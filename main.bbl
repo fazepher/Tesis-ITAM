@@ -1,0 +1,2731 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.7 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \sortlist[entry]{nty/global/}
+    \entry{AlmondVerba63}{book}{}
+      \name{author}{2}{}{%
+        {{hash=3bcf3178574daf0035ad6aea45062795}{%
+           family={Almond},
+           family_i={A\bibinitperiod},
+           given={Gabriel\bibnamedelima A.},
+           given_i={G\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=63212cdbac81056aded49c950d1dd6dc}{%
+           family={Verba},
+           family_i={V\bibinitperiod},
+           given={Sidney},
+           given_i={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Princeton University Press}%
+      }
+      \strng{namehash}{d6f3212a696e1ad779c9003428cb7367}
+      \strng{fullhash}{d6f3212a696e1ad779c9003428cb7367}
+      \field{sortinit}{A}
+      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
+      \field{labelyear}{1963}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{subtitle}{Political Attitudes and Democracy in Five Nations}
+      \field{title}{The Civic Culture}
+      \field{year}{1963}
+      \keyw{NAP}
+    \endentry
+    \entry{Aquino10}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=da836a8db8b866a00de14ce2998a15d6}{%
+           family={Aquino\bibnamedelima Pérez},
+           family_i={A\bibinitperiod\bibinitdelim P\bibinitperiod},
+           given={Elizabeth},
+           given_i={E\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Instituto {T}ecnológico {A}utónomo de {M}éxico ({ITAM})}%
+      }
+      \list{location}{1}{%
+        {Ciudad de {M}éxico}%
+      }
+      \strng{namehash}{da836a8db8b866a00de14ce2998a15d6}
+      \strng{fullhash}{da836a8db8b866a00de14ce2998a15d6}
+      \field{sortinit}{A}
+      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
+      \field{labelyear}{2010}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{pagetotal}{54}
+      \field{title}{Construcción de una tabla de mortalidad con un enfoque bayesiano}
+      \field{type}{Tesina para obtener el grado de {L}icenciada en {A}ctuaría}
+      \field{year}{2010}
+      \keyw{Bayes}
+    \endentry
+    \entry{Arnade16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=e2b7edec03846b9fdf0c692676a55c86}{%
+           family={Arnade},
+           family_i={A\bibinitperiod},
+           given={Chris},
+           given_i={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{e2b7edec03846b9fdf0c692676a55c86}
+      \strng{fullhash}{e2b7edec03846b9fdf0c692676a55c86}
+      \field{sortinit}{A}
+      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
+      \field{labelyear}{2016}
+      \field{labelmonth}{6}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{title}{Attributions of causality}
+      \field{version}{2}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.interfluidity.com/v2/6602.html
+      \endverb
+      \keyw{NAP}
+      \warn{\item Datamodel: Entry 'Arnade16' (referencias_tesis.bib): Invalid format '24' of date field 'date' - ignoring}
+    \endentry
+    \entry{AN17a}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=110fc1c2b8b5ab77ba97a1417ad5cb65}{%
+           family={{Asamblée National}},
+           family_i={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{110fc1c2b8b5ab77ba97a1417ad5cb65}
+      \strng{fullhash}{110fc1c2b8b5ab77ba97a1417ad5cb65}
+      \field{sortinit}{A}
+      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
+      \field{extrayear}{1}
+      \field{labelyear}{2017}
+      \field{labelmonth}{6}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{note}{Consultado el 6 de enero de 2018}
+      \field{title}{Fiche de synthèse n1: Présentation synthétique des institutions françaises}
+      \field{year}{2017}
+      \verb{url}
+      \verb http://www2.assemblee-nationale.fr/decouvrir-l-assemblee/role-et-pouvoirs-de-l-assemblee-nationale/les-institutions-francaises-generalites/presentation-synthetique-des-institutions-francaises
+      \endverb
+      \keyw{Generales}
+    \endentry
+    \entry{AN17b}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=110fc1c2b8b5ab77ba97a1417ad5cb65}{%
+           family={{Asamblée National}},
+           family_i={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{110fc1c2b8b5ab77ba97a1417ad5cb65}
+      \strng{fullhash}{110fc1c2b8b5ab77ba97a1417ad5cb65}
+      \field{sortinit}{A}
+      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
+      \field{extrayear}{2}
+      \field{labelyear}{2017}
+      \field{labelmonth}{5}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{5}
+      \field{note}{Consultado el 6 de enero de 2018}
+      \field{title}{Fiche de synthèse n11: L’organisation territoriale de la France}
+      \field{year}{2017}
+      \verb{url}
+      \verb http://www2.assemblee-nationale.fr/decouvrir-l-assemblee/role-et-pouvoirs-de-l-assemblee-nationale/les-institutions-francaises-generalites/l-organisation-territoriale-de-la-france
+      \endverb
+      \keyw{Generales}
+    \endentry
+    \entry{AN17c}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=110fc1c2b8b5ab77ba97a1417ad5cb65}{%
+           family={{Asamblée National}},
+           family_i={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{110fc1c2b8b5ab77ba97a1417ad5cb65}
+      \strng{fullhash}{110fc1c2b8b5ab77ba97a1417ad5cb65}
+      \field{sortinit}{A}
+      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
+      \field{extrayear}{3}
+      \field{labelyear}{2017}
+      \field{labelmonth}{6}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{note}{Consultado el 6 de enero de 2018}
+      \field{title}{Fiche de synthèse n45: La mise en cause de la responsabilité du Gouvernement}
+      \field{year}{2017}
+      \verb{url}
+      \verb http://www2.assemblee-nationale.fr/decouvrir-l-assemblee/role-et-pouvoirs-de-l-assemblee-nationale/les-fonctions-de-l-assemblee-nationale/les-fonctions-de-controle-et-l-information-des-deputes/la-mise-en-cause-de-la-responsabilite-du-gouvernement
+      \endverb
+      \keyw{Generales}
+    \endentry
+    \entry{BV08}{inbook}{}
+      \name{author}{2}{}{%
+        {{hash=29041fbfab16972ead020de107c4b48f}{%
+           family={Balaam},
+           family_i={B\bibinitperiod},
+           given={David},
+           given_i={D\bibinitperiod}}}%
+        {{hash=1f0ef6cc9a792023c12613b629d48f34}{%
+           family={Veseth},
+           family_i={V\bibinitperiod},
+           given={Michael},
+           given_i={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Upper Saddel River, Nueva Jersey}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{6141afcabba200c7d128077c84810196}
+      \strng{fullhash}{6141afcabba200c7d128077c84810196}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{labelyear}{2008}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Introduction to International Political Economy}
+      \field{edition}{4}
+      \field{title}{Marx, Lenin, and the Structuralist Perspective}
+      \field{year}{2008}
+      \keyw{NAP}
+    \endentry
+    \entry{Beauchamp16a}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=5621113ba635dd8e13f684b8979b1ee9}{%
+           family={Beauchamp},
+           family_i={B\bibinitperiod},
+           given={Zack},
+           given_i={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{5621113ba635dd8e13f684b8979b1ee9}
+      \strng{fullhash}{5621113ba635dd8e13f684b8979b1ee9}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{extrayear}{1}
+      \field{labelyear}{2016}
+      \field{labelmonth}{5}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{5}
+      \field{note}{Entrevista a Cass Mudde, de la Universidad de Georgia. Consultado el 30 de octubre de 2017.}
+      \field{title}{An expert on the European far right explains the growing influence of anti-immigrant politics}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.vox.com/2016/5/31/11722994/european-far-right-cas-mudde
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Beauchamp16b}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=5621113ba635dd8e13f684b8979b1ee9}{%
+           family={Beauchamp},
+           family_i={B\bibinitperiod},
+           given={Zack},
+           given_i={Z\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Vox.com}%
+      }
+      \strng{namehash}{5621113ba635dd8e13f684b8979b1ee9}
+      \strng{fullhash}{5621113ba635dd8e13f684b8979b1ee9}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{extrayear}{2}
+      \field{labelyear}{2016}
+      \field{labelmonth}{11}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{White Riot}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.vox.com/2016/9/19/12933072/far-right-white-riot-trump-brexit
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Berger85}{book}{}
+      \name{author}{1}{}{%
+        {{hash=8966aba85df96e95b2d99e188028743a}{%
+           family={Berger},
+           family_i={B\bibinitperiod},
+           given={James\bibnamedelima O.},
+           given_i={J\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Estados Unidos}%
+      }
+      \list{publisher}{1}{%
+        {Springer-Verlag New York, Inc.}%
+      }
+      \strng{namehash}{8966aba85df96e95b2d99e188028743a}
+      \strng{fullhash}{8966aba85df96e95b2d99e188028743a}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{labelyear}{1985}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{isbn}{0-387-96098-8}
+      \field{pagetotal}{617}
+      \field{subtitle}{Springer series in statistics}
+      \field{title}{Statistical decision theory and {B}ayesian analysis}
+      \field{year}{1985}
+      \keyw{Bayes}
+    \endentry
+    \entry{Berman01}{article}{}
+      \name{author}{1}{}{%
+        {{hash=33569545e84ca68ab8876a99c5c8df0c}{%
+           family={Berman},
+           family_i={B\bibinitperiod},
+           given={Sheri},
+           given_i={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{33569545e84ca68ab8876a99c5c8df0c}
+      \strng{fullhash}{33569545e84ca68ab8876a99c5c8df0c}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{labelyear}{2001}
+      \field{labelmonth}{1}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{2}
+      \field{journaltitle}{Comparative Politics}
+      \field{month}{1}
+      \field{title}{Review: Ideas, Norms, and Culture in Political Analysis}
+      \field{volume}{33}
+      \field{year}{2001}
+      \field{pages}{231\bibrangedash 250}
+      \range{pages}{20}
+      \verb{url}
+      \verb http://www.jstor.org/stable/422380
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Bernardo81}{book}{}
+      \name{author}{1}{}{%
+        {{hash=a6465d03429d49c28f90e7278ecb4d33}{%
+           family={Bernardo},
+           family_i={B\bibinitperiod},
+           given={José\bibnamedelima Miguel},
+           given_i={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=e03124227f6a7037a68d15686d12724d}{%
+           family={Vicens},
+           family_i={V\bibinitperiod},
+           given={Albert},
+           given_i={A\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Barcelona}%
+      }
+      \list{publisher}{1}{%
+        {Ediciones Vicens-Vives}%
+      }
+      \strng{namehash}{a6465d03429d49c28f90e7278ecb4d33}
+      \strng{fullhash}{a6465d03429d49c28f90e7278ecb4d33}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{labelyear}{1981}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{1}
+      \field{isbn}{84-316-1889-2}
+      \field{pagetotal}{286}
+      \field{subtitle}{Una {P}erspectiva {B}ayesiana}
+      \field{title}{Bioestadística}
+      \field{year}{1981}
+      \keyw{Bayes}
+    \endentry
+    \entry{Berteloot17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=3b1f059def57116fa1bb6fbb7f9c9dee}{%
+           family={Berteloot},
+           family_i={B\bibinitperiod},
+           given={Tristan},
+           given_i={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b1f059def57116fa1bb6fbb7f9c9dee}
+      \strng{fullhash}{3b1f059def57116fa1bb6fbb7f9c9dee}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{labelyear}{2017}
+      \field{labelmonth}{9}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{note}{Consultado el 12 de noviembre de 2017.}
+      \field{title}{Pour Philippot, l'humiliation ou l'exil}
+      \field{year}{2017}
+      \verb{url}
+      \verb https://oeilsurlefront.liberation.fr/les-idees/2017/09/19/pour-philippot-l-humiliation-ou-l-exil_1597506
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Blalock67}{book}{}
+      \name{author}{1}{}{%
+        {{hash=129992ba9ebc5717d0a3897fad07b2c1}{%
+           family={Blalock},
+           family_i={B\bibinitperiod},
+           given={Hubert\bibnamedelima M.},
+           given_i={H\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons}%
+      }
+      \strng{namehash}{129992ba9ebc5717d0a3897fad07b2c1}
+      \strng{fullhash}{129992ba9ebc5717d0a3897fad07b2c1}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{labelyear}{1967}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Toward a Theory of Minority-group Relations}
+      \field{year}{1967}
+      \keyw{NAP}
+    \endentry
+    \entry{Boily05}{article}{}
+      \name{author}{1}{}{%
+        {{hash=e30235d0331bbccc3e46f88786999466}{%
+           family={Boily},
+           family_i={B\bibinitperiod},
+           given={Frédéric},
+           given_i={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{e30235d0331bbccc3e46f88786999466}
+      \strng{fullhash}{e30235d0331bbccc3e46f88786999466}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{labelyear}{2005}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{1}
+      \field{journaltitle}{Politiques et Sociétés}
+      \field{subtitle}{Le mariage du traditionalisme et du populisme}
+      \field{title}{Aux sources idéologiques du Front national}
+      \field{volume}{24}
+      \field{year}{2005}
+      \field{pages}{23\bibrangedash 47}
+      \range{pages}{25}
+      \keyw{FN}
+    \endentry
+    \entry{Bornschier09}{article}{}
+      \name{author}{1}{}{%
+        {{hash=fca266ad529530ca050187ccd377292e}{%
+           family={Bornschier},
+           family_i={B\bibinitperiod},
+           given={Simon},
+           given_i={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{fca266ad529530ca050187ccd377292e}
+      \strng{fullhash}{fca266ad529530ca050187ccd377292e}
+      \field{sortinit}{B}
+      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{labelyear}{2009}
+      \field{labelmonth}{10}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Living Reviews}
+      \field{month}{10}
+      \field{title}{Cleavage Politics in Old and New Democracies}
+      \field{year}{2009}
+      \verb{url}
+      \verb http://www.livingreviews.org/lrd-2009-6
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{CDansLAir17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=a930fe564a765807227e823e40bfd973}{%
+           family={{C dans l'air}},
+           family_i={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{a930fe564a765807227e823e40bfd973}
+      \strng{fullhash}{a930fe564a765807227e823e40bfd973}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2017}
+      \field{labelmonth}{7}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{note}{Consultado el 12 de noviembre de 2017}
+      \field{title}{Règlement de comptes au FN}
+      \field{year}{2017}
+      \verb{url}
+      \verb https://www.youtube.com/watch?v=rdWfY7clIco&index=84&list=PL4_by8YNrJv-2o8tOvIHY0Q5TAhorDiin
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Capo17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=96039a279d22cdf63b3bacf49d6222ec}{%
+           family={Capo},
+           family_i={C\bibinitperiod},
+           given={Dominique},
+           given_i={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{96039a279d22cdf63b3bacf49d6222ec}
+      \strng{fullhash}{96039a279d22cdf63b3bacf49d6222ec}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2017}
+      \field{labelmonth}{8}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{8}
+      \field{note}{Consultado el 11 de noviembre de 2017}
+      \field{title}{21 Avril 2002, le choc, deuxième partie}
+      \field{year}{2017}
+      \verb{url}
+      \verb https://www.youtube.com/watch?v=v0T-kmHUVlA
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Carney16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=ea84ce2620c337d9615a2d1832b20034}{%
+           family={Carney},
+           family_i={C\bibinitperiod},
+           given={Timothy},
+           given_i={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {The Washington Examiner}%
+      }
+      \strng{namehash}{ea84ce2620c337d9615a2d1832b20034}
+      \strng{fullhash}{ea84ce2620c337d9615a2d1832b20034}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2016}
+      \field{labelmonth}{8}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{8}
+      \field{title}{Understanding Trump: Economic anxiety is racial anxiety}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.washingtonexaminer.com/understanding-trump-economic-anxiety-is-racial-anxiety/article/2600612/
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Carpizo04}{article}{}
+      \name{author}{1}{}{%
+        {{hash=3d1fa7b9023cc4a69b0e7c6fa6e1cf27}{%
+           family={Carpizo},
+           family_i={C\bibinitperiod},
+           given={Jorge},
+           given_i={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{3d1fa7b9023cc4a69b0e7c6fa6e1cf27}
+      \strng{fullhash}{3d1fa7b9023cc4a69b0e7c6fa6e1cf27}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2004}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{1}
+      \field{journaltitle}{Revista Latinoamericana de Derecho}
+      \field{title}{México: ¿sistema presidencial o parlamentario?}
+      \field{volume}{1}
+      \field{year}{2004}
+      \field{pages}{1\bibrangedash 37}
+      \range{pages}{37}
+      \keyw{Otros}
+    \endentry
+    \entry{Coffe07}{article}{}
+      \name{author}{3}{}{%
+        {{hash=e70fd18f117a4804a56e1953fe397924}{%
+           family={Coffé},
+           family_i={C\bibinitperiod},
+           given={Hilde},
+           given_i={H\bibinitperiod}}}%
+        {{hash=961686ff1fd71a41db43ec9e6a35af2b}{%
+           family={Heyndels},
+           family_i={H\bibinitperiod},
+           given={Bruno},
+           given_i={B\bibinitperiod}}}%
+        {{hash=8468f89833ef232d90c73710dfb49c18}{%
+           family={Vermeir},
+           family_i={V\bibinitperiod},
+           given={Jan},
+           given_i={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{59fb3294514638bfdb18fa638e120add}
+      \strng{fullhash}{59fb3294514638bfdb18fa638e120add}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2007}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Electoral Studies}
+      \field{title}{Fertile grounds for extreme right-wing parties: Explaining the Vlaams Blok’s electoral success}
+      \field{volume}{26}
+      \field{year}{2007}
+      \field{pages}{142\bibrangedash 155}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1016/j.electstud.2006.01.005
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Congdon06}{book}{}
+      \name{author}{1}{}{%
+        {{hash=e18657e3b93861fed1d6e7fc4ce75032}{%
+           family={Congdon},
+           family_i={C\bibinitperiod},
+           given={Peter},
+           given_i={P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Reino Unido}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons Ltd.}%
+      }
+      \strng{namehash}{e18657e3b93861fed1d6e7fc4ce75032}
+      \strng{fullhash}{e18657e3b93861fed1d6e7fc4ce75032}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2006}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{isbn}{978-0-470-01875-0}
+      \field{note}{Wiley series in probability and statistics}
+      \field{pagetotal}{573}
+      \field{title}{Bayesian Statistical Modelling}
+      \field{year}{2006}
+      \keyw{Bayes}
+    \endentry
+    \entry{ConstFr}{misc}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{nodate}
+      \field{labeltitlesource}{title}
+      \field{note}{Texto vigente al 6 de enero de 2018}
+      \field{title}{Constitution du 4 octobre 1958}
+      \verb{url}
+      \verb https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000006071194&dateTexte=20180106
+      \endverb
+      \keyw{Generales}
+    \endentry
+    \entry{CoxDurham16}{inbook}{}
+      \name{author}{2}{}{%
+        {{hash=2ed8c9d75fddfe0572f0fe569a866063}{%
+           family={Cox},
+           family_i={C\bibinitperiod},
+           given={Michael},
+           given_i={M\bibinitperiod}}}%
+        {{hash=fc655605b6a4644bd2f92578a999ca63}{%
+           family={Durham},
+           family_i={D\bibinitperiod},
+           given={Martin},
+           given_i={M\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=e736f469d2b3687d50536c42e0887907}{%
+           family={Hainsworth},
+           family_i={H\bibinitperiod},
+           given={Paul},
+           given_i={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Bloomsbury Academic}%
+      }
+      \strng{namehash}{99a84b2ad948556531f7b279e772e839}
+      \strng{fullhash}{99a84b2ad948556531f7b279e772e839}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2016}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The Politics of the Extreme Right: From the Margins to the Mainstream}
+      \field{chapter}{13}
+      \field{origyear}{2000}
+      \field{title}{Te politics of anger: the extreme right in the United States}
+      \field{year}{2016}
+      \field{pages}{287\bibrangedash 311}
+      \range{pages}{25}
+      \keyw{NAP}
+    \endentry
+    \entry{Crepon15}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=894fd47c25798b3172945638513cc171}{%
+           family={Crépon},
+           family_i={C\bibinitperiod},
+           given={Sylvain},
+           given_i={S\bibinitperiod}}}%
+      }
+      \name{editor}{3}{}{%
+        {{hash=894fd47c25798b3172945638513cc171}{%
+           family={Crépon},
+           family_i={C\bibinitperiod},
+           given={Sylvain},
+           given_i={S\bibinitperiod}}}%
+        {{hash=59b4b583f09a0fbc8a434460d2b88dde}{%
+           family={Dézé},
+           family_i={D\bibinitperiod},
+           given={Alexandre},
+           given_i={A\bibinitperiod}}}%
+        {{hash=73e62d7916eb01ae9e205a320a3eaf07}{%
+           family={Mayer},
+           family_i={M\bibinitperiod},
+           given={Nonna},
+           given_i={N\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Paris}%
+      }
+      \list{publisher}{1}{%
+        {Presses de SciencesPo}%
+      }
+      \strng{namehash}{894fd47c25798b3172945638513cc171}
+      \strng{fullhash}{894fd47c25798b3172945638513cc171}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Les faux-semblants du Front National: sociologie d'un parti politique}
+      \field{chapter}{8}
+      \field{title}{La politique des mœurs au Front National}
+      \field{year}{2015}
+      \field{pages}{185\bibrangedash 205}
+      \range{pages}{21}
+      \keyw{FN}
+    \endentry
+    \entry{CreponEtAl15}{incollection}{}
+      \name{editor}{3}{}{%
+        {{hash=894fd47c25798b3172945638513cc171}{%
+           family={Crépon},
+           family_i={C\bibinitperiod},
+           given={Sylvain},
+           given_i={S\bibinitperiod}}}%
+        {{hash=59b4b583f09a0fbc8a434460d2b88dde}{%
+           family={Dézé},
+           family_i={D\bibinitperiod},
+           given={Alexandre},
+           given_i={A\bibinitperiod}}}%
+        {{hash=73e62d7916eb01ae9e205a320a3eaf07}{%
+           family={Mayer},
+           family_i={M\bibinitperiod},
+           given={Nonna},
+           given_i={N\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Paris}%
+      }
+      \list{publisher}{1}{%
+        {Presses de SciencesPo}%
+      }
+      \strng{namehash}{319067da645ef6349b6011db67ba672c}
+      \strng{fullhash}{319067da645ef6349b6011db67ba672c}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Les faux-semblants du Front National: sociologie d'un parti politique}
+      \field{title}{Repères chronologiques}
+      \field{year}{2015}
+      \field{pages}{545\bibrangedash 557}
+      \range{pages}{13}
+      \keyw{FN}
+    \endentry
+    \entry{LeTemps17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=6b7de22a24647bf3c7363beca6c2176c}{%
+           family={Delafoi},
+           family_i={D\bibinitperiod},
+           given={Florian},
+           given_i={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{6b7de22a24647bf3c7363beca6c2176c}
+      \strng{fullhash}{6b7de22a24647bf3c7363beca6c2176c}
+      \field{sortinit}{D}
+      \field{sortinithash}{78f7c4753a2004675f316a80bdb31742}
+      \field{labelyear}{2017}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Front national (1971-2017)}
+      \field{year}{2017}
+      \verb{url}
+      \verb https://www.letemps.ch/monde/front-national-19712017
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Dobson01}{book}{}
+      \name{author}{1}{}{%
+        {{hash=40a29b3f1286f9b87966bd7096ae3e04}{%
+           family={Dobson},
+           family_i={D\bibinitperiod},
+           given={Annette\bibnamedelima J.},
+           given_i={A\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Chapman \& Hall}%
+      }
+      \strng{namehash}{40a29b3f1286f9b87966bd7096ae3e04}
+      \strng{fullhash}{40a29b3f1286f9b87966bd7096ae3e04}
+      \field{sortinit}{D}
+      \field{sortinithash}{78f7c4753a2004675f316a80bdb31742}
+      \field{labelyear}{2001}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{1-58488-165-8}
+      \field{pagetotal}{221}
+      \field{title}{An introduction to generalized linear models}
+      \field{year}{2001}
+      \keyw{Bayes}
+    \endentry
+    \entry{DraperSmith98}{book}{}
+      \name{author}{2}{}{%
+        {{hash=079c857cb6a5644c829847d84e60a9ca}{%
+           family={Draper},
+           family_i={D\bibinitperiod},
+           given={Norman\bibnamedelima R.},
+           given_i={N\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=bbccd75a9de2f2f7c00f816dab8e475b}{%
+           family={Smith},
+           family_i={S\bibinitperiod},
+           given={Harry},
+           given_i={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Estados Unidos}%
+      }
+      \list{publisher}{1}{%
+        {Wiley}%
+      }
+      \strng{namehash}{2f0a647333ef1b894ae3605cc3455351}
+      \strng{fullhash}{2f0a647333ef1b894ae3605cc3455351}
+      \field{sortinit}{D}
+      \field{sortinithash}{78f7c4753a2004675f316a80bdb31742}
+      \field{labelyear}{1998}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{isbn}{978-0-471-17082-2}
+      \field{note}{Willey Series in Probability and Statistics}
+      \field{pagetotal}{736}
+      \field{title}{Applied Regression Analysis}
+      \field{year}{1998}
+      \keyw{Bayes}
+    \endentry
+    \entry{Europe17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=0ce48374154683117bde022108a1df23}{%
+           family={{Europe 1}},
+           family_i={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{0ce48374154683117bde022108a1df23}
+      \strng{fullhash}{0ce48374154683117bde022108a1df23}
+      \field{sortinit}{E}
+      \field{sortinithash}{fefc5210ef4721525b2a478df41efcd4}
+      \field{labelyear}{2017}
+      \field{labelmonth}{9}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{note}{Entrevista a Pascal Perrineau. Consultado el 12 de noviembre de 2017.}
+      \field{title}{Départ de Florian Philippot: «une mauvaise nouvelle pour le FN», selon Pascal Perrineau}
+      \field{year}{2017}
+      \verb{url}
+      \verb http://www.europe1.fr/politique/depart-de-florian-philippot-une-mauvaise-nouvelle-pour-le-fn-selon-pascal-perrineau-3443705
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{LePen12}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=75b8c5ea703190229f70a26c33497cf7}{%
+           family={{Front National}},
+           family_i={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{75b8c5ea703190229f70a26c33497cf7}
+      \strng{fullhash}{75b8c5ea703190229f70a26c33497cf7}
+      \field{sortinit}{F}
+      \field{sortinithash}{c6a7d9913bbd7b20ea954441c0460b78}
+      \field{labelyear}{2012}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Consultado el 26 de marzo de 2018}
+      \field{subtitle}{Pour la France et les français}
+      \field{title}{Mon Projet}
+      \field{year}{2012}
+      \verb{url}
+      \verb http://www.frontnational.com/pdf/projet_mlp2012.pdf
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Galtier17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=4ed5cc24ebafee84bb8335d3947ce3ce}{%
+           family={Galtier},
+           family_i={G\bibinitperiod},
+           given={Ludovic},
+           given_i={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{4ed5cc24ebafee84bb8335d3947ce3ce}
+      \strng{fullhash}{4ed5cc24ebafee84bb8335d3947ce3ce}
+      \field{sortinit}{G}
+      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{labelyear}{2017}
+      \field{labelmonth}{9}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{note}{Consultado el 12 de noviembre de 2017.}
+      \field{title}{Philippot: le FN «fait un retour en arrière terrifiant» sur sa ligne}
+      \field{year}{2017}
+      \verb{url}
+      \verb http://www.rtl.fr/actu/politique/philippot-le-front-national-fait-un-retour-en-arriere-terrifiant-sur-sa-ligne-7790173335
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{GelmanHill06}{book}{}
+      \name{author}{2}{}{%
+        {{hash=1e1eb60e3b6e222217bf8e9b24070b28}{%
+           family={Gelman},
+           family_i={G\bibinitperiod},
+           given={Andrew},
+           given_i={A\bibinitperiod}}}%
+        {{hash=2595a681de46fa44d658f731bf8bf909}{%
+           family={{\forceY{H}}ill},
+           family_i={{\forceY{H}}\bibinitperiod},
+           given={Jennifer},
+           given_i={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Estados Unidos}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{18c2e8110447f7b8d6fbd1f964ced482}
+      \strng{fullhash}{18c2e8110447f7b8d6fbd1f964ced482}
+      \field{sortinit}{G}
+      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{labelyear}{2006}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{5}
+      \field{isbn}{978-0-5216-8689-1}
+      \field{note}{Analytical Methods for Social Science Research}
+      \field{pagetotal}{625}
+      \field{title}{Data Analysis Using Regression and Multilevel/Hierarchical Models}
+      \field{year}{2006}
+      \keyw{Bayes}
+    \endentry
+    \entry{Gelman13}{book}{}
+      \name{author}{6}{}{%
+        {{hash=1e1eb60e3b6e222217bf8e9b24070b28}{%
+           family={Gelman},
+           family_i={G\bibinitperiod},
+           given={Andrew},
+           given_i={A\bibinitperiod}}}%
+        {{hash=40c60e4e0832fcac64a68a5249bfc022}{%
+           family={Carlin},
+           family_i={C\bibinitperiod},
+           given={John\bibnamedelima B.},
+           given_i={J\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=1d67b4656f9551333d9785747b11cf8b}{%
+           family={Stern},
+           family_i={S\bibinitperiod},
+           given={Hal\bibnamedelima S.},
+           given_i={H\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=d0372712969a665b40376f6322d14e39}{%
+           family={Dunson},
+           family_i={D\bibinitperiod},
+           given={David\bibnamedelima B.},
+           given_i={D\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=5d36e97683cbc9d6ef06fc2ec40becb0}{%
+           family={Vehtari},
+           family_i={V\bibinitperiod},
+           given={Aki},
+           given_i={A\bibinitperiod}}}%
+        {{hash=37fe180f849ae0085cba2b45692be375}{%
+           family={Rubin},
+           family_i={R\bibinitperiod},
+           given={Donald\bibnamedelima B.},
+           given_i={D\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Estados Unidos}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{fullhash}{e96daf37aee1988c0e89a660219adf57}
+      \field{sortinit}{G}
+      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{labelyear}{2013}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{isbn}{978-1-4398-4095-5}
+      \field{note}{Chapman \& Hall/CRC texts in Statistical Science}
+      \field{pagetotal}{667}
+      \field{title}{Bayesian Data Analysis}
+      \field{year}{2013}
+      \keyw{Bayes}
+    \endentry
+    \entry{Goodliffe17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=a762ecdfd2c9afba8223ecec6f2ded7e}{%
+           family={Goodliffe},
+           family_i={G\bibinitperiod},
+           given={Gabriel},
+           given_i={G\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Ciudad de México}%
+      }
+      \strng{namehash}{a762ecdfd2c9afba8223ecec6f2ded7e}
+      \strng{fullhash}{a762ecdfd2c9afba8223ecec6f2ded7e}
+      \field{sortinit}{G}
+      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{labelyear}{2017}
+      \field{labelmonth}{10}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{note}{Participación en un foro sobre populismo entre académicos del ITAM y la Universidad John Hopkins.}
+      \field{title}{Global Populism in the Rise}
+      \field{year}{2017}
+      \keyw{NAP}
+    \endentry
+    \entry{Gross16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=77cca39c4b7d9a8ff121a0dd3f2ec33e}{%
+           family={Gross},
+           family_i={G\bibinitperiod},
+           given={Estelle},
+           given_i={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{77cca39c4b7d9a8ff121a0dd3f2ec33e}
+      \strng{fullhash}{77cca39c4b7d9a8ff121a0dd3f2ec33e}
+      \field{sortinit}{G}
+      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{labelyear}{2016}
+      \field{labelmonth}{9}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{title}{Marine Le Pen change de slogan : ``Une ligne populiste assumée''}
+      \field{year}{2016}
+      \verb{url}
+      \verb https://www.nouvelobs.com/politique/election-presidentielle-2017/20160919.OBS8333/marine-le-pen-change-de-slogan-une-ligne-populiste-assumee.html
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{GP16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=99de664a1474c944b2b9159f8333f338}{%
+           family={Gutiérrez\bibnamedelima Peña},
+           family_i={G\bibinitperiod\bibinitdelim P\bibinitperiod},
+           given={Eduardo},
+           given_i={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Ciudad de {M}éxico}%
+      }
+      \list{organization}{1}{%
+        {Instituto {T}ecnológico {A}utónomo de {M}éxico ({ITAM})}%
+      }
+      \strng{namehash}{99de664a1474c944b2b9159f8333f338}
+      \strng{fullhash}{99de664a1474c944b2b9159f8333f338}
+      \field{sortinit}{G}
+      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{labelyear}{2016}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Departamento {A}cadémico de {E}stadística}
+      \field{title}{Presentación {I}ntroductioria al curso {M}étodos {E}stadísticos {B}ayesianos}
+      \field{year}{2016}
+      \keyw{Bayes}
+    \endentry
+    \entry{Hainsworth16a}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=e736f469d2b3687d50536c42e0887907}{%
+           family={Hainsworth},
+           family_i={H\bibinitperiod},
+           given={Paul},
+           given_i={P\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=e736f469d2b3687d50536c42e0887907}{%
+           family={Hainsworth},
+           family_i={H\bibinitperiod},
+           given={Paul},
+           given_i={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Bloomsbury Academic}%
+      }
+      \strng{namehash}{e736f469d2b3687d50536c42e0887907}
+      \strng{fullhash}{e736f469d2b3687d50536c42e0887907}
+      \field{sortinit}{H}
+      \field{sortinithash}{82012198d5dfa657b8c4a168793268a6}
+      \field{extrayear}{1}
+      \field{labelyear}{2016}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The Politics of the Extreme Right: From the Margins to the Mainstream}
+      \field{chapter}{1}
+      \field{isbn}{978-1-4742-9095-1}
+      \field{origyear}{2000}
+      \field{title}{Introduction: the extreme right}
+      \field{year}{2016}
+      \field{pages}{1\bibrangedash 17}
+      \range{pages}{17}
+      \keyw{NAP}
+    \endentry
+    \entry{Hainsworth16b}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=e736f469d2b3687d50536c42e0887907}{%
+           family={Hainsworth},
+           family_i={H\bibinitperiod},
+           given={Paul},
+           given_i={P\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=e736f469d2b3687d50536c42e0887907}{%
+           family={Hainsworth},
+           family_i={H\bibinitperiod},
+           given={Paul},
+           given_i={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Bloomsbury Academic}%
+      }
+      \strng{namehash}{e736f469d2b3687d50536c42e0887907}
+      \strng{fullhash}{e736f469d2b3687d50536c42e0887907}
+      \field{sortinit}{H}
+      \field{sortinithash}{82012198d5dfa657b8c4a168793268a6}
+      \field{extrayear}{2}
+      \field{labelyear}{2016}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The Politics of the Extreme Right: From the Margins to the Mainstream}
+      \field{chapter}{2}
+      \field{isbn}{978-1-4742-9095-1}
+      \field{origyear}{2000}
+      \field{title}{The Front National: from ascendancy to fragmentation on the French extreme right}
+      \field{year}{2016}
+      \field{pages}{18\bibrangedash 32}
+      \range{pages}{15}
+      \keyw{FN}
+    \endentry
+    \entry{Heilbroner92}{inbook}{}
+      \name{author}{1}{}{%
+        {{hash=b5e6985a914981838cce37e94fc14104}{%
+           family={Heilbroner},
+           family_i={H\bibinitperiod},
+           given={Robert},
+           given_i={R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Nueva York}%
+      }
+      \list{publisher}{1}{%
+        {Simon \& Schuster}%
+      }
+      \strng{namehash}{b5e6985a914981838cce37e94fc14104}
+      \strng{fullhash}{b5e6985a914981838cce37e94fc14104}
+      \field{sortinit}{H}
+      \field{sortinithash}{82012198d5dfa657b8c4a168793268a6}
+      \field{labelyear}{1992}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{chapter}{The Inexorable System of Karl Marx}
+      \field{edition}{6}
+      \field{subtitle}{The Lives, Times, and Ideas of the Great Economic Thinkers}
+      \field{title}{The Worldy Philosphers}
+      \field{year}{1992}
+      \keyw{NAP}
+    \endentry
+    \entry{Hoare16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=137df7a805b96dce6d15d1b6f05e18a2}{%
+           family={Hoare},
+           family_i={H\bibinitperiod},
+           given={Liam},
+           given_i={L\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Tablet Mag}%
+      }
+      \strng{namehash}{137df7a805b96dce6d15d1b6f05e18a2}
+      \strng{fullhash}{137df7a805b96dce6d15d1b6f05e18a2}
+      \field{sortinit}{H}
+      \field{sortinithash}{82012198d5dfa657b8c4a168793268a6}
+      \field{labelyear}{2016}
+      \field{labelmonth}{5}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{5}
+      \field{title}{Austria’s Incredibly Narrow Escape From Neo-Fascism}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.tabletmag.com/jewish-news-and-politics/202857/austrias-narrow-escape
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{InaPolitique97}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=d04770d8b46f913c7336a2f13e68a3bd}{%
+           family={{Ina Politique}},
+           family_i={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{d04770d8b46f913c7336a2f13e68a3bd}
+      \strng{fullhash}{d04770d8b46f913c7336a2f13e68a3bd}
+      \field{sortinit}{I}
+      \field{sortinithash}{25e99d37ba90f7c4fb20baf4e310faf3}
+      \field{labelyear}{2012}
+      \field{labelmonth}{7}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{note}{Consultado el 11 de noviembre de 2017}
+      \field{title}{Marie Caroline Le Pen Mantes}
+      \field{year}{2012}
+      \verb{url}
+      \verb https://www.youtube.com/watch?v=pjaOlSbemHE
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Inglehart16}{article}{}
+      \name{author}{2}{}{%
+        {{hash=bdf952c15ff273b515d6136fab678181}{%
+           family={Inglehart},
+           family_i={I\bibinitperiod},
+           given={Ronald\bibnamedelima F.},
+           given_i={R\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=74023876b3216f90a572ad913efc23fa}{%
+           family={Norris},
+           family_i={N\bibinitperiod},
+           given={Pipa},
+           given_i={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{7abc70d9c8f69da157bdad2899806394}
+      \strng{fullhash}{7abc70d9c8f69da157bdad2899806394}
+      \field{sortinit}{I}
+      \field{sortinithash}{25e99d37ba90f7c4fb20baf4e310faf3}
+      \field{labelyear}{2016}
+      \field{labelmonth}{8}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Harvard Kennedy School Faculty Research Working Paper Series}
+      \field{month}{8}
+      \field{title}{Trump, Brexit, and the Rise of Populism: Economic Have-Nots and Cultural Backlash}
+      \field{year}{2016}
+      \keyw{NAP}
+    \endentry
+    \entry{Ivarsflaten14}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=7163e772e2f6ac1bf556136dbfe990c4}{%
+           family={Ivarsflaten},
+           family_i={I\bibinitperiod},
+           given={Elisabeth},
+           given_i={E\bibinitperiod}}}%
+        {{hash=b0be9c3724c6fe7c58f8ac00653e4154}{%
+           family={Gudbransen},
+           family_i={G\bibinitperiod},
+           given={Froy},
+           given_i={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{6fe4e83cc4abc034b711296f05bc3c15}
+      \strng{fullhash}{6fe4e83cc4abc034b711296f05bc3c15}
+      \field{sortinit}{I}
+      \field{sortinithash}{25e99d37ba90f7c4fb20baf4e310faf3}
+      \field{labelyear}{2014}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Europaworld}
+      \field{title}{The populist radical right in Western Europe}
+      \field{year}{2014}
+      \keyw{NAP}
+    \endentry
+    \entry{Kesselman79}{article}{}
+      \name{author}{1}{}{%
+        {{hash=de6527661cc9f391a3b848f85e9139d0}{%
+           family={Kesselman},
+           family_i={K\bibinitperiod},
+           given={Mark},
+           given_i={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{de6527661cc9f391a3b848f85e9139d0}
+      \strng{fullhash}{de6527661cc9f391a3b848f85e9139d0}
+      \field{sortinit}{K}
+      \field{sortinithash}{a7d5b3aec5a0890aae7baf85a209abfc}
+      \field{labelyear}{1979}
+      \field{labelmonth}{3}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The American Political Science Review}
+      \field{month}{3}
+      \field{number}{1}
+      \field{title}{Reviewed Work: The Silent Revolution: Changing Values and Political Styles Among Western Publics by Ronald Inglehart}
+      \field{volume}{73}
+      \field{year}{1979}
+      \field{pages}{284\bibrangedash 286}
+      \range{pages}{3}
+      \verb{url}
+      \verb https://www.jstor.org/stable/pdf/1954818.pdf
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Kitschelt95}{book}{}
+      \name{author}{1}{}{%
+        {{hash=0335f7144abcfd700d4931c56a1120c0}{%
+           family={Kitschelt},
+           family_i={K\bibinitperiod},
+           given={Herbert},
+           given_i={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Michigan}%
+      }
+      \list{publisher}{1}{%
+        {University of Michigan Press}%
+      }
+      \strng{namehash}{0335f7144abcfd700d4931c56a1120c0}
+      \strng{fullhash}{0335f7144abcfd700d4931c56a1120c0}
+      \field{sortinit}{K}
+      \field{sortinithash}{a7d5b3aec5a0890aae7baf85a209abfc}
+      \field{labelyear}{1995}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{subtitle}{A Comparative Analysis}
+      \field{title}{The Radical Right in Western Europe}
+      \field{year}{1995}
+      \keyw{NAP}
+    \endentry
+    \entry{LeBras16}{book}{}
+      \name{author}{1}{}{%
+        {{hash=1295d955df97a0bd7764c718a67a5b59}{%
+           family={Le\bibnamedelima Bras},
+           family_i={L\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Hervé},
+           given_i={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Chambray-lès-Tours}%
+      }
+      \list{publisher}{1}{%
+        {Éditions du Seuil et La République des idées}%
+      }
+      \strng{namehash}{1295d955df97a0bd7764c718a67a5b59}
+      \strng{fullhash}{1295d955df97a0bd7764c718a67a5b59}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2016}
+      \field{labelmonth}{03}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-2-02-130028-4}
+      \field{month}{03}
+      \field{subtitle}{Tripartisme contre démocracie}
+      \field{title}{Le nouvel ordre électoral}
+      \field{year}{2016}
+      \keyw{FN}
+    \endentry
+    \entry{LeBras15}{book}{}
+      \name{author}{1}{}{%
+        {{hash=1295d955df97a0bd7764c718a67a5b59}{%
+           family={Le\bibnamedelima Bras},
+           family_i={L\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Hervé},
+           given_i={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {París}%
+      }
+      \list{publisher}{1}{%
+        {Éditions Autrement}%
+      }
+      \strng{namehash}{1295d955df97a0bd7764c718a67a5b59}
+      \strng{fullhash}{1295d955df97a0bd7764c718a67a5b59}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2015}
+      \field{labelmonth}{10}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-2-7467-4126-3}
+      \field{month}{10}
+      \field{title}{Le Pari du FN}
+      \field{year}{2015}
+      \keyw{FN}
+    \endentry
+    \entry{LePen16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=7d79c8ba7ac64411960e31328c876f96}{%
+           family={{Le Monde}},
+           family_i={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{7d79c8ba7ac64411960e31328c876f96}
+      \strng{fullhash}{7d79c8ba7ac64411960e31328c876f96}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2016}
+      \field{labelmonth}{11}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{Marine Le Pen prône la fin de l’éducation gratuite pour les enfants étrangers}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.lemonde.fr/election-presidentielle-2017/article/2016/12/08/marine-le-pen-prone-la-fin-de-l-education-gratuite-pour-les-enfants-etrangers_5045648_4854003.html
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{LeParisien13}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=91b6dad910764eb699c0f9d1b5f7897b}{%
+           family={{Le Parisien}},
+           family_i={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{91b6dad910764eb699c0f9d1b5f7897b}
+      \strng{fullhash}{91b6dad910764eb699c0f9d1b5f7897b}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2013}
+      \field{labelmonth}{10}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{note}{Consultado el 30 de octubre de 2017}
+      \field{title}{Marine Le Pen : les origines du FN ne sont «absolument pas» à l'extrême droite}
+      \field{year}{2013}
+      \verb{url}
+      \verb http://www.leparisien.fr/politique/marine-le-pen-les-origines-du-fn-ne-sont-absolument-pas-a-l-extreme-droite-03-10-2013-3192605.php
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{ViePublique01}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=0773680d3494b658d2c872d59899e0a7}{%
+           family={Le\bibnamedelima Pen},
+           family_i={L\bibinitperiod\bibinitdelim P\bibinitperiod},
+           given={Jean\bibnamedelima Marie},
+           given_i={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{0773680d3494b658d2c872d59899e0a7}
+      \strng{fullhash}{0773680d3494b658d2c872d59899e0a7}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2001}
+      \field{labelmonth}{09}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{09}
+      \field{title}{Déclaration de M. Jean-Marie Le Pen, président du Front national et candidat à l'élection présidentielle de 2002 sur le terrorisme, l'identité nationale, l'immigration, le manque de sécurité, son programme électoral pour l'élection présidentielle de 2002}
+      \field{year}{2001}
+      \verb{url}
+      \verb http://discours.vie-publique.fr/notices/013003238.html
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Lee12}{book}{}
+      \name{author}{1}{}{%
+        {{hash=c8ab6c518b98e7befa10c060df74c3d9}{%
+           family={Lee},
+           family_i={L\bibinitperiod},
+           given={Peter\bibnamedelima M.},
+           given_i={P\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Reino Unido}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons Ltd.}%
+      }
+      \strng{namehash}{c8ab6c518b98e7befa10c060df74c3d9}
+      \strng{fullhash}{c8ab6c518b98e7befa10c060df74c3d9}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2012}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{4}
+      \field{isbn}{978-1-118-33257-3}
+      \field{pagetotal}{462}
+      \field{subtitle}{an introduction}
+      \field{title}{Bayesian statistics}
+      \field{year}{2012}
+      \keyw{Bayes}
+    \endentry
+    \entry{Leprince16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=bd8316990604dc93d4e666ca90d25549}{%
+           family={Leprince},
+           family_i={L\bibinitperiod},
+           given={Chloé},
+           given_i={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{bd8316990604dc93d4e666ca90d25549}
+      \strng{fullhash}{bd8316990604dc93d4e666ca90d25549}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2016}
+      \field{labelmonth}{10}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{title}{``Establishment'', une béquille lexicale populiste de Jean-Marie Le Pen à Donald Trump}
+      \field{year}{2016}
+      \verb{url}
+      \verb https://www.franceculture.fr/emissions/le-mot-de-la-semaine/establishment-une-bequille-lexicale-populiste-de-jean-marie-le-pen
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{LesEchos99}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=b5b83959832d7217146d3bf141225395}{%
+           family={{Les Echos}},
+           family_i={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{b5b83959832d7217146d3bf141225395}
+      \strng{fullhash}{b5b83959832d7217146d3bf141225395}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{1999}
+      \field{labelmonth}{11}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{note}{Consultado el 11 de noviembre de 2017}
+      \field{title}{La condamnation de Le Pen à un an d'inéligibilité confirmée}
+      \field{year}{1999}
+      \verb{url}
+      \verb https://www.lesechos.fr/24/11/1999/LesEchos/18032-181-ECH_la-condamnation-de-le-pen-a-un-an-d-ineligibilite-confirmee.htm
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Fascista16}{misc}{}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2016}
+      \field{labelmonth}{10}
+      \field{datelabelsource}{}
+      \field{labeltitlesource}{title}
+      \field{issuetitle}{Fascista Americano}
+      \field{month}{10}
+      \field{number}{214}
+      \field{title}{Letras Libres}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.letraslibres.com/mexico/revista/fascista-americano
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Linz90}{article}{}
+      \name{author}{1}{}{%
+        {{hash=913563dc8e949e2dc478fadaaec7351e}{%
+           family={Linz},
+           family_i={L\bibinitperiod},
+           given={Juan\bibnamedelima J.},
+           given_i={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {The Johns Hopkins University Press}%
+      }
+      \strng{namehash}{913563dc8e949e2dc478fadaaec7351e}
+      \strng{fullhash}{913563dc8e949e2dc478fadaaec7351e}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{1990}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{1}
+      \field{journaltitle}{Journal of Democracy}
+      \field{title}{The Perils of Presidentialism}
+      \field{volume}{1}
+      \field{year}{1990}
+      \field{pages}{51\bibrangedash 69}
+      \range{pages}{19}
+      \keyw{Otros}
+    \endentry
+    \entry{LObs07}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=e79a34899283bac5d403d775d18b977f}{%
+           family={{L'Obs}},
+           family_i={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{e79a34899283bac5d403d775d18b977f}
+      \strng{fullhash}{e79a34899283bac5d403d775d18b977f}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2007}
+      \field{labelmonth}{08}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{08}
+      \field{note}{Consultado el 26 de marzo de 2018}
+      \field{title}{Le programme de Jean-Marie Le Pen}
+      \field{year}{2007}
+      \verb{url}
+      \verb https://www.nouvelobs.com/politique/elections-2007/20070224.OBS4060/le-programme-de-jean-marie-le-pen.html
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Parisien16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=034dcb7fa58050d1d19a2edf7fd764e9}{%
+           family={Lombart},
+           family_i={L\bibinitperiod},
+           given={Gaël},
+           given_i={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{034dcb7fa58050d1d19a2edf7fd764e9}
+      \strng{fullhash}{034dcb7fa58050d1d19a2edf7fd764e9}
+      \field{sortinit}{L}
+      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
+      \field{labelyear}{2016}
+      \field{labelmonth}{12}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{note}{Consultado el 7 de enero de 2018}
+      \field{title}{Présidentielle : et si deux candidats arrivaient à égalité...}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.leparisien.fr/elections/presidentielle/pratique/presidentielle-et-si-deux-candidats-arrivaient-a-egalite-28-12-2016-6502290.php
+      \endverb
+      \keyw{Generales}
+    \endentry
+    \entry{Mammone12}{incollection}{}
+      \name{author}{3}{}{%
+        {{hash=4d0c5c8e4b6e708074a48cd4991f1c82}{%
+           family={Mammone},
+           family_i={M\bibinitperiod},
+           given={Andrea},
+           given_i={A\bibinitperiod}}}%
+        {{hash=759980610c64625a5f8fb1d05e1742b3}{%
+           family={Godin},
+           family_i={G\bibinitperiod},
+           given={Emmanuel},
+           given_i={E\bibinitperiod}}}%
+        {{hash=120ed75797abe5b7e0dc6feaa97daa70}{%
+           family={Jenkins},
+           family_i={J\bibinitperiod},
+           given={Brian},
+           given_i={B\bibinitperiod}}}%
+      }
+      \name{editor}{3}{}{%
+        {{hash=4d0c5c8e4b6e708074a48cd4991f1c82}{%
+           family={Mammone},
+           family_i={M\bibinitperiod},
+           given={Andrea},
+           given_i={A\bibinitperiod}}}%
+        {{hash=759980610c64625a5f8fb1d05e1742b3}{%
+           family={Godin},
+           family_i={G\bibinitperiod},
+           given={Emmanuel},
+           given_i={E\bibinitperiod}}}%
+        {{hash=120ed75797abe5b7e0dc6feaa97daa70}{%
+           family={Jenkins},
+           family_i={J\bibinitperiod},
+           given={Brian},
+           given_i={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Routledge}%
+      }
+      \strng{namehash}{5095bc35115c9b1accd074570bd86f45}
+      \strng{fullhash}{5095bc35115c9b1accd074570bd86f45}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2012}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Mapping the Extreme Right in Contemporary Europe: From local to transnational}
+      \field{title}{Introduction: mapping the `right of the mainstream right' in contemporary Europe}
+      \field{year}{2012}
+      \field{pages}{1\bibrangedash 14}
+      \range{pages}{14}
+      \keyw{NAP}
+    \endentry
+    \entry{Marin17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=bf3fea56cf4a4c335827506721ded9b0}{%
+           family={Marin},
+           family_i={M\bibinitperiod},
+           given={Grégory},
+           given_i={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{bf3fea56cf4a4c335827506721ded9b0}
+      \strng{fullhash}{bf3fea56cf4a4c335827506721ded9b0}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2017}
+      \field{labelmonth}{6}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{note}{Entrevista a Sylvain Crépon. Consultado el 12 de noviembre de 2017.}
+      \field{title}{Front national. Sylvain Crépon: «Les cadres du parti le disent, leur avenir est à droite»}
+      \field{year}{2017}
+      \verb{url}
+      \verb https://www.humanite.fr/front-national-sylvain-crepon-les-cadres-du-parti-le-disent-leur-avenir-est-droite-637922
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Marrani09}{article}{}
+      \name{author}{1}{}{%
+        {{hash=c2daa3a144fb589743f3c20b4e9ee652}{%
+           family={Marrani},
+           family_i={M\bibinitperiod},
+           given={David},
+           given_i={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{c2daa3a144fb589743f3c20b4e9ee652}
+      \strng{fullhash}{c2daa3a144fb589743f3c20b4e9ee652}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2009}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{2}
+      \field{journaltitle}{Constitutional Forum}
+      \field{subtitle}{the Recent Constitutional Evolution of the Two Headed Executive}
+      \field{title}{Semi-Presidentialism à la française}
+      \field{volume}{18}
+      \field{year}{2009}
+      \field{pages}{55\bibrangedash 67}
+      \range{pages}{13}
+      \keyw{Otros}
+    \endentry
+    \entry{Mendoza11}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=ef597d3901b5d92b8296bb1f3f1df07c}{%
+           family={Mendoza},
+           family_i={M\bibinitperiod},
+           given={Manuel},
+           given_i={M\bibinitperiod}}}%
+        {{hash=dfbe2de83b4eacd1ed07f7b768e5c6e0}{%
+           family={Regueiro},
+           family_i={R\bibinitperiod},
+           given={Pedro},
+           given_i={P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Ciudad de {M}éxico}%
+      }
+      \list{organization}{1}{%
+        {Instituto {T}ecnológico {A}utónomo de {M}éxico ({ITAM})}%
+      }
+      \strng{namehash}{387c6e4b7ed234b6a7372f36d2608acb}
+      \strng{fullhash}{387c6e4b7ed234b6a7372f36d2608acb}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2011}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Departamento {A}cadémico de {E}stadística}
+      \field{title}{Estadística Bayesiana}
+      \field{year}{2011}
+      \keyw{Bayes}
+    \endentry
+    \entry{LeMonde12}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=80a0158c1baccdc78ffb488dfdb1d082}{%
+           family={Mestre},
+           family_i={M\bibinitperiod},
+           given={Abel},
+           given_i={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{80a0158c1baccdc78ffb488dfdb1d082}
+      \strng{fullhash}{80a0158c1baccdc78ffb488dfdb1d082}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2012}
+      \field{labelmonth}{09}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{09}
+      \field{note}{Consultado el 26 de marzo de 2018}
+      \field{title}{Le FN n'est plus le même, mais a-t-il vraiment changé?}
+      \field{year}{2012}
+      \verb{url}
+      \verb http://www.lemonde.fr/culture/article/2012/09/20/le-front-national-n-est-plus-le-meme-mais-a-t-il-vraiment-change_1763234_3246.html
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Milanovic16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=d7b0b8fe9eb7824e4c743ba7c743db00}{%
+           family={Milanovic},
+           family_i={M\bibinitperiod},
+           given={Branko},
+           given_i={B\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {VOX CEPR}%
+      }
+      \strng{namehash}{d7b0b8fe9eb7824e4c743ba7c743db00}
+      \strng{fullhash}{d7b0b8fe9eb7824e4c743ba7c743db00}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2016}
+      \field{labelmonth}{7}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{title}{The greatest reshuffle of individual incomes since the Industrial Revolution}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://voxeu.org/article/greatest-reshuffle-individual-incomes-industrial-revolution
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{LegisFr07}{online}{}
+      \name{author}{1}{}{%
+        {{hash=53aca1121d75b211c005b083b800319f}{%
+           family={{Ministère de l'Intérieur}},
+           family_i={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{53aca1121d75b211c005b083b800319f}
+      \strng{fullhash}{53aca1121d75b211c005b083b800319f}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{extrayear}{1}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Election législatives 2007 – Résultats par bureaux de vote}
+      \field{year}{2015}
+      \verb{url}
+      \verb https://www.data.gouv.fr/fr/datasets/elections-legislatives-2007-resultats-par-bureaux-de-vote/
+      \endverb
+      \keyw{Datos}
+    \endentry
+    \entry{LegisFr12}{online}{}
+      \name{author}{1}{}{%
+        {{hash=53aca1121d75b211c005b083b800319f}{%
+           family={{Ministère de l'Intérieur}},
+           family_i={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{53aca1121d75b211c005b083b800319f}
+      \strng{fullhash}{53aca1121d75b211c005b083b800319f}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{extrayear}{2}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Election législatives 2012 – Résultats par bureaux de vote}
+      \field{year}{2015}
+      \verb{url}
+      \verb https://www.data.gouv.fr/fr/datasets/elections-legislatives-2012-resultats-par-bureaux-de-vote/
+      \endverb
+      \keyw{Datos}
+    \endentry
+    \entry{PresFr07}{online}{}
+      \name{author}{1}{}{%
+        {{hash=53aca1121d75b211c005b083b800319f}{%
+           family={{Ministère de l'Intérieur}},
+           family_i={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{53aca1121d75b211c005b083b800319f}
+      \strng{fullhash}{53aca1121d75b211c005b083b800319f}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{extrayear}{3}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Election présidentielle 2007 – Résultats par bureaux de vote}
+      \field{year}{2015}
+      \verb{url}
+      \verb https://www.data.gouv.fr/fr/datasets/election-presidentielle-2007-resultats-par-bureaux-de-vote/
+      \endverb
+      \keyw{Datos}
+    \endentry
+    \entry{PresFr12}{online}{}
+      \name{author}{1}{}{%
+        {{hash=53aca1121d75b211c005b083b800319f}{%
+           family={{Ministère de l'Intérieur}},
+           family_i={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{53aca1121d75b211c005b083b800319f}
+      \strng{fullhash}{53aca1121d75b211c005b083b800319f}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{extrayear}{4}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Election présidentielle 2012 – Résultats par bureaux de vote}
+      \field{year}{2015}
+      \verb{url}
+      \verb https://www.data.gouv.fr/fr/datasets/election-presidentielle-2012-resultats-par-bureaux-de-vote-1/
+      \endverb
+      \keyw{Datos}
+    \endentry
+    \entry{InterieurElecc}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=53aca1121d75b211c005b083b800319f}{%
+           family={{Ministère de l'Intérieur}},
+           family_i={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{53aca1121d75b211c005b083b800319f}
+      \strng{fullhash}{53aca1121d75b211c005b083b800319f}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2011}
+      \field{labelmonth}{9}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{note}{Consultado el 6 de enero de 2018}
+      \field{title}{Les différentes élections}
+      \field{year}{2011}
+      \verb{url}
+      \verb https://www.interieur.gouv.fr/fr/Elections/Les-elections-en-France/Les-modalites-d-elections/Les-differentes-elections
+      \endverb
+      \keyw{Generales}
+    \endentry
+    \entry{Moore66}{inbook}{}
+      \name{author}{1}{}{%
+        {{hash=aa92bfeeaf769d80a0ff958c5eea024e}{%
+           family={Moore},
+           family_i={M\bibinitperiod},
+           given={Barrington},
+           given_i={B\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston}%
+      }
+      \list{publisher}{1}{%
+        {Beacon Press}%
+      }
+      \strng{namehash}{aa92bfeeaf769d80a0ff958c5eea024e}
+      \strng{fullhash}{aa92bfeeaf769d80a0ff958c5eea024e}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{1966}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{chapter}{Revolution from Above and Fascism}
+      \field{subtitle}{Lord and Peasant in the Making of the Modern World}
+      \field{title}{Social origins of dictatorship and democracy}
+      \field{year}{1966}
+      \field{pages}{433\bibrangedash 452}
+      \range{pages}{20}
+      \keyw{NAP}
+    \endentry
+    \entry{Mudde17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=84d395c33672f5bfb8ecdc038c3ade17}{%
+           family={Mudde},
+           family_i={M\bibinitperiod},
+           given={Cas},
+           given_i={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{84d395c33672f5bfb8ecdc038c3ade17}
+      \strng{fullhash}{84d395c33672f5bfb8ecdc038c3ade17}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2017}
+      \field{labelmonth}{12}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{title}{Brexit, Trump, and Five (Wrong) Lessons About ‘The Populist Challenge’}
+      \field{year}{2017}
+      \verb{url}
+      \verb https://www.huffingtonpost.com/cas-mudde/brexit-trump-and-five-wro_b_12801832.html
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Mudde07a}{inbook}{}
+      \name{author}{1}{}{%
+        {{hash=84d395c33672f5bfb8ecdc038c3ade17}{%
+           family={Mudde},
+           family_i={M\bibinitperiod},
+           given={Cas},
+           given_i={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{84d395c33672f5bfb8ecdc038c3ade17}
+      \strng{fullhash}{84d395c33672f5bfb8ecdc038c3ade17}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{2007}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Populist Radical Right Parties in Europe}
+      \field{chapter}{1}
+      \field{isbn}{978-0-521-61632-4}
+      \field{title}{Constructing a conceptual framework}
+      \field{year}{2007}
+      \field{pages}{11\bibrangedash 31}
+      \range{pages}{21}
+      \keyw{NAP}
+    \endentry
+    \entry{NelderWedderburn72}{article}{}
+      \name{author}{2}{}{%
+        {{hash=2e1841604c4068db6002cdd374976a2f}{%
+           family={Nelder},
+           family_i={N\bibinitperiod},
+           given={J.A.},
+           given_i={J\bibinitperiod}}}%
+        {{hash=315d5ab583ae716fb40d97562a9884d0}{%
+           family={Wedderburn},
+           family_i={W\bibinitperiod},
+           given={R.W.M.},
+           given_i={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley}%
+      }
+      \strng{namehash}{a9920529c464d2dbadeef3d16a52a35a}
+      \strng{fullhash}{a9920529c464d2dbadeef3d16a52a35a}
+      \field{sortinit}{N}
+      \field{sortinithash}{925374ca63e7594de7fafdb83e64d41d}
+      \field{labelyear}{1972}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{3}
+      \field{journaltitle}{Journal of the Royal Statistical Society}
+      \field{title}{Generalized Linear Models}
+      \field{volume}{135}
+      \field{year}{1972}
+      \field{pages}{370\bibrangedash 384}
+      \range{pages}{15}
+      \keyw{Bayes}
+    \endentry
+    \entry{Nieto16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=804eda7e53ed0597c56fbe14930ce274}{%
+           family={Nieto\bibnamedelima Barajas},
+           family_i={N\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Luis\bibnamedelima Enrique},
+           given_i={L\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Ciudad de {M}éxico}%
+      }
+      \list{organization}{1}{%
+        {Instituto {T}ecnológico {A}utónomo de {M}éxico ({ITAM})}%
+      }
+      \strng{namehash}{804eda7e53ed0597c56fbe14930ce274}
+      \strng{fullhash}{804eda7e53ed0597c56fbe14930ce274}
+      \field{sortinit}{N}
+      \field{sortinithash}{925374ca63e7594de7fafdb83e64d41d}
+      \field{labelyear}{2016}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Maestría en Ciencia de Datos}
+      \field{subtitle}{con enfoque Bayesiano}
+      \field{title}{Regresión Avanzada}
+      \field{year}{2016}
+      \keyw{Bayes}
+    \endentry
+    \entry{Olzak92}{book}{}
+      \name{author}{1}{}{%
+        {{hash=5d030b235b786a77790f1b727e8a0b5e}{%
+           family={Olzac},
+           family_i={O\bibinitperiod},
+           given={Susan},
+           given_i={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Stanford}%
+      }
+      \list{publisher}{1}{%
+        {Stanford University Press}%
+      }
+      \strng{namehash}{5d030b235b786a77790f1b727e8a0b5e}
+      \strng{fullhash}{5d030b235b786a77790f1b727e8a0b5e}
+      \field{sortinit}{O}
+      \field{sortinithash}{7803d2715d5e795e70382b084ab8d00e}
+      \field{labelyear}{1992}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Dynamics of Ethnic Competition and Conflict}
+      \field{year}{1992}
+      \keyw{NAP}
+    \endentry
+    \entry{Petersen02}{book}{}
+      \name{author}{1}{}{%
+        {{hash=c0a597f520aeadc299e3692ce535d222}{%
+           family={Petersen},
+           family_i={P\bibinitperiod},
+           given={Roger\bibnamedelima D.},
+           given_i={R\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Estados Unidos}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{c0a597f520aeadc299e3692ce535d222}
+      \strng{fullhash}{c0a597f520aeadc299e3692ce535d222}
+      \field{sortinit}{P}
+      \field{sortinithash}{c0a4896d0e424f9ca4d7f14f2b3428e7}
+      \field{labelyear}{2002}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780521007740}
+      \field{subtitle}{Fear, {H}atred, and {R}esentment in {T}wentieth-{C}entury {E}astern {E}urope}
+      \field{title}{Understanding {E}thnic Violence}
+      \field{year}{2002}
+      \keyw{NAP}
+    \endentry
+    \entry{Rae16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=edda7efe5d0a6ae2927ace2a840aeeb7}{%
+           family={Rae},
+           family_i={R\bibinitperiod},
+           given={Alasdair},
+           given_i={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{edda7efe5d0a6ae2927ace2a840aeeb7}
+      \strng{fullhash}{edda7efe5d0a6ae2927ace2a840aeeb7}
+      \field{sortinit}{R}
+      \field{sortinithash}{c7387613477035a752d935acfc3e3ea2}
+      \field{labelyear}{2016}
+      \field{labelmonth}{6}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{title}{What can explain Brexit?}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.statsmapsnpix.com/2016/06/what-can-explain-brexit.html
+      \endverb
+      \keyw{NAP}
+      \warn{\item Datamodel: Entry 'Rae16' (referencias_tesis.bib): Invalid format '25' of date field 'date' - ignoring}
+    \endentry
+    \entry{Regueiro12}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=6ce5c769ad1d4e8018f3bc1d791dabf0}{%
+           family={Regueiro\bibnamedelima Martínez},
+           family_i={R\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Pedro},
+           given_i={P\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Instituto {T}ecnológico {A}utónomo de {M}éxico ({ITAM})}%
+      }
+      \list{location}{1}{%
+        {Ciudad de {M}éxico}%
+      }
+      \strng{namehash}{6ce5c769ad1d4e8018f3bc1d791dabf0}
+      \strng{fullhash}{6ce5c769ad1d4e8018f3bc1d791dabf0}
+      \field{sortinit}{R}
+      \field{sortinithash}{c7387613477035a752d935acfc3e3ea2}
+      \field{labelyear}{2012}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{pagetotal}{112}
+      \field{title}{Análisis jerárquico bayesiano del futbol mexicano}
+      \field{type}{Tesis para obtener el grado de {L}icenciado en {M}atemáticas {A}plicadas}
+      \field{year}{2012}
+      \keyw{Bayes}
+    \endentry
+    \entry{Robert07}{book}{}
+      \name{author}{1}{}{%
+        {{hash=6e20960b59a6850b0335bdcc34be9c55}{%
+           family={Robert},
+           family_i={R\bibinitperiod},
+           given={Christian\bibnamedelima P.},
+           given_i={C\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{6e20960b59a6850b0335bdcc34be9c55}
+      \strng{fullhash}{6e20960b59a6850b0335bdcc34be9c55}
+      \field{sortinit}{R}
+      \field{sortinithash}{c7387613477035a752d935acfc3e3ea2}
+      \field{labelyear}{2007}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{isbn}{978-0-387-71598-8}
+      \field{pagetotal}{602}
+      \field{subtitle}{From Decision-Theoretic Foundations to Computational Implementation}
+      \field{title}{The Bayesian Choice}
+      \field{year}{2007}
+      \keyw{Bayes}
+    \endentry
+    \entry{Sewell92}{article}{}
+      \name{author}{1}{}{%
+        {{hash=d14449296bcdeb19a0cd4b35e5eefa90}{%
+           family={Sewell\bibnamedelima Jr.},
+           family_i={S\bibinitperiod\bibinitdelim J\bibinitperiod},
+           given={William\bibnamedelima H},
+           given_i={W\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{d14449296bcdeb19a0cd4b35e5eefa90}
+      \strng{fullhash}{d14449296bcdeb19a0cd4b35e5eefa90}
+      \field{sortinit}{S}
+      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{labelyear}{1992}
+      \field{labelmonth}{7}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Journal of Sociology}
+      \field{month}{7}
+      \field{number}{1}
+      \field{title}{A Theory of Structure: Duality, Agency, and Transformation}
+      \field{volume}{98}
+      \field{year}{1992}
+      \field{pages}{1\bibrangedash 29}
+      \range{pages}{29}
+      \verb{url}
+      \verb http://www.jstor.org/stable/pdf/2781191.pdf
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Sides16}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=5d7c023d30efedf1cab9d2adcc87f438}{%
+           family={Sides},
+           family_i={S\bibinitperiod},
+           given={John},
+           given_i={J\bibinitperiod}}}%
+        {{hash=d51bdd0b6530912d77ebb8d6cfcdd944}{%
+           family={Tesler},
+           family_i={T\bibinitperiod},
+           given={Michael},
+           given_i={M\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {The Washington Post}%
+      }
+      \strng{namehash}{d452e40a854ad5829d54f44fdfc1dad7}
+      \strng{fullhash}{d452e40a854ad5829d54f44fdfc1dad7}
+      \field{sortinit}{S}
+      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{labelyear}{2016}
+      \field{labelmonth}{3}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{3}
+      \field{title}{How political science helps explain the rise of Trump (part 3): It’s the economy, stupid}
+      \field{year}{2016}
+      \verb{url}
+      \verb https://www.washingtonpost.com/news/monkey-cage/wp/2016/03/04/how-political-science-helps-explain-the-rise-of-trump-part-3-its-the-economy-stupid/?utm_term=.dd546463a844
+      \endverb
+      \keyw{NAP}
+      \warn{\item Datamodel: Entry 'Sides16' (referencias_tesis.bib): Invalid format '4' of date field 'date' - ignoring}
+    \endentry
+    \entry{Silver16}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6a14a9b6dd57352a91da398f00bb6c01}{%
+           family={Silver},
+           family_i={S\bibinitperiod},
+           given={Nate},
+           given_i={N\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {FiveThirtyEight}%
+      }
+      \strng{namehash}{6a14a9b6dd57352a91da398f00bb6c01}
+      \strng{fullhash}{6a14a9b6dd57352a91da398f00bb6c01}
+      \field{sortinit}{S}
+      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{labelyear}{2016}
+      \field{labelmonth}{11}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{Education, Not Income, Predicted Who Would Vote For Trump}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://fivethirtyeight.com/features/education-not-income-predicted-who-would-vote-for-trump/
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Nozer17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=f8da2be6e6b79ee6d39f6724a608ff49}{%
+           family={Singpurwalla},
+           family_i={S\bibinitperiod},
+           given={Nozer\bibnamedelima D.},
+           given_i={N\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Guanajuato}%
+      }
+      \list{organization}{1}{%
+        {Centro de Investigación en Matemáticas ({CIMAT})}%
+      }
+      \strng{namehash}{f8da2be6e6b79ee6d39f6724a608ff49}
+      \strng{fullhash}{f8da2be6e6b79ee6d39f6724a608ff49}
+      \field{sortinit}{S}
+      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{labelyear}{2017}
+      \field{labelmonth}{06}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{06}
+      \field{note}{Conferencia magistral dentro del International Workshop on Perspectives on High Dimensional Data VII (HDDA VII)}
+      \field{title}{Subjective Probability: Its Axioms and Acrobatics}
+      \field{year}{2017}
+      \verb{url}
+      \verb http://hddavii.eventos.cimat.mx/sites/hddavii/files/Nozer_Singpurwalla.pdf
+      \endverb
+      \keyw{Bayes}
+    \endentry
+    \entry{Skocpol79}{article}{}
+      \name{author}{1}{}{%
+        {{hash=a6c7d3389d5ad65fa5d2c9a5d7c657a8}{%
+           family={Skocpol},
+           family_i={S\bibinitperiod},
+           given={Theda},
+           given_i={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{a6c7d3389d5ad65fa5d2c9a5d7c657a8}
+      \strng{fullhash}{a6c7d3389d5ad65fa5d2c9a5d7c657a8}
+      \field{sortinit}{S}
+      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{labelyear}{1979}
+      \field{labelmonth}{1}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Theory and Society}
+      \field{month}{1}
+      \field{note}{Edición especial doble sobre el Estado y la Revolución}
+      \field{number}{1}
+      \field{title}{Old Regimes and Revolutionary Crises in France, Russia, and China}
+      \field{volume}{7}
+      \field{year}{1979}
+      \field{pages}{7\bibrangedash 95}
+      \range{pages}{89}
+      \verb{url}
+      \verb http://www.jstor.org/stable/656999?origin=JSTOR-pdf
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Sputnik17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=d8cbab03b020e685f762d8bcbfef1c62}{%
+           family={Sputnik},
+           family_i={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{d8cbab03b020e685f762d8bcbfef1c62}
+      \strng{fullhash}{d8cbab03b020e685f762d8bcbfef1c62}
+      \field{sortinit}{S}
+      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{labelyear}{2017}
+      \field{labelmonth}{10}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{note}{Consultado el 30 de octubre de 2017}
+      \field{title}{Austria's FPO Leader: 'We Are Not Extreme Right Party'}
+      \field{year}{2017}
+      \verb{url}
+      \verb https://sputniknews.com/europe/201710251058522359-austria-strache-fpo-ovp-coalition/
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Stockemer17}{book}{}
+      \name{author}{1}{}{%
+        {{hash=c13f5bf1df87ae03e0ab84c504b18ad3}{%
+           family={Stockemer},
+           family_i={S\bibinitperiod},
+           given={Daniel},
+           given_i={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{c13f5bf1df87ae03e0ab84c504b18ad3}
+      \strng{fullhash}{c13f5bf1df87ae03e0ab84c504b18ad3}
+      \field{sortinit}{S}
+      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{labelyear}{2017}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-319-49639-9}
+      \field{subtitle}{Continuity and Change Under Jean-Marie Le Pen and Marine Le Pen}
+      \field{title}{The Front National in France}
+      \field{year}{2017}
+      \keyw{FN}
+    \endentry
+    \entry{Tesler16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=d51bdd0b6530912d77ebb8d6cfcdd944}{%
+           family={Tesler},
+           family_i={T\bibinitperiod},
+           given={Michael},
+           given_i={M\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {The Washington Post}%
+      }
+      \strng{namehash}{d51bdd0b6530912d77ebb8d6cfcdd944}
+      \strng{fullhash}{d51bdd0b6530912d77ebb8d6cfcdd944}
+      \field{sortinit}{T}
+      \field{sortinithash}{423d138a005a533b47e6475e39378bf2}
+      \field{labelyear}{2016}
+      \field{labelmonth}{8}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{8}
+      \field{title}{Economic anxiety isn’t driving racial resentment. Racial resentment is driving economic anxiety.}
+      \field{year}{2016}
+      \verb{url}
+      \verb https://www.washingtonpost.com/news/monkey-cage/wp/2016/08/22/economic-anxiety-isnt-driving-racial-resentment-racial-resentment-is-driving-economic-anxiety/?utm_term=.b93b1dde31b4
+      \endverb
+      \keyw{NAP}
+      \warn{\item Datamodel: Entry 'Tesler16' (referencias_tesis.bib): Invalid format '22' of date field 'date' - ignoring}
+    \endentry
+    \entry{Uribe16}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=6724efce880e78129c5334770a5e83d7}{%
+           family={Uribe\bibnamedelima Coughlan},
+           family_i={U\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={Alexandra},
+           given_i={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{6724efce880e78129c5334770a5e83d7}
+      \strng{fullhash}{6724efce880e78129c5334770a5e83d7}
+      \field{sortinit}{U}
+      \field{sortinithash}{8145509bd2718876fc77d31fd2cde117}
+      \field{labelyear}{2016}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Curso del Departamento de Ciencia Política del ITAM para el semestre de otoño.}
+      \field{title}{Política Comparada}
+      \field{year}{2016}
+      \keyw{Generales}
+    \endentry
+    \entry{Usi14}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=5929be11caad88452be950d061b24937}{%
+           family={Usi\bibnamedelima López},
+           family_i={U\bibinitperiod\bibinitdelim L\bibinitperiod},
+           given={María\bibnamedelima Andrea},
+           given_i={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Instituto {T}ecnológico {A}utónomo de {M}éxico ({ITAM})}%
+      }
+      \list{location}{1}{%
+        {Ciudad de {M}éxico}%
+      }
+      \strng{namehash}{5929be11caad88452be950d061b24937}
+      \strng{fullhash}{5929be11caad88452be950d061b24937}
+      \field{sortinit}{U}
+      \field{sortinithash}{8145509bd2718876fc77d31fd2cde117}
+      \field{labelyear}{2014}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{pagetotal}{214}
+      \field{title}{Análisis bayesiano de la influenza en México}
+      \field{type}{Tesis para obtener el grado de {L}icenciada en {M}atemáticas {A}plicadas}
+      \field{year}{2014}
+      \keyw{Bayes}
+    \endentry
+    \entry{Valentino13}{article}{}
+      \name{author}{3}{}{%
+        {{hash=4d8c182736f2637e2653b2bad4f87f13}{%
+           family={Valentino},
+           family_i={V\bibinitperiod},
+           given={Nicholas},
+           given_i={N\bibinitperiod}}}%
+        {{hash=2faef5f6ed1dac5ed2016a9e465fb9c5}{%
+           family={Brader},
+           family_i={B\bibinitperiod},
+           given={Ted},
+           given_i={T\bibinitperiod}}}%
+        {{hash=3b1f5efc75f724aba28117807b8633b8}{%
+           family={Jardina},
+           family_i={J\bibinitperiod},
+           given={Ashley},
+           given_i={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{e77623bc318fce856748bebe4137ee72}
+      \strng{fullhash}{e77623bc318fce856748bebe4137ee72}
+      \field{sortinit}{V}
+      \field{sortinithash}{d18f5ce25ce0b5ca7f924e3f6c04870e}
+      \field{labelyear}{2013}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Political Psychology}
+      \field{number}{2}
+      \field{title}{Immigration Opposition Among U.S. Whites: General Ethnocentrism or Media Priming of Attitudes About Latinos?}
+      \field{volume}{34}
+      \field{year}{2013}
+      \field{pages}{149\bibrangedash 166}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1111/j.1467-9221.2012.00928.x
+      \endverb
+      \keyw{NAP}
+    \endentry
+    \entry{Veser99}{article}{}
+      \name{author}{1}{}{%
+        {{hash=62f18a7fe4946275bb51269762f67d2d}{%
+           family={Veser},
+           family_i={V\bibinitperiod},
+           given={Ernst},
+           given_i={E\bibinitperiod}}}%
+      }
+      \list{publisher}{2}{%
+        {Research Center for Humanities}%
+        {Social Sciences}%
+      }
+      \strng{namehash}{62f18a7fe4946275bb51269762f67d2d}
+      \strng{fullhash}{62f18a7fe4946275bb51269762f67d2d}
+      \field{sortinit}{V}
+      \field{sortinithash}{d18f5ce25ce0b5ca7f924e3f6c04870e}
+      \field{labelyear}{1999}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{1}
+      \field{journaltitle}{Journal of Social Sciences and Philosphy}
+      \field{subtitle}{A new political system model}
+      \field{title}{Semi-presidentialism-Duverger's Concept}
+      \field{volume}{11}
+      \field{year}{1999}
+      \field{pages}{39\bibrangedash 60}
+      \range{pages}{22}
+      \keyw{Otros}
+    \endentry
+    \entry{ViePublique}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=27a714a4c14daca0eded3e3a1b3bc58f}{%
+           family={{Vie Publique}},
+           family_i={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{27a714a4c14daca0eded3e3a1b3bc58f}
+      \strng{fullhash}{27a714a4c14daca0eded3e3a1b3bc58f}
+      \field{sortinit}{V}
+      \field{sortinithash}{d18f5ce25ce0b5ca7f924e3f6c04870e}
+      \field{labelyear}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Consultado el 6 de enero de 2018}
+      \field{title}{Le président de la République}
+      \verb{url}
+      \verb http://www.vie-publique.fr/decouverte-institutions/institutions/fonctionnement/president-republique/
+      \endverb
+      \keyw{Generales}
+    \endentry
+    \entry{Williams12}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=c19b93338dbb6a9aed8b3357a41411ce}{%
+           family={Williams},
+           family_i={W\bibinitperiod},
+           given={Michelle\bibnamedelima Hale},
+           given_i={M\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \name{editor}{3}{}{%
+        {{hash=4d0c5c8e4b6e708074a48cd4991f1c82}{%
+           family={Mammone},
+           family_i={M\bibinitperiod},
+           given={Andrea},
+           given_i={A\bibinitperiod}}}%
+        {{hash=759980610c64625a5f8fb1d05e1742b3}{%
+           family={Godin},
+           family_i={G\bibinitperiod},
+           given={Emmanuel},
+           given_i={E\bibinitperiod}}}%
+        {{hash=120ed75797abe5b7e0dc6feaa97daa70}{%
+           family={Jenkins},
+           family_i={J\bibinitperiod},
+           given={Brian},
+           given_i={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Routledge}%
+      }
+      \strng{namehash}{c19b93338dbb6a9aed8b3357a41411ce}
+      \strng{fullhash}{c19b93338dbb6a9aed8b3357a41411ce}
+      \field{sortinit}{W}
+      \field{sortinithash}{99e3ba1b3f78bb6f073e7fa7ac11636b}
+      \field{labelyear}{2012}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Mapping the Extreme Right in Contemporary Europe: From local to transnational}
+      \field{chapter}{16}
+      \field{title}{Downside after the summit: Factors in extreme-right party decline in France and Austria}
+      \field{year}{2012}
+      \field{pages}{254\bibrangedash 269}
+      \range{pages}{16}
+      \keyw{FN}
+    \endentry
+    \entry{Zafimehy17}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=275a4d258ac2743b8a78084088a6950a}{%
+           family={Zafimehy},
+           family_i={Z\bibinitperiod},
+           given={Marie},
+           given_i={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{275a4d258ac2743b8a78084088a6950a}
+      \strng{fullhash}{275a4d258ac2743b8a78084088a6950a}
+      \field{sortinit}{Z}
+      \field{sortinithash}{fdda4caaa6b5fa63e0c081dcb159543a}
+      \field{labelyear}{2017}
+      \field{labelmonth}{9}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{note}{Consultado el 12 de noviembre de 2017.}
+      \field{title}{Florian Philippot quitte le Front National: retour sur un désamour en 6 dates}
+      \field{year}{2017}
+      \verb{url}
+      \verb http://www.rtl.fr/actu/politique/florian-philippot-quitte-le-front-national-retour-sur-un-desamour-en-6-dates-7790176224
+      \endverb
+      \keyw{FN}
+    \endentry
+    \entry{Zepeda15}{article}{}
+      \name{author}{1}{}{%
+        {{hash=9982bef216075ba4ff5da6e3f5e6b40e}{%
+           family={Zepeda\bibnamedelima Herrera},
+           family_i={Z\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Fernando\bibnamedelima Antonio},
+           given_i={F\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ITAM}%
+      }
+      \strng{namehash}{9982bef216075ba4ff5da6e3f5e6b40e}
+      \strng{fullhash}{9982bef216075ba4ff5da6e3f5e6b40e}
+      \field{sortinit}{Z}
+      \field{sortinithash}{fdda4caaa6b5fa63e0c081dcb159543a}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{37}
+      \field{journaltitle}{Laberintos e Infinitos}
+      \field{title}{Sobre la conexión estadística de Gauss y Galton}
+      \field{volume}{2}
+      \field{year}{2015}
+      \field{pages}{26\bibrangedash 30}
+      \range{pages}{5}
+      \keyw{Bayes}
+    \endentry
+  \endsortlist
+  \missing{Carpizo78}
+\endrefsection
+\endinput
+

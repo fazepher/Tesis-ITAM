@@ -1,0 +1,50 @@
+\chapter{Familia exponencial}
+
+En este anexo presento 3 distribuciones que pertenecen a la familia exponencial. Para ello, presento de nueva cuenta definición de la familia exponencial: 
+
+\textbf{Definición \ref{def:Fam_Exp}. Familia Exponencial}\\
+Sea $Y$ una variable aleatoria con función de distribución $p\left(Y|\theta = (\theta_1,\dots,\theta_k)\right)$ tal que 
+\begin{equation*}
+p\left(Y|\theta = (\theta_1,\dots,\theta_k)\right) = a(\theta)b(Y)exp\left\lbrace\sum\limits_{j=1}^k c_j(\theta)d_j(Y)\right\rbrace,
+\end{equation*}
+donde $a, b$ y todas las $c_j$ y $d_j$ son funciones conocidas. Se dice entonces que $Y$ pertenece a la \textbf{familia exponencial}.
+ 
+
+\begin{enumerate}
+
+\item \textbf{Distribución Normal}
+
+\begin{align*}
+Y &\sim N(\mu,\sigma^2) \\
+p(y|\theta = (\mu,\sigma^2)) &=\dfrac{1}{\sqrt{2\pi\sigma^2}}exp\left\lbrace-\dfrac{1}{2\sigma^2}(y-\mu)^2\right\rbrace\\
+& = \dfrac{1}{\sqrt{2\pi\sigma^2}}exp\left\lbrace-\dfrac{y^2-2y\mu+\mu^2}{2\sigma^2}\right\rbrace\\
+& = \dfrac{1}{\sqrt{2\pi\sigma^2}}exp\left\lbrace-\dfrac{\mu^2}{2\sigma^2}\right\rbrace exp\left\lbrace y\dfrac{\mu}{\sigma^2} - y^2\dfrac{1}{\sigma^2}\right\rbrace \\
+\intertext{De aquí podemos ver entonces que:}
+a(\theta = (\mu,\sigma^2)) &= \dfrac{1}{\sqrt{2\pi\sigma^2}}exp\left\lbrace-\dfrac{\mu^2}{2\sigma^2}\right\rbrace & b(y) &= 1 \\
+c_1(\theta = (\mu,\sigma^2)) &= \dfrac{\mu}{\sigma^2} & d_1(y) &= y\\ 
+c_2(\theta = (\mu,\sigma^2)) &= -\dfrac{1}{\sigma^2} & d_2(y) &= y^2\\ 
+\end{align*}
+
+\item \textbf{Distribución Poisson}
+\begin{align*}
+Y &\sim Poi(\lambda) \\
+p(y|\theta = \lambda) &=\dfrac{\lambda^ye^{-\lambda}}{y!}I_{\mathbb{N}}(y) \\
+& = e^{-\lambda}\dfrac{I_{\mathbb{N}}(y)}{y!}exp\left\lbrace y\, ln(\lambda)\right\rbrace 
+\intertext{De aquí podemos ver entonces que:}
+a(\theta = \lambda) &= e^{-\lambda} & b(y) &= \dfrac{I_{\mathbb{N}}(y)}{y!} \\
+c_1(\theta = \lambda) &= ln(\lambda) & d_1(y) &= y\\ 
+\end{align*}
+
+\item \textbf{Distribución Binomial}
+Suponemos que $n$, el número de ensayos Bernoulli, es conocido. 
+\begin{align*}
+Y &\sim Bin(n,p) \\
+p(y|\theta = p) &= {n \choose y} p^y(1-p)^{n-y}I_{\mathbb{N}_n}(y) \\
+& = (1-p)^n {n \choose y} I_{\mathbb{N}_n}(y)\left(\dfrac{p}{1-p}\right)^y \\
+& = (1-p)^n {n \choose y} I_{\mathbb{N}_n}(y) exp\left\lbrace y\,ln\left(\dfrac{p}{1-p}\right)\right\rbrace
+\intertext{De aquí podemos ver entonces que:}
+a(\theta = p) &= (1-p)^n & b(y) &= {n \choose y} I_{\mathbb{N}_n}(y) \\
+c_1(\theta = p) &= ln\left(\dfrac{p}{1-p}\right) & d_1(y) &= y\\ 
+\end{align*}
+
+\end{enumerate}

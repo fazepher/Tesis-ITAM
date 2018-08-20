@@ -1,0 +1,81 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {spanish}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Agradecimientos}{\es@scroman {iii}}{chapter*.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Introducci\IeC {\'o}n}{\es@scroman {vii}}{chapter*.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{I\hspace {1em}Los movimientos NAP y el caso del FN}{1}{part.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}Los movimientos NAP}{2}{chapter.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.1}Definiendo una familia pol\IeC {\'\i }tica}{5}{section.1.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.2}El Front National como movimiento NAP}{8}{section.1.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {2}El FN dentro del sistema pol\IeC {\'\i }tico franc\IeC {\'e}s}{13}{chapter.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.1}Recuento del sistema pol\IeC {\'\i }tico}{13}{section.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.1}Semipresidencialismo franc\IeC {\'e}s}{14}{subsection.2.1.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.2}Divisi\IeC {\'o}n territorial}{18}{subsection.2.1.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.3}Principales elecciones}{21}{subsection.2.1.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.2}Breve historia del Front National}{24}{section.2.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.1}El FN del desierto (1972-1983)}{25}{subsection.2.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.2}El FN Lepenista (1984-2010)}{27}{subsection.2.2.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.3}El FN Marinista (2011-)}{31}{subsection.2.2.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {3}Teor\IeC {\'\i }as sobre el voto NAP}{35}{chapter.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.1}Estructuralismo y Culturalismo}{36}{section.3.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.2}Clivajes y Escolaridad}{38}{section.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.3}La Clase Desplazada por la Globalizaci\IeC {\'o}n}{40}{section.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.4}Teor\IeC {\'\i }as del Conflicto e Inter\IeC {\'e}s econ\IeC {\'o}mico}{42}{section.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{II\hspace {1em}Paradigma estad\IeC {\'\i }stico bayesiano}{45}{part.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {4}La probabilidad no existe}{46}{chapter.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.1}\IeC {\textquestiondown }Probabilidad o probabilidades?}{47}{section.4.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.2}Aprendizaje bayesiano}{51}{section.4.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.3}La \IeC {\'u}nica receta de la inferencia bayesiana}{53}{section.4.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.3.1}Problemas de inferencia bayesiana}{53}{subsection.4.3.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.3.2}La receta}{57}{subsection.4.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.4}Distribuciones iniciales}{58}{section.4.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.1}Distribuciones iniciales no informativas}{61}{subsection.4.4.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {5}Modelos de Regresi\IeC {\'o}n Bayesianos}{69}{chapter.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.1}Regresi\IeC {\'o}n lineal}{70}{section.5.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.1.1}An\IeC {\'a}lisis bayesiano del modelo lineal normal}{73}{subsection.5.1.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.2}Regresi\IeC {\'o}n Log\IeC {\'\i }stica}{82}{section.5.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.1}Modelos lineales generalizados}{83}{subsection.5.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.2}Identificabilidad}{89}{subsection.5.2.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.3}Modelos Jer\IeC {\'a}rquicos}{89}{section.5.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{Anexos}{90}{section.5.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {A}Bases de datos utilizadas}{92}{appendix.Alph1}
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{Referencias}{94}{table.caption.21}
