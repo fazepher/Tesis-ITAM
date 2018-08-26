@@ -53,7 +53,7 @@ Ahora bien, para realizar un análisis bayesiano del modelo requerimos especific
 
 \subsubsection*{Verosimilitud}
 
-Siguiendo a \textcites[Cap. 3]{GP16}[Sec. 4.2 ]{Congdon06}, manipulemos la función de verosimilitud de la normal multivariada de la \textbf{Ecuación \ref{eq:modelo_normal_matricial}} para facilitar la actualización mediante el teorema de Bayes. Observemos que:
+Siguiendo a \textcites[Cap. 3]{GP98}[Sec. 4.2 ]{Congdon06}, manipulemos la función de verosimilitud de la normal multivariada de la \textbf{Ecuación \ref{eq:modelo_normal_matricial}} para facilitar la actualización mediante el teorema de Bayes. Observemos que:
 \begin{align}\label{eq:modelo_normal_prop}
 p(y|\theta) &= \dfrac{1}{\sqrt{(2\pi)|\sigma^2 \mathbb{I}_N|}}exp\left\lbrace -\dfrac{1}{2}(y-X\beta)^T(\sigma^2\mathbb{I}_N)^{-1}(y-X\beta)\right\rbrace \nonumber \\
 p(y|\theta) &\propto (\sigma^2)^{-n/2}exp\left\lbrace -\dfrac{1}{2\sigma^2}(y-X\beta)^T(y-X\beta)\right\rbrace
@@ -129,7 +129,7 @@ La distribución inicial de $\tau$ también ya tiene una forma conocida: es prop
 \end{align}
 Cabe hacer notar que esta distribución inicial conjugada es propia siempre que $a^\star > p $, $r > 0$ y $B_0 = T_0^{-1}$ sea positiva definida.\\ 
 
-Por otro lado, si se buscan distribuciones iniciales más vagas, resulta que también es posible obtener distribuciones mínimo informativas límites de esta conjugada. Por ejemplo, aunque es impropia, la inicial de Jeffreys es de esa forma con los siguientes límites: $a^\star \rightarrow p $, $r \rightarrow 0$ y $B_0 = T_0^{-1} \rightarrow \mathbf{O}$. La \textbf{Ecuación \ref{eq:distr_ng}} se reduce a la siguiente expresión \parencite[14]{GP16}: 
+Por otro lado, si se buscan distribuciones iniciales más vagas, resulta que también es posible obtener distribuciones mínimo informativas límites de esta conjugada. Por ejemplo, aunque es impropia, la inicial de Jeffreys es de esa forma con los siguientes límites: $a^\star \rightarrow p $, $r \rightarrow 0$ y $B_0 = T_0^{-1} \rightarrow \mathbf{O}$. La \textbf{Ecuación \ref{eq:distr_ng}} se reduce a la siguiente expresión \parencite[14]{GP}: 
 \begin{equation} \label{eq:jeffreys_ng}
 p(\theta) = p(\beta,\tau) \propto \tau^{(p-2)/2}
 \end{equation}
@@ -204,7 +204,16 @@ T_1 = X^TX \qquad b1 = b \qquad a_1 = \dfrac{N}{2} \qquad r_1 = \dfrac{y^Ty - b^
 \end{equation*}
 donde la equivalencia del estimador máximo verosímil $\hat{\sigma}^2$ puede verificarse con la \textbf{Ecuación \ref{eq:aux_para_jeffreys_ng}}.\\
 
-Hasta aquí he presentado de manera más o menos general el modelo de regresión más conocido y utilizado, que es el modelo lineal normal. Es claro que esta exposición no agota las características del modelo como podrían ser, por ejemplo, la inferencia sobre $\beta$ basada en su distribución marginal, misma que resulta ser una $t$ de Student \parencite[16]{GP16}. Sin embargo, sí representa un ejemplo más real del aprendizaje bayesiano al tiempo que constituye la base sobre la que se busca construir modelos más generales. 
+\subsection{Problema de multicolinealidad}
+
+Antes de continuar, debo señalar un posible problema cuando uno ajusta modelos de regresión. El estimador máximo verosimil $b=(X^TX)^{-1}X^Ty$ es clave en el desarrollo anterior. Hasta ahora he asumido que es posible calcularlo, aún cuando este no siempre es el caso. El estimador involucra la matriz inversa $(X^TX)^{-1}$, pero no siempre es posible invertir una matriz. Para ello se requiere que todas sus columnas sean lo que en álgebra lineal se conoce como \textit{linealmente independientes}. Est no pasa si hay variables explicativas tales que exista una combinación lineal de ellas que sea igual a $0$ para todos los datos \parencite[68]{GelmanHill06}. Cuando esto sucede se dice que dichas variables son linealmente dependientes o bien que son \textit{colineales}.\\
+
+El caso más sencillo es cuando se utiliza una variable categórica a través de su representación como variables índice dicotómicas. Esto quiere decir que si hay $J$ categorías, podemos representarlas como $J$ variables diferentes, de las cuales $J-1$ son iguales a $0$ y solamente hay un $1$ en la correspondiente a la categoría de la observación. Así, la suma de las $J$ variables índice siempre es igual a $1$. El problema se materializa cuando consideramos que el intercepto en una regresión es equivalente a una variable explicativa ficticia igual a $1$, por lo que al restarle la suma de las $J$ variables dicotómicas se obtiene una combinación lineal de variables explicativas igual a $0$ para todos los datos, i.e. dependencia lineal. Una forma de evitar el problema es excluyendo el término del intercepto en la regresión. Sin embargo, si existe una segunda variable categórica entonces el problema se repite. Para resolverlo, entonces, se tienen que incorporar restricciones. Una de las más frecuentes es la llamada restricción de esquina \parencite[63]{Regueiro12}. Esta consiste en obligar a uno de los coeficientes de las categorías a que tome el valor de $0$, lo que equivale a excluir una de las $J$ categorías y solo incorporar $J-1$ variables dicotómicas. Así, si existen otras variables categóricas, se puede proceder de la misma manera escogiendo, para cada una de ellas, una categoría de referencia para excluir \parencite[68]{GelmanHill06}. Otra solución consiste en imponer una restricción de tipo suma cero. En este caso el valor de uno de los coeficientes se fija como el negativo de la suma del resto de los coeficientes de las variables linealmente dependientes: $\beta_j=-\sum\limits_{k\neq j}\beta_k$. Esta restricción tiene como consecuencia que los efectos de las diferentes categorías no pueden ser todos positivos o todos negativos \parencite[62]{Usi14}.\\
+
+Ahora bien, en términos estadísticos normalmente se habla del problema de \textit{multicolinealidad} porque incluso si no hay colinealidad exacta, hay ocasiones que los datos están altamente correlacionados y esto tiene como consecuencia que sea difícil invertir la matriz $X^TX$ \parencite[58]{Usi14}. Una manera de atacar este problema es mediante información inicial a través de la precisión $T_0$ en la \textbf{Ecuación \ref{eq:modelo_normal_post_bayes}} \parencite[112]{Congdon06}.\\ 
+
+Hasta aquí he presentado de manera más o menos general el modelo de regresión más conocido y utilizado, que es el modelo lineal normal. Es claro que esta exposición no agota las características del modelo como podrían ser, por ejemplo, la inferencia sobre $\beta$ basada en su distribución marginal, misma que resulta ser una $t$ de Student \parencite[16]{GP98}. Sin embargo, sí representa un ejemplo más real del aprendizaje bayesiano al tiempo que constituye la base sobre la que se busca construir modelos más generales. 
+
 
 \section{Regresión Logística}
 
@@ -318,14 +327,34 @@ ln\left(\dfrac{p_i}{1-p_i}\right) &= ln\left(\dfrac{\mu_i}{n_i}\right)-ln\left(1
 \therefore \quad g(\mu_i)&=ln\left(\dfrac{\mu_i}{n_i-\mu_i}\right)
 \end{align*}
 
-\subsection{Identificabilidad}
+\subsection{Problema de separación}
 
-{\color{Red} ¿DEBERÍA HABLAR DEL PROBLEMA DE SEPARACIÓN PARA PLANTEAR LAS INICIALES? EN LA SECCIÓN ANTERIOR QUIZÁS HABLAR DEL PROBLEMA DE IDENTIFICABILIDAD POR DEPENDENCIA LINEAL DE VARIABLES EXPLICATIVAS}
+{\color{Red} ¿DEBERÍA HABLAR DEL PROBLEMA DE SEPARACIÓN PARA PLANTEAR LAS INICIALES?}
 
 \section{Modelos Jerárquicos}
 
-Hasta ahora, he presentado los modelos de regresión--- ya sean lineales o lineales generalizados--- como un método que permite aproximar cómo cambia el valor esperado de una variable de interés a través de \textit{subpoblaciones} definidas por funciones lineales de unas variables explicativas \parencite[31, énfasis mío.]{GelmanHill06}. En efecto, podemos pensar que diferentes valores de las variables explicativas definen diferentes subpoblaciones o grupos cuyos valores promedio en la variable de interés está determinado por la regresión. A pesar de esta variación, la \textit{forma específica} como cambian estos valores es la misma a través de las subpoblaciones pues está dada por los coeficientes de la regresión.\\ 
+Los modelos de regresión--- ya sean lineales o lineales generalizados--- pueden interpretarse como un método que permite aproximar cómo cambia el valor esperado de una variable de interés a través de subpoblaciones definidas por funciones lineales de unas variables explicativas \parencite[31]{GelmanHill06}. En efecto, podemos pensar que diferentes valores de las variables explicativas definen diferentes subpoblaciones o grupos cuyos valores promedio en la variable de interés está determinado por la regresión. A pesar de esta variabilidad, la \textit{forma específica} como cambian estos valores es la misma a través de las subpoblaciones pues está dada por los mismos coeficientes. De manera informal, podemos decir que las observaciones de todas las subpoblaciones tienen cierta simetría que las hace similares entre sí a nuestros ojos y por eso comparten los mismos parámetros.\\ 
 
-Sin embargo, hay ocasiones en las que uno podría esperar que la relación sea diferente a través de diversas subpoblaciones. Esto es, uno pensaría que diferentes subpoblaciones o grupos podrían tener diferentes valores de los coeficientes. Una primera alternativa a esta situación es ajustar regresiones separadas para cada grupo. 
+No obstante, hay ocasiones en las que dicha simetría es más débil o, mejor dicho, podemos distinguir claramente subpoblaciones o grupos de observaciones como más homogéneas al interior que entre sí. Es decir, la simetría la encontramos para observaciones provenientes de la misma subpoblación y no entre aquellas que pertenezcan a grupos distintos. Por ejemplo, uno esperaría mayor homogeneidad de los resultados en algún examen entre estudiantes de una misma escuela que entre aquellos de diferentes instituciones educativas \parencite{Ortiz12}; de la misma manera, cuando se busca estimar el resultado de una elección con base en encuestas publicadas uno esperaría más diferencias entre encuestas de diferentes casas que entre ejercicios de la misma organización \parencite{Zepeda18}. En la práctica, este razonamiento implica que las distintas subpoblaciones o grupos deberían tener distintos parámetros o coeficientes; por ejemplo, cuando los efectos estacionales en la prevalencia de una enfermedad son distintos para diferentes regiones geográficas \parencite{Usi14}.\\ 
 
+En una situación así, una posibilidad es ajustar regresiones separadas para cada grupo. Sin embargo, el hecho de que se traten de \textit{subpoblaciones} y no de \textit{poblaciones} o fenómenos completamente distintos nos haría pensar que si bien los parámetros son diferentes, deben estar de todas formas relacionados. Más aún, ajustar regresiones separadas a cada grupo tiene el defecto de que cada una de ellas incorpora exclusivamente la información del grupo respectivo, desperdiciando de alguna manera la información sobre el fenómeno o población general que los datos de las otras subpoblaciones pueden aportar.\\
 
+Otra alternativa es mantener una sola regresión incluyendo variables indicadoras de pertenencia al grupo e interpretar el modelo como una regresión con interceptos variables. Sin embargo, este camino puede fallar incluso en situaciones más o menos sencillas. ¿Qué pasa si se tienen variables explicativas a nivel grupo? No es posible incluir al mismo tiempo tanto estas variables como las indicadoras de pertenencia al grupo pues tendríamos un problema de multicolinealidad \parencite[7]{GelmanHill06}. 
+
+Así pues, tenemos dos extremos que pudieran no parecernos ideales. Por un lado, podemos pensar que todos los datos son similares entre sí y, por tanto, ajustamos una sola regresión. A esta opción podemos llamarla \textit{agrupación completa} o \textit{complete-pooling}. El costo de tomar este camino podría ser subestimar la variabilidad originada por las diferentes subpoblaciones debido a que estamos sobresimplificando el modelo asumiendo la simetría total. En el otro extremo, podríamos suponer que cada subpoblación es completamente distinta y se requieren tantas regresiones independientes como grupos hayan. Un modelo así sería \textit{sin agrupación} o de \textit{no-pooling}. En este caso, un riesgo que corremos es que las estimaciones podrían ser demasiado ruidosas o inciertas debido a que estarían ignorando la información sobre la población general que comparten las observaciones de las distintas subpoblaciones o por el simple hecho de que hayan muy pocas observaciones por grupo, por ejemplo. Empero, hay una tercera alternativa conocida como modelos jerárquicos o multinivel y que representan un punto intermedio entre las dos anteriores mediante una \textit{agrupación parcial} de los datos o \textit{partial pooling}. Su objetivo es reconocer las diferencias que existen a través de diferentes subpoblaciones mediante una estructura jerárquica que incorpore la información de todas ellas con relación a la población general. Dicho de otra forma, los modelos jerárquicos buscan evitar subestimar la variabilidad originada por las diferentes subpoblaciones sin dejar de compartir la información que cada una conlleve sobre el fenómeno común. La manera en que lo logran es formalizando y explotando a fondo la noción de esa simetría u homogeneidad en los datos.  
+
+\subsection*{Intercambiabilidad}
+
+Los modelos jerárquicos tienen su piedra angular en el concepto de intercambiabilidad que es la formalización de la idea de simetría de la que hablaba. La definición que sigue está basada en \textcite[Definiciones 2.2 y 2.3]{GP98}. 
+
+\dfn{\textbf{Intercambiabilidad}\\
+\label{def:Intercambiabilidad}
+
+Sean $X_1,\dots,X_n$ una sucesión finita de variables aleatorias. Se dice que son \textbf{finitamente intercambiables} si y solo si, para toda permutación $\pi$ definida sobre el conjunto de índices $\mathbb{N}_n$, su distribución conjunta satisface que 
+\begin{equation*}
+p(X_1 = x_1, \dots, X_n = x_n) = p(X_1 = x_{\pi(1)},\dots, X_n = x_{\pi(n)}).
+\end{equation*}
+La sucesión infinita $X_1,X_2,\dots$ es \textbf{infinitamente intercambiable} si y solo si toda subsucesión finita es finitamente intercambiable. 
+}
+
+Cuando asumimos que unas variables aleatorias son independientes, se cumple la propiedad de intercambiabilidad, pero el concepto de intercambiabilidad es un poco más general.\footnote{Para ver que independencia implica intercambiabilidad basta ver que, si hay independencia, la distribución conjunta se descompone en un producto y ``el orden de los factores no altera el resultado". Sin embargo, no es cierto que intercambiabilidad implique independencia, como puede verse en el contraejemplo de \textcite[8]{GP98}.}
