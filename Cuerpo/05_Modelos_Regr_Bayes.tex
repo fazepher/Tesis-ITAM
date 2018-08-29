@@ -343,7 +343,7 @@ Así pues, tenemos dos extremos que pudieran no parecernos ideales. Por un lado,
 
 Existe otra alternativa conocida como modelos jerárquicos o multinivel y que representan un punto intermedio entre las dos anteriores mediante una \textit{agrupación parcial} de los datos o \textit{partial-pooling}. Su objetivo es reconocer las diferencias que existen a través de diferentes subpoblaciones mediante una estructura jerárquica que incorpore la información de todas ellas con relación a la población general. La manera en que lo logran es formalizando y explotando a fondo la noción de esa simetría u homogeneidad en los datos.  
 
-\subsection*{Intercambiabilidad}
+\subsection{Intercambiabilidad}
 
 Los modelos jerárquicos tienen su piedra angular en el concepto de intercambiabilidad que es la formalización de la idea de simetría de la que hablaba. La definición que sigue está basada en \textcite[169-171,Definiciones 4.2 y 4.3]{BernardoSmith00}.\\ 
 
@@ -363,7 +363,12 @@ p(x_1,\dots,x_n) = \int\limits_\Theta \prod\limits_{i=1}^n p(x_i|\theta)p(\theta
 \end{equation}
 Este es el supuesto, a veces tácito, que normalmente se hace en un modelo estadístico \parencite[5]{Gelman13}.\\
 
-Ahora bien, un modelo jerárquico establece la intercambiabilidad de las observaciones al interior de cada subpoblación mediante la independencia condicional dado un parámetro del grupo. Esto haría también un modelo de no agregación, mientras que una agregación completa asume esto para toda la población. Lo que distingue a un modelo jerárquico es que adicionalmente supone intercambiabilidad para los parámetros de cada grupo de manera que estos sean condicionalmente independientes dado uno o más \textit{hiperparámetros} poblacionales. Esto puede verse de manera esquemática en la \textbf{Figura \ref{fig:Esquema_Modelo_Jer}}.\\ 
+Ahora bien, un modelo jerárquico establece la intercambiabilidad de las observaciones al interior de cada subpoblación mediante la independencia condicional dado un parámetro del grupo. Esto haría también un modelo de no agregación, mientras que una agregación completa asume esto para toda la población. Lo que distingue a un modelo jerárquico es que adicionalmente supone intercambiabilidad para los parámetros de cada grupo de manera que estos sean condicionalmente independientes dado uno o más \textit{hiperparámetros} poblacionales. Esto puede verse de manera esquemática en la \textbf{Figura \ref{fig:Esquema_Modelo_Jer}}, mientras que en términos de las distribuciones del modelo tendríamos los siguientes niveles: 
+\begin{align} \label{eq:Esquema_Modelo_Jer}	
+\text{I Datos} \qquad & p(y|\theta)=p(y_1,\dots,y_J|\theta_1,\dots,\theta_J)=\prod\limits_{j=1}^Jp(y_j|\theta_j) \nonumber \\
+\text{II Parámetros} \qquad & p(\theta|\varphi)=p(\theta_1,\dots,\theta_J|\varphi) = \prod\limits_{j=1}^Jp(\theta_j|\varphi) \nonumber \\
+\text{III Hiperparámetros} \qquad & p(\varphi)
+\end{align}
 
 \begin{figure}[h]
 	\centering
@@ -371,13 +376,6 @@ Ahora bien, un modelo jerárquico establece la intercambiabilidad de las observa
 	\caption{Esquema de un modelo jerárquico básico para $J$ subpoblaciones. Los datos de cada subpoblación $y_j$ son condicionalmente independientes dado un parámetro $\theta_j$. Los parámetros $\theta$ son, a su vez, intercambiables y se modelan condicionalmente independientes dado un hiperparámetro poblacional $\varphi$. Fuente: elaboración propia.}
 	\label{fig:Esquema_Modelo_Jer}	
 \end{figure}
-
-En términos de las distribuciones del modelo tendríamos los siguientes niveles: 
-\begin{align} \label{eq:Esquema_Modelo_Jer}	
-\text{I Datos} \qquad & p(y|\theta)=p(y_1,\dots,y_J|\theta_1,\dots,\theta_J)=\prod\limits_{j=1}^Jp(y_j|\theta_j) \nonumber \\
-\text{II Parámetros} \qquad & p(\theta|\varphi)=p(\theta_1,\dots,\theta_J|\varphi) = \prod\limits_{j=1}^Jp(\theta_j|\varphi) \nonumber \\
-\text{III Hiperparámetros} \qquad & p(\varphi)
-\end{align}
 
 El modelo jerárquico entonces aumenta el número de parámetros a estimar al agregar los hiperparámetros. Para realizar el aprendizaje bayesiano entonces tenemos que la distribución inicial de los parámetros depende de un hiperparámetro que deberá tener una distribución \textit{hiperinicial}. El problema consiste en inferir las características de las subpoblaciones--- $\theta$--- y las características poblacionales--- $\varphi$--- \parencite[23]{GP98}: 
 \begin{align} \label{eq:Bayes_Modelo_Jer}	
@@ -387,3 +385,28 @@ p(\theta,\varphi|y) & \propto p(y|\theta,\varphi)p(\theta,\varphi) \nonumber \\
 &\propto p(\varphi)\prod\limits_{j=1}^Jp(y_j|\theta_j)p(\theta_j|\varphi)
 \end{align}
 
+\subsection{Regresiones jerárquicas}
+
+Cuando ya queremos ajustar una regresión podríamos pensar en los modelos jerárquicos como un modelo en el que los coeficientes también son modelados mediante hiperparámetros que también se estiman con los mismos datos \parencite[1]{GelmanHill06}. Esto permite pensar en regresiones a distintos niveles y con variables grupales, pero también en estructuras no necesariamente anidadas. De manera general es posible clasificar los modelos jerárquicos en tres grandes categorías: interceptos variables, pendientes variables e interceptos y pendientes variables. Para presentarlos, supongamos que tenemos $N$ conjuntos de observaciones $\left\lbrace(y_i,x_i,u_{j[i]})\right\rbrace_{i=1}^{N}$ agrupadas en $J$ grupos. Nuestra variable de interés es $Y$, contamos con una variable explicativa a nivel individuo, $X$,  y una a nivel grupo,  $U$.  Debido a que ahora tenemos $J$ grupos, indico con la notación $j[i]$ el grupo al que pertenece la $i$-ésima unidad. Utilizaré  por simplicidad un modelo lineal--- aunque se puede generalizar a MLG--- en el que $\alpha$ representa el intercepto y $\beta$ la pendiente de la recta. En el caso de los los \textit{hipercoeficientes} utilizaré $a$ y $b$. 
+
+\subsubsection*{Interceptos variables}
+\begin{align*}
+y_i &= \alpha_{j[i]} + \beta x_i + \epsilon_i  \quad \epsilon_i  \sim N(0,\sigma_y^2) \\
+\alpha_{j[i]} &= a + b u_{j[i]} + \eta_{j[i]} \quad \eta_{j[i]} \sim N(0, \sigma_{\alpha}^2) \\ 
+p(\theta) &= p(\beta,\sigma_y^2,a,b,\sigma_{\alpha}^2)
+\end{align*}
+
+\subsubsection*{Pendientes variables}
+\begin{align*}
+y_i &= \alpha + \beta_{j[i]} x_i + \epsilon_i  \quad \epsilon_i  \sim N(0,\sigma_y^2) \\
+\beta_{j[i]} &= a + b u_{j[i]} + \eta_{j[i]} \quad \eta_{j[i]} \sim N(0, \sigma_{\beta}^2) \\ 
+p(\theta) &= p(\alpha,\sigma_y^2,a,b,\sigma_{\beta}^2)
+\end{align*}
+
+\subsubsection*{Interceptos y pendientes variables}
+\begin{align*}
+y_i &= \alpha_{j[i]} + \beta_{j[i]} x_i + \epsilon_i  \quad \epsilon_i  \sim N(0,\sigma_y^2) \\
+\alpha_{j[i]} &= a_{\alpha} + b_{\alpha} u_{j[i]} + \eta_{\alpha,\,j[i]} \quad \eta_{\alpha,\,j[i]}  \sim N(0, \sigma_{\alpha}^2) \\ 
+\beta_{j[i]} &= a_{\beta} + b_{\beta} u_{j[i]} + \eta_{\beta,\,j[i]} \quad \eta_{\beta,\,j[i]}  \sim N(0, \sigma_{\beta}^2) \\ 
+p(\theta) &= p(\sigma_y^2,a_{\alpha},b_{\alpha},\sigma_{\alpha}^2,a_{\beta},b_{\beta},\sigma_{\beta}^2)
+\end{align*}
