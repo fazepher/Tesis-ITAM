@@ -345,7 +345,7 @@ Existe otra alternativa conocida como modelos jerárquicos o multinivel y que re
 
 \subsection{Intercambiabilidad}
 
-Los modelos jerárquicos tienen su piedra angular en el concepto de intercambiabilidad que es la formalización de la idea de simetría de la que hablaba. La definición que sigue está basada en \textcite[169-171,Definiciones 4.2 y 4.3]{BernardoSmith00}.\\ 
+Los modelos jerárquicos tienen su piedra angular en el concepto de intercambiabilidad que es la formalización de la idea de simetría de la que hablaba.\\ 
 
 \dfn{\textbf{Intercambiabilidad}\\
 \label{def:Intercambiabilidad}
@@ -357,13 +357,14 @@ p(X_1 = x_1, \dots, X_n = x_n) = p(X_1 = x_{\pi(1)},\dots, X_n = x_{\pi(n)}).
 La sucesión infinita $X_1,X_2,\dots$ es \textbf{infinitamente intercambiable} si y solo si toda subsucesión finita es finitamente intercambiable.\\ 
 }
 
-Cuando asumimos que unas variables aleatorias son independientes, se cumple la propiedad de intercambiabilidad, pero el concepto de intercambiabilidad es un poco más general;\footnote{Para ver que independencia implica intercambiabilidad basta ver que, si hay independencia, la distribución conjunta se descompone en un producto y ``el orden de los factores no altera el resultado". Sin embargo, no es cierto que intercambiabilidad implique independencia, como puede verse en el contraejemplo de \textcite[8]{GP98}.} queremos decir que los índices o etiquetas de las observaciones pueden cambiar y no los distinguiríamos. En este caso es natural asumir una representación de independencia condicional dado un parámetro común para las observaciones. Esta \textit{naturalidad} puede justificarse a partir de un caso particular del Teorema de representación de De Finetti puesto que establece que la densidad conjunta de unas variables aleatorias intercambiables puede representarse mediante el uso de la independencia condicional dado un parámetro:\footnote{Pueden consultarse \textcite[9-12]{GP98} o la Subsección 4.3 de \textcite{BernardoSmith00}, de manera particular en la versión del Corolario 1 de la página 180. Cabe aclarar que la condición de intercambiabilidad que supone el Teorema de representación de De Finetti es de intercambiabilidad infinita, pero normalmente al modelar tratamos con observables que más bien satisfarían solamente una intercambiabilidad finita. A pesar de esto, si se da el caso en el que la secuencia finita de variables aleatorias observadas constituiría una parte de una secuencia más larga de variables finitamente intercambiables, es posible asumir intercambiabilidad infinita como una aproximación suficientemente buena y proceder en consecuencia\parencite[226-227]{BernardoSmith00}.}
+Esta definición está basada en \textcite[169-171,Definiciones 4.2 y 4.3]{BernardoSmith00}. Cuando asumimos que unas variables aleatorias son independientes, se cumple la propiedad de intercambiabilidad, pero el concepto de intercambiabilidad es un poco más general;\footnote{Para ver que independencia implica intercambiabilidad basta ver que, si hay independencia, la distribución conjunta se descompone en un producto y ``el orden de los factores no altera el resultado". Sin embargo, no es cierto que intercambiabilidad implique independencia, como puede verse en el contraejemplo de \textcite[8]{GP98}.} queremos decir que los índices o etiquetas de las observaciones pueden cambiar y no los distinguiríamos. En este caso es natural asumir una representación de independencia condicional dado un parámetro común para las observaciones. Esta \textit{naturalidad} puede justificarse a partir de un caso particular del Teorema de representación de De Finetti puesto que establece que la densidad conjunta de unas variables aleatorias intercambiables puede representarse mediante el uso de la independencia condicional dado un parámetro:\footnote{Pueden consultarse \textcite[9-12]{GP98} o la Subsección 4.3 de \textcite{BernardoSmith00}, de manera particular en la versión del Corolario 1 de la página 180. Cabe aclarar que la condición de intercambiabilidad que supone el Teorema de representación de De Finetti es de intercambiabilidad infinita, pero normalmente al modelar tratamos con observables que más bien satisfarían solamente una intercambiabilidad finita. A pesar de esto, si se da el caso en el que la secuencia finita de variables aleatorias observadas constituiría una parte de una secuencia más larga de variables finitamente intercambiables, es posible asumir intercambiabilidad infinita como una aproximación suficientemente buena y proceder en consecuencia\parencite[226-227]{BernardoSmith00}.}
 \begin{equation} \label{eq:Repr_DeFinetti}
 p(x_1,\dots,x_n) = \int\limits_\Theta \prod\limits_{i=1}^n p(x_i|\theta)p(\theta)d\theta.
 \end{equation}
 Este es el supuesto, a veces tácito, que normalmente se hace en un modelo estadístico \parencite[5]{Gelman13}.\\
 
 Ahora bien, un modelo jerárquico establece la intercambiabilidad de las observaciones al interior de cada subpoblación mediante la independencia condicional dado un parámetro del grupo. Esto haría también un modelo de no agregación, mientras que una agregación completa asume esto para toda la población. Lo que distingue a un modelo jerárquico es que adicionalmente supone intercambiabilidad para los parámetros de cada grupo de manera que estos sean condicionalmente independientes dado uno o más \textit{hiperparámetros} poblacionales. Esto puede verse de manera esquemática en la \textbf{Figura \ref{fig:Esquema_Modelo_Jer}}, mientras que en términos de las distribuciones del modelo tendríamos los siguientes niveles: 
+
 \begin{align} \label{eq:Esquema_Modelo_Jer}	
 \text{I Datos} \qquad & p(y|\theta)=p(y_1,\dots,y_J|\theta_1,\dots,\theta_J)=\prod\limits_{j=1}^Jp(y_j|\theta_j) \nonumber \\
 \text{II Parámetros} \qquad & p(\theta|\varphi)=p(\theta_1,\dots,\theta_J|\varphi) = \prod\limits_{j=1}^Jp(\theta_j|\varphi) \nonumber \\
@@ -387,7 +388,7 @@ p(\theta,\varphi|y) & \propto p(y|\theta,\varphi)p(\theta,\varphi) \nonumber \\
 
 \subsection{Regresiones jerárquicas}
 
-Cuando ya queremos ajustar una regresión podríamos pensar en los modelos jerárquicos como un modelo en el que los coeficientes también son modelados mediante hiperparámetros que también se estiman con los mismos datos \parencite[1]{GelmanHill06}. Esto permite pensar en regresiones a distintos niveles y con variables grupales, pero también en estructuras no necesariamente anidadas. De manera general es posible clasificar los modelos jerárquicos en tres grandes categorías: interceptos variables, pendientes variables e interceptos y pendientes variables. Para presentarlos, supongamos que tenemos $N$ conjuntos de observaciones $\left\lbrace(y_i,x_i,u_{j[i]})\right\rbrace_{i=1}^{N}$ agrupadas en $J$ grupos. Nuestra variable de interés es $Y$, contamos con una variable explicativa a nivel individuo, $X$,  y una a nivel grupo,  $U$.  Debido a que ahora tenemos $J$ grupos, indico con la notación $j[i]$ el grupo al que pertenece la $i$-ésima unidad. Utilizaré  por simplicidad un modelo lineal--- aunque se puede generalizar a MLG--- en el que $\alpha$ representa el intercepto y $\beta$ la pendiente de la recta. En el caso de los los \textit{hipercoeficientes} utilizaré $a$ y $b$. 
+Cuando ya queremos ajustar una regresión podríamos pensar en los modelos jerárquicos como un modelo en el que los coeficientes también son modelados mediante hiperparámetros que también se estiman con los mismos datos \parencite[1]{GelmanHill06}. Esto permite pensar en regresiones a distintos niveles y con variables grupales, estudios con base en muestreo estratificado e incluso estructuras no necesariamente anidadas. De manera general es posible clasificar los modelos jerárquicos en tres grandes categorías: interceptos variables, pendientes variables e interceptos y pendientes variables. Para presentarlos, supongamos que tenemos $N$ conjuntos de observaciones $\left\lbrace(y_i,x_i,u_{j[i]})\right\rbrace_{i=1}^{N}$ agrupadas en $J$ grupos. Nuestra variable de interés es $Y$, contamos con una variable explicativa a nivel individuo, $X$,  y una a nivel grupo,  $U$.  Debido a que ahora tenemos $J$ grupos, indico con la notación $j[i]$ el grupo al que pertenece la $i$-ésima unidad. Utilizaré  por simplicidad un modelo lineal en el que $\alpha$ representa el intercepto y $\beta$ la pendiente de la recta. En el caso de los los \textit{hipercoeficientes} utilizaré $a$ y $b$. 
 
 \subsubsection*{Interceptos variables}
 \begin{align*}
@@ -410,3 +411,17 @@ y_i &= \alpha_{j[i]} + \beta_{j[i]} x_i + \epsilon_i  \quad \epsilon_i  \sim N(0
 \beta_{j[i]} &= a_{\beta} + b_{\beta} u_{j[i]} + \eta_{\beta,\,j[i]} \quad \eta_{\beta,\,j[i]}  \sim N(0, \sigma_{\beta}^2) \\ 
 p(\theta) &= p(\sigma_y^2,a_{\alpha},b_{\alpha},\sigma_{\alpha}^2,a_{\beta},b_{\beta},\sigma_{\beta}^2)
 \end{align*}
+
+Es posible ajustar MLG jerárquicos. Por ejemplo, una regresión logística jerárquica con algunas iniciales para los hiperparámetros sería la siguiente: 
+
+\subsubsection*{Regresión logística jerárquica}
+\begin{align*}
+y_i|\alpha_{j[i]},\beta_{j[i]} & \sim Binom(n_i,p_i) \\
+ln\left(\dfrac{p_i}{1-p_i}\right) &= \alpha_{j[i]} + \beta_{j[i]} x_i  \\ 
+\alpha_{j[i]} & \sim N(a_{\alpha} + b_{\alpha} u_{j[i]}, \sigma_{\alpha}^2) \\ 
+\beta_{j[i]} & \sim N(a_{\beta} + b_{\beta} u_{j[i]}, \sigma_{\beta}^2) \\ 
+a_{\alpha} \sim N(0,5) \quad & \qquad a_{\beta} \sim N(0,5) \\
+b_{\alpha} \sim N(0,5) \quad & \qquad b_{\beta} \sim N(0,5) \\
+\end{align*}
+
+Como puede intuirse, la estructura de un modelo jerárquico puede complicarse bastante. Sin embargo, recordemos que la \textit{única receta de la inferencia bayesiana} sigue siendo la misma: encontrar la distribución condicional de todas aquellas cantidades de interés cuyo valor desconocemos, dado el valor conocido de las variables observadas. Gracias a las herramientas computacionales este cálculo es posible para modelos cada vez más complejos. En el siguiente capítulo, entonces, discutiré algunos métodos computacionales que hacen posible este aprendizaje bayesiano. 
