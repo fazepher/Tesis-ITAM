@@ -1,0 +1,19 @@
+\chapter{Cómputo bayesiano}
+
+Cuando alguien toma un primer curso de probabilidad o estadística, uno de los primeros ejemplos de variables aleatorias que le es presentado seguramente es el modelo de ensayos Bernoulli. Y en más de una ocasión la forma de ilustrar o enseñar el modelo es lanzando volados \textit{simulando} la realización de una variable aleatoria Bernoulli. La idea es que cada lanzamiento es independiente y se podría llegar a tener una muestra lo suficientemente grande como para empezar a mostrarle al alumno cómo se satisfacen ciertas propiedades teóricas del modelo como su media o su varianza. Gracias al avance tecnológico, hoy podemos ya no tenemos que lanzar volados físicamente sino que los simulamos desde una computadora. A partir de la generación de números aleatorios,\footnote{Técnicamente pseudo aleatorios debido a la capacidad finita de las computadoras pero diseñados de manera tal que satisfagan las propiedades básicas de la generación de números aleatorios {\color{Red} citar Simulation Ross quizás}.} también es posible generar observaciones de otras distribuciones además de un volado. Así, hay métodos básicos para simular observaciones de la distribución Binomial, Poisson o Normal, por ejemplo.\\
+
+La utilidad de los métodos de simulación--- además de la tautología de imitar el fenómeno de estudio--- está en que, en teoría, podemos generar tantas observaciones como necesitemos para representar de buena manera las distribuciones que estemos estudiando.\\ 
+
+\begin{itemize}
+\item Queremos una muestra suficientemente grande de la posterior. Para ello requerimos un método que genere una realización \textit{independiente} de la posterior. 
+
+\item Una distribución límite de una Cadena de Markov es tal que no cambia. Esto quiere decir que si una simulación de una cadena de Markov llega a la distribución límite, cada nueva simulación se genera de manera independiente. 
+
+\item Si no conozco completamente una distribución posterior, ¿existe alguna cadena de Markov cuya distribución límite sea esta distribución posterior? Si existiera entonces podría simular la cadena y, eventualmente, llegar a la distribución límite y, entonces, ya podría simular una muestra aleatoria de mi distribución posterior.
+
+\item Una muestra suficientemente grande de esta distribución posterior satisface la única receta. Los resúmenes de Monte Carlo permiten la inferencia axiomática, por llamarla de una manera.  
+\end{itemize}
+
+
+
+
