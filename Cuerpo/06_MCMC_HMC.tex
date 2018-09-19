@@ -1,8 +1,34 @@
 \chapter{Cómputo bayesiano}
 
-Cuando alguien toma un primer curso de probabilidad o estadística, uno de los primeros ejemplos de variables aleatorias que le es presentado seguramente es el modelo de ensayos Bernoulli. Y en más de una ocasión la forma de ilustrar o enseñar el modelo es lanzando volados \textit{simulando} la realización de una variable aleatoria Bernoulli. La idea es que cada lanzamiento es independiente y se podría llegar a tener una muestra lo suficientemente grande como para empezar a mostrarle al alumno cómo se satisfacen ciertas propiedades teóricas del modelo como su media o su varianza. Gracias al avance tecnológico, hoy podemos ya no tenemos que lanzar volados físicamente sino que los simulamos desde una computadora. A partir de la generación de números aleatorios,\footnote{Técnicamente pseudo aleatorios debido a la capacidad finita de las computadoras pero diseñados de manera tal que satisfagan las propiedades básicas de la generación de números aleatorios {\color{Red} citar Simulation Ross quizás}.} también es posible generar observaciones de otras distribuciones además de un volado. Así, hay métodos básicos para simular observaciones de la distribución Binomial, Poisson o Normal, por ejemplo.\\
+De acuerdo con \textcite{Ross10}, los resultados más importantes y más conocidos de la teoría de probabilidad son los llamados teoremas límite, en particular aquellos conocidos como \textit{leyes de los grandes números}. Este término fue utilizado por primera vez por Poisson en 1837 y generaliza el teorema principal probado por Jakob Bernoulli en su célebre \textit{Ars Conjectandi}, publicado póstumamente en 1713 \parencite{Seneta13}. La idea general ya la había adelantado el propio Bernoulli en 1703 respecto a que todos los hombres saben ``por algún instinto de la naturaleza \textit{per se} y sin ninguna instrucción previa, que entre más observaciones hay, menor es el peligro de alejarse del blanco" \parencite{Pulskamp09}. Es decir, si tenemos suficientes realizaciones de un experimento, podemos estimar con mucha precisión aquello que buscamos.\\ 
 
-La utilidad de los métodos de simulación--- además de la tautología de imitar el fenómeno de estudio--- está en que, en teoría, podemos generar tantas observaciones como necesitemos para representar de buena manera las distribuciones que estemos estudiando.\\ 
+Después de varios avances históricos que pueden consultarse en \textcite{Seneta13}, hoy tenemos dos leyes generales de los grandes números:
+
+\begin{teo} \label{teo:LGN}
+\textbf{Leyes de los grandes números.}
+Sean $X_1,\,X_2,\dots$ una secuencia de variables aleatorias independientes e idénticamente distribuidas, cada una con media finita $E[X_i]=\mu$, y $\bar{X}_N=\sum\limits_{i=1}^N\dfrac{X_i}{N}$, las respectivas medias empíricas. Entonces se cumplen las siguientes dos leyes.\\ 
+\begin{itemize}
+\item \textbf{Ley débil}
+\begin{equation*}
+\lim_{N \to \infty} P\left( |\bar{X}_N-\mu| \geq \epsilon \right)  = 0 \qquad \forall \, \epsilon > 0
+\end{equation*}
+\item \textbf{Ley fuerte}
+\begin{equation*}
+P\left(\lim_{N \to \infty} \bar{X}_M = \mu \right)  = 1 
+\end{equation*}
+\end{itemize}
+\end{teo}
+
+Bajo algunos supuestos adicionales, se puede consultar la prueba de ambas leyes en \textcite{Ross10}. Tenemos entonces que, conforme el tamaño de una muestra aleatoria aumenta, los promedios empíricos convergen a los promedios teóricos. Una manera común de ejemplificar este fenómeno es mediante el lanzamiento sucesivo de monedas. En este caso los volados \textit{simulan} observaciones de una variable aleatoria de ensayos Bernoulli y, al tener una muestra suficientemente grande, se comienzan a apreciar ciertas propiedades teóricas del modelo como la probabilidad de éxito.\\
+
+Gracias al avance tecnológico, hoy ya no tenemos necesariamente que lanzar volados físicamente sino que los simulamos desde una computadora, a partir de la generación de números pseudoaleatorios, diseñados de manera tal que satisfagan todas las propiedades básicas de números auténticamente aleatorios \parencite{Ross13}. Así, hay métodos básicos para simular observaciones de la distribución Binomial, Poisson o Normal, por ejemplo. Ahora bien, esta práctica de aprender de un sistema, simulando con muestreo aleatorio no surge con las computadoras \parencite{Owen13}. Ya desde 1812 Laplace había sugerido la posibilidad de estimar empíricamente el valor de $\pi$ mediante el llamado problema de la aguja de Buffon \parencite{Ragheb13}. Sin embargo, sí han sido las computadoras las que han potenciado la utilidad de los métodos de simulación, en general--- más allá de la tautología de imitar el fenómeno de estudio--- y, de manera más importante para esta tesis, la estadística bayesiana, en particular.
+
+\section{Monte Carlo} 
+
+La simulación por computadora ha permitido el desarrollo de la estadística bayesiana, particularmente desde la década de los 90 del siglo pasado. Sin embargo, la semilla de este desarrollo ya había sido plantada medio siglo antes desde el terreno de la física, desafortunadamente a causa de la Segunda Guerra Mundial, por los científicos del laboratorio de Los Alamos, encargados del proyecto Manhattan y el desarrollo de más armas de fisión nuclear.\\
+
+Uno de esos científicos fue un matemático polaco-estadounidense llamado Stanislaw Ulam. En 1946, convaleciente de una enfermedad, comenzó a preguntarse sobre la probabilidad de ganar en un juego de solitario. Después de mucho batallar con los cálculos de combinatoria se preguntó si no sería más práctico estimarla simulando muchas partidas en las primeras computadoras electrónicas. Y ahí surgió el eureka: ¿por qué no hacer lo mismo para los problemas de física nuclear en los que estaban trabajando en Los Alamos? \parencite{Eckhardt87}. Stan compartió su idea con John von Neumann quien, sorprendido y emocionado con la idea, le envió una carta a Richard Richtmayer--- el líder del equipo en Los Alamos--- con todos los cálculos necesarios para llevar a cabo el proyecto, incluso estimando que la computadora tardaría 5 horas \parencite{vonNeumann47}. El método fue rápidamente adoptado por todos en Los Alamos, tanto que otro físico, Nicholas Metropolis, sugirió llamarlo \textit{Monte Carlo} bromeando sobre el tío apostador de Stan quien vivía pidiendo prestado dinero porque ``simplemente tenía que ir a Monte Carlo" \parencite{Metropolis87}. Después de un arduo trabajo, el método pareció funcionar--- gracias en buena medida al trabajo de programación de Klara von Neumann \parencite{Haigh14}--- y el propio Metropolis publicó, junto con Stan, un paper presentándolo a grandes rasgos \parencite{MetropolisUlam49}.
+
 
 \begin{itemize}
 \item Queremos una muestra suficientemente grande de la posterior. Para ello requerimos un método que genere una realización \textit{independiente} de la posterior. 
