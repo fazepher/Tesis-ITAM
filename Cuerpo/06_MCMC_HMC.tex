@@ -17,13 +17,13 @@ P\left(\lim_{N \to \infty} \bar{X}_M = \mu \right)  = 1
 \end{itemize}
 \end{teo}
 
-Ambas leyes nos dicen que, conforme el tamaño de una muestra aleatoria aumenta, los promedios empíricos convergen a los promedios teóricos. Una manera común de ejemplificar este fenómeno es mediante el lanzamiento sucesivo de monedas. En este caso los volados \textit{simulan} observaciones de una variable aleatoria de ensayos Bernoulli y, al tener una muestra suficientemente grande, se comienza a apreciar la convergencia hacia la probabilidad de éxito. Gracias al avance tecnológico, hoy ya no tenemos necesariamente que lanzar volados físicamente sino que los simulamos desde una computadora, a partir de la generación de números pseudoaleatorios, diseñados de manera tal que satisfagan todas las propiedades básicas de números auténticamente aleatorios \parencite{Ross13}. Podemos pedirle a la computadora que simule una gran cantidad de volados y registre la proporción empírica acumulada de los que cayeron águila. Conforme más aumenta el número de volados, más nos acercamos a 0.5, la proporción teórica. Esto se puede repetir para otras series de volados y el comportamiento es el mismo, como puede apreciarse en la \ref{fig:LGN}. \\
+Ambas leyes nos dicen que, conforme el tamaño de una muestra aleatoria aumenta, los promedios empíricos convergen a los promedios teóricos. Una manera común de ejemplificar este fenómeno es mediante el lanzamiento sucesivo de monedas. En este caso los volados \textit{simulan} observaciones de una variable aleatoria de ensayos Bernoulli y, al tener una muestra suficientemente grande, se comienza a apreciar la convergencia hacia la probabilidad de éxito. Gracias al avance tecnológico, hoy ya no tenemos necesariamente que lanzar volados físicamente sino que los simulamos desde una computadora, a partir de la generación de números pseudoaleatorios, diseñados de manera tal que satisfagan todas las propiedades básicas de números auténticamente aleatorios \parencite{Ross13}. Podemos pedirle a la computadora que simule una gran cantidad de volados y registre la proporción empírica acumulada de los que cayeron águila. Conforme más aumenta el número de volados, más nos acercamos a 0.5, la proporción teórica. Esto se puede repetir para otras series de volados y el comportamiento es el mismo, como puede apreciarse en la \textbf{\ref{fig:LGN}}. \\
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.25]{Figs/LGN}
 	\caption{Ilustración de las leyes de los grandes números mediante volados simulados por computadora. Conforme el número de volados aumenta, la proporción empírica converge a la proporción teórica. Esto pasa para cada serie de volados. Fuente: elaboración propia.}
-	\label{fig:Regimen_Semipresidencial_VRepFr}	
+	\label{fig:LGN}	
 \end{figure}
 
 Es cierto que esta práctica de aprender de un sistema, simulando con muestreo aleatorio no surge con las computadoras \parencite{Owen13}. Ya desde 1812 Laplace había sugerido la posibilidad de estimar empíricamente el valor de $\pi$ mediante el llamado problema de la aguja de Buffon \parencite{Ragheb13}. Sin embargo, como el ejemplo de los volados muestra, sí han sido las computadoras las que han potenciado la utilidad de los métodos de simulación. ¿Cuánto hubiéramos tardado en lanzar los 7,500 volados que la computadora simuló al instante? Más aún, esta capacidad computacional consolidó la utilidad de la estadística bayesiana. ¡Y pensar que todo empezó con una guerra y un juego de solitario!, como explico a continuación.
@@ -37,15 +37,22 @@ Uno de esos científicos fue un matemático polaco-estadounidense llamado Stanis
 Stan compartió su idea con John von Neumann quien, sorprendido y emocionado con la idea, le envió una carta a Richard Richtmayer--- el líder del equipo en Los Alamos--- con todos los cálculos necesarios para llevar a cabo el proyecto \parencite{vonNeumann47}. El método fue rápidamente adoptado por todos en Los Alamos, tanto que otro físico, Nicholas Metropolis, sugirió llamarlo \textit{Monte Carlo}, bromeando sobre un tío apostador de Stan, que vivía pidiendo prestado dinero porque ``simplemente tenía que ir a Monte Carlo" \parencite{Metropolis87}. Después de un arduo trabajo, el método pareció funcionar--- gracias en buena medida al trabajo de programación de Klara von Neumann \parencite{Haigh14}--- y el propio Metropolis publicó, junto con Stan, un primer paper presentándolo a grandes rasgos \parencite{MetropolisUlam49}.\\
 
 De manera concreta, el método es la conjunción de la simulación con la ley de los grandes números. Al fin y al cabo, las cantidades que requerían calcular eran valores esperados de la siguiente forma: 
-\begin{equation*}
+\begin{equation}
+\label{eq:IntegralMC}
 \bar{h} = \mathbb{E}[h(q)]=\int\limits_\mathcal{Q} h(q)f(q)dq ,
-\end{equation*} 
-donde $h$ es una función de interés y $f(q)$ es la distribución de probabilidad sobre las \textit{configuraciones} en las que podía encontrarse el sistema físico. Estas integrales típicamente no pueden calcularse ni analíticamente ni por métodos numéricos tradicionales. Sin embargo, si se tiene una muestra aleatoria de valores de $q$ provenientes de su distribución $f$, se podría aproximar $\bar{h}$ con el promedio empírico: 
+\end{equation} 
+donde $h$ es una función de interés y $f(q)$ es la distribución de probabilidad sobre las \textit{configuraciones} en las que podía encontrarse el sistema físico. Estas integrales típicamente no pueden calcularse ni analíticamente ni por métodos numéricos tradicionales. Sin embargo, si se tiene una muestra aleatoria de valores de $q$ provenientes de su distribución $f$, se puede aproximar $\bar{h}$ con el promedio empírico, que en este contexto se conoce como \textit{estimador de Monte Carlo}: 
 \begin{equation*}
 \bar{h} \approx \sum\limits_{i=1}^N \dfrac{h(q_i)}{N}
 \end{equation*}
 
-Esta forma aparentemente sencilla conlleva una gran flexibilidad de \textit{resúmenes inferenciales} que se pueden llevar a cabo. Por lo que la posibilidad de realizar la \textit{integración por Monte Carlo}, hace que en la práctica exista una dualidad entre una distribución o densidad y una muestra proveniente de ella \parencite{SmithGelfand92}. El problema para los científicos en Los Alamos se convirtió entonces en encontrar algoritmos eficientes para obtener una muestra aleatoria de variables que seguían diferentes distribuciones $f$.
+El problema para los científicos en Los Alamos se convirtió entonces en encontrar algoritmos eficientes para obtener una muestra aleatoria de variables provenientes de diferentes distribuciones $f$. Este problema es exactamente el mismo que se tiene en la aplicación de la estadística bayesiana. En efecto, la \textbf{\ref{eq:IntegralMC}} permite llevar a cabo una gran variedad de \textit{resúmenes inferenciales} {\color{Red} Citar GPMCIB}, por lo que la posibilidad de realizar la correspondiente \textit{integración por Monte Carlo} hace que, en la práctica, exista una dualidad entre una distribución o densidad y una muestra proveniente de ella \parencite{SmithGelfand92}. Siguiendo la única receta de la inferencia bayesiana--- ver la página \pageref{receta_bayesiana}---, se busca obtener una muestra aleatoria de la distribución posterior lo suficientemente grande para, con ella, estimar por Monte Carlo los resúmenes inferenciales requeridos.\\
+
+Hay varios métodos de simulación de variables aleatorias que permiten obtener muestras aleatorias independientes y calcular un estimador de Monte Carlo. Entre los más mencionados podemos encontrar el método de inversión, el de aceptación y rechazo o el muestreo por importancia. Sin embargo, los físicos de Los Alamos pronto se dieron cuenta que se podrían ser más eficientes si, en lugar de buscar realizar simulaciones independientes, hacían simulaciones secuenciales que dependieran entre sí. 
+
+\section{MCMC}
+
+
 
 \section{Metropolis-Hastings}
 
