@@ -1146,6 +1146,41 @@
       \field{title}{Presentación {I}ntroductioria al curso {M}étodos {E}stadísticos {B}ayesianos}
       \field{year}{2016}
     \endentry
+    \entry{Haigh14}{article}{}
+      \name{author}{3}{}{%
+        {{hash=0d6c971cd063fae6aa25a75f0c7df58b}{%
+           family={Haigh},
+           family_i={H\bibinitperiod},
+           given={Thomas},
+           given_i={T\bibinitperiod}}}%
+        {{hash=792536074400c2f02aa85cfdf107e816}{%
+           family={Priestley},
+           family_i={P\bibinitperiod},
+           given={Mark},
+           given_i={M\bibinitperiod}}}%
+        {{hash=65ed4ad8e692330e276486b34ed7d497}{%
+           family={Rope},
+           family_i={R\bibinitperiod},
+           given={Crispin},
+           given_i={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{55de5e9b84b8cd607f675b257fb81d9b}
+      \strng{fullhash}{55de5e9b84b8cd607f675b257fb81d9b}
+      \field{sortinit}{H}
+      \field{sortinithash}{82012198d5dfa657b8c4a168793268a6}
+      \field{labelyear}{2014}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{3}
+      \field{journaltitle}{IEEE Annals of the History of Computing}
+      \field{subtitle}{Nuclear Monte Carlo Simulations, 1947–1948}
+      \field{title}{Los Alamos Bets on ENIAC}
+      \field{volume}{36}
+      \field{year}{2014}
+      \field{pages}{42\bibrangedash 63}
+      \range{pages}{22}
+    \endentry
     \entry{Hainsworth16a}{incollection}{}
       \name{author}{1}{}{%
         {{hash=e736f469d2b3687d50536c42e0887907}{%
@@ -1527,35 +1562,6 @@
       \verb{url}
       \verb http://discours.vie-publique.fr/notices/013003238.html
       \endverb
-    \endentry
-    \entry{Lee12}{book}{}
-      \name{author}{1}{}{%
-        {{hash=c8ab6c518b98e7befa10c060df74c3d9}{%
-           family={Lee},
-           family_i={L\bibinitperiod},
-           given={Peter\bibnamedelima M.},
-           given_i={P\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Reino Unido}%
-      }
-      \list{publisher}{1}{%
-        {John Wiley \& Sons Ltd.}%
-      }
-      \strng{namehash}{c8ab6c518b98e7befa10c060df74c3d9}
-      \strng{fullhash}{c8ab6c518b98e7befa10c060df74c3d9}
-      \field{sortinit}{L}
-      \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
-      \field{labelyear}{2012}
-      \field{datelabelsource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{edition}{4}
-      \field{isbn}{978-1-118-33257-3}
-      \field{pagetotal}{462}
-      \field{subtitle}{an introduction}
-      \field{title}{Bayesian statistics}
-      \field{year}{2012}
     \endentry
     \entry{Leprince16}{misc}{}
       \name{author}{1}{}{%
@@ -2436,6 +2442,36 @@
       \field{title}{The Bayesian Choice}
       \field{year}{2007}
     \endentry
+    \entry{RobertCasella11}{article}{}
+      \name{author}{2}{}{%
+        {{hash=f551e54e4218974c2a2e55bd6a113d54}{%
+           family={Robert},
+           family_i={R\bibinitperiod},
+           given={Christian},
+           given_i={C\bibinitperiod}}}%
+        {{hash=c7abc90e14f2761d9325ee092fda0de7}{%
+           family={Casella},
+           family_i={C\bibinitperiod},
+           given={George},
+           given_i={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{01f16917ced44988d76598baceda1bbb}
+      \strng{fullhash}{01f16917ced44988d76598baceda1bbb}
+      \field{sortinit}{R}
+      \field{sortinithash}{c7387613477035a752d935acfc3e3ea2}
+      \field{labelyear}{2011}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{1}
+      \field{journaltitle}{Statistical Science}
+      \field{subtitle}{Subjective Recollections from Incomplete Data}
+      \field{title}{A Short History of Markov Chain Monte Carlo}
+      \field{volume}{26}
+      \field{year}{2011}
+      \field{pages}{102\bibrangedash 115}
+      \range{pages}{14}
+    \endentry
     \entry{Ross10}{book}{}
       \name{author}{1}{}{%
         {{hash=eed02fd8e6aac71a2a3492388b00db90}{%
@@ -2664,6 +2700,36 @@
       \verb{url}
       \verb http://www.jstor.org/stable/656999?origin=JSTOR-pdf
       \endverb
+    \endentry
+    \entry{SmithGelfand92}{article}{}
+      \name{author}{2}{}{%
+        {{hash=d12c9b3200e5e26e599542e28c1fa27a}{%
+           family={Smith},
+           family_i={S\bibinitperiod},
+           given={A.F.M.},
+           given_i={A\bibinitperiod}}}%
+        {{hash=997bf01f7b23d7553a38a50278a87f4f}{%
+           family={Gelfand},
+           family_i={G\bibinitperiod},
+           given={A.E.},
+           given_i={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{b5b377b302e9b951b46be51ab1b313f2}
+      \strng{fullhash}{b5b377b302e9b951b46be51ab1b313f2}
+      \field{sortinit}{S}
+      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{labelyear}{1992}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{2}
+      \field{journaltitle}{The American Statistician}
+      \field{subtitle}{A Sampling-Resampling Perspective}
+      \field{title}{Bayesian Statistics without Tears}
+      \field{volume}{46}
+      \field{year}{1992}
+      \field{pages}{84\bibrangedash 88}
+      \range{pages}{5}
     \endentry
     \entry{Sputnik17}{misc}{}
       \name{author}{1}{}{%

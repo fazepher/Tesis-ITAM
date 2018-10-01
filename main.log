@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.7.24)  16 SEP 2018 16:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.7.24)  1 OCT 2018 08:35
 entering extended mode
 **./main.tex
 (main.tex
@@ -1016,6 +1016,9 @@ LaTeX Info: Redefining \. on input line 28.
 LaTeX Info: Redefining \% on input line 28.
 
 
+LaTeX Warning: Label `fig:Regimen_Semipresidencial_VRepFr' multiply defined.
+
+
 LaTeX Warning: Label `tbl:Bases_escolaridad' multiply defined.
 
 )
@@ -1439,7 +1442,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--45
 LaTeX Info: Redefining \sptext on input line 45.
 LaTeX Info: Redefining \. on input line 45.
 LaTeX Info: Redefining \% on input line 45.
-[17] <Figs/FN_Francia/Div_Terr_Fr_v2.png, id=498, 1186.4325pt x 654.19406pt>
+[17] <Figs/FN_Francia/Div_Terr_Fr_v2.png, id=499, 1186.4325pt x 654.19406pt>
 File: Figs/FN_Francia/Div_Terr_Fr_v2.png Graphic file (type png)
 
 <use Figs/FN_Francia/Div_Terr_Fr_v2.png>
@@ -1710,189 +1713,211 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--10
 
  []
 
-LaTeX Info: Redefining \sptext on input line 11.
-LaTeX Info: Redefining \. on input line 11.
-LaTeX Info: Redefining \% on input line 11.
-[47]
+
 Underfull \hbox (badness 10000) in paragraph at lines 11--12
 
  []
+
+LaTeX Info: Redefining \sptext on input line 12.
+LaTeX Info: Redefining \. on input line 12.
+LaTeX Info: Redefining \% on input line 12.
+[47]
+
+Package biblatex-chicago Warning: Empty Ibidem citation on input line 13.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 13--14
 
  []
 
-LaTeX Info: Redefining \sptext on input line 14.
-LaTeX Info: Redefining \. on input line 14.
-LaTeX Info: Redefining \% on input line 14.
-[48]
+
 Underfull \hbox (badness 10000) in paragraph at lines 15--16
 
  []
 
-LaTeX Info: Redefining \sptext on input line 22.
-LaTeX Info: Redefining \. on input line 22.
-LaTeX Info: Redefining \% on input line 22.
-[49]
-Underfull \hbox (badness 10000) in paragraph at lines 26--27
+LaTeX Info: Redefining \sptext on input line 16.
+LaTeX Info: Redefining \. on input line 16.
+LaTeX Info: Redefining \% on input line 16.
+[48]
+Underfull \hbox (badness 10000) in paragraph at lines 17--18
 
  []
 
-
+LaTeX Info: Redefining \sptext on input line 24.
+LaTeX Info: Redefining \. on input line 24.
+LaTeX Info: Redefining \% on input line 24.
+[49]
 Underfull \hbox (badness 10000) in paragraph at lines 28--29
 
  []
 
-LaTeX Info: Redefining \sptext on input line 29.
-LaTeX Info: Redefining \. on input line 29.
-LaTeX Info: Redefining \% on input line 29.
-[50]
-LaTeX Info: Redefining \sptext on input line 44.
-LaTeX Info: Redefining \. on input line 44.
-LaTeX Info: Redefining \% on input line 44.
- [51]
-LaTeX Info: Redefining \sptext on input line 59.
-LaTeX Info: Redefining \. on input line 59.
-LaTeX Info: Redefining \% on input line 59.
- [52]
-LaTeX Info: Redefining \sptext on input line 67.
-LaTeX Info: Redefining \. on input line 67.
-LaTeX Info: Redefining \% on input line 67.
- [53]
-Underfull \hbox (badness 10000) in paragraph at lines 70--71
+
+Underfull \hbox (badness 10000) in paragraph at lines 30--31
 
  []
 
-LaTeX Info: Redefining \sptext on input line 73.
-LaTeX Info: Redefining \. on input line 73.
-LaTeX Info: Redefining \% on input line 73.
-[54]
-LaTeX Info: Redefining \sptext on input line 81.
-LaTeX Info: Redefining \. on input line 81.
-LaTeX Info: Redefining \% on input line 81.
- [55]
-LaTeX Info: Redefining \sptext on input line 89.
-LaTeX Info: Redefining \. on input line 89.
-LaTeX Info: Redefining \% on input line 89.
- [56]
-LaTeX Info: Redefining \sptext on input line 101.
-LaTeX Info: Redefining \. on input line 101.
-LaTeX Info: Redefining \% on input line 101.
- [57]
-Overfull \hbox (8.16006pt too wide) in paragraph at lines 104--105
+LaTeX Info: Redefining \sptext on input line 33.
+LaTeX Info: Redefining \. on input line 33.
+LaTeX Info: Redefining \% on input line 33.
+[50]
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+LaTeX Info: Redefining \sptext on input line 48.
+LaTeX Info: Redefining \. on input line 48.
+LaTeX Info: Redefining \% on input line 48.
+[51]
+Overfull \hbox (8.16006pt too wide) in paragraph at lines 51--52
 []\OT1/cmr/m/n/10 ... el proposi-to de un anali-sis es-tadsti-co es fun-da-
 men-tal-men-te un proposi-
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 109--110
+LaTeX Info: Redefining \sptext on input line 52.
+LaTeX Info: Redefining \. on input line 52.
+LaTeX Info: Redefining \% on input line 52.
+[52]
+Underfull \hbox (badness 10000) in paragraph at lines 68--70
 
  []
 
-LaTeX Info: Redefining \sptext on input line 110.
-LaTeX Info: Redefining \. on input line 110.
-LaTeX Info: Redefining \% on input line 110.
+LaTeX Info: Redefining \sptext on input line 74.
+LaTeX Info: Redefining \. on input line 74.
+LaTeX Info: Redefining \% on input line 74.
+[53]
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
+
+ []
+
+LaTeX Info: Redefining \sptext on input line 82.
+LaTeX Info: Redefining \. on input line 82.
+LaTeX Info: Redefining \% on input line 82.
+[54]
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+
+ []
+
+LaTeX Info: Redefining \sptext on input line 93.
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 93--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 96--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--103
+
+ []
+
+LaTeX Info: Redefining \sptext on input line 103.
+LaTeX Info: Redefining \. on input line 103.
+LaTeX Info: Redefining \% on input line 103.
+[56]
+LaTeX Info: Redefining \sptext on input line 112.
+LaTeX Info: Redefining \. on input line 112.
+LaTeX Info: Redefining \% on input line 112.
+ [57]
+Underfull \hbox (badness 10000) in paragraph at lines 116--118
+
+ []
+
+LaTeX Info: Redefining \sptext on input line 129.
+LaTeX Info: Redefining \. on input line 129.
+LaTeX Info: Redefining \% on input line 129.
 [58]
-Underfull \hbox (badness 10000) in paragraph at lines 111--112
+Underfull \hbox (badness 10000) in paragraph at lines 129--131
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--114
+Overfull \hbox (4.62566pt too wide) in paragraph at lines 132--133
+\OT1/cmr/m/n/10 reali-dad cual-quier in-fe-ren-cia o de-ci-sion se de-bera to
+mar--- co-mo ya he mencionado---
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 
  []
 
-LaTeX Info: Redefining \sptext on input line 114.
-LaTeX Info: Redefining \. on input line 114.
-LaTeX Info: Redefining \% on input line 114.
+
+Underfull \hbox (badness 10000) in paragraph at lines 134--135
+
+ []
+
+LaTeX Info: Redefining \sptext on input line 138.
+LaTeX Info: Redefining \. on input line 138.
+LaTeX Info: Redefining \% on input line 138.
 [59]
-Overfull \hbox (28.4379pt too wide) in paragraph at lines 115--116
-\OT1/cmr/m/n/10 de-re-mos jus-tas. Ima-gi-ne-mos un mer-ca-do co-mo el del si-t
-io web https://www.predictit.org/
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 121--123
+Underfull \hbox (badness 10000) in paragraph at lines 140--141
 
  []
 
-LaTeX Info: Redefining \sptext on input line 123.
-LaTeX Info: Redefining \. on input line 123.
-LaTeX Info: Redefining \% on input line 123.
+LaTeX Info: Redefining \sptext on input line 143.
+LaTeX Info: Redefining \. on input line 143.
+LaTeX Info: Redefining \% on input line 143.
 [60]
-Underfull \hbox (badness 10000) in paragraph at lines 128--129
+Underfull \hbox (badness 10000) in paragraph at lines 145--147
 
  []
 
-LaTeX Info: Redefining \sptext on input line 133.
-LaTeX Info: Redefining \. on input line 133.
-LaTeX Info: Redefining \% on input line 133.
-[61]
-Underfull \hbox (badness 10000) in paragraph at lines 142--144
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
 
  []
 
 LaTeX Info: Redefining \sptext on input line 154.
 LaTeX Info: Redefining \. on input line 154.
 LaTeX Info: Redefining \% on input line 154.
+[61]
+Underfull \hbox (badness 10000) in paragraph at lines 154--157
+
+ []
+
+LaTeX Info: Redefining \sptext on input line 170.
+LaTeX Info: Redefining \. on input line 170.
+LaTeX Info: Redefining \% on input line 170.
 [62]
-Underfull \hbox (badness 10000) in paragraph at lines 154--156
-
- []
-
-LaTeX Info: Redefining \sptext on input line 157.
-LaTeX Info: Redefining \. on input line 157.
-LaTeX Info: Redefining \% on input line 157.
-[63]
-Underfull \hbox (badness 10000) in paragraph at lines 161--162
-
- []
-
-LaTeX Info: Redefining \sptext on input line 164.
-LaTeX Info: Redefining \. on input line 164.
-LaTeX Info: Redefining \% on input line 164.
-[64]
-Underfull \hbox (badness 10000) in paragraph at lines 166--168
+Underfull \hbox (badness 10000) in paragraph at lines 170--172
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 174--175
+Underfull \hbox (badness 10000) in paragraph at lines 173--174
 
  []
 
-LaTeX Info: Redefining \sptext on input line 176.
-LaTeX Info: Redefining \. on input line 176.
-LaTeX Info: Redefining \% on input line 176.
-[65]
-Underfull \hbox (badness 10000) in paragraph at lines 188--190
-
- []
-
-LaTeX Info: Redefining \sptext on input line 190.
-LaTeX Info: Redefining \. on input line 190.
-LaTeX Info: Redefining \% on input line 190.
-[66]
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
-
- []
-
-LaTeX Info: Redefining \sptext on input line 192.
-LaTeX Info: Redefining \. on input line 192.
-LaTeX Info: Redefining \% on input line 192.
-[67]) (Cuerpo/05_Modelos_Regr_Bayes.tex
+LaTeX Info: Redefining \sptext on input line 174.
+LaTeX Info: Redefining \. on input line 174.
+LaTeX Info: Redefining \% on input line 174.
+[63]) (Cuerpo/05_Modelos_Regr_Bayes.tex
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
- [68]
+ [64]
 Cap\'{\i }tulo 5.
 
 Underfull \hbox (badness 10000) in paragraph at lines 7--8
 
  []
 
-[69
+[65
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 16--18
@@ -1902,7 +1927,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 16--18
 LaTeX Info: Redefining \sptext on input line 18.
 LaTeX Info: Redefining \. on input line 18.
 LaTeX Info: Redefining \% on input line 18.
-[70]
+[66]
 Underfull \hbox (badness 10000) in paragraph at lines 19--20
 
  []
@@ -1915,7 +1940,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--22
 LaTeX Info: Redefining \sptext on input line 24.
 LaTeX Info: Redefining \. on input line 24.
 LaTeX Info: Redefining \% on input line 24.
-[71]
+[67]
 Underfull \hbox (badness 10000) in paragraph at lines 30--32
 
  []
@@ -1923,19 +1948,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 30--32
 LaTeX Info: Redefining \sptext on input line 47.
 LaTeX Info: Redefining \. on input line 47.
 LaTeX Info: Redefining \% on input line 47.
-[72]
+[68]
 LaTeX Info: Redefining \sptext on input line 63.
 LaTeX Info: Redefining \. on input line 63.
 LaTeX Info: Redefining \% on input line 63.
- [73]
+ [69]
 LaTeX Info: Redefining \sptext on input line 87.
 LaTeX Info: Redefining \. on input line 87.
 LaTeX Info: Redefining \% on input line 87.
- [74]
+ [70]
 LaTeX Info: Redefining \sptext on input line 102.
 LaTeX Info: Redefining \. on input line 102.
 LaTeX Info: Redefining \% on input line 102.
- [75]
+ [71]
 Underfull \hbox (badness 10000) in paragraph at lines 111--113
 
  []
@@ -1943,7 +1968,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 111--113
 LaTeX Info: Redefining \sptext on input line 121.
 LaTeX Info: Redefining \. on input line 121.
 LaTeX Info: Redefining \% on input line 121.
-[76]
+[72]
 Underfull \hbox (badness 10000) in paragraph at lines 129--131
 
  []
@@ -1951,15 +1976,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 129--131
 LaTeX Info: Redefining \sptext on input line 133.
 LaTeX Info: Redefining \. on input line 133.
 LaTeX Info: Redefining \% on input line 133.
-[77]
+[73]
 LaTeX Info: Redefining \sptext on input line 153.
 LaTeX Info: Redefining \. on input line 153.
 LaTeX Info: Redefining \% on input line 153.
- [78]
+ [74]
 LaTeX Info: Redefining \sptext on input line 170.
 LaTeX Info: Redefining \. on input line 170.
 LaTeX Info: Redefining \% on input line 170.
- [79]
+ [75]
 Underfull \hbox (badness 10000) in paragraph at lines 173--175
 
  []
@@ -1967,11 +1992,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 173--175
 LaTeX Info: Redefining \sptext on input line 187.
 LaTeX Info: Redefining \. on input line 187.
 LaTeX Info: Redefining \% on input line 187.
-[80]
+[76]
 LaTeX Info: Redefining \sptext on input line 204.
 LaTeX Info: Redefining \. on input line 204.
 LaTeX Info: Redefining \% on input line 204.
- [81]
+ [77]
 Underfull \hbox (badness 10000) in paragraph at lines 204--206
 
  []
@@ -1989,7 +2014,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 211--212
 LaTeX Info: Redefining \sptext on input line 212.
 LaTeX Info: Redefining \. on input line 212.
 LaTeX Info: Redefining \% on input line 212.
-[82]
+[78]
 Underfull \hbox (badness 10000) in paragraph at lines 213--214
 
  []
@@ -1997,7 +2022,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 213--214
 LaTeX Info: Redefining \sptext on input line 216.
 LaTeX Info: Redefining \. on input line 216.
 LaTeX Info: Redefining \% on input line 216.
-[83]
+[79]
 Underfull \hbox (badness 10000) in paragraph at lines 220--221
 
  []
@@ -2010,7 +2035,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 223--224
 LaTeX Info: Redefining \sptext on input line 224.
 LaTeX Info: Redefining \. on input line 224.
 LaTeX Info: Redefining \% on input line 224.
-[84]
+[80]
 Underfull \hbox (badness 10000) in paragraph at lines 235--238
 
  []
@@ -2018,11 +2043,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 235--238
 LaTeX Info: Redefining \sptext on input line 240.
 LaTeX Info: Redefining \. on input line 240.
 LaTeX Info: Redefining \% on input line 240.
-[85]
+[81]
 LaTeX Info: Redefining \sptext on input line 255.
 LaTeX Info: Redefining \. on input line 255.
 LaTeX Info: Redefining \% on input line 255.
- [86]
+ [82]
 Underfull \hbox (badness 10000) in paragraph at lines 272--273
 
  []
@@ -2030,7 +2055,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 272--273
 LaTeX Info: Redefining \sptext on input line 283.
 LaTeX Info: Redefining \. on input line 283.
 LaTeX Info: Redefining \% on input line 283.
-[87]
+[83]
 Underfull \hbox (badness 10000) in paragraph at lines 299--300
 
  []
@@ -2038,7 +2063,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 299--300
 LaTeX Info: Redefining \sptext on input line 300.
 LaTeX Info: Redefining \. on input line 300.
 LaTeX Info: Redefining \% on input line 300.
-[88]
+[84]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
@@ -2047,11 +2072,11 @@ Package amsmath Warning: Foreign command \atopwithdelims;
 LaTeX Info: Redefining \sptext on input line 315.
 LaTeX Info: Redefining \. on input line 315.
 LaTeX Info: Redefining \% on input line 315.
-[89]
+[85]
 LaTeX Info: Redefining \sptext on input line 334.
 LaTeX Info: Redefining \. on input line 334.
 LaTeX Info: Redefining \% on input line 334.
- [90]
+ [86]
 Underfull \hbox (badness 10000) in paragraph at lines 336--337
 
  []
@@ -2064,7 +2089,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 338--339
 LaTeX Info: Redefining \sptext on input line 339.
 LaTeX Info: Redefining \. on input line 339.
 LaTeX Info: Redefining \% on input line 339.
-[91]
+[87]
 Underfull \hbox (badness 10000) in paragraph at lines 340--341
 
  []
@@ -2077,7 +2102,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 342--343
 LaTeX Info: Redefining \sptext on input line 343.
 LaTeX Info: Redefining \. on input line 343.
 LaTeX Info: Redefining \% on input line 343.
-[92]
+[88]
 Underfull \hbox (badness 10000) in paragraph at lines 348--349
 
  []
@@ -2085,7 +2110,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 348--349
 LaTeX Info: Redefining \sptext on input line 354.
 LaTeX Info: Redefining \. on input line 354.
 LaTeX Info: Redefining \% on input line 354.
-[93]
+[89]
 Underfull \hbox (badness 10000) in paragraph at lines 356--359
 
  []
@@ -2093,7 +2118,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 356--359
 LaTeX Info: Redefining \sptext on input line 363.
 LaTeX Info: Redefining \. on input line 363.
 LaTeX Info: Redefining \% on input line 363.
-[94]
+[90]
 Underfull \hbox (badness 10000) in paragraph at lines 363--365
 
  []
@@ -2102,7 +2127,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 363--365
 
 pdfTeX warning: pdflatex (file ./Figs/Bayes/Modelo_Jer.pdf): PDF inclusion: fou
 nd PDF version <1.7>, but at most version <1.5> allowed
-<Figs/Bayes/Modelo_Jer.pdf, id=1214, 963.6pt x 542.025pt>
+<Figs/Bayes/Modelo_Jer.pdf, id=1153, 963.6pt x 542.025pt>
 File: Figs/Bayes/Modelo_Jer.pdf Graphic file (type pdf)
 
 <use Figs/Bayes/Modelo_Jer.pdf>
@@ -2115,7 +2140,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Info: Redefining \sptext on input line 382.
 LaTeX Info: Redefining \. on input line 382.
 LaTeX Info: Redefining \% on input line 382.
-[95]
+[91]
 Underfull \hbox (badness 10000) in paragraph at lines 391--392
 
  []
@@ -2123,11 +2148,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 391--392
 LaTeX Info: Redefining \sptext on input line 392.
 LaTeX Info: Redefining \. on input line 392.
 LaTeX Info: Redefining \% on input line 392.
-[96 <./Figs/Bayes/Modelo_Jer.pdf>]
+[92 <./Figs/Bayes/Modelo_Jer.pdf>]
 LaTeX Info: Redefining \sptext on input line 407.
 LaTeX Info: Redefining \. on input line 407.
 LaTeX Info: Redefining \% on input line 407.
- [97]
+ [93]
 Overfull \hbox (8.20172pt too wide) in paragraph at lines 417--418
 []\OT1/cmr/m/n/10 Es po-si-ble ajus-tar MLG jerarqui-cos. Por ejem-plo, una re
 -gre-sion logsti-ca jerarqui-
@@ -2136,67 +2161,92 @@ Overfull \hbox (8.20172pt too wide) in paragraph at lines 417--418
 LaTeX Info: Redefining \sptext on input line 427.
 LaTeX Info: Redefining \. on input line 427.
 LaTeX Info: Redefining \% on input line 427.
-[98]) (Cuerpo/06_MCMC_HMC.tex
+[94]) (Cuerpo/06_MCMC_HMC.tex
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
- [99]
+ [95]
 Cap\'{\i }tulo 6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--4
+Underfull \hbox (badness 10000) in paragraph at lines 6--8
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 8--10
-
- []
-
-[100
+[96
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 22--23
+
+LaTeX Warning: Reference `fig:LGN' on page 97 undefined on input line 20.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
  []
 
-LaTeX Info: Redefining \sptext on input line 25.
-LaTeX Info: Redefining \. on input line 25.
-LaTeX Info: Redefining \% on input line 25.
-[101]
-Underfull \hbox (badness 10000) in paragraph at lines 28--29
+<Figs/LGN.png, id=1216, 1202.24156pt x 626.34pt>
+File: Figs/LGN.png Graphic file (type png)
+ <use Figs/LGN.png>
+Package pdftex.def Info: Figs/LGN.png used on input line 24.
+(pdftex.def)             Requested size: 300.55965pt x 156.58461pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+LaTeX Info: Redefining \sptext on input line 30.
+LaTeX Info: Redefining \. on input line 30.
+LaTeX Info: Redefining \% on input line 30.
+[97]
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
 
  []
 
-LaTeX Info: Redefining \sptext on input line 31.
-LaTeX Info: Redefining \. on input line 31.
-LaTeX Info: Redefining \% on input line 31.
-[102])
+LaTeX Info: Redefining \sptext on input line 34.
+LaTeX Info: Redefining \. on input line 34.
+LaTeX Info: Redefining \% on input line 34.
+[98 <./Figs/LGN.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 35--36
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--38
+
+ []
+
+LaTeX Info: Redefining \sptext on input line 40.
+LaTeX Info: Redefining \. on input line 40.
+LaTeX Info: Redefining \% on input line 40.
+[99]
+LaTeX Info: Redefining \sptext on input line 56.
+LaTeX Info: Redefining \. on input line 56.
+LaTeX Info: Redefining \% on input line 56.
+ [100])
 LaTeX Info: Redefining \sptext on input line 160.
 LaTeX Info: Redefining \. on input line 160.
 LaTeX Info: Redefining \% on input line 160.
- [103] [104
+ [101] [102
 
 ] (Anexos/A_Bases_Datos.tex
 Anexo A.
-[105
+[103
 
 ]
 LaTeX Info: Redefining \sptext on input line 45.
 LaTeX Info: Redefining \. on input line 45.
 LaTeX Info: Redefining \% on input line 45.
- [106])
+ [104])
 LaTeX Info: Redefining \sptext on input line 170.
 LaTeX Info: Redefining \. on input line 170.
 LaTeX Info: Redefining \% on input line 170.
- [107]
+ [105]
 LaTeX Info: Redefining \sptext on input line 170.
 LaTeX Info: Redefining \. on input line 170.
 LaTeX Info: Redefining \% on input line 170.
- [108]
+ [106]
 LaTeX Info: Redefining \sptext on input line 170.
 LaTeX Info: Redefining \. on input line 170.
 LaTeX Info: Redefining \% on input line 170.
- [109] [110
+ [107] [108
 
 ]
 Overfull \hbox (5.5977pt too wide) in paragraph at lines 171--171
@@ -2223,21 +2273,21 @@ Overfull \hbox (20.76082pt too wide) in paragraph at lines 171--171
 ganisation -[] territoriale -[]
  []
 
-[111
+[109
 
 ]
 LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
+ [110]
+LaTeX Info: Redefining \sptext on input line 171.
+LaTeX Info: Redefining \. on input line 171.
+LaTeX Info: Redefining \% on input line 171.
+ [111]
+LaTeX Info: Redefining \sptext on input line 171.
+LaTeX Info: Redefining \. on input line 171.
+LaTeX Info: Redefining \% on input line 171.
  [112]
-LaTeX Info: Redefining \sptext on input line 171.
-LaTeX Info: Redefining \. on input line 171.
-LaTeX Info: Redefining \% on input line 171.
- [113]
-LaTeX Info: Redefining \sptext on input line 171.
-LaTeX Info: Redefining \. on input line 171.
-LaTeX Info: Redefining \% on input line 171.
- [114]
 LaTeX Font Info:    Try loading font information for U+lasy on input line 171.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ulasy.fd"
@@ -2251,7 +2301,7 @@ a Analy-sis\OT1/cmr/m/n/10 . 3.[] ed. Chap-man & Hall/CRC
 LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
-[115]
+[113]
 Overfull \hbox (13.7454pt too wide) in paragraph at lines 171--171
 \OT1/cmr/m/it/10 sumee''\OT1/cmr/m/n/10 . []$\OT1/cmtt/m/n/10 https : / / www 
 . nouvelobs . com / politique / election -[] presidentielle -[]
@@ -2260,11 +2310,11 @@ Overfull \hbox (13.7454pt too wide) in paragraph at lines 171--171
 LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
-[116]
+[114]
 LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
- [117]
+ [115]
 Overfull \hbox (2.05682pt too wide) in paragraph at lines 171--171
 \OT1/cmr/m/it/10 Marie Le Pen a Do-nald Trump\OT1/cmr/m/n/10 . []$\OT1/cmtt/m/
 n/10 https : / / www . franceculture . fr / emissions /
@@ -2285,7 +2335,15 @@ tp : / / www . letraslibres . com / mexico / revista / fascista -[]
 LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
-[118]
+[116]
+LaTeX Info: Redefining \sptext on input line 171.
+LaTeX Info: Redefining \. on input line 171.
+LaTeX Info: Redefining \% on input line 171.
+ [117]
+LaTeX Info: Redefining \sptext on input line 171.
+LaTeX Info: Redefining \. on input line 171.
+LaTeX Info: Redefining \% on input line 171.
+ [118]
 LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
@@ -2298,27 +2356,24 @@ LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
  [121]
+Overfull \hbox (10.97182pt too wide) in paragraph at lines 171--171
+[]\OT1/cmr/m/n/10 Smith, A.F.M. y A.E. Gel-fand. 1992. ``Ba-ye-sian Sta-tis-tic
+s wit-hout Tears: A Sampling-
+ []
+
 LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
- [122]
+[122]
 LaTeX Info: Redefining \sptext on input line 171.
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
  [123]
-LaTeX Info: Redefining \sptext on input line 171.
-LaTeX Info: Redefining \. on input line 171.
-LaTeX Info: Redefining \% on input line 171.
- [124]
-LaTeX Info: Redefining \sptext on input line 171.
-LaTeX Info: Redefining \. on input line 171.
-LaTeX Info: Redefining \% on input line 171.
- [125]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 177.
 LaTeX Info: Redefining \sptext on input line 177.
 LaTeX Info: Redefining \. on input line 177.
 LaTeX Info: Redefining \% on input line 177.
- [126]
+ [124]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 177.
  (main.aux
 LaTeX Info: Redefining \sptext on input line 28.
@@ -2328,10 +2383,13 @@ LaTeX Info: Redefining \% on input line 28.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 177.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 177.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 9C6A7C48F9FADBBDA9C2E7797E31F6FA;3346.
+(rerunfilecheck)             Checksum: E5B148DA07C5CBBBAFC1CBC96346EF89;3320.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -2343,16 +2401,16 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 177.
  )
 (\end occurred inside a group at level 1)
 
-### simple group (level 1) entered at line 171 ({)
+### simple group (level 1) entered at line 154 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 17547 strings out of 493335
- 283772 string characters out of 3136645
- 805524 words of memory out of 3000000
- 20332 multiletter control sequences out of 15000+200000
+ 17546 strings out of 493335
+ 284000 string characters out of 3136645
+ 805178 words of memory out of 3000000
+ 20343 multiletter control sequences out of 15000+200000
  19206 words of font info for 70 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,17n,75p,3161b,2602s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,17n,75p,3161b,2605s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmbx10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
@@ -2372,16 +2430,15 @@ x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Program Files (x86)/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2
 .9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmti8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/ty
-pe1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type
-1/public/amsfonts/latxfont/lasy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/
-type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (139 pages, 1124059 bytes).
+fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmti8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/latxfont/lasy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files (x86)/MiKTeX 2.9/
+fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (137 pages, 1128325 bytes).
 PDF statistics:
- 1752 PDF objects out of 2073 (max. 8388607)
- 449 named destinations out of 1000 (max. 500000)
- 373 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1698 PDF objects out of 1728 (max. 8388607)
+ 436 named destinations out of 1000 (max. 500000)
+ 378 words of extra memory for PDF output out of 10000 (max. 10000000)
 

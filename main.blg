@@ -1,16 +1,16 @@
-[0] Config.pm:343> INFO - This is Biber 2.5
-[14] Config.pm:346> INFO - Logfile is 'main.blg'
-[76] biber-MSWIN32:290> INFO - === 
-[120] Biber.pm:351> INFO - Reading 'main.bcf'
-[347] Biber.pm:776> INFO - Found 111 citekeys in bib section 0
-[373] Biber.pm:3493> INFO - Processing section 0
-[412] Biber.pm:3657> INFO - Looking for bibtex format file 'referencias_tesis.bib' for section 0
-[427] bibtex.pm:1187> INFO - Decoding LaTeX character macros into UTF-8
-[439] bibtex.pm:1048> INFO - Found BibTeX data source 'referencias_tesis.bib'
-[641] Utils.pm:149> WARN - I didn't find a database entry for 'Carpizo78' (section 0)
-[860] UCollate.pm:66> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
-[861] UCollate.pm:66> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[861] Biber.pm:3306> INFO - Sorting list 'nty/global/' of type 'entry' with scheme 'nty' and locale 'es-ES'
-[1155] bbl.pm:526> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[1182] bbl.pm:619> INFO - Output to main.bbl
-[1183] Biber.pm:108> INFO - WARNINGS: 1
+[1] Config.pm:343> INFO - This is Biber 2.5
+[42] Config.pm:346> INFO - Logfile is 'main.blg'
+[167] biber-MSWIN32:290> INFO - === 
+[311] Biber.pm:351> INFO - Reading 'main.bcf'
+[596] Biber.pm:776> INFO - Found 113 citekeys in bib section 0
+[624] Biber.pm:3493> INFO - Processing section 0
+[662] Biber.pm:3657> INFO - Looking for bibtex format file 'referencias_tesis.bib' for section 0
+[678] bibtex.pm:1187> INFO - Decoding LaTeX character macros into UTF-8
+[689] bibtex.pm:1048> INFO - Found BibTeX data source 'referencias_tesis.bib'
+[905] Utils.pm:149> WARN - I didn't find a database entry for 'Carpizo78' (section 0)
+[1111] UCollate.pm:66> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1112] UCollate.pm:66> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1112] Biber.pm:3306> INFO - Sorting list 'nty/global/' of type 'entry' with scheme 'nty' and locale 'es-ES'
+[1425] bbl.pm:526> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[1455] bbl.pm:619> INFO - Output to main.bbl
+[1455] Biber.pm:108> INFO - WARNINGS: 1

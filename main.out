@@ -22,23 +22,23 @@
 \BOOKMARK [0][-]{chapter.4}{La probabilidad no existe}{part.2}% 22
 \BOOKMARK [1][-]{section.4.1}{\277Probabilidad o probabilidades?}{chapter.4}% 23
 \BOOKMARK [1][-]{section.4.2}{Aprendizaje bayesiano}{chapter.4}% 24
-\BOOKMARK [1][-]{section.4.3}{La \372nica receta de la inferencia bayesiana}{chapter.4}% 25
-\BOOKMARK [2][-]{subsection.4.3.1}{Problemas de inferencia bayesiana}{section.4.3}% 26
-\BOOKMARK [2][-]{subsection.4.3.2}{La receta}{section.4.3}% 27
-\BOOKMARK [1][-]{section.4.4}{Distribuciones iniciales}{chapter.4}% 28
-\BOOKMARK [2][-]{subsection.4.4.1}{Distribuciones iniciales no informativas}{section.4.4}% 29
-\BOOKMARK [0][-]{chapter.5}{Modelos de Regresi\363n Bayesianos}{part.2}% 30
-\BOOKMARK [1][-]{section.5.1}{Regresi\363n lineal}{chapter.5}% 31
-\BOOKMARK [2][-]{subsection.5.1.1}{An\341lisis bayesiano del modelo lineal normal}{section.5.1}% 32
-\BOOKMARK [2][-]{subsection.5.1.2}{Problema de multicolinealidad}{section.5.1}% 33
-\BOOKMARK [1][-]{section.5.2}{Regresi\363n Log\355stica}{chapter.5}% 34
-\BOOKMARK [2][-]{subsection.5.2.1}{Modelos lineales generalizados}{section.5.2}% 35
-\BOOKMARK [2][-]{subsection.5.2.2}{Problema de separaci\363n}{section.5.2}% 36
-\BOOKMARK [1][-]{section.5.3}{Modelos Jer\341rquicos}{chapter.5}% 37
-\BOOKMARK [2][-]{subsection.5.3.1}{Intercambiabilidad}{section.5.3}% 38
-\BOOKMARK [2][-]{subsection.5.3.2}{Regresiones jer\341rquicas}{section.5.3}% 39
-\BOOKMARK [0][-]{chapter.6}{C\363mputo bayesiano}{part.2}% 40
-\BOOKMARK [1][-]{section.6.1}{Monte Carlo}{chapter.6}% 41
-\BOOKMARK [-1][-]{section.6.1}{Anexos}{}% 42
-\BOOKMARK [0][-]{appendix.Alph1}{Bases de datos utilizadas}{section.6.1}% 43
-\BOOKMARK [-1][-]{table.caption.26}{Referencias}{}% 44
+\BOOKMARK [1][-]{section.4.3}{Distribuciones iniciales}{chapter.4}% 25
+\BOOKMARK [2][-]{subsection.4.3.1}{Distribuciones no informativas}{section.4.3}% 26
+\BOOKMARK [2][-]{subsection.4.3.2}{Distribuciones informativas}{section.4.3}% 27
+\BOOKMARK [2][-]{subsection.4.3.3}{Distribuciones Conjugadas}{section.4.3}% 28
+\BOOKMARK [0][-]{chapter.5}{Modelos de Regresi\363n Bayesianos}{part.2}% 29
+\BOOKMARK [1][-]{section.5.1}{Regresi\363n lineal}{chapter.5}% 30
+\BOOKMARK [2][-]{subsection.5.1.1}{An\341lisis bayesiano del modelo lineal normal}{section.5.1}% 31
+\BOOKMARK [2][-]{subsection.5.1.2}{Problema de multicolinealidad}{section.5.1}% 32
+\BOOKMARK [1][-]{section.5.2}{Regresi\363n Log\355stica}{chapter.5}% 33
+\BOOKMARK [2][-]{subsection.5.2.1}{Modelos lineales generalizados}{section.5.2}% 34
+\BOOKMARK [2][-]{subsection.5.2.2}{Problema de separaci\363n}{section.5.2}% 35
+\BOOKMARK [1][-]{section.5.3}{Modelos Jer\341rquicos}{chapter.5}% 36
+\BOOKMARK [2][-]{subsection.5.3.1}{Intercambiabilidad}{section.5.3}% 37
+\BOOKMARK [2][-]{subsection.5.3.2}{Regresiones jer\341rquicas}{section.5.3}% 38
+\BOOKMARK [0][-]{chapter.6}{C\363mputo bayesiano}{part.2}% 39
+\BOOKMARK [1][-]{section.6.1}{Monte Carlo}{chapter.6}% 40
+\BOOKMARK [1][-]{section.6.2}{Metropolis-Hastings}{chapter.6}% 41
+\BOOKMARK [-1][-]{section.6.2}{Anexos}{}% 42
+\BOOKMARK [0][-]{appendix.Alph1}{Bases de datos utilizadas}{section.6.2}% 43
+\BOOKMARK [-1][-]{table.caption.22}{Referencias}{}% 44
