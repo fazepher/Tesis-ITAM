@@ -1120,6 +1120,32 @@
       \field{title}{Análisis Bayesiano de Modelos Jerárquicos Lineales}
       \field{year}{1998}
     \endentry
+    \entry{GP97}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=99de664a1474c944b2b9159f8333f338}{%
+           family={Gutiérrez\bibnamedelima Peña},
+           family_i={G\bibinitperiod\bibinitdelim P\bibinitperiod},
+           given={Eduardo},
+           given_i={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Ciudad de {M}éxico}%
+      }
+      \list{organization}{1}{%
+        {Universidad Nacional Autónoma de México (UNAM)}%
+      }
+      \strng{namehash}{99de664a1474c944b2b9159f8333f338}
+      \strng{fullhash}{99de664a1474c944b2b9159f8333f338}
+      \field{sortinit}{G}
+      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{labelyear}{1997}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Serie monografías, IIMAS}
+      \field{title}{Métodos Computacionales en la Inferencia Bayesiana}
+      \field{year}{1997}
+    \endentry
     \entry{GP16}{misc}{}
       \name{author}{1}{}{%
         {{hash=99de664a1474c944b2b9159f8333f338}{%
@@ -1457,12 +1483,12 @@
       \field{sortinit}{L}
       \field{sortinithash}{872351f18d0f736066eda0bf18bfa4f7}
       \field{labelyear}{2016}
-      \field{labelmonth}{03}
+      \field{labelmonth}{3}
       \field{datelabelsource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{isbn}{978-2-02-130028-4}
-      \field{month}{03}
+      \field{month}{3}
       \field{subtitle}{Tripartisme contre démocracie}
       \field{title}{Le nouvel ordre électoral}
       \field{year}{2016}
@@ -1938,6 +1964,52 @@
       \field{year}{1949}
       \field{pages}{335\bibrangedash 341}
       \range{pages}{7}
+    \endentry
+    \entry{Metropolis53}{article}{}
+      \name{author}{5}{}{%
+        {{hash=2b73f47a1a84dd52f45fe57c381c3786}{%
+           family={Metropolis},
+           family_i={M\bibinitperiod},
+           given={Nicholas},
+           given_i={N\bibinitperiod}}}%
+        {{hash=9c4e84bb128c9cd0557392dac948ffcb}{%
+           family={Rosenbluth},
+           family_i={R\bibinitperiod},
+           given={Arianna},
+           given_i={A\bibinitperiod}}}%
+        {{hash=9b005d2eb32ff0a5bde4b0140606e670}{%
+           family={Rosenbluth},
+           family_i={R\bibinitperiod},
+           given={Marshall},
+           given_i={M\bibinitperiod}}}%
+        {{hash=145f718fcdd2c3e8f6cc80aa77279d65}{%
+           family={Teller},
+           family_i={T\bibinitperiod},
+           given={Augusta},
+           given_i={A\bibinitperiod}}}%
+        {{hash=e22e18e792a0fca9678ed7c3a29c1fed}{%
+           family={Teller},
+           family_i={T\bibinitperiod},
+           given={Edward},
+           given_i={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{5e4fd1c4740883d53e259a40b68b0611}
+      \strng{fullhash}{b835de4d6f8c8ebb108930166638f961}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelyear}{1953}
+      \field{labelmonth}{6}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{6}
+      \field{journaltitle}{Journal of Chemical Physics}
+      \field{month}{6}
+      \field{title}{Equation of State Calculations by Fast Computing Machines}
+      \field{volume}{21}
+      \field{year}{1953}
+      \field{pages}{1087\bibrangedash 1092}
+      \range{pages}{6}
     \endentry
     \entry{Milanovic16}{misc}{}
       \name{author}{1}{}{%
@@ -2659,11 +2731,11 @@
       \field{sortinit}{S}
       \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
       \field{labelyear}{2017}
-      \field{labelmonth}{06}
+      \field{labelmonth}{6}
       \field{datelabelsource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{month}{06}
+      \field{month}{6}
       \field{note}{Conferencia magistral dentro del International Workshop on Perspectives on High Dimensional Data VII (HDDA VII)}
       \field{title}{Subjective Probability: Its Axioms and Acrobatics}
       \field{year}{2017}

@@ -82,10 +82,12 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {6.1}Monte Carlo}{98}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}Metropolis-Hastings}{100}{section.6.2}
+\contentsline {section}{\numberline {6.2}MCMC}{101}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {part}{Anexos}{101}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Metropolis-Hastings}{103}{subsection.6.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Bases de datos utilizadas}{103}{appendix.Alph1}
+\contentsline {part}{Anexos}{105}{equation.6.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {part}{Referencias}{105}{table.caption.22}
+\contentsline {chapter}{\numberline {A}Bases de datos utilizadas}{107}{appendix.Alph1}
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{Referencias}{109}{table.caption.22}

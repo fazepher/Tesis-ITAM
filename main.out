@@ -38,7 +38,8 @@
 \BOOKMARK [2][-]{subsection.5.3.2}{Regresiones jer\341rquicas}{section.5.3}% 38
 \BOOKMARK [0][-]{chapter.6}{C\363mputo bayesiano}{part.2}% 39
 \BOOKMARK [1][-]{section.6.1}{Monte Carlo}{chapter.6}% 40
-\BOOKMARK [1][-]{section.6.2}{Metropolis-Hastings}{chapter.6}% 41
-\BOOKMARK [-1][-]{section.6.2}{Anexos}{}% 42
-\BOOKMARK [0][-]{appendix.Alph1}{Bases de datos utilizadas}{section.6.2}% 43
-\BOOKMARK [-1][-]{table.caption.22}{Referencias}{}% 44
+\BOOKMARK [1][-]{section.6.2}{MCMC}{chapter.6}% 41
+\BOOKMARK [2][-]{subsection.6.2.1}{Metropolis-Hastings}{section.6.2}% 42
+\BOOKMARK [-1][-]{equation.6.2.4}{Anexos}{}% 43
+\BOOKMARK [0][-]{appendix.Alph1}{Bases de datos utilizadas}{equation.6.2.4}% 44
+\BOOKMARK [-1][-]{table.caption.22}{Referencias}{}% 45

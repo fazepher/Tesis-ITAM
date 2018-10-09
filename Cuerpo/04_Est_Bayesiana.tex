@@ -37,11 +37,11 @@ Un punto clave de la teoría de decisión bayesiana es que la definición matem�
 
 \begin{teo} \label{teo:Bayes_1}
 \textbf{Teorema de Bayes. (Versión probabilística)}\\
-Sean $A$ y $B$ eventos tales que $P(B) \neq 0$. Se cumple que: 
+Sean $A$ y $B$ eventos tales que $\Pr(B) \neq 0$. Se cumple que: 
 \begin{equation*}
-P(A|B)=\dfrac{P(B|A)P(A)}{P(B)}\;,
+\Pr(A|B)=\dfrac{\Pr(B|A)\Pr(A)}{\Pr(B)}\;,
 \end{equation*}
-donde $P(A|B)$ y $P(B|A)$ son probabilidades condicionales, mientras que $P(A)$ y $P(B)$ son las respectivas probabilidades marginales. 
+donde $\Pr(A|B)$ y $\Pr(B|A)$ son probabilidades condicionales, mientras que $\Pr(A)$ y $\Pr(B)$ son las respectivas probabilidades marginales. 
 \end{teo}
 
 Vale la pena detenerse a pensar qué implica este teorema en el contexto de la estadística bayesiana; no por nada el apelativo de nuestro paradigma es justamente \textit{bayesiano}, en honor a Thomas Bayes, mismo personaje al que se refiere el teorema. A partir de este momento utilizaré el término \textit{distribución} de manera general para referirme, por ejemplo, a una ley de probabilidad o a sus funciones de densidad o masa de probabilidad, según sea el caso.\\ 
@@ -84,12 +84,12 @@ Sin embargo, podría haber razones suficientes para que esta no sea la distribuc
 
 Otra forma de asignar probabilidades a eventos es pensar en apuestas que consideremos justas. Imaginemos un mercado como el del sitio web 	\href{https://www.predictit.org/}{Predict It} en el que podemos apostar una cantidad $p \in (0,1)$ de centavos de dólar a que un evento suceda. Si el evento efectivamente sucede, nuestra apuesta vale $1$ dólar y habremos ganado $1-p$ centavos. Si el evento no sucede, perdemos $p$ centavos. Por otro lado, pensemos en una apuesta justa, es decir, una cuya ganacia esperada fuera $0$.\\ 
 
-La ganancia esperada $E[g]$ es igual a la ganancia cuando el evento sucede, por la probabilidad de que suceda, más la ganancia--- en este caso, negativa--- cuando el evento no sucede, por la probabilidad de que no suceda. Si denotamos al evento como $A$ y a su probabilidad como $P(A)$, tenemos que : 
+La ganancia esperada $\E{g}$ es igual a la ganancia cuando el evento sucede, por la probabilidad de que suceda, más la ganancia--- en este caso, negativa--- cuando el evento no sucede, por la probabilidad de que no suceda. Si denotamos al evento como $A$ y a su probabilidad como $\Pr(A)$, tenemos que : 
 \begin{align*}
-E[g] = 0 &\Leftrightarrow (1-p)P(A) - pP(A^c) = 0 \\
-&\Leftrightarrow (1-p)P(A) - p(1-P(A))= 0\\ 
-&\Leftrightarrow P(A) - p = 0\\
-&\Leftrightarrow P(A) = p.
+\E{g} = 0 &\Leftrightarrow (1-p)\Pr(A) - p\Pr(A^c) = 0 \\
+&\Leftrightarrow (1-p)\Pr(A) - p(1-\Pr(A))= 0\\ 
+&\Leftrightarrow \Pr(A) - p = 0\\
+&\Leftrightarrow \Pr(A) = p.
 \end{align*}
 Si apostáramos una cantidad mayor estaríamos arriesgándonos de más, o dicho de otra forma, tendríamos una ganancia esperada negativa, por lo que no nos convendría la apuesta. Querríamos apostar menos, pues en ese caso nuestra ganancia esperada sería positiva. Esto quiere decir que podemos pensar en las probabilidades subjetivas de un evento como la máxima cantidad que estaríamos dispuestos a considerar en una apuesta de este tipo.\\ 
 
@@ -112,13 +112,13 @@ Esta distribución, sin embargo, ha sufrido algunas críticas. La primera de ell
 
 La distribución \textit{inicial de Jeffreys} para un parámetro $\theta$ se define en términos de la información de Fisher como: 
 \begin{equation*}
-f(\theta) \propto \sqrt{I_x(\theta)} \quad \text{donde} \quad I_x(\theta) = -E\left[\dfrac{\partial^2}{\partial\theta^2} ln\left(f(x|\theta)\right) \right] 
+f(\theta) \propto \sqrt{I_x(\theta)} \quad \text{donde} \quad I_x(\theta) = -\E{\dfrac{\partial^2}{\partial\theta^2} ln\left(f(x|\theta)\right)} 
 \end{equation*}
 Un desarrollo de cómo obtener este resultado de invarianza se puede encontrar en \textcite{Mendoza11}}.\\ 
 
 Ciertamente la inicial de Jeffreys logra superar la primera crítica a las distribuciones iniciales uniformes no informativas, pero no otro tipo de críticas. Consideremos el caso en el que tenemos una observación $x$ proveniente de una distribución normal con varianza conocida. En este caso tenemos que la inicial de Jeffreys es la siguiente: 
 \begin{align*}
-f(\theta = \mu) &\propto \sqrt{I_x(\theta = \mu)} = \sqrt{-E\left[\dfrac{\partial^2}{\partial\mu^2} ln\left(f(x|\mu)\right) \right]} 
+f(\theta = \mu) &\propto \sqrt{I_x(\theta = \mu)} = \sqrt{-\E{\dfrac{\partial^2}{\partial\mu^2} ln\left(f(x|\mu)\right)}} 
 \intertext{donde}
 ln\left(f(x|\mu)\right) &= -\dfrac{ln(2\pi\sigma^2)}{2}-\dfrac{(x-\mu)^2}{2\sigma^2}\\ 
 &\Rightarrow \dfrac{\partial}{\partial\mu} ln\left(f(x|\mu)\right) = \dfrac{x-\mu}{\sigma^2}\\
