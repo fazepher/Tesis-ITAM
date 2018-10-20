@@ -25,11 +25,6 @@
 \usepackage{url}
 \usepackage[usenames,dvipsnames]{xcolor}
             
-%% Matemáticas %%
-\usepackage{amsmath,amssymb,amsthm}
-%\usepackage[spanish,onelanguage,ruled]{algorithm2e} Algoritmos
-%\usepackage{mathtools} Mejoras a símbolos matemáticos
-
 %% Español y letras %%
 \usepackage[spanish,es-nodecimaldot]{babel} 
 \usepackage[utf8]{inputenc}
@@ -55,6 +50,11 @@
 \renewcommand*{\revsdnamedelim}{} %Se necesita para eliminar la coma antes de la conjunción "y" en una lista de dos nombres cuando el primero está  invertido (apellido, nombre)
 \addbibresource{referencias_tesis.bib}
 %\newcommand{\yobligada}{\forceY}
+
+%% Matemáticas %%
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[spanish,onelanguage,linesnumbered,ruled]{algorithm2e} %Algoritmos
+%\usepackage{mathtools} Mejoras a símbolos matemáticos
 
 %% Corrección espacios %%
 \allowdisplaybreaks
@@ -160,8 +160,8 @@
 \appendix
 
 \addcontentsline{toc}{part}{Anexos}
-\part*{Anexos}
-\input{Anexos/A_Bases_Datos.tex}
+%\part*{Anexos}
+%\input{Anexos/A_Bases_Datos.tex}
 %\input{Anexos/B_AED_compl.tex}
 %\input{Anexos/C_Fam_Exp.tex}
 

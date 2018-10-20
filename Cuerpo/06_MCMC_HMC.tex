@@ -14,7 +14,7 @@ Sean $X_1,\,X_2,\dots$ una secuencia de variables aleatorias independientes e id
 \end{equation*}
 \item \textbf{Ley fuerte}
 \begin{equation*}
-P\left(\lim_{N \to \infty} \bar{X}_M = \mu \right)  = 1 
+P\left(\lim_{N \to \infty} \bar{X}_N = \mu \right)  = 1 
 \end{equation*}
 \end{itemize}
 \end{teo}
@@ -52,9 +52,9 @@ h^\star \approx \hat{h} = \sum\limits_{i=1}^N \dfrac{h(x_i)}{N}
 
 El problema para los científicos en Los Alamos se convirtió entonces en encontrar algoritmos eficientes para obtener una muestra aleatoria de variables provenientes de diferentes distribuciones $f$.\\ 
 
-Este problema es exactamente el mismo que se tiene en la aplicación de la estadística bayesiana. En efecto, la forma de la \textbf{Ecuación \ref{eq:IntegralMC}} permite llevar a cabo una gran variedad de \textit{resúmenes inferenciales} \parencite{GP97}. La posibilidad de realizar la correspondiente \textit{integración por Monte Carlo} hace que, en la práctica, exista una dualidad entre una distribución o densidad y una muestra proveniente de ella \parencite{SmithGelfand92}. La única receta de la inferencia bayesiana--- ver la página \pageref{receta_bayesiana}---, en la práctica se convierte en obtener una muestra aleatoria de la distribución posterior lo suficientemente grande para, con ella, estimar por Monte Carlo los resúmenes inferenciales requeridos.\\
+Este problema es exactamente el mismo que se tiene en la aplicación de la estadística bayesiana. En efecto, la forma de \eqref{eq:IntegralMC} permite llevar a cabo una gran variedad de \textit{resúmenes inferenciales} \parencite{GP97}. La posibilidad de realizar la correspondiente \textit{integración por Monte Carlo} hace que, en la práctica, exista una dualidad entre una distribución o densidad y una muestra proveniente de ella \parencite{SmithGelfand92}. La única receta de la inferencia bayesiana--- ver la página \pageref{receta_bayesiana}---, en la práctica se convierte en obtener una muestra aleatoria de la distribución posterior lo suficientemente grande para, con ella, estimar por Monte Carlo los resúmenes inferenciales requeridos.\\
 
-Hay varios métodos de simulación de variables aleatorias que permiten obtener muestras aleatorias independientes y calcular un estimador de Monte Carlo. Entre los más mencionados podemos encontrar el método de inversión, el de aceptación y rechazo o el muestreo por importancia. Sin embargo, los físicos de Los Alamos pronto se dieron cuenta que podrían ser más eficientes si, en lugar de buscar realizar simulaciones independientes, hacían simulaciones secuenciales que dependieran entre sí. 
+Hay varios métodos de simulación de variables aleatorias que permiten obtener muestras aleatorias independientes y calcular un estimador de Monte Carlo. Entre los más mencionados podemos encontrar el método de inversión, el de aceptación y rechazo o el muestreo por importancia \parencites{Ross13,RobertCasella10}. Sin embargo, los físicos de Los Alamos pronto se dieron cuenta que podrían ser más eficientes si, en lugar de buscar realizar simulaciones independientes, hacían simulaciones secuenciales que dependieran entre sí. 
 
 \section{MCMC}
 
@@ -64,58 +64,105 @@ La forma de realizar simulaciones correlacionadas que logren simular de manera m
 \label{def:Cadena_Markov}
 Una \textit{cadena de Markov} $\left\lbrace X_{(n)}, \, n = 0, 1, 2,\dots \right\rbrace$ es una secuencia de variables aleatorias tales que satisfacen la siguiente \textit{propiedad de Markov} para toda $n$
 \begin{equation*}
-X_{(n+1)}| X_{(n)}, \dots, X_{(0)} \sim X_{(n+1)}| X_{(n)} \sim p(x_{(n)},\tilde{x}_{(n+1)})
+X_{(n+1)}| X_{(n)}, \dots, X_{(0)} \sim X_{(n+1)}| X_{(n)} \sim p(x_{(n+1)}|x_{(n)})
 \end{equation*}
 }
 
-Si llamamos \textit{estados} a los eventos que suceden en la cadena en cada punto en el tiempo, podemos decir que la distribución condicional del estado futuro de una cadena de Markov dada toda su historia depende exclusivamente del estado presente y no de los estados anteriores. Esta distribución condicional se llama \textit{kernel de transición}, mismo que normalmente es independiente del índice $n$ y depende exclusivamente del estado actual y el estado futuro. Esta propiedad se llama \textit{homogeneidad} en el tiempo y permite simplificar la notación a $p(x,\tilde{x})$.\\ 
+Si llamamos \textit{estados} a los eventos que suceden en la cadena en cada punto en el tiempo, podemos decir que la distribución condicional del estado futuro de una cadena de Markov dada toda su historia depende exclusivamente del estado presente y no de los estados anteriores. Esta distribución condicional se llama \textit{kernel de transición}, mismo que normalmente es independiente del índice $n$ y depende exclusivamente del estado actual y el estado futuro. Esta propiedad se llama \textit{homogeneidad} en el tiempo y permite simplificar la notación a $p(\tilde{x}|x)$.\\ 
 
-La teoría de cadenas de Markov determina las condiciones bajo las cuales existen teoremas límites al estilo de las leyes de los grandes números y que en este contexto se conocen como \textit{ergódicos}. Esta teoría escapa los objetivos particulares de la tesis pero, si es de interés para el lector, algunas referencias útiles son {\color{Red} Citar libros de estocásticos}. Baste decir por ahora que, bajo ciertas condiciones, sabemos que la distribución de $X_{(n)}$ converge a una distribución límite conforme $n$ tiende a infinito. Más aún, los \textit{promedios ergódicos}--- es decir los promedios acumulados de la cadena--- también convergen al valor esperado de la distribución límite.\\ 
+La teoría de cadenas de Markov determina las condiciones bajo las cuales existen teoremas límites al estilo de las leyes de los grandes números y que en este contexto se conocen como \textit{ergódicos}. Esta teoría escapa los objetivos particulares de la tesis pero, si es de interés para el lector, algunas referencias útiles son \textcites{Rincon12,Ross96,TaylorKarlin84}. Baste decir por ahora que, bajo ciertas condiciones, sabemos que la distribución de $X_{(n)}$ converge a una distribución límite conforme $n$ tiende a infinito. Más aún, los \textit{promedios ergódicos}--- es decir los promedios acumulados de la cadena--- también convergen al valor esperado de la distribución límite.\\ 
 
-Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones del teorema ergódico y cuya distribución límite sea la distribución de la cuál se quiere simular. Así, después de $N$ transiciones de la cadena, la distribución de los valores simulados sería aproximadamente la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
+Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones del teorema ergódico y cuya distribución límite sea la distribución de la cual se quiere simular. Así, después de $N$ transiciones de la cadena, la distribución de los valores simulados sería aproximadamente la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
 
 \begin{equation*}
-h^\star \approx \hat{h} = \sum\limits_{i=n}^N \dfrac{h(x_{(n)})}{N}
+h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h(x_{(n)})}{N}
 \end{equation*}
 
-\subsection{Metropolis-Hastings}
+\subsection{Metropolis Hastings}
 
- El primero de estos métodos MCMC fue propuesto por las parejas de esposos Arianna y Marshall Rosenbluth y Augusta y Edward Teller junto con el propio Nicholas Metropolis en el \textit{Journal of Chemical Physics} \parencite{Metropolis53}. Se conoce como el algoritmo de Metropolis, aunque hay quienes creen que en realidad el trabajo más fuerte lo hicieron el resto de los autores por lo que debería llamarse el algoritmo de Rosenbluth-Teller {\color{Red} citar Gubernatis}. Casi 20 años después de esta propuesta desde el terreno de la física, el estadístico canadiense Wilfred Keith Hastings lo generalizó {\color{Red} citar Hastings}, por lo que podemos hablar de algoritmos de Metropolis-Hastings o MH.\\
+ El primero de estos métodos MCMC fue propuesto por las parejas de esposos Arianna y Marshall Rosenbluth y Augusta y Edward Teller junto con el propio Nicholas Metropolis en el \textit{Journal of Chemical Physics} \parencite{Metropolis53}. Se conoce como el algoritmo de Metropolis, aunque hay quienes creen que en realidad el trabajo más fuerte lo hicieron el resto de los autores por lo que debería llamarse el algoritmo de Rosenbluth-Teller \parencite{Gubernatis05}. Casi 20 años después, el estadístico canadiense Wilfred Keith Hastings lo generalizó \parencite{Hastings70}, por lo que podemos hablar de algoritmos de Metropolis Hastings o MH.\\
  
 Las cadenas de Markov para MH requieren ser homogéneas en el tiempo y que sea posible llegar a cualquier estado en un número finito de transiciones, algo que se conoce como \textit{irreducibilidad}. Si además de ser una cadena irreducible, el kernel de transición satisface la siguiente \textit{ecuación de balance detallado} para alguna distribución $f$, se dice que es reversible y podemos aplicar el teorema ergódico.
 \begin{equation}
 \label{eq:Balance_Detallado}
-f(x)p(x,\tilde{x})=f(\tilde{x})p(\tilde{x},x)
+f(x)p(\tilde{x}|x)=f(\tilde{x})p(x|\tilde{x})
 \end{equation}
 
-El algoritmo de Metropolis-Hastings busca construir cadenas de Markov homogéneas, irreducibles y reversibles que tengan como distribución límite a la distribución objetivo. ¿Cómo hacerlo? Para ello analicemos lo que la reversibilidad implica de manera intuitiva.\\
+El algoritmo de Metropolis Hastings busca construir cadenas de Markov homogéneas, irreducibles y reversibles que tengan como distribución límite a la distribución objetivo. ¿Cómo hacerlo? Para ello analicemos lo que la reversibilidad implica de manera intuitiva.\\
 
-Siguiendo la argumentación de {\color{Red} Citar Chib y Greenberg}, la \textbf{Ecuación \ref{eq:Balance_Detallado}} refleja que hay un balance entre las probabilidades de la cadena de estar en diferentes estados, de ahí el nombre. Supongamos que no se cumpliera la reversibilidad para algún kernel $q(x,\tilde{x})$. Entonces, sin pérdida de generalidad, para algunos estados pasaría que:
+Siguiendo la argumentación de \textcite{ChibGreenberg95}, \eqref{eq:Balance_Detallado} refleja que hay un balance entre las probabilidades de la cadena de estar en diferentes estados, de ahí el nombre. Supongamos que no se cumpliera la reversibilidad para algún kernel $q(\tilde{x}|x)$. Entonces, sin pérdida de generalidad, para algunos estados pasaría que:
 \begin{equation}
 \label{eq:Inbalance_Detallado}
-f(x)q(x,\tilde{x})>f(\tilde{x})q(\tilde{x},x) \quad \Rightarrow \quad \dfrac{f(x)}{f(\tilde{x})}>\dfrac{q(\tilde{x},x)}{q(x,\tilde{x})}
+\dfrac{f(x)}{f(\tilde{x})}>\dfrac{q(x|\tilde{x})}{q(\tilde{x}|x)}
 \end{equation}
 
-De manera un poco informal, tenemos que el miembro izquierdo de la segunda desigualdad refleja las probabilidades relativas ``necesarias'' entre estar en el estado $x$ y el estado $\tilde{x}$. El miembro derecho, por su parte, indica las probabilidades relativas de transitar a dichos estados bajo el kernel de transición de la cadena. La desigualdad indica que la cadena estaría transitando de $x$ a $\tilde{x}$ más de lo necesario y, equivalentemente, transitando de $\tilde{x}$ a $x$ menos de lo necesario.\\ 
+De manera un poco informal, tenemos que el miembro izquierdo de la desigualdad refleja las probabilidades relativas ``necesarias'' entre estar en el estado $x$ y el estado $\tilde{x}$. El miembro derecho, por su parte, indica las probabilidades relativas de transitar a dichos estados bajo el kernel de transición de la cadena. La desigualdad indica que la cadena estaría transitando a $\tilde{x}$ más de lo necesario y, equivalentemente, transitaría a $x$ menos de lo necesario.\\ 
 
-Para conseguir el balance necesario para aplicar el teorema ergódico, necesitamos hacer una \textit{corrección de Metropolis} al kernel de transición, reduciendo el número relativo de veces que la cadena transite de $x$ a $\tilde{x}$ y aumentando el número relativo de transiciones de $\tilde{x}$ a $x$. La forma de hacer la corrección es comenzar con un kernel de transición $q(x,\tilde{x})$ que \textit{proponga} un estado y agregar una \textit{probabilidad de aceptación} $\alpha(x,\tilde{x})$ de que el estado propuesto se acepte. Si la propuesta se rechaza, la cadena permanece en el mismo estado, reduciendo a la vez el número de transiciones hacia estados sobremuestreados y aumentando el número relativo de veces que estamos en el estado originalmente submuestreado. Estos dos pasos constituyen un nuevo kernel de transición de Metropolis-Hastings de la siguiente forma: 
+Para conseguir el balance necesario para aplicar el teorema ergódico, necesitamos hacer una \textit{corrección de Metropolis} al kernel de transición, reduciendo el número relativo de veces que la cadena transite de $x$ a $\tilde{x}$ y aumentando el número relativo de transiciones de $\tilde{x}$ a $x$. La forma de hacer la corrección es comenzar con un kernel de transición $q(\tilde{x}|x)$ que \textit{proponga} un estado y agregar una \textit{probabilidad de aceptación} $\alpha(\tilde{x};x)$ de que el estado propuesto se acepte. Si la propuesta se rechaza, la cadena permanece en el mismo estado, reduciendo a la vez el número de transiciones hacia estados sobremuestreados y aumentando el número relativo de veces que estamos en el estado originalmente submuestreado. Estos dos pasos constituyen un nuevo kernel de transición de Metropolis Hastings de la siguiente forma: 
 \begin{align*}
-p_{MH}(x,\tilde{x}) &= q(x,\tilde{x})\alpha(x,\tilde{x}) \quad x \neq \tilde{x} \\
-p_{MH}(x,x) &= 1 - \int\limits_\mathcal{X} p_{MH}(x,\tilde{x})d\tilde{x}
+p_{MH}(\tilde{x}|x) &= q(\tilde{x}|x)\alpha(\tilde{x};x) \quad x \neq \tilde{x} \\
+p_{MH}(x|x) &= 1 - \int\limits_\mathcal{X} p_{MH}(\tilde{x}|x)d\tilde{x}
 \end{align*}
 
-Queremos que el kernel $p_{MH}$ satisfaga la \textbf{Ecuación \ref{eq:Balance_Detallado}}, entonces:
+Queremos que el kernel $p_{MH}$ satisfaga \eqref{eq:Balance_Detallado}, entonces:
 \begin{equation*}
-f(x)p_{MH}(x,\tilde{x})=f(\tilde{x})p_{MH}(\tilde{x},x) \quad \Leftrightarrow \quad f(x)q(x,\tilde{x})\alpha(x,\tilde{x})=f(\tilde{x})q(\tilde{x},x)\alpha(\tilde{x},x) 
+f(x)p_{MH}(\tilde{x}|x)=f(\tilde{x})p_{MH}(x|\tilde{x}) \quad \Leftrightarrow \quad f(x)q(\tilde{x}|x)\alpha(\tilde{x};x)=f(\tilde{x})q(x|\tilde{x})\alpha(x;\tilde{x}) 
 \end{equation*}
 
-Las transiciones de $\tilde{x}$ a $x$ se dan demasiado poco, de acuerdo a nuestra desigualdad supuesta en \textbf{\ref{eq:Inbalance_Detallado}}. Por lo que deberíamos siempre aceptar este tipo de transiciones a fin de corregir el submuestreo. Tomemos entonces $\alpha(\tilde{x},x) = 1$ y observemos que $\alpha(x,\tilde{x})$ queda determinada de tal forma que logremos el balance necesario: 
+De acuerdo a nuestra desigualdad supuesta en \eqref{eq:Inbalance_Detallado}, las transiciones de $\tilde{x}$ a $x$ se dan demasiado poco, por lo que deberíamos siempre aceptar este tipo de transiciones a fin de corregir el submuestreo. Tomemos entonces $\alpha(x;\tilde{x}) = 1$ y observemos que $\alpha(\tilde{x};x)$ queda determinada de tal forma que logremos el balance necesario: 
 \begin{equation*}
-\alpha(x,\tilde{x})=\dfrac{f(\tilde{x})q(\tilde{x},x)}{f(x)q(x,\tilde{x})}
+\alpha(\tilde{x};x)=\dfrac{f(\tilde{x})q(x|\tilde{x})}{f(x)q(\tilde{x}|x)}
 \end{equation*}
 
-Si la desigualdad \textbf{\ref{eq:Inbalance_Detallado}} fuera en el sentido contrario, i.e. $f(\tilde{x})q(\tilde{x},x)>f(x)q(x,\tilde{x})$, los roles de las probabilidades de aceptación se invertirían, por lo que de manera general tenemos que 
+Si la desigualdad \eqref{eq:Inbalance_Detallado} fuera en el sentido contrario, i.e. $f(\tilde{x})q(x|\tilde{x})>f(x)q(\tilde{x}|x)$, los roles de las probabilidades de aceptación se invertirían, por lo que de manera general tenemos que 
 \begin{equation}
 \label{eq:Proba_Aceptar_MH}
-\alpha(x,\tilde{x})=min\left[\dfrac{f(\tilde{x})q(\tilde{x},x)}{f(x)q(x,\tilde{x})},1\right]
+\alpha(\tilde{x};x)=min\left\lbrace\dfrac{f(\tilde{x})q(x|\tilde{x})}{f(x)q(\tilde{x}|x)},1\right\rbrace
 \end{equation}
+
+La utilidad de MH para la estadística bayesiana está en la forma \eqref{eq:Proba_Aceptar_MH} de la probabilidad de aceptación. Como la distribución objetivo se encuentra tanto en el denominador como en el numerador, no se requiere completa sino basta con conocerla salvo por una constante de proporcionalidad que desaparezca al realizar el cociente. Esta situación es exactamente la que impera en la aplicación de la estadística bayesiana. Recordemos el resumen del aprendizaje bayesiano en \eqref{eq:Bayes_Prop}, \textit{la posterior es proporcional a la inicial por la verosimilitud}: 
+\begin{equation*}
+f(\theta|x) \propto L(\theta)f(\theta).
+\end{equation*}
+
+Por esto, para simular $N$ valores de una distribución posterior $f(\theta|x)$ mediante MH solo necesitamos la distribución inicial $f(\theta)$, la verosimilitud $L(\theta)=f(x|\theta)$ y un kernel de propuestas $q(\tilde{\theta}|\theta)$, siguiendo el \textbf{Algoritmo \ref{alg:MH}}. La única consideración que debe tenerse en cuenta es que la posterior sea propia, si se inició con una inicial impropia es posible que la posterior no pueda integrar a 1, lo que haría que el algoritmo fallara \parencite{RobertCasella10}.\\
+
+\begin{algorithm}
+\DontPrintSemicolon
+
+\SetKwInput{Entradas}{Entradas}
+\Entradas{\begin{itemize}
+\item Verosimilitud $L(\theta)=f(x|\theta)$;\\ 
+\item Distribución inicial $f(\theta)$;\\ 
+\item Kernel de propuestas $q(\tilde{\theta}|\theta)$;\\ 
+\item Tamaño de muestra $N$.
+\end{itemize}
+}
+
+\KwOut{\begin{itemize}
+\item Simulaciones $\left\lbrace \theta_{(n)} \right\rbrace_{n=1}^N\sim f(\theta|x)$.
+\end{itemize}}
+
+Valor inicial arbitrario o simulado $\theta_{(0)}$\;
+\For{$n \leftarrow 1$ \KwTo $N$}{
+$\theta \leftarrow \theta_{(n-1)}$\;
+$\tilde{\theta} \sim q(\tilde{\theta}|\theta)$\;
+$\alpha(\tilde{\theta};\theta) \leftarrow min\left\lbrace\dfrac{f(x|\tilde{\theta})f(\tilde{\theta})q(\theta|\tilde{\theta})}{f(x|\theta)f(\theta)q(\tilde{\theta}|\theta)},1\right\rbrace$\;
+$u \sim U[0,1]$ \;
+\eIf{$u \leq \alpha(\tilde{\theta};\theta)$}{
+	$\theta_{(n)} \leftarrow \tilde{\theta}$\;
+	}{
+	$\theta_{(n)} \leftarrow \theta $\;
+	}
+}
+
+\caption{Metropolis Hastings para el aprendizaje bayesiano \label{alg:MH}}
+\end{algorithm}
+
+El mayor problema, claro está, es el de encontrar un kernel de propuestas conveniente. Una clase de kerneles son aquellos que exploran progresivamente el espacio de estados de manera local. Estos se conocen como \textit{Random Walk Metropolis} o RWM \parencite{RobertCasella10}. De hecho, el algoritmo inicial de \textcite{Metropolis53} era de este tipo, usando una distribución uniforme en una vecindad del estado presente; también se pueden usar otras distribuciones, como normales centradas en el estado presente. \textcite{Robert15} hace la analogía con alguien que para ver una pintura en un cuarto oscuro tiene que ir alumbrando el cuadro con una antorcha, iluminando secuencialmente diferentes segmentos del lienzo.\\
+
+Estos kerneles de caminata aleatoria son \textit{simétricos} en el sentido de que $q(\tilde{\theta}|\theta) = q(\theta |\tilde{\theta})$. Esto hace que su implementación sea más sencilla que la de un algoritmo general de MH puesto que permiten simplificar los cálculos de probabilidades de aceptación:
+\begin{equation*}
+\alpha_{RWM}(\tilde{\theta};\theta)=min\left\lbrace\dfrac{f(x|\tilde{\theta})f(\tilde{\theta})q(\theta|\tilde{\theta})}{f(x|\theta)f(\theta)q(\tilde{\theta}|\theta)},1\right\rbrace = min\left\lbrace\dfrac{f(x|\tilde{\theta})f(\tilde{\theta})}{f(x|\theta)f(\theta)},1\right\rbrace
+\end{equation*}
+
