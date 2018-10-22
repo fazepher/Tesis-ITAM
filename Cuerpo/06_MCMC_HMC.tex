@@ -125,7 +125,7 @@ La utilidad de MH para la estadística bayesiana está en la forma \eqref{eq:Pro
 f(\theta|x) \propto L(\theta)f(\theta).
 \end{equation*}
 
-Por esto, para simular $N$ valores de una distribución posterior $f(\theta|x)$ mediante MH solo necesitamos la distribución inicial $f(\theta)$, la verosimilitud $L(\theta)=f(x|\theta)$ y un kernel de propuestas $q(\tilde{\theta}|\theta)$, siguiendo el \textbf{Algoritmo \ref{alg:MH}}. La única consideración que debe tenerse en cuenta es que la posterior sea propia, si se inició con una inicial impropia es posible que la posterior no pueda integrar a 1, lo que haría que el algoritmo fallara \parencite{RobertCasella10}.\\
+Por esto, para simular $N$ valores de una distribución posterior $f(\theta|x)$ mediante MH solo necesitamos la distribución inicial $f(\theta)$, la verosimilitud $L(\theta)=f(x|\theta)$ y un kernel de propuestas $q(\tilde{\theta}|\theta)$, siguiendo el \textbf{Algoritmo \ref{alg:MH}}.\\
 
 \begin{algorithm}
 \DontPrintSemicolon
@@ -159,10 +159,35 @@ $u \sim U[0,1]$ \;
 \caption{Metropolis Hastings para el aprendizaje bayesiano \label{alg:MH}}
 \end{algorithm}
 
-El mayor problema, claro está, es el de encontrar un kernel de propuestas conveniente. Una clase de kerneles son aquellos que exploran progresivamente el espacio de estados de manera local. Estos se conocen como \textit{Random Walk Metropolis} o RWM \parencite{RobertCasella10}. De hecho, el algoritmo inicial de \textcite{Metropolis53} era de este tipo, usando una distribución uniforme en una vecindad del estado presente; también se pueden usar otras distribuciones, como normales centradas en el estado presente. \textcite{Robert15} hace la analogía con alguien que para ver una pintura en un cuarto oscuro tiene que ir alumbrando el cuadro con una antorcha, iluminando secuencialmente diferentes segmentos del lienzo.\\
+La única consideración que debe tenerse en cuenta es que la posterior sea propia; si se inició con una inicial impropia es posible que la posterior no pueda integrar a 1, lo que haría que el algoritmo fallara \parencite{RobertCasella10}.\\
 
-Estos kerneles de caminata aleatoria son \textit{simétricos} en el sentido de que $q(\tilde{\theta}|\theta) = q(\theta |\tilde{\theta})$. Esto hace que su implementación sea más sencilla que la de un algoritmo general de MH puesto que permiten simplificar los cálculos de probabilidades de aceptación:
+Si la posterior es propia, entonces el mayor problema, claro está, es el de encontrar un kernel de propuestas conveniente. Una alternativa son aquellos que exploran progresivamente el espacio de estados de manera local. Estos se conocen como \textit{Random Walk Metropolis} o RWM \parencite{RobertCasella10}. De hecho, el algoritmo inicial de \textcite{Metropolis53} era de este tipo, usando una distribución uniforme en una vecindad del estado actual; también se pueden usar otras distribuciones, como normales centradas en dicho estado. \textcite{Robert15} hace la analogía con alguien que para ver una pintura en un cuarto oscuro tiene que ir alumbrando el cuadro con una antorcha, iluminando secuencialmente diferentes segmentos del lienzo.\\
+
+Estos kérneles de caminata aleatoria son \textit{simétricos}; esto es,  $q(\tilde{\theta}|\theta) = q(\theta |\tilde{\theta})$, lo que simplifica los cálculos de probabilidades de aceptación:
 \begin{equation*}
-\alpha_{RWM}(\tilde{\theta};\theta)=min\left\lbrace\dfrac{f(x|\tilde{\theta})f(\tilde{\theta})q(\theta|\tilde{\theta})}{f(x|\theta)f(\theta)q(\tilde{\theta}|\theta)},1\right\rbrace = min\left\lbrace\dfrac{f(x|\tilde{\theta})f(\tilde{\theta})}{f(x|\theta)f(\theta)},1\right\rbrace
+\alpha_{RWM}(\tilde{\theta};\theta)=min\left\lbrace\dfrac{f(\tilde{\theta}|x)q(\theta|\tilde{\theta})}{f(\theta|x)q(\tilde{\theta}|\theta)},1\right\rbrace = min\left\lbrace\dfrac{f(\tilde{\theta}|x)}{f(\theta|x)},1\right\rbrace
 \end{equation*}
 
+Un \textit{toy example} puede ayudar a visualizar cómo funcionan. Supongamos que quisiéramos simular de una posterior que, en realidad, es una normal bivariada cuyas marginales son normales estándar. Tomamos como kernel de transición una distribución uniforme en un rectángulo de $0.75$ de lado centrado en el estado actual de la cadena, por lo que tenemos un kernel simétrico y un algoritmo de \textit{Random Walk Metropolis}. Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. El objetivo de un algoritmo de integración por MCMC es, en el fondo, encontrar esta \textit{región crítica} y explorarla, obteniendo una muestra cada vez más fiel de la distribución {\color{Red} Betancourt}. Con tan solo 2500 iteraciones la cadena ya la recorrió y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM}
+        \caption{La cadena empieza lejos de las zonas de mayor densidad y se va acercando a ellas. Las taches representan propuestas rechazadas.}
+        \label{fig:RWM_A}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo2_RWM}
+        \caption{Después de 2500 iteraciones, la cadena explora ya la región crítica. Los valores fuera de ella normalmente son rechazados.}
+        \label{fig:RWM_B}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo3_RWM}
+        \caption{Los promedios ergódicos empiezan a converger a las medias teóricas.}
+        \label{fig:RWM_C}
+    \end{subfigure}
+    \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis}. Fuente: elaboración propia.}\label{fig:RWM}
+\end{figure}
