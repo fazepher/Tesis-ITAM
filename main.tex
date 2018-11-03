@@ -36,7 +36,7 @@
 \usepackage{longtable} 
 \usepackage{multirow}
 \usepackage{arydshln}
-\usepackage{rotating}
+%\usepackage{rotating}
 
 %% Figuras %%
 \usepackage{graphicx}
@@ -49,7 +49,6 @@
 \usepackage[backend=biber,style=chicago-authordate, natbib=true,ibidtracker = strict, opcittracker = strict]{biblatex}
 \renewcommand*{\revsdnamedelim}{} %Se necesita para eliminar la coma antes de la conjunción "y" en una lista de dos nombres cuando el primero está  invertido (apellido, nombre)
 \addbibresource{referencias_tesis.bib}
-%\newcommand{\yobligada}{\forceY}
 
 %% Matemáticas %%
 \usepackage{amsmath,amssymb,amsthm}
@@ -87,6 +86,9 @@
 	\newtheorem{propiedad}{Propiedad}
 	\newtheorem*{propiedad*}{Propiedad}
 
+%% Contenido (ToC) %%
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% INICIO DEL DOCUMENTO %%%

@@ -204,6 +204,80 @@ T_1 = X^TX \qquad b1 = b \qquad a_1 = \dfrac{N}{2} \qquad r_1 = \dfrac{y^Ty - b^
 \end{equation*}
 donde la equivalencia del estimador máximo verosímil $\hat{\sigma}^2$ puede verificarse con la \textbf{Ecuación \ref{eq:aux_para_jeffreys_ng}}.\\
 
+\subsection{V2 Análisis bayesiano del modelo lineal normal}
+
+Ahora bien, para realizar un análisis bayesiano del modelo requerimos especificar una distribución inicial para $\theta$ y, mediante el teorema de Bayes, actualizarla para obtener una distribución posterior dados los datos observados. Entonces, primero presento una manipulación de la función de verosimilitud para después ver algunas distribuciones iniciales frecuentemente utilizadas y, finalmente, realizar la actualización de las mismas dados los datos. 
+
+\subsubsection*{V2 Verosimilitud}
+
+Siguiendo a \textcites{GP98}{Congdon06}, manipulemos la función de verosimilitud de la normal multivariada de \eqref{eq:modelo_normal_matricial} para facilitar la actualización mediante el teorema de Bayes. Observemos que:
+\begin{align*}
+f(y|\theta) &= \dfrac{1}{\sqrt{(2\pi)|\sigma^2 \mathbb{I}_N|}}exp\left\lbrace -\dfrac{1}{2}(y-X\beta)^T(\sigma^2\mathbb{I}_N)^{-1}(y-X\beta)\right\rbrace \nonumber \\
+f(y|\theta) &\propto (\sigma^2)^{-n/2}exp\left\lbrace -\dfrac{1}{2\sigma^2}(y-X\beta)^T(y-X\beta)\right\rbrace
+\end{align*}
+
+En el análisis clásico o frecuentista, el estimador máximo verosímil para los coeficientes $\beta$ es $b=(X^TX)^{-1}X^Ty$. Por su parte, aquel de la varianza es $\hat{\sigma}^2=\dfrac{1}{N}(y-Xb)^T(y-Xb)$. Es posible manipular los términos dentro de la exponencial en la distribución normal con estos estimadores $b$ y $\hat{\sigma}^2$ de manera tal que tengamos la siguiente expresión: 
+\begin{equation*}
+f(y|\theta) \propto exp\left\lbrace -\dfrac{1}{2\sigma^2}\left[(\beta-b)^TX^TX(\beta-b)\right] \right\rbrace (\sigma^2)^{-N/2} exp\left\lbrace -\dfrac{N\hat{\sigma}^2}{2\sigma^2}\right\rbrace \,.
+\end{equation*}
+
+Notemos ahora que si la varianza $\sigma^2$ fuera conocida podríamos descomponer esta distribución en dos partes, una de las cuales tiene la forma del kernel de una distribución normal para $\beta|\sigma^2$, lo que sugiere ya la familia conjugada de distribuciones iniciales. No obstante, a veces resulta más fácil trabajar en términos de precisiones que de varianzas. Si definimos la precisión de una variable normal como $\tau=\dfrac{1}{\sigma^2}$, tenemos que la función de verosimilitud en el modelo normal se puede representar como sigue: 
+\begin{equation} \label{eq:verosimilitud_modelo_normal}
+f(y|\theta) \propto exp\left\lbrace -\dfrac{\tau}{2}\left[(\beta-b)^TX^TX(\beta-b)\right] \right\rbrace \tau^{N/2}exp\left\lbrace -\dfrac{N\hat{\sigma}^2\tau}{2}\right\rbrace \,.
+\end{equation}
+
+\subsubsection*{V2 Distribuciones iniciales}
+
+La primera distribución inicial que podríamos plantear sería la distribución conjugada. Recordemos que esta debe tener la misma forma funcional que la verosimilitud, por lo que \eqref{eq:verosimilitud_modelo_normal} sugiere lo siguiente: 
+\begin{equation*}
+f(\theta)= f(\beta,\tau) \propto exp\left\lbrace -\dfrac{\tau}{2}\left[(\beta-b_0)^TT_0(\beta-b_0)\right] \right\rbrace \tau^{a/2} exp\left\lbrace -\dfrac{r\tau}{2}\right\rbrace \,,
+\end{equation*}
+donde $b_0$, $T_0$, $a$ y $r$ sean algunos parámetros convenientes. Con esta forma, podemos determinar la familia conjugada en un proceso de dos pasos. En primer lugar, asumimos que la varianza o precisión está dada, lo que permite definir una distribución inicial para $\beta|\tau$. Posteriormente, determinaremos la distribución inicial conjugada para $\tau$. Es decir, separaremos la distribución inicial en dos: $f(\theta)=f(\beta,\tau)=f(\beta|\tau)f(\tau)$.\\ 
+
+La distribución condicional resulta ser una normal centrada en $b_0$ y con precisión $\tau T_0$, por lo que debemos completarla multiplicando por $1=\tau^{(d-d)/2}$, donde $d$ es el número de coeficientes, incluyendo a $\beta_0$. Así: 
+\begin{align} \label{eq:distr_ng}
+f(\theta)= f(\beta|\tau)f(\tau) &\propto exp\left\lbrace -\dfrac{\tau}{2}\left[(\beta-b_0)^TT_0(\beta-b_0)\right] \right\rbrace \tau^{a/2} exp\left\lbrace -\dfrac{r\tau}{2}\right\rbrace \nonumber \\
+&\propto \tau^{(d - d)/2} exp\left\lbrace -\dfrac{\tau}{2}\left[(\beta-b_0)^TT_0(\beta-b_0)\right] \right\rbrace \tau^{a/2} exp\left\lbrace -\dfrac{r\tau}{2}\right\rbrace \,. \nonumber\\
+\intertext{Con lo que} \nonumber 
+f(\beta|\tau) &\propto \tau^{d/2} exp\left\lbrace -\dfrac{\tau}{2}\left[(\beta-b_0)^TT_0(\beta-b_0)\right] \right\rbrace \,\text{y} \nonumber \\
+f(\tau) &\propto \tau^{(a-d)/2} exp\left\lbrace -\dfrac{r\tau}{2}\right\rbrace \,.
+\end{align}
+
+La distribución inicial de $\tau$ también ya tiene una forma conocida: es proporcional a una gamma. Para verlo solo basta con un poco de álgebra para verificar que el parámetro de forma debe ser $a_0 = (a-d+2)/2=(a^\star-d)/2$ con $a^\star=a+2$ y el de tasa $r_0 = r/2$. Por lo tanto, en su conjunto, tenemos que $\theta$ tiene una distribución inicial \textit{Normal-Gamma}: 
+\begin{align} 
+\theta &= (\beta,\tau) \sim NG_d\left(b_0,T_0,a_0=\dfrac{a^\star-d}{2},r_0 =\dfrac{r}{2}\right) \nonumber \\
+\intertext{de forma que}
+\beta|\tau &\sim N_d(b_0,\tau T_0) \;\text{y}\; \tau \sim \Gamma\left(a_0 = \dfrac{a^\star-d}{2}, r_0 = \dfrac{r}{2}\right) \,.
+\label{eq:normal_gamma}
+\end{align}
+Cabe hacer notar que esta distribución inicial conjugada es propia siempre que $a^\star > d $, $r > 0$ y $B_0 = T_0^{-1}$ sea positiva definida.\\ 
+
+Por otro lado, si se buscan distribuciones iniciales más vagas, resulta que también es posible obtener distribuciones mínimo informativas límites de esta conjugada. Por ejemplo, aunque es impropia, la inicial de Jeffreys es de esa forma con los siguientes límites: $a^\star \rightarrow p $, $r \rightarrow 0$ y $B_0 = T_0^{-1} \rightarrow \mathbf{O}$ \parencite{GP98}. Así, \eqref{eq:distr_ng} se reduce a la siguiente expresión: 
+\begin{equation} \label{eq:jeffreys_ng}
+f(\theta) = f(\beta,\tau) \propto \tau^{(d-2)/2}
+\end{equation}
+
+\subsubsection*{V2 Distribuciones finales}
+
+Consideremos para la actualización el caso general de la distribución inicial normal gamma de \eqref{eq:normal_gamma}. Se debe aplicar el teorema de Bayes con base en \eqref{eq:verosimilitud_modelo_normal} y \eqref{eq:distr_ng} buscando, al tener una inicial conjugada, mantener la forma de normal gamma. Esto es, la verosimilitud la podemos ver también como el producto de dos distribuciones, una normal para $\beta|\tau$ centrada en el estimador máximo verosímil $b$ y con precisión $\tau X^TX$ y una gamma para $\tau$ utilizando el estimador máximo verosímil de la varianza $\hat{\sigma}^2$. Después de varias simplificaciones {\color{Aquamarine} que pueden consultarse en anexo} la actualización es la siguiente:
+\begin{align} \label{eq:modelo_normal_post_bayes}
+y|\beta, \sigma^2 &\sim N_N(X\beta,\sigma^2\mathbb{I}_N) \quad \text{tal que} \quad \theta = (\beta, \sigma^2) \sim f(\beta,\sigma^2) \nonumber \\
+\beta|\tau &\sim N_d(b_0,\tau T_0) \qquad \tau \sim \Gamma\left(a_0 = \dfrac{a^\star-d}{2},r_0 = \dfrac{r}{2}\right) \nonumber \\ 
+\beta|\tau , y &\sim N_d(b_1,\tau T_1) \qquad \tau|y \sim \Gamma\left(a_1,r_1\right) \nonumber \\
+\intertext{con $a^\star > d $, $r > 0$ y $B_0 = T_0^{-1}$ positiva definida y tal que} \nonumber
+T_1 &= X^TX+T_0 \qquad b_1 = T_1^{-1}(X^TXb+T_0b_0) = T_1^{-1}(X^Ty+T_0b_0),\nonumber \\ 
+a_1 &= \dfrac{N-d+a^\star}{2} \qquad r_1 = \dfrac{y^Ty + b_0^TT_0b_0 - b_1^TT_1b_1 + r}{2}
+\end{align}
+donde $b=(X^TX)^{-1}X^Ty$ es el estimador máximo verosímil de $\beta$.\\
+
+La distribución posterior de $\beta|\tau$ resulta tener una interpretación conveniente \parencite{Congdon06}. Es una normal $d$-variada cuya media puede verse como un promedio de las medias originales--- la de la inicial y el estimador máximo verosímil--- ponderadas por sus precisiones. La nueva precisión es simplemente la suma de las precisiones originales.\\
+
+Más aún, si en lugar de utilizar como distribución inicial una normal gamma de esta forma se utiliza la inicial de Jeffreys de \eqref{eq:jeffreys_ng}, podemos utilizar estas expresiones para hacer la actualización--- aprovechando el carácter que la inicial de Jeffreys tiene como límite de conjugadas--- considerando $a^\star \rightarrow d $, $r \rightarrow 0$ y $B_0 = T_0^{-1} \rightarrow \mathbf{O}$, por lo que se tendrían: 
+\begin{equation*}
+T_1 = X^TX \qquad b1 = b \qquad a_1 = \dfrac{N}{2} \qquad r_1 = \dfrac{y^Ty - b^TX^TXb}{2}=\dfrac{N\hat{\sigma}^2}{2} \,
+\end{equation*}
+{\color{Aquamarine} donde la equivalencia del estimador máximo verosímil $\hat{\sigma}^2$ puede verificarse en el desarrollo completo}.\\
+
 \subsection{Problema de multicolinealidad}
 
 Antes de continuar, debo señalar un posible problema cuando uno ajusta modelos de regresión. El estimador máximo verosimil $b=(X^TX)^{-1}X^Ty$ es clave en el desarrollo anterior. Hasta ahora he asumido que es posible calcularlo, aún cuando este no siempre es el caso. El estimador involucra la matriz inversa $(X^TX)^{-1}$, pero no siempre es posible invertir una matriz. Para ello se requiere que todas sus columnas sean lo que en álgebra lineal se conoce como \textit{linealmente independientes}. Est no pasa si hay variables explicativas tales que exista una combinación lineal de ellas que sea igual a $0$ para todos los datos \parencite[68]{GelmanHill06}. Cuando esto sucede se dice que dichas variables son linealmente dependientes o bien que son \textit{colineales}.\\
