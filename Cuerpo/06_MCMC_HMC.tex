@@ -1,31 +1,14 @@
-\chapter{Cómputo bayesiano}
+\chapter{Cómputo bayesiano} \label{chap:Cap_MCMC}
 
 De acuerdo con \textcite{Ross10}, los resultados más importantes y más conocidos de la teoría de probabilidad son los llamados teoremas límite, en particular aquellos conocidos como \textit{leyes de los grandes números}. La idea general podemos tomarla de Jakob Bernoulli, el primero en presentar un teorema de este tipo, y estriba en que todos los hombres saben ``por algún instinto de la naturaleza \textit{per se} y sin ninguna instrucción previa, que entre más observaciones hay, menor es el peligro de alejarse del blanco" \parencite{Pulskamp09}. Es decir, si tenemos suficientes realizaciones de un experimento, podemos estimar con mucha precisión aquello que buscamos.\\
 
-Hoy tenemos--- después de varios avances históricos que pueden consultarse en \textcite{Seneta13}--- las siguientes dos leyes generales de los grandes números, cuyas pruebas bajo algunos supuestos adicionales pueden consultarse en \textcite{Ross10}:
+Después de varios avances históricos que pueden consultarse en \textcite{Seneta13}, hoy contamos con las leyes débil y fuerte de los grandes números \parencite{Ross10}. Ambas nos dicen que, conforme el tamaño de una muestra aleatoria aumenta, los promedios empíricos convergen a los promedios teóricos. Una manera común de ejemplificar este fenómeno es mediante el lanzamiento sucesivo de monedas. En este caso los volados \textit{simulan} observaciones de una variable aleatoria de ensayos Bernoulli y, al tener una muestra suficientemente grande, se comienza a apreciar la convergencia hacia la probabilidad de éxito.\\ 
 
-\begin{teo} \label{teo:LGN}
-\textbf{Leyes de los grandes números.}
-Sean $X_1,\,X_2,\dots$ una secuencia de variables aleatorias independientes e idénticamente distribuidas, cada una con media finita $E[X_i]=\mu$, y $\bar{X}_N=\sum\limits_{i=1}^N\dfrac{X_i}{N}$, las respectivas medias empíricas. Entonces se cumplen las siguientes dos leyes.
-\begin{itemize}
-\item \textbf{Ley débil}
-\begin{equation*}
-\lim_{N \to \infty} P\left( |\bar{X}_N-\mu| \geq \epsilon \right)  = 0 \qquad \forall \, \epsilon > 0
-\end{equation*}
-\item \textbf{Ley fuerte}
-\begin{equation*}
-P\left(\lim_{N \to \infty} \bar{X}_N = \mu \right)  = 1 
-\end{equation*}
-\end{itemize}
-\end{teo}
-
-Ambas leyes nos dicen que, conforme el tamaño de una muestra aleatoria aumenta, los promedios empíricos convergen a los promedios teóricos. Una manera común de ejemplificar este fenómeno es mediante el lanzamiento sucesivo de monedas. En este caso los volados \textit{simulan} observaciones de una variable aleatoria de ensayos Bernoulli y, al tener una muestra suficientemente grande, se comienza a apreciar la convergencia hacia la probabilidad de éxito.\\ 
-
-Gracias al avance tecnológico, hoy ya no tenemos necesariamente que lanzar volados físicamente sino que los simulamos desde una computadora, a partir de la generación de números pseudoaleatorios, diseñados de manera tal que satisfagan todas las propiedades básicas de números auténticamente aleatorios \parencite{Ross13}. Podemos pedirle a la computadora que simule una gran cantidad de volados y registre la proporción empírica acumulada de los que cayeron águila. Conforme más aumenta el número de volados, más nos acercamos a 0.5, la proporción teórica. Esto se puede repetir para otras series de volados y el comportamiento es el mismo, como puede apreciarse en la \textbf{Figura \ref{fig:LGN}}. \\
+Gracias al avance tecnológico, hoy ya no tenemos necesariamente que lanzar volados físicamente sino que los simulamos desde una computadora, a partir de la generación de números pseudoaleatorios, diseñados de manera tal que satisfagan todas las propiedades básicas de números auténticamente aleatorios \parencite{Ross13}. Podemos pedirle a la computadora que simule una gran cantidad de volados \textit{justos} y registre la proporción empírica acumulada de los que cayeron águila. Conforme más aumenta el número de volados, más nos acercamos a 0.5, la proporción teórica. Esto se puede repetir para otras series de volados y el comportamiento es el mismo, como puede apreciarse en la \textbf{Figura \ref{fig:LGN}}. \\
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.25]{Figs/LGN}
+	\includegraphics[scale=0.2]{Figs/LGN}
 	\caption{Ilustración de las leyes de los grandes números mediante volados simulados por computadora. Conforme el número de volados aumenta, la proporción empírica converge a la proporción teórica. Esto pasa para cada serie de volados. Fuente: elaboración propia.}
 	\label{fig:LGN}	
 \end{figure}
@@ -43,11 +26,11 @@ Stan compartió su idea con John von Neumann quien, sorprendido y emocionado con
 De manera concreta, el método es la conjunción de la simulación con la ley de los grandes números. Las cantidades que requerían calcular eran valores esperados de la siguiente forma: 
 \begin{equation}
 \label{eq:IntegralMC}
-h^\star = \mathbb{E}[h(X)]=\int\limits_\mathcal{X} h(x)f(x)dx ,
+h^\star = \mathbb{E}[h(Z)]=\int\limits_\mathcal{Z} h(z)f(z)dz ,
 \end{equation} 
-donde $h$ es una función de interés y $f(x)$ es la distribución de probabilidad sobre las \textit{configuraciones} en las que podía encontrarse el sistema físico. Estas integrales típicamente no pueden calcularse ni analíticamente ni por métodos numéricos tradicionales. Sin embargo, si se tiene una muestra aleatoria de valores de $X$ provenientes de su distribución $f$, se puede aproximar $\bar{h}$ con el promedio empírico, que en este contexto se conoce como \textit{estimador de Monte Carlo}: 
+donde $h$ es una función de interés y $f(z)$ es la distribución de probabilidad sobre las \textit{configuraciones} $z$ en las que podía encontrarse el sistema físico. Estas integrales típicamente no pueden calcularse ni analíticamente ni por métodos numéricos tradicionales. Sin embargo, si se tiene una muestra aleatoria de valores de $Z$ provenientes de su distribución $f$, se puede aproximar $h^\star$ con el promedio empírico, que en este contexto se conoce como \textit{estimador de Monte Carlo}: 
 \begin{equation*}
-h^\star \approx \hat{h} = \sum\limits_{i=1}^N \dfrac{h(x_i)}{N}
+h^\star \approx \hat{h} = \sum\limits_{i=1}^N \dfrac{h(z_i)}{N}
 \end{equation*}
 
 El problema para los científicos en Los Alamos se convirtió entonces en encontrar algoritmos eficientes para obtener una muestra aleatoria de variables provenientes de diferentes distribuciones $f$.\\ 
@@ -62,92 +45,78 @@ La forma de realizar simulaciones correlacionadas que logren simular de manera m
 
 \dfn{\textbf{Cadena de Markov}\\
 \label{def:Cadena_Markov}
-Una \textit{cadena de Markov} $\left\lbrace X_{(n)}, \, n = 0, 1, 2,\dots \right\rbrace$ es una secuencia de variables aleatorias tales que satisfacen la siguiente \textit{propiedad de Markov} para toda $n$
+Una \textit{cadena de Markov} $\left\lbrace Z_{(n)}, \, n = 0, 1, 2,\dots \right\rbrace$ es una secuencia de variables aleatorias tales que satisfacen la siguiente \textit{propiedad de Markov} para toda $n$
 \begin{equation*}
-X_{(n+1)}| X_{(n)}, \dots, X_{(0)} \sim X_{(n+1)}| X_{(n)} \sim p(x_{(n+1)}|x_{(n)})
+Z_{(n+1)}| Z_{(n)}, \dots, Z_{(0)} \sim Z_{(n+1)}| Z_{(n)} \sim p(z_{(n+1)}|z_{(n)})
 \end{equation*}
 }
 
-Si llamamos \textit{estados} a los eventos que suceden en la cadena en cada punto en el tiempo, podemos decir que la distribución condicional del estado futuro de una cadena de Markov dada toda su historia depende exclusivamente del estado presente y no de los estados anteriores. Esta distribución condicional se llama \textit{kernel de transición}, mismo que normalmente es independiente del índice $n$ y depende exclusivamente del estado actual y el estado futuro. Esta propiedad se llama \textit{homogeneidad} en el tiempo y permite simplificar la notación a $p(\tilde{x}|x)$.\\ 
+Si llamamos \textit{estados} a los eventos que suceden en la cadena en cada punto en el tiempo, podemos decir que la distribución condicional del estado futuro de una cadena de Markov dada toda su historia depende exclusivamente del estado presente y no de los estados anteriores. Esta distribución condicional se llama \textit{kernel de transición}, mismo que normalmente es independiente del índice $n$ y depende exclusivamente del estado actual y el estado futuro. Esta propiedad se llama \textit{homogeneidad} en el tiempo y permite simplificar la notación a $p(\tilde{z}|z)$.\\ 
 
-La teoría de cadenas de Markov determina las condiciones bajo las cuales existen teoremas límites al estilo de las leyes de los grandes números y que en este contexto se conocen como \textit{ergódicos}. Esta teoría escapa los objetivos particulares de la tesis pero, si es de interés para el lector, algunas referencias útiles son \textcites{Rincon12,Ross96,TaylorKarlin84}. Baste decir por ahora que, bajo ciertas condiciones, sabemos que la distribución de $X_{(n)}$ converge a una distribución límite conforme $n$ tiende a infinito. Más aún, los \textit{promedios ergódicos}--- es decir los promedios acumulados de la cadena--- también convergen al valor esperado de la distribución límite.\\ 
+La teoría de cadenas de Markov determina las condiciones bajo las cuales existen teoremas límites al estilo de las leyes de los grandes números y que en este contexto se conocen como \textit{ergódicos}. Esta teoría escapa los objetivos particulares de la tesis pero, si es de interés para el lector, algunas referencias útiles son \textcites{Rincon12,Ross96,TaylorKarlin84}. Baste decir por ahora que, bajo ciertas condiciones, sabemos que la distribución de $Z_{(n)}$ converge a una distribución límite conforme $n$ tiende a infinito. Más aún, los \textit{promedios ergódicos}--- es decir los promedios acumulados de la cadena--- también convergen al valor esperado de la distribución límite.\\ 
 
 Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones del teorema ergódico y cuya distribución límite sea la distribución de la cual se quiere simular. Así, después de $N$ transiciones de la cadena, la distribución de los valores simulados sería aproximadamente la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
 
 \begin{equation*}
-h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h(x_{(n)})}{N}
+h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h(z_{(n)})}{N}
 \end{equation*}
 
 \subsection{Metropolis Hastings}
 
  El primero de estos métodos MCMC fue propuesto por las parejas de esposos Arianna y Marshall Rosenbluth y Augusta y Edward Teller junto con el propio Nicholas Metropolis en el \textit{Journal of Chemical Physics} \parencite{Metropolis53}. Se conoce como el algoritmo de Metropolis, aunque hay quienes creen que en realidad el trabajo más fuerte lo hicieron el resto de los autores por lo que debería llamarse el algoritmo de Rosenbluth-Teller \parencite{Gubernatis05}. Casi 20 años después, el estadístico canadiense Wilfred Keith Hastings lo generalizó \parencite{Hastings70}, por lo que podemos hablar de algoritmos de Metropolis Hastings o MH.\\
  
-Las cadenas de Markov para MH requieren ser homogéneas en el tiempo y que sea posible llegar a cualquier estado en un número finito de transiciones, algo que se conoce como \textit{irreducibilidad}. Si además de ser una cadena irreducible, el kernel de transición satisface la siguiente \textit{ecuación de balance detallado} para alguna distribución $f$, se dice que es reversible y podemos aplicar el teorema ergódico.
+Las cadenas de Markov para MH requieren ser homogéneas en el tiempo y que sea posible llegar a cualquier estado en un número finito de transiciones, algo que se conoce como \textit{irreducibilidad}. Si además de ser una cadena irreducible, el kernel de transición satisface la siguiente \textit{ecuación de balance detallado} para alguna distribución $f$, se dice que es \textit{reversible} y podemos aplicar el teorema ergódico.
 \begin{equation}
 \label{eq:Balance_Detallado}
-f(x)p(\tilde{x}|x)=f(\tilde{x})p(x|\tilde{x})
+f(z)p(\tilde{z}|z)=f(\tilde{z})p(z|\tilde{z})
 \end{equation}
 
 El algoritmo de Metropolis Hastings busca construir cadenas de Markov homogéneas, irreducibles y reversibles que tengan como distribución límite a la distribución objetivo. ¿Cómo hacerlo? Para ello analicemos lo que la reversibilidad implica de manera intuitiva.\\
 
-Siguiendo la argumentación de \textcite{ChibGreenberg95}, \eqref{eq:Balance_Detallado} refleja que hay un balance entre las probabilidades de la cadena de estar en diferentes estados, de ahí el nombre. Supongamos que no se cumpliera la reversibilidad para algún kernel $q(\tilde{x}|x)$. Entonces, sin pérdida de generalidad, para algunos estados pasaría que:
+Siguiendo la argumentación de \textcite{ChibGreenberg95}, \eqref{eq:Balance_Detallado} refleja que hay un balance entre las probabilidades de la cadena de estar en diferentes estados, de ahí el nombre. Supongamos que no se cumpliera la reversibilidad para algún kernel $q(\tilde{z}|z)$. Entonces, sin pérdida de generalidad, para algunos estados pasaría que:
 \begin{equation}
 \label{eq:Inbalance_Detallado}
-\dfrac{f(x)}{f(\tilde{x})}>\dfrac{q(x|\tilde{x})}{q(\tilde{x}|x)}
+\dfrac{f(z)}{f(\tilde{z})}>\dfrac{q(z|\tilde{z})}{q(\tilde{z}|z)}
 \end{equation}
 
-De manera un poco informal, tenemos que el miembro izquierdo de la desigualdad refleja las probabilidades relativas ``necesarias'' entre estar en el estado $x$ y el estado $\tilde{x}$. El miembro derecho, por su parte, indica las probabilidades relativas de transitar a dichos estados bajo el kernel de transición de la cadena. La desigualdad indica que la cadena estaría transitando a $\tilde{x}$ más de lo necesario y, equivalentemente, transitaría a $x$ menos de lo necesario.\\ 
+De manera un poco informal, tenemos que el miembro izquierdo de la desigualdad refleja las probabilidades relativas ``necesarias'' entre estar en el estado $z$ y el estado $\tilde{z}$. El miembro derecho, por su parte, indica las probabilidades relativas de transitar a dichos estados bajo el kernel de transición de la cadena. La desigualdad indica que la cadena estaría transitando a $\tilde{z}$ más de lo necesario y, equivalentemente, transitaría a $z$ menos de lo necesario.\\ 
 
-Para conseguir el balance necesario para aplicar el teorema ergódico, necesitamos hacer una \textit{corrección de Metropolis} al kernel de transición, reduciendo el número relativo de veces que la cadena transite de $x$ a $\tilde{x}$ y aumentando el número relativo de transiciones de $\tilde{x}$ a $x$. La forma de hacer la corrección es comenzar con un kernel de transición $q(\tilde{x}|x)$ que \textit{proponga} un estado y agregar una \textit{probabilidad de aceptación} $\alpha(\tilde{x};x)$ de que el estado propuesto se acepte. Si la propuesta se rechaza, la cadena permanece en el mismo estado, reduciendo a la vez el número de transiciones hacia estados sobremuestreados y aumentando el número relativo de veces que estamos en el estado originalmente submuestreado. Estos dos pasos constituyen un nuevo kernel de transición de Metropolis Hastings de la siguiente forma: 
+Para conseguir el balance requerido para aplicar el teorema ergódico, necesitamos hacer una \textit{corrección de Metropolis} al kernel de transición, reduciendo el número relativo de veces que la cadena transite de $z$ a $\tilde{z}$ y aumentando el número relativo de transiciones de $\tilde{z}$ a $z$. La forma de hacer la corrección es comenzar con un kernel de transición $q(\tilde{z}|z)$ que \textit{proponga} un estado y agregar una \textit{probabilidad de aceptación} $\alpha(\tilde{z};z)$ de que la propuesta se acepte. Si la propuesta se rechaza, la cadena permanece en el mismo estado, reduciendo a la vez el número de transiciones hacia estados sobremuestreados y aumentando el número relativo de veces que estamos en el estado originalmente submuestreado. Estos dos pasos constituyen un nuevo kernel de transición de Metropolis Hastings de la siguiente forma: 
 \begin{align*}
-p_{MH}(\tilde{x}|x) &= q(\tilde{x}|x)\alpha(\tilde{x};x) \quad x \neq \tilde{x} \\
-p_{MH}(x|x) &= 1 - \int\limits_\mathcal{X} p_{MH}(\tilde{x}|x)d\tilde{x}
+p_{MH}(\tilde{z}|z) &= q(\tilde{z}|z)\alpha(\tilde{z};z) \quad z \neq \tilde{z} \\
+p_{MH}(z|z) &= 1 - \int\limits_{\tilde{\mathcal{Z}}} p_{MH}(\tilde{z}|z)d\tilde{z}
 \end{align*}
 
 Queremos que el kernel $p_{MH}$ satisfaga \eqref{eq:Balance_Detallado}, entonces:
 \begin{equation*}
-f(x)p_{MH}(\tilde{x}|x)=f(\tilde{x})p_{MH}(x|\tilde{x}) \quad \Leftrightarrow \quad f(x)q(\tilde{x}|x)\alpha(\tilde{x};x)=f(\tilde{x})q(x|\tilde{x})\alpha(x;\tilde{x}) 
+f(z)p_{MH}(\tilde{z}|z)=f(\tilde{z})p_{MH}(z|\tilde{z}) \quad \Leftrightarrow \quad f(z)q(\tilde{z}|z)\alpha(\tilde{z};z)=f(\tilde{z})q(z|\tilde{z})\alpha(z;\tilde{z}) 
 \end{equation*}
 
-De acuerdo a nuestra desigualdad supuesta en \eqref{eq:Inbalance_Detallado}, las transiciones de $\tilde{x}$ a $x$ se dan demasiado poco, por lo que deberíamos siempre aceptar este tipo de transiciones a fin de corregir el submuestreo. Tomemos entonces $\alpha(x;\tilde{x}) = 1$ y observemos que $\alpha(\tilde{x};x)$ queda determinada de tal forma que logremos el balance necesario: 
+De acuerdo a nuestra desigualdad supuesta en \eqref{eq:Inbalance_Detallado}, las transiciones de $\tilde{z}$ a $z$ se dan demasiado poco, por lo que deberíamos siempre aceptar este tipo de transiciones a fin de corregir el submuestreo. Tomemos entonces $\alpha(z;\tilde{z}) = 1$ y observemos que $\alpha(\tilde{z};z)$ queda determinada de tal forma que logremos el balance necesario: 
 \begin{equation*}
-\alpha(\tilde{x};x)=\dfrac{f(\tilde{x})q(x|\tilde{x})}{f(x)q(\tilde{x}|x)}
+\alpha(\tilde{z};z)=\dfrac{f(\tilde{z})q(z|\tilde{z})}{f(z)q(\tilde{z}|z)}
 \end{equation*}
 
-Si la desigualdad \eqref{eq:Inbalance_Detallado} fuera en el sentido contrario, i.e. $f(\tilde{x})q(x|\tilde{x})>f(x)q(\tilde{x}|x)$, los roles de las probabilidades de aceptación se invertirían, por lo que de manera general tenemos que 
+Si la desigualdad \eqref{eq:Inbalance_Detallado} fuera en el sentido contrario, i.e. $f(\tilde{z})q(z|\tilde{z})>f(z)q(\tilde{z}|z)$, los roles de las probabilidades de aceptación se invertirían, por lo que de manera general tenemos que 
 \begin{equation}
 \label{eq:Proba_Aceptar_MH}
-\alpha(\tilde{x};x)=min\left\lbrace\dfrac{f(\tilde{x})q(x|\tilde{x})}{f(x)q(\tilde{x}|x)},1\right\rbrace
+\alpha(\tilde{z};z)=min\left\lbrace\dfrac{f(\tilde{z})q(z|\tilde{z})}{f(z)q(\tilde{z}|z)},1\right\rbrace
 \end{equation}
 
 La utilidad de MH para la estadística bayesiana está en la forma \eqref{eq:Proba_Aceptar_MH} de la probabilidad de aceptación. Como la distribución objetivo se encuentra tanto en el denominador como en el numerador, no se requiere completa sino basta con conocerla salvo por una constante de proporcionalidad que desaparezca al realizar el cociente. Esta situación es exactamente la que impera en la aplicación de la estadística bayesiana. Recordemos el resumen del aprendizaje bayesiano en \eqref{eq:Bayes_Prop}, \textit{la posterior es proporcional a la inicial por la verosimilitud}: 
 \begin{equation*}
-f(\theta|x) \propto L(\theta)f(\theta).
+f(\theta|y) \propto L(\theta)f(\theta).
 \end{equation*}
 
-Por esto, para simular $N$ valores de una distribución posterior $f(\theta|x)$ mediante MH solo necesitamos la distribución inicial $f(\theta)$, la verosimilitud $L(\theta)=f(x|\theta)$ y un kernel de propuestas $q(\tilde{\theta}|\theta)$, siguiendo el \textbf{Algoritmo \ref{alg:MH}}.\\
+Por esto, para simular $N$ valores de una distribución posterior $f(\theta|y)$ mediante MH solo necesitamos la distribución inicial $f(\theta)$, la verosimilitud $L(\theta)=f(y|\theta)$ y un kernel de propuestas $q(\tilde{\theta}|\theta)$, siguiendo el \textbf{Algoritmo \ref{alg:MH}}. La única consideración que debe tenerse en cuenta es que la posterior sea propia; si se inició con una inicial impropia es posible que la posterior no pueda integrar a 1, lo que haría que el algoritmo fallara \parencite{RobertCasella10}.\\
 
 \begin{algorithm}
 \DontPrintSemicolon
-
-\SetKwInput{Entradas}{Entradas}
-\Entradas{\begin{itemize}
-\item Verosimilitud $L(\theta)=f(x|\theta)$;\\ 
-\item Distribución inicial $f(\theta)$;\\ 
-\item Kernel de propuestas $q(\tilde{\theta}|\theta)$;\\ 
-\item Tamaño de muestra $N$.
-\end{itemize}
-}
-
-\KwOut{\begin{itemize}
-\item Simulaciones $\left\lbrace \theta_{(n)} \right\rbrace_{n=1}^N\sim f(\theta|x)$.
-\end{itemize}}
-
 Valor inicial arbitrario o simulado $\theta_{(0)}$\;
 \For{$n \leftarrow 1$ \KwTo $N$}{
 $\theta \leftarrow \theta_{(n-1)}$\;
 $\tilde{\theta} \sim q(\tilde{\theta}|\theta)$\;
-$\alpha(\tilde{\theta};\theta) \leftarrow min\left\lbrace\dfrac{f(x|\tilde{\theta})f(\tilde{\theta})q(\theta|\tilde{\theta})}{f(x|\theta)f(\theta)q(\tilde{\theta}|\theta)},1\right\rbrace$\;
+$\alpha(\tilde{\theta};\theta) \leftarrow min\left\lbrace\dfrac{f(y|\tilde{\theta})f(\tilde{\theta})q(\theta|\tilde{\theta})}{f(y|\theta)f(\theta)q(\tilde{\theta}|\theta)},1\right\rbrace$\;
 $u \sim U[0,1]$ \;
 \eIf{$u \leq \alpha(\tilde{\theta};\theta)$}{
 	$\theta_{(n)} \leftarrow \tilde{\theta}$\;
@@ -159,16 +128,16 @@ $u \sim U[0,1]$ \;
 \caption{Metropolis Hastings para el aprendizaje bayesiano \label{alg:MH}}
 \end{algorithm}
 
-La única consideración que debe tenerse en cuenta es que la posterior sea propia; si se inició con una inicial impropia es posible que la posterior no pueda integrar a 1, lo que haría que el algoritmo fallara \parencite{RobertCasella10}.\\
+\subsubsection*{\textit{Random Walk Metropolis}}
 
 Si la posterior es propia, entonces el mayor problema, claro está, es el de encontrar un kernel de propuestas conveniente. Una alternativa son aquellos que exploran progresivamente el espacio de estados de manera local. Estos se conocen como \textit{Random Walk Metropolis} o RWM \parencite{RobertCasella10}. De hecho, el algoritmo inicial de \textcite{Metropolis53} era de este tipo, usando una distribución uniforme en una vecindad del estado actual; también se pueden usar otras distribuciones, como normales centradas en dicho estado. \textcite{Robert15} hace la analogía con alguien que para ver una pintura en un cuarto oscuro tiene que ir alumbrando el cuadro con una antorcha, iluminando secuencialmente diferentes segmentos del lienzo.\\
 
 Estos kérneles de caminata aleatoria son \textit{simétricos}; esto es,  $q(\tilde{\theta}|\theta) = q(\theta |\tilde{\theta})$, lo que simplifica los cálculos de probabilidades de aceptación:
 \begin{equation*}
-\alpha_{RWM}(\tilde{\theta};\theta)=min\left\lbrace\dfrac{f(\tilde{\theta}|x)q(\theta|\tilde{\theta})}{f(\theta|x)q(\tilde{\theta}|\theta)},1\right\rbrace = min\left\lbrace\dfrac{f(\tilde{\theta}|x)}{f(\theta|x)},1\right\rbrace
+\alpha_{RWM}(\tilde{\theta};\theta)=min\left\lbrace\dfrac{f(\tilde{\theta}|y)q(\theta|\tilde{\theta})}{f(\theta|y)q(\tilde{\theta}|\theta)},1\right\rbrace = min\left\lbrace\dfrac{f(\tilde{\theta}|y)}{f(\theta|y)},1\right\rbrace
 \end{equation*}
 
-Un \textit{toy example} puede ayudar a visualizar cómo funcionan. Supongamos que quisiéramos simular de una posterior que, en realidad, es una normal bivariada cuyas marginales son normales estándar. Tomamos como kernel de transición una distribución uniforme en un rectángulo de $0.75$ de lado centrado en el estado actual de la cadena, por lo que tenemos un kernel simétrico y un algoritmo de \textit{Random Walk Metropolis}. Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. El objetivo de un algoritmo de integración por MCMC es, en el fondo, encontrar esta \textit{región crítica} y explorarla, obteniendo una muestra cada vez más fiel de la distribución {\color{Red} Betancourt}. Con tan solo 2500 iteraciones la cadena ya la recorrió y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
+Un \textit{toy example} puede ayudar a visualizar cómo funcionan. Supongamos que quisiéramos simular de una posterior que, en realidad, es una normal bivariada cuyas marginales son normales estándar. Tomamos como kernel de transición una distribución uniforme en un rectángulo de $0.75$ de lado centrado en el estado actual de la cadena, por lo que tenemos un kernel simétrico y un algoritmo de \textit{Random Walk Metropolis}. Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. El objetivo de un algoritmo de integración por MCMC es, en el fondo, encontrar esta \textit{región crítica} y explorarla, obteniendo una muestra cada vez más fiel de la distribución \parencite{Betancourt17}. Con tan solo 2500 iteraciones la cadena ya la recorrió y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
 
 \begin{figure}[h]
     \centering
@@ -180,7 +149,7 @@ Un \textit{toy example} puede ayudar a visualizar cómo funcionan. Supongamos qu
     ~ 
     \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo2_RWM}
-        \caption{Después de 2500 iteraciones, la cadena explora ya la región crítica. Los valores fuera de ella normalmente son rechazados.}
+        \caption{Después de 2500 iteraciones, la cadena ezplora ya la región crítica. Los valores fuera de ella normalmente son rechazados.}
         \label{fig:RWM_B}
     \end{subfigure}
     ~
@@ -191,3 +160,9 @@ Un \textit{toy example} puede ayudar a visualizar cómo funcionan. Supongamos qu
     \end{subfigure}
     \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis}. Fuente: elaboración propia.}\label{fig:RWM}
 \end{figure}
+
+\subsection{Gibbs Sampler}
+
+Estos métodos, si
+
+\section{Hamiltonian Monte Carlo}

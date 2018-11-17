@@ -14,14 +14,6 @@
 \usepackage{enumerate}
 \usepackage{fancyhdr} 
 \usepackage{bm}
-\usepackage[pdftex,
-            pdfauthor={Fernando Antonio Zepeda Herrera},
-            pdftitle={Modelado estadístico del voto FN en Francia},
-            pdfsubject={Tesis para el título de licenciado},
-            pdfkeywords={Front National Bayesian ITAM Statistics},
-            pdfproducer={Latex con hyperref},
-            pdfcreator={pdflatex},
-            hidelinks]{hyperref}
 \usepackage{url}
 \usepackage[usenames,dvipsnames]{xcolor}
             
@@ -89,6 +81,19 @@
 %% Contenido (ToC) %%
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
+
+%% Referencias cruzadas %%
+\usepackage[pdftex,
+            pdfauthor={Fernando Antonio Zepeda Herrera},
+            pdftitle={Modelado estadístico del voto FN en Francia},
+            pdfsubject={Tesis para el título de licenciado},
+            pdfkeywords={Front National Bayesian ITAM Statistics},
+            pdfproducer={Latex con hyperref},
+            pdfcreator={pdflatex},
+            hidelinks]{hyperref}
+\addto\extrasspanish{%
+\def\chapterautorefname{capítulo}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% INICIO DEL DOCUMENTO %%%
