@@ -176,7 +176,7 @@ ln\left(\dfrac{p_i}{1-p_i}\right)&=ln(p_i)-ln(1-p_i)\\
 \therefore \quad g(\mu_i)&=ln\left(\dfrac{\mu_i}{n_i-\mu_i}\right)
 \end{align*}
 
-\subsubsection{Problema analítico}
+\subsubsection{Problema analítico} \label{sec:Prob_Analitico}
 
 Ahora supongamos que queremos realizar un análisis bayesiano y actualizar nuestras creencias mediante el teorema de Bayes. Podríamos llevarnos la desagradable sorpresa de que una regresión logística no tiene las mismas facilidades analíticas que sí tiene el modelo normal. De manera particular, no podemos encontrar una distribución conjugada. En efecto, definiendo $\theta_i = ln\left(\dfrac{p_i}{1-p_i}\right)=X_i\beta$ y utilizando la forma de la función de verosimilitud en \eqref{eq:Veros_Binomial}, donde $y$ representa el vector de observaciones de nuestra variable de interés: 
 \begin{align} \label{eq:Veros_Binomial_MLG} 
