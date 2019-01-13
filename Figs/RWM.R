@@ -218,7 +218,8 @@ ggsave("Bayes/Ejemplo2_RWM_C.pdf",plot = ejemplo_est_indep_c, device = cairo_pdf
 
 #### Ejemplo con correlación ####
 set.seed(31122018)
-Ejemplo_Est_Corr <- RWM_Norm2_KTunif(N = 2500,inicio = c(.5,-.5), r = 1.5,
+r=0.25
+Ejemplo_Est_Corr <- RWM_Norm2_KTunif(N = 2500,inicio = c(-2.5,2.5), r = r,
                                      matriz_varianzas = matrix(c(1,0.9,0.9,1), nrow = 2))
 n_rechazadas <- Ejemplo_Est_Corr$Simulaciones %>% 
   filter(equals(Var1,lag(Var1)),
@@ -237,16 +238,17 @@ ejemplo_est_corr_compara <- graf_base_corr +
              color = "steelblue4", size = rel(2)) + 
   geom_path(data = filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30), 
             color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
-  annotate("rect", xmin = aux$Var1 - 1.5, xmax = aux$Var1 + 1.5, ymin = aux$Var2 - 1.5, ymax = aux$Var2 + 1.5,
+  annotate("rect", xmin = aux$Var1 - r, xmax = aux$Var1 + r, ymin = aux$Var2 - r, ymax = aux$Var2 + r,
            color = "steelblue4", alpha = 0.2) +
-  scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  labs(title = "Rectángulo de propuestas más amplio")
+  scale_x_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
+  scale_y_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
+  labs(title = "Rectángulo de propuestas estrecho de lado 0.5")
 
 ggsave("Bayes/Ejemplo_RWM_Compara1.pdf",plot = ejemplo_est_corr_compara, device = cairo_pdf, width = 10, height = 8)
 
 set.seed(31122018)
-Ejemplo_Est_Corr <- RWM_Norm2_KTunif(N = 2500,inicio = c(0.5,-0.5),r = .25,
+r = 1.5
+Ejemplo_Est_Corr <- RWM_Norm2_KTunif(N = 2500,inicio = c(-2.5,2.5),r = r,
                                      matriz_varianzas = matrix(c(1,0.95,0.95,1), nrow = 2))
 n_rechazadas <- Ejemplo_Est_Corr$Simulaciones %>% 
   filter(equals(Var1,lag(Var1)),
@@ -265,10 +267,39 @@ ejemplo_est_corr_compara <- graf_base_corr +
              color = "steelblue4", size = rel(2)) + 
   geom_path(data = filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30), 
             color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
-  annotate("rect", xmin = aux$Var1 - .25, xmax = aux$Var1 + .25, ymin = aux$Var2 - .25, ymax = aux$Var2 + .25,
+  annotate("rect", xmin = aux$Var1 - r, xmax = aux$Var1 + r, ymin = aux$Var2 - r, ymax = aux$Var2 + r,
            color = "steelblue4", alpha = 0.2) +
-  scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  labs(title = "Rectángulo de propuestas más estrecho")
+  scale_x_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
+  scale_y_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
+  labs(title = "Rectángulo de propuestas intermedio de lado 3")
 
 ggsave("Bayes/Ejemplo_RWM_Compara2.pdf",plot = ejemplo_est_corr_compara, device = cairo_pdf, width = 10, height = 8)
+
+set.seed(31122018)
+r=2.5
+Ejemplo_Est_Corr <- RWM_Norm2_KTunif(N = 2500,inicio = c(-2.5,2.5),r = r,
+                                     matriz_varianzas = matrix(c(1,0.95,0.95,1), nrow = 2))
+n_rechazadas <- Ejemplo_Est_Corr$Simulaciones %>% 
+  filter(equals(Var1,lag(Var1)),
+         equals(Var2,lag(Var2))) %>% 
+  extract2("n") 
+Ejemplo_Est_Corr %<>% 
+  map(~ mutate(.x,Rechazada = n %in% n_rechazadas))
+
+aux <- filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30) %>% 
+  top_n(1,n) %>% 
+  select(Var1,Var2)
+ejemplo_est_corr_compara <- graf_base_corr + 
+  geom_point(data = filter(Ejemplo_Est_Corr$Propuestas,Rechazada, n <= 30), 
+             color = "steelblue4", size = rel(5), shape = 88) + 
+  geom_point(data = Ejemplo_Est_Corr$Simulaciones[1,], 
+             color = "steelblue4", size = rel(2)) + 
+  geom_path(data = filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30), 
+            color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+  annotate("rect", xmin = aux$Var1 - r, xmax = aux$Var1 + r, ymin = aux$Var2 - r, ymax = aux$Var2 + r,
+           color = "steelblue4", alpha = 0.2) +
+  scale_x_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
+  scale_y_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
+  labs(title = "Rectángulo de propuestas amplio de lado 5")
+
+ggsave("Bayes/Ejemplo_RWM_Compara3.pdf",plot = ejemplo_est_corr_compara, device = cairo_pdf, width = 10, height = 8)
