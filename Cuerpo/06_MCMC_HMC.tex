@@ -39,11 +39,11 @@ Lo importante para este trabajo es que este es exactamente el mismo probelma que
 
 No obstante, la forma de \eqref{eq:IntegralMC} permite llevar a cabo una gran variedad de \textit{resúmenes inferenciales} \parencite{GP97}. La posibilidad de realizar la correspondiente \textit{integración por Monte Carlo} hace que, en la práctica, exista una dualidad entre una distribución o densidad y una muestra proveniente de ella \parencite{SmithGelfand92}. La única receta de la inferencia bayesiana--- ver la página \pageref{receta_bayesiana}---, en la práctica se convierte en obtener una muestra aleatoria de la distribución posterior lo suficientemente grande para, con ella, estimar por Monte Carlo los resúmenes inferenciales requeridos.\\
 
-Hay varios métodos de simulación de variables aleatorias que permiten obtener muestras aleatorias independientes y calcular un estimador de Monte Carlo. Entre los más mencionados podemos encontrar el método de inversión, el de aceptación y rechazo o el muestreo por importancia \parencites{Ross13,RobertCasella10}. Sin embargo, los físicos de Los Alamos pronto se dieron cuenta que podrían ser más eficientes si, en lugar de buscar realizar simulaciones independientes, hacían simulaciones secuenciales que dependieran entre sí. 
+Hay varios métodos de simulación de variables aleatorias que permiten obtener muestras aleatorias independientes y calcular un estimador de Monte Carlo. Entre los más mencionados podemos encontrar el método de inversión, el de aceptación y rechazo o el muestreo por importancia \parencites{Ross13,RobertCasella10}. Sin embargo, los físicos de Los Alamos pronto se dieron cuenta que, en lugar de buscar realizar directamente simulaciones independientes, podrían hacer simulaciones secuenciales que dependieran entre sí. 
 
 \section{MCMC}
 
-La forma de realizar simulaciones correlacionadas que logren simular de manera más eficiente que los métodos tradicionales de aceptación y rechazo o muestreo por importancia es utilizar \textit{cadenas de Markov}.
+La forma de realizar simulaciones correlacionadas que logren simular de manera más eficiente que los métodos directos tradicionales de aceptación y rechazo o muestreo por importancia es utilizar \textit{cadenas de Markov}.
 
 \dfn{\textbf{Cadena de Markov}\\
 \label{def:Cadena_Markov}
@@ -54,9 +54,16 @@ Z_{(n+1)}| Z_{(n)}, \dots, Z_{(0)} \sim Z_{(n+1)}| Z_{(n)} \sim p(z_{(n+1)}|z_{(
 }
 Si llamamos \textit{estados} a los eventos que suceden en la cadena en cada punto en el tiempo, podemos decir que la distribución condicional del estado futuro de una cadena de Markov dada toda su historia depende exclusivamente del estado presente y no de los estados anteriores. Dicho de otra forma, \textit{el futuro es independiente del pasado, dado el presente}. La distribución condicional se llama \textit{kernel de transición}, mismo que normalmente es también independiente del índice $n$ y depende exclusivamente del estado actual y el estado futuro. Esta propiedad se llama \textit{homogeneidad} en el tiempo y permite simplificar la notación a $p(\tilde{z}|z)$.\\ 
 
-La teoría de cadenas de Markov determina las condiciones bajo las cuales existen teoremas límites al estilo de las leyes de los grandes números y que en este contexto se conocen como \textit{ergódicos}. Esta teoría escapa los objetivos particulares de la tesis pero, si es de interés para el lector, algunas referencias útiles son \textcites{Rincon12,Ross96,TaylorKarlin84}. Baste decir por ahora que, bajo ciertas condiciones, sabemos que la distribución de $Z_{(n)}$ converge a una distribución límite conforme $n$ tiende a infinito. Más aún, los \textit{promedios ergódicos}--- es decir los promedios acumulados de la cadena--- también convergen al valor esperado de la distribución límite.\\ 
+La teoría de cadenas de Markov determina las condiciones bajo las cuales existen teoremas límites al estilo de las leyes de los grandes números y que en este contexto se conocen como \textit{ergódicos}. Esta teoría escapa los objetivos particulares de la tesis pero, si es de interés para el lector, algunas referencias útiles son \textcites{Rincon12,Neal93,Ross96,TaylorKarlin84}. Baste decir por ahora que, bajo ciertas condiciones, sabemos que la distribución de $Z_{(n)}$ converge a una distribución límite conforme $n$ tiende a infinito. Más aún, los \textit{promedios ergódicos}--- es decir los promedios acumulados de la cadena--- también convergen al valor esperado de la distribución límite. Esto se puede expresar matemáticamente como sigue:
+\begin{subequations}\label{eq:Teo_Erg}
+\begin{align}
+Z_{(N)} &\xrightarrow[N\rightarrow\infty]{\mathcal{D}} Z, \quad Z \sim f(z) \label{eq:Teo_Erg_Conv_D} \\
+\dfrac{1}{N}\sum\limits_{n=1}^N h(z_{(n)}) &\xrightarrow[N\rightarrow\infty]{} E_{f}[h(z)]
+\label{eq:Teo_Erg_Conv_Prom}
+\end{align}
+\end{subequations}
 
-Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones del teorema ergódico y cuya distribución límite sea la distribución de la cual se quiere simular. Así, después de $N$ transiciones de la cadena, la distribución de los valores simulados sería aproximadamente la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
+Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones necesarias y cuya distribución límite sea la distribución de la cual se quiere simular. Así, después de $N$ transiciones de la cadena, la cadena de valores simulados convergería a la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
 
 \begin{equation*}
 h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h(z_{(n)})}{N}
@@ -64,9 +71,11 @@ h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h(z_{(n)})}{N}
 
 \subsection{Metropolis Hastings}
 
- El primero de estos métodos MCMC fue propuesto por las parejas de esposos Arianna y Marshall Rosenbluth y Augusta y Edward Teller junto con el propio Nicholas Metropolis en el \textit{Journal of Chemical Physics} \parencite{Metropolis53}. Se conoce como el algoritmo de Metropolis, aunque hay quienes creen que en realidad el trabajo más fuerte lo hicieron el resto de los autores por lo que debería llamarse el algoritmo de Rosenbluth-Teller \parencite{Gubernatis05}. Casi 20 años después, el estadístico canadiense Wilfred Keith Hastings lo generalizó \parencite{Hastings70}, por lo que podemos hablar de algoritmos de Metropolis Hastings o MH.\\
+ El primero de estos métodos MCMC fue propuesto por las parejas de esposos Arianna y Marshall Rosenbluth y Augusta y Edward Teller junto con el propio Nicholas Metropolis en el \textit{Journal of Chemical Physics} \parencite{Metropolis53}. Se conoce como el algoritmo de Metropolis, aunque hay quienes creen que en realidad el trabajo más fuerte lo hicieron el resto de los autores por lo que debería llamarse el algoritmo de Rosenbluth-Teller \parencite{Gubernatis05}. Casi 20 años después, el estadístico canadiense Wilfred Keith Hastings lo generalizó \parencite{Hastings70}, por lo que podemos hablar de algoritmos de Metropolis Hastings o MH.
+
+\subsubsection*{Balance detallado, la clave de MH}
  
-Las cadenas de Markov para MH requieren ser homogéneas en el tiempo y que sea posible llegar a cualquier estado en un número finito de transiciones, algo que se conoce como \textit{irreducibilidad}. Si además de ser una cadena irreducible, el kernel de transición satisface la siguiente \textit{ecuación de balance detallado} para alguna distribución $f$, se dice que es \textit{reversible} y podemos aplicar el teorema ergódico.
+Las cadenas de Markov para MH requieren ser homogéneas en el tiempo y que sea posible llegar a cualquier estado en un número finito de transiciones, algo que se conoce como \textit{irreducibilidad}. Si además el kernel de transición satisface la siguiente \textit{ecuación de balance detallado} para alguna distribución $f$, se dice que es \textit{reversible} y podemos aplicar el teorema ergódico.
 \begin{equation}
 \label{eq:Balance_Detallado}
 f(z)p(\tilde{z}|z)=f(\tilde{z})p(z|\tilde{z})
@@ -109,7 +118,7 @@ La utilidad de MH para la estadística bayesiana está en la forma \eqref{eq:Pro
 f(\theta|y) \propto L(\theta)f(\theta).
 \end{equation*}
 
-Por esto, para simular $N$ valores de una distribución posterior $f(\theta|y)$ mediante MH solo necesitamos la distribución inicial $f(\theta)$, la verosimilitud $L(\theta)=f(y|\theta)$ y un kernel de propuestas $q(\tilde{\theta}|\theta)$, siguiendo el \textbf{Algoritmo \ref{alg:MH}}. La única consideración que debe tenerse en cuenta es que la posterior sea propia; si se inició con una inicial impropia es posible que la posterior no pueda integrar a 1, lo que haría que el algoritmo fallara \parencite{RobertCasella10}.\\
+Por esto, para simular valores de una distribución posterior $f(\theta|y)$ mediante MH solo necesitamos la distribución inicial $f(\theta)$, la verosimilitud $L(\theta)=f(y|\theta)$ y un kernel de propuestas $q(\tilde{\theta}|\theta)$, siguiendo el \textbf{Algoritmo \ref{alg:MH}}. Hay una última consideración que debe tenerse en cuenta y es que la posterior sea propia; si se inició con una inicial impropia es posible que la posterior no pueda integrar a 1, lo que haría que el algoritmo fallara \parencite{RobertCasella10}.\\
 
 \begin{algorithm}
 \DontPrintSemicolon
@@ -131,16 +140,16 @@ $u \sim U[0,1]$ \;
 
 \subsubsection*{\textit{Random Walk Metropolis}}
 
-Si la posterior es propia, entonces el mayor problema, claro está, es el de encontrar un kernel de propuestas conveniente. Una alternativa son aquellos que exploran progresivamente el espacio de estados de manera local. Estos se conocen como \textit{Random Walk Metropolis} o RWM \parencite{RobertCasella10}. De hecho, el algoritmo inicial de \textcite{Metropolis53} era de este tipo, usando una distribución uniforme en una vecindad del estado actual; pero también se pueden usar otras distribuciones, como normales centradas en dicho estado. \textcite{Robert15} hace la analogía con alguien que para ver una pintura en un cuarto oscuro tiene que ir alumbrando el cuadro con una antorcha, iluminando secuencialmente diferentes segmentos del lienzo.\\
+Si la posterior es propia, entonces el mayor problema, claro está, es el de encontrar un kernel de propuestas conveniente. Una alternativa son aquellos que exploran progresivamente el espacio de estados de manera local. Estos se conocen como \textit{Random Walk Metropolis} o RWM \parencite{RobertCasella10}. De hecho, el algoritmo inicial de \textcite{Metropolis53} era de este tipo, usando una distribución uniforme en una vecindad del estado actual; pero también se pueden usar otras distribuciones, como una normal o una $t$ de Student centrada en dicho estado. \textcite{Robert15} hace la analogía con alguien que para ver una pintura en un cuarto oscuro tiene que ir alumbrando el cuadro con una antorcha, iluminando secuencialmente diferentes segmentos del lienzo.\\
 
-Estos kérneles de caminata aleatoria son \textit{simétricos}; esto es,  $q(\tilde{\theta}|\theta) = q(\theta |\tilde{\theta})$, lo que simplifica los cálculos de probabilidades de aceptación:
+Estos kérneles de caminata aleatoria son \textit{simétricos}--- esto es,  $q(\tilde{\theta}|\theta) = q(\theta |\tilde{\theta})$--- lo que simplifica los cálculos de probabilidades de aceptación:
 \begin{equation*}
 \alpha_{RWM}(\tilde{\theta};\theta)=min\left\lbrace\dfrac{f(\tilde{\theta}|y)q(\theta|\tilde{\theta})}{f(\theta|y)q(\tilde{\theta}|\theta)},1\right\rbrace = min\left\lbrace\dfrac{f(\tilde{\theta}|y)}{f(\theta|y)},1\right\rbrace
 \end{equation*}
 
 Un ejemplo trivial puede ayudar a visualizar cómo funcionan. Supongamos que quisiéramos simular de una posterior que, en realidad, es una normal bivariada cuyas marginales son normales estándar. Un posible kernel de transición sería una distribución uniforme en un rectángulo de $3$ de lado centrado en el estado actual de la cadena, por lo que tendríamos un kernel simétrico y un algoritmo de \textit{Random Walk Metropolis}.\\ 
 
-Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo, encontrar esta \textit{región crítica} y explorarla--- obteniendo una muestra cada vez más fiel de la distribución--- es el objetivo de un algoritmo de integración por MCMC \parencite{Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
+Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo, encontrar esta \textit{región crítica} y explorarla--- obteniendo una muestra cada vez más fiel de la distribución--- es el objetivo de un algoritmo de integración por MCMC \parencites{Neal93,Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
 
 \begin{figure}[h]
     \centering
@@ -160,6 +169,8 @@ Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \r
     \end{subfigure}
     \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis}. Fuente: elaboración propia.}\label{fig:RWM}
 \end{figure}
+
+La convergencia de los promedios ergódicos que implica \eqref{eq:Teo_Erg_Conv_Prom} es ciertamente importante. Sin embargo, en un análisis bayesiano la única receta indica tener una muestra aleatoria de la distribución posterior. Si observamos con cuidado \eqref{eq:Teo_Erg_Conv_D}, vemos que es la última simulación de la cadena la que podemos considerarla como proveniente de la distribución objetivo límite.\\
 
 Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qué usar $3$ como lado y no $0.5$? ¿Qué hubiera pasado en ese caso? Podemos observarlo en la \textbf{Figura \ref{fig:RWM2}}. El rectángulo es más pequeño y eso tiene dos efectos: hay menos propuestas rechazadas pero la cadena avanza más lentamente. Vemos cómo aún después de las mismas 2,500 iteraciones la cadena no ha explorado por completo el área de mayor densidad y los promedios ergódicos apenas comienzan a converger.\\ 
 
@@ -199,7 +210,7 @@ Este comportamiento puede no ser el deseado en el ejemplo, pero es importante te
     \caption{Comparación de dos kerneles uniformes de propuestas para simular una normal bivariada correlación $0.95$ mediante RWM. Fuente: elaboración propia.}\label{fig:RWM_Corr}
 \end{figure}
 
-Ambas cadenas convergerán, pero este ejemplo ilustra uno de los principales problemas de los algoritmos de MH, en general. Elegir un kernel de propuestas eficiente no es sencillo. Más aún, la dimensionalidad de los problemas hace que muy rápidamente nos alejemos de los ejemplos triviales y seamos incapaces de proponer kérneles de transición que funcionen de manera adecuada. ¿Qué hacer? Por varios años se tuvieron que encontrar soluciones \textit{ad hoc}, hasta la década de los 90 cuando hubo una ``epifanía'' en el mundo de la estadística bayesiana \parencite{RobertCasella11}. 
+Ambas cadenas convergerán, pero este ejemplo ilustra uno de los principales problemas de los algoritmos de MH, en general. Elegir un kernel de propuestas eficiente no es sencillo. Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que funcionen \parencites{Geyer05,}, Más aún, la dimensionalidad de los problemas hace que muy rápidamente nos alejemos de los ejemplos triviales y seamos incapaces de proponer kérneles de transición que funcionen de manera adecuada. ¿Qué hacer? Por varios años se tuvieron que encontrar soluciones \textit{ad hoc}, hasta la década de los 90 cuando hubo una ``epifanía'' en el mundo de la estadística bayesiana \parencite{RobertCasella11}. 
 
 \subsection{Gibbs Sampler}
 
