@@ -149,7 +149,7 @@ Estos kérneles de caminata aleatoria son \textit{simétricos}--- esto es,  $q(\
 
 Un ejemplo trivial puede ayudar a visualizar cómo funcionan. Supongamos que quisiéramos simular de una posterior que, en realidad, es una normal bivariada cuyas marginales son normales estándar. Un posible kernel de transición sería una distribución uniforme en un rectángulo de $3$ de lado centrado en el estado actual de la cadena, por lo que tendríamos un kernel simétrico y un algoritmo de \textit{Random Walk Metropolis}.\\ 
 
-Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo, encontrar esta \textit{región crítica} y explorarla--- obteniendo una muestra cada vez más fiel de la distribución--- es el objetivo de un algoritmo de integración por MCMC \parencites{Neal93,Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
+Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo--- como quedará más claro después--- encontrar esta \textit{región crítica} y explorarla es el objetivo de un algoritmo de integración por MCMC \parencites{Neal93,Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
 
 \begin{figure}[h]
     \centering
@@ -170,9 +170,7 @@ Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \r
     \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis}. Fuente: elaboración propia.}\label{fig:RWM}
 \end{figure}
 
-La convergencia de los promedios ergódicos que implica \eqref{eq:Teo_Erg_Conv_Prom} es ciertamente importante. Sin embargo, en un análisis bayesiano la única receta indica tener una muestra aleatoria de la distribución posterior. Si observamos con cuidado \eqref{eq:Teo_Erg_Conv_D}, vemos que es la última simulación de la cadena la que podemos considerarla como proveniente de la distribución objetivo límite.\\
-
-Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qué usar $3$ como lado y no $0.5$? ¿Qué hubiera pasado en ese caso? Podemos observarlo en la \textbf{Figura \ref{fig:RWM2}}. El rectángulo es más pequeño y eso tiene dos efectos: hay menos propuestas rechazadas pero la cadena avanza más lentamente. Vemos cómo aún después de las mismas 2,500 iteraciones la cadena no ha explorado por completo el área de mayor densidad y los promedios ergódicos apenas comienzan a converger.\\ 
+Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qué usar $3$ como lado y no $0.5$? ¿Qué hubiera pasado en ese caso? Podemos observarlo en la \textbf{Figura \ref{fig:RWM2}}. El rectángulo de propuestas es más pequeño y eso tiene dos efectos: hay menos propuestas rechazadas pero la cadena avanza más lentamente. Vemos cómo aún después de las mismas 2,500 iteraciones la cadena no ha explorado por completo el área de mayor densidad y los promedios ergódicos apenas comienzan a converger.\\ 
 
 \begin{figure}[h]
     \centering
@@ -193,27 +191,38 @@ Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qu
     \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis} con un kernel de propuestas estrecho. Fuente: elaboración propia.}\label{fig:RWM2}
 \end{figure}
 
-Este comportamiento puede no ser el deseado en el ejemplo, pero es importante tenerlo en cuenta. El rectángulo más amplio permite proponer valores más distantes del punto actual, lo que en este caso hace que la cadena avance rápidamente. Sin embargo, también propone valores que se alejan de la región crítica, mismos que tienden a ser rechazados. El rectángulo más pequeño avanza más bien ``lento pero seguro''. Esto podemos verlo comparando el comportamiento de ambos kérneles cuando intentan simular normales ahora altamente correlacionadas, en la \textbf{Figura \ref{fig:RWM_Corr}}.\\
+El rectángulo más amplio propone valores que se alejan de la región crítica, mismos que tienden a ser rechazados. Sin embargo, también permite proponer valores más distantes del punto actual, lo que en este caso hace que la cadena avance rápidamente. El rectángulo más pequeño avanza más bien ``lento pero seguro''... quizás demasiado lento. Ambas cadenas convergerán, pero este ejemplo ilustra uno de los principales problemas de los algoritmos de MH, en general. Elegir un kernel de propuestas eficiente no es sencillo. Si la escala del kernel es demasiado pequeña, los saltos son demasiado pequeños y la cadena avanza demasiado lento. Si la escala es demasiado grande, corremos el riesgo de que la cadena rechace casi todas las propuestas y quede ``atorada'' en algún lugar; si la cadena repite el mismo valor varias veces seguidas, también alenta su avance. Debe haber un justo medio entre ambos extremos. Esto podemos verlo comparando el comportamiento de tres kérneles cuando intentan simular normales ahora altamente correlacionadas, en la \textbf{Figura \ref{fig:RWM_Corr}}.\\ 
 
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara1}
-        \caption{El kernel de propuestas uniforme en un rectángulo de lado 3 centrado en el punto actual permite alcanzar puntos más distantes pero también propone valores frecuentemente rechazados al alejarse demasiado de la región crítica.}
+        \caption{Un kernel de propuestas demasiado estrecho acepta más propuestas pero se mueve lento.}
     \end{subfigure}
     ~ 
     \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2}
-        \caption{El kernel de propuestas uniforme en un rectángulo de lado 0.5 centrado en el punto actual propone valores normalmente aceptados pero avanza lentamente.}
+        \caption{El kernel óptimo en general es uno que permita alcanzar regiones diferentes del espacio sin rechazar ``demasiadas'' propuestas. Esto permite que la cadena avance de mejor manera.}
     \end{subfigure}
     ~
-    \caption{Comparación de dos kerneles uniformes de propuestas para simular una normal bivariada correlación $0.95$ mediante RWM. Fuente: elaboración propia.}\label{fig:RWM_Corr}
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara3}
+        \caption{Un kernel de propuestas demasiado amplio rechaza demasiadas propuestas. Esto puede provocar que la cadena quede ``atorada'' en el mismo lugar por varias propuestas, lo que a su vez implica un avance más lento.}
+    \end{subfigure}
+    ~
+    \caption{Comparación de kerneles uniformes de propuestas para simular una normal bivariada con correlación $0.95$ mediante RWM. Fuente: elaboración propia.}\label{fig:RWM_Corr}
 \end{figure}
 
-Ambas cadenas convergerán, pero este ejemplo ilustra uno de los principales problemas de los algoritmos de MH, en general. Elegir un kernel de propuestas eficiente no es sencillo. Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que funcionen \parencites{Geyer05,}, Más aún, la dimensionalidad de los problemas hace que muy rápidamente nos alejemos de los ejemplos triviales y seamos incapaces de proponer kérneles de transición que funcionen de manera adecuada. ¿Qué hacer? Por varios años se tuvieron que encontrar soluciones \textit{ad hoc}, hasta la década de los 90 cuando hubo una ``epifanía'' en el mundo de la estadística bayesiana \parencite{RobertCasella11}. 
+Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que sean relativamente eficientes \parencites{GelmanRobertsGilks96,Geyer05,YangRdz13}. Para el ejemplo original de normales bivariadas no correlacionadas elegí el rectángulo uniforme de lado $3$ porque \textcite{YangRdz13} encuentran que este es el ancho óptimo para simular una normal estándar mediante un kernel uniforme. Sin embargo, nada garantiza que esto sea \textit{el kernel óptimo} para una normal bivariada o para normales correlacionadas. El uso del kernel uniforme se debe a que es fácil de entender y fue el utilizado por los científicos de Los Álamos, pero pueden haber kérneles más eficientes como reporta el artículo antes citado.\\ 
+
+ Más aún, la dimensionalidad de los problemas hace que muy rápidamente nos alejemos de los ejemplos triviales y seamos incapaces de proponer kérneles de transición que funcionen de manera adecuada. ¿Qué hacer? Por varios años se tuvieron que seguir encontrando soluciones \textit{ad hoc}, hasta la década de los 90 cuando hubo una ``epifanía'' en el mundo de la estadística bayesiana \parencite{RobertCasella11}. 
 
 \subsection{Gibbs Sampler}
 
 \textcite{GelfandSmith90} presentaron en 1990. 
+
+\subsection{Convergencia}
+
+La convergencia de los promedios ergódicos que implica \eqref{eq:Teo_Erg_Conv_Prom} es ciertamente importante. Sin embargo, en un análisis bayesiano la única receta indica tener una muestra aleatoria de la distribución posterior. Si observamos con cuidado \eqref{eq:Teo_Erg_Conv_D}, vemos que la última simulación de la cadena es la que podemos considerar como proveniente de la distribución objetivo límite. Si quisiéramos una muestra de tamaño $N$ deberíamos correr $N$ cadenas independientes. Afortunadamente, en las cadenas de MH y MCMC en general, la distribución límite es también lo que se conoce como \textit{distribución estacionaria} de la cadena de Markov. Esto quiere decir que, si se tiene una observación distribuida\\
 
 \section{Hamiltonian Monte Carlo}
