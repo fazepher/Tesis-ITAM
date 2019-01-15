@@ -26,7 +26,7 @@ Stan compartió su idea con John von Neumann quien, sorprendido y emocionado con
 De manera concreta, el método es la conjunción de la simulación con la ley de los grandes números. Las cantidades que requerían calcular eran valores esperados de la siguiente forma: 
 \begin{equation}
 \label{eq:IntegralMC}
-h^\star = \mathbb{E}[h(Z)]=\int\limits_\mathcal{Z} h(z)f(z)dz ,
+h^\star = \E{h(Z)}=\int\limits_\mathcal{Z} h(z)f(z)dz ,
 \end{equation} 
 donde $h$ es una función de interés y $f(z)$ es la distribución de probabilidad sobre las \textit{configuraciones} $z$ en las que podía encontrarse el sistema físico. El gran problema era--- y sigue siendo--- que estas integrales típicamente no pueden calcularse ni analíticamente ni por métodos numéricos tradicionales. Sin embargo, si se tiene una muestra aleatoria de valores de $Z$ provenientes de su distribución $f$, se puede aproximar $h^\star$ con el promedio empírico, que en este contexto se conoce como \textit{estimador de Monte Carlo}: 
 \begin{equation*}
@@ -35,11 +35,11 @@ h^\star \approx \hat{h} = \sum\limits_{i=1}^N \dfrac{h(z_i)}{N}
 
 Entonces, los científicos en Los Alamos se dedicaron a encontrar algoritmos eficientes para obtener una muestra aleatoria de variables provenientes de diferentes distribuciones $f$.\\ 
 
-Lo importante para este trabajo es que este es exactamente el mismo probelma que se tiene en la aplicación de la estadística bayesiana y que hizo que por décadas--- por no decir siglos--- fuera poco menos que imposible llevar a cabo análisis bayesianos no triviales, como ya anticipa en \ref{sec:Prob_Analitico}. En efecto, las integrales que surgen en la estadística bayesiana no pueden ser calculadas de manera analítica. El ejemplo más frecuente es la constante normalizadora del teorema de Bayes. ¿Cómo aplicar el teorema si el denominador no puede ser calculado?\\ 
+Lo importante para este trabajo es que este es exactamente el mismo probelma que se tiene en la aplicación de la estadística bayesiana y que hizo que por décadas--- por no decir siglos--- fuera poco menos que imposible llevar a cabo análisis bayesianos no triviales, como ya anticipa en \ref{sec:Prob_Analitico}. Muchas de las integrales que surgen en la estadística bayesiana no pueden ser calculadas de manera analítica. El ejemplo más frecuente es la constante normalizadora del teorema de Bayes. ¿Cómo aplicar el teorema si el denominador no puede ser calculado?\\ 
 
-No obstante, la forma de \eqref{eq:IntegralMC} permite llevar a cabo una gran variedad de \textit{resúmenes inferenciales} \parencite{GP97}. La posibilidad de realizar la correspondiente \textit{integración por Monte Carlo} hace que, en la práctica, exista una dualidad entre una distribución o densidad y una muestra proveniente de ella \parencite{SmithGelfand92}. La única receta de la inferencia bayesiana--- ver la página \pageref{receta_bayesiana}---, en la práctica se convierte en obtener una muestra aleatoria de la distribución posterior lo suficientemente grande para, con ella, estimar por Monte Carlo los resúmenes inferenciales requeridos.\\
+No obstante, la forma de \eqref{eq:IntegralMC} permite llevar a cabo una gran variedad de \textit{resúmenes inferenciales} \parencite{GP97}. La posibilidad de realizar las correspondientes \textit{integraciones por Monte Carlo} hace que, en la práctica, exista una dualidad entre una distribución o densidad y una muestra proveniente de ella \parencite{SmithGelfand92}. La única receta de la inferencia bayesiana--- ver la página \pageref{receta_bayesiana}---, en la práctica se convierte en obtener una muestra aleatoria de la distribución posterior lo suficientemente grande para, con ella, estimar por Monte Carlo los resúmenes inferenciales requeridos.\\
 
-Hay varios métodos de simulación de variables aleatorias que permiten obtener muestras aleatorias independientes y calcular un estimador de Monte Carlo. Entre los más mencionados podemos encontrar el método de inversión, el de aceptación y rechazo o el muestreo por importancia \parencites{Ross13,RobertCasella10}. Sin embargo, los físicos de Los Alamos pronto se dieron cuenta que, en lugar de buscar realizar directamente simulaciones independientes, podrían hacer simulaciones secuenciales que dependieran entre sí. 
+Hay varios métodos de simulación de variables aleatorias que permiten obtener muestras aleatorias independientes y calcular un estimador de Monte Carlo. Entre los más mencionados podemos encontrar el método de inversión, el de aceptación y rechazo o el muestreo por importancia \parencites{Ross13,RobertCasella10}. Sin embargo, los físicos de Los Alamos pronto se dieron cuenta que, en lugar de buscar realizar directamente simulaciones independientes, era más práctico hacer simulaciones secuenciales que dependieran entre sí. 
 
 \section{MCMC}
 
@@ -58,12 +58,12 @@ La teoría de cadenas de Markov determina las condiciones bajo las cuales existe
 \begin{subequations}\label{eq:Teo_Erg}
 \begin{align}
 Z_{(N)} &\xrightarrow[N\rightarrow\infty]{\mathcal{D}} Z, \quad Z \sim f(z) \label{eq:Teo_Erg_Conv_D} \\
-\dfrac{1}{N}\sum\limits_{n=1}^N h(z_{(n)}) &\xrightarrow[N\rightarrow\infty]{} E_{f}[h(z)]
+\dfrac{1}{N}\sum\limits_{n=1}^N h(z_{(n)}) &\xrightarrow[N\rightarrow\infty]{} \mathbb{E}_{f}[h(z)]
 \label{eq:Teo_Erg_Conv_Prom}
 \end{align}
 \end{subequations}
 
-Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones necesarias y cuya distribución límite sea la distribución de la cual se quiere simular. Así, después de $N$ transiciones de la cadena, la cadena de valores simulados convergería a la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
+Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones necesarias y cuya distribución límite sea la distribución de la cual se quiere simular. Así, después de $N$ transiciones de la cadena, la simulación convergería a la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
 
 \begin{equation*}
 h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h(z_{(n)})}{N}
@@ -113,7 +113,7 @@ Si la desigualdad \eqref{eq:Inbalance_Detallado} fuera en el sentido contrario, 
 \alpha(\tilde{z};z)=min\left\lbrace\dfrac{f(\tilde{z})q(z|\tilde{z})}{f(z)q(\tilde{z}|z)},1\right\rbrace
 \end{equation}
 
-La utilidad de MH para la estadística bayesiana está en la forma \eqref{eq:Proba_Aceptar_MH} de la probabilidad de aceptación. Como la distribución objetivo se encuentra tanto en el denominador como en el numerador, no se requiere completa sino basta con conocerla salvo por una constante de proporcionalidad que desaparezca al realizar el cociente. Esta situación es exactamente la que impera en la aplicación de la estadística bayesiana. Recordemos el resumen del aprendizaje bayesiano en \eqref{eq:Bayes_Prop}, \textit{la posterior es proporcional a la inicial por la verosimilitud}: 
+La utilidad de MH para la estadística bayesiana está en la forma de la probabilidad de aceptación en \eqref{eq:Proba_Aceptar_MH}. Como la distribución objetivo se encuentra tanto en el denominador como en el numerador, no se requiere completa sino basta con conocerla salvo por una constante de proporcionalidad que desaparezca al realizar el cociente. Esta situación es exactamente la que impera en la aplicación de la estadística bayesiana. Recordemos el resumen del aprendizaje bayesiano en \eqref{eq:Bayes_Prop}, \textit{la posterior es proporcional a la inicial por la verosimilitud}: 
 \begin{equation*}
 f(\theta|y) \propto L(\theta)f(\theta).
 \end{equation*}
@@ -210,16 +210,25 @@ El rectángulo más amplio propone valores que se alejan de la región crítica,
         \caption{Un kernel de propuestas demasiado amplio rechaza demasiadas propuestas. Esto puede provocar que la cadena quede ``atorada'' en el mismo lugar por varias propuestas, lo que a su vez implica un avance más lento.}
     \end{subfigure}
     ~
-    \caption{Comparación de kerneles uniformes de propuestas para simular una normal bivariada con correlación $0.95$ mediante RWM. Fuente: elaboración propia.}\label{fig:RWM_Corr}
+    \caption{Comparación de kerneles uniformes de propuestas para simular una normal bivariada con correlación $0.95$ mediante RWM. Las tres cadenas presentan las primeras $30$ transiciones, aunque no se repiten los puntos en los que la cadena permanece en el mismo estado. Fuente: elaboración propia.}\label{fig:RWM_Corr}
 \end{figure}
 
-Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que sean relativamente eficientes \parencites{GelmanRobertsGilks96,Geyer05,YangRdz13}. Para el ejemplo original de normales bivariadas no correlacionadas elegí el rectángulo uniforme de lado $3$ porque \textcite{YangRdz13} encuentran que este es el ancho óptimo para simular una normal estándar mediante un kernel uniforme. Sin embargo, nada garantiza que esto sea \textit{el kernel óptimo} para una normal bivariada o para normales correlacionadas. El uso del kernel uniforme se debe a que es fácil de entender y fue el utilizado por los científicos de Los Álamos, pero pueden haber kérneles más eficientes como reporta el artículo antes citado.\\ 
+Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que sean relativamente eficientes \parencites{GelmanRobertsGilks96,Geyer05,YangRdz13}. Para el ejemplo original de normales bivariadas no correlacionadas elegí el rectángulo uniforme de lado $3$ porque \textcite{YangRdz13} encuentran que este es el ancho óptimo para simular una normal estándar mediante un kernel uniforme. Sin embargo, nada garantiza que esto sea \textit{el} kernel óptimo para una normal bivariada o para normales correlacionadas. El uso del kernel uniforme se debe a que es fácil de entender y fue el utilizado por los científicos de Los Álamos, pero pueden haber kérneles más eficientes como reporta el mismo artículo.\\ 
 
- Más aún, la dimensionalidad de los problemas hace que muy rápidamente nos alejemos de los ejemplos triviales y seamos incapaces de proponer kérneles de transición que funcionen de manera adecuada. ¿Qué hacer? Por varios años se tuvieron que seguir encontrando soluciones \textit{ad hoc}, hasta la década de los 90 cuando hubo una ``epifanía'' en el mundo de la estadística bayesiana \parencite{RobertCasella11}. 
+ El problema crece porque la dimensionalidad de los problemas hace que muy rápidamente nos alejemos de los ejemplos triviales y seamos incapaces de proponer kérneles de transición que funcionen de manera adecuada. ¿Qué hacer? Por varios años esto desalentó el uso de los métodos MCMC, hasta la década de los 90 cuando hubo una ``epifanía'' en el mundo de la estadística bayesiana \parencite{RobertCasella11}. 
 
 \subsection{Gibbs Sampler}
 
-\textcite{GelfandSmith90} presentaron en 1990. 
+\textcite{GelfandSmith90} presentaron un artículo titulado \textit{Sampling-Based Approaches to Calculating Marginal Densities}. En él rescataron tres métodos de simulación para obtener densidades que no pueden ser conocidas de manera analítica. Sin embargo, el método que provocó la explosión de los métodos bayesianos fue el llamado \textit{Gibbs Sampler}.\\ 
+
+Este algoritmo de MCMC fue propuesto por \textcite{GemanGeman84} mientras trabajaban en problemas de reconstrucción de imágenes, pero ya estaba oculto en el artículo de \textcite{Hastings70} cuando sugería que para simular de una distribución multidimensional se podría cambiar de manera secuencial una única coordenada o, incluso, subgrupos de coordenadas. En otras palabras, ``divide y vencerás''; si el problema es que la distribución objetivo es de alta dimensionalidad y compleja, ¿por qué no intentar simularla por partes más simples en lugar de querer simularla directamente? La gran contribución de los hermanos Geman fue encontrar una manera simple y poderosa de llevarlo a cabo. La chispa de Gelfand y Smith fue mostrarle al mundo estadístico que, sin ser el método más eficiente para cualquier problema, podía ser bastante eficiente en un amplio rango de problemas comúnmente encontrados en la práctica y, mejor aún, era efectivamente simple y universal \parencite{GelfandEtAl90}.\\
+
+Cuando el vector que queremos simular es bivariado--- digamos $Z = (X,Y)$--- el algoritmo consiste en alternar simulaciones simples de una variable condicional en el valor de la otra, conservando los vectores bivariados de cada ciclo de dos \textit{pasos de Gibbs}. Primero simulamos de $X|Y$, luego de $Y|X$; volvemos a simular otra $X$ dada la $Y$ anterior, luego otra $Y$ dada la nueva $X$ y así sucesivamente. Una analogía imperfecta pero que me funciona como recurso pnemotécnico para recordar el \textit{Gibbs Sampler} es imaginar que mi objetivo es cruzar de algún punto en una acera a otro punto en la acera contraria. En lugar de cruzar la calle de manera diagonal en un solo paso, cruzamos mediante dos. El primero es caminar por la misma banqueta hasta alguna esquina y el segundo es cruzar la calle sobre el paso peatonal. Estos dos pasos constituirían una \textit{transición de Gibss} y repitiendo transiciones de este tipo podríamos caminar de una dirección alejada a algún punto de interés en la ciudad.\\ 
+
+De manera más general, el \textit{Gibbs Sampler} construye una cadena de Markov con base en las llamadas distribuciones \textit{condicionales completas}. Estas no son otra cosa más que las distribuciones condicionales de una o más variables dentro de un vector, dado el resto. Supongamos que tenemos un vector de variables $Z$ de dimensión $d$ expresado mediante una partición $Z = (Z_1, Z_2, \dots, Z_k)$ donde $Z_i \in \mathbb{R}^{d_i}$ y $\sum\limits_{i=1}^k d_i = d$. Para cada subvector $Z_j$, definimos la correspondiente condicional completa como $f_j(Z_j|Z_{-j})$, donde $Z_{-j}$ significa todos los componentes del vector menos el $j-ésimo$.\\
+
+Una transición de Gibbs se construye, al igual que en el caso bivariado y la analogía, mediante pasos de Gibbs intermedios. Empezando en un vector $z^{(0)}$ en el espacio de estados multidimensional, caminamos sobre la banqueta, simulando un valor $z_1^{(1)}$ dejando el resto de las variables fijas. Sustituimos este valor en el vector y, ahora, simulamos un valor $z_2^{(1)}$ de la correspondiente condicional completa. Así, cada subvector $z_j$ se simula con base en los nuevos valores de subvectores que van primero en la secuencia pero con los valores de la transición anterior para los subvectores que sigan en la secuencia. El último paso de la transición será entonces simular $z_k^{(1)}$ dados todos los nuevos valores simulados. 
+
 
 \subsection{Convergencia}
 
