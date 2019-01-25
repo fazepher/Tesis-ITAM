@@ -47,18 +47,18 @@ La forma de realizar simulaciones correlacionadas que logren simular de manera m
 
 \dfn{\textbf{Cadena de Markov}\\
 \label{def:Cadena_Markov}
-Una \textit{cadena de Markov} $\left\lbrace Z_{(n)}, \, n = 0, 1, 2,\dots \right\rbrace$ es una secuencia de variables aleatorias tales que satisfacen la siguiente \textit{propiedad de Markov} para toda $n$
+Una \textit{cadena de Markov} $\left\lbrace Z^{(n)}, \, n = 0, 1, 2,\dots \right\rbrace$ es una secuencia de variables aleatorias tales que satisfacen la siguiente \textit{propiedad de Markov} para toda $n$
 \begin{equation*}
-Z_{(n+1)}| Z_{(n)}, \dots, Z_{(0)} \sim Z_{(n+1)}| Z_{(n)} \sim p(z_{(n+1)}|z_{(n)})
+Z^{(n+1)}| Z^{(n)}, \dots, Z^{(0)} \sim Z^{(n+1)}| Z^{(n)} \sim p(z^{(n+1)}|z^{(n)})
 \end{equation*}
 }
 Si llamamos \textit{estados} a los eventos que suceden en la cadena en cada punto en el tiempo, podemos decir que la distribución condicional del estado futuro de una cadena de Markov dada toda su historia depende exclusivamente del estado presente y no de los estados anteriores. Dicho de otra forma, \textit{el futuro es independiente del pasado, dado el presente}. La distribución condicional se llama \textit{kernel de transición}, mismo que normalmente es también independiente del índice $n$ y depende exclusivamente del estado actual y el estado futuro. Esta propiedad se llama \textit{homogeneidad} en el tiempo y permite simplificar la notación a $p(\tilde{z}|z)$.\\ 
 
-La teoría de cadenas de Markov determina las condiciones bajo las cuales existen teoremas límites al estilo de las leyes de los grandes números y que en este contexto se conocen como \textit{ergódicos}. Esta teoría escapa los objetivos particulares de la tesis pero, si es de interés para el lector, algunas referencias útiles son \textcites{Rincon12,Neal93,Ross96,TaylorKarlin84}. Baste decir por ahora que, bajo ciertas condiciones, sabemos que la distribución de $Z_{(n)}$ converge a una distribución límite conforme $n$ tiende a infinito. Más aún, los \textit{promedios ergódicos}--- es decir los promedios acumulados de la cadena--- también convergen al valor esperado de la distribución límite. Esto se puede expresar matemáticamente como sigue:
+La teoría de cadenas de Markov determina las condiciones bajo las cuales existen teoremas límites al estilo de las leyes de los grandes números y que en este contexto se conocen como \textit{ergódicos}. Esta teoría escapa los objetivos particulares de la tesis pero, si es de interés para el lector, algunas referencias útiles son \textcites{Rincon12,Neal93,Ross96,TaylorKarlin84}. Baste decir por ahora que, bajo ciertas condiciones, sabemos que la distribución de $Z^{(n)}$ converge a una distribución límite conforme $n$ tiende a infinito. Más aún, los \textit{promedios ergódicos}--- es decir los promedios acumulados de la cadena--- también convergen al valor esperado de la distribución límite. Esto se puede expresar matemáticamente como sigue:
 \begin{subequations}\label{eq:Teo_Erg}
 \begin{align}
-Z_{(N)} &\xrightarrow[N\rightarrow\infty]{\mathcal{D}} Z, \quad Z \sim f(z) \label{eq:Teo_Erg_Conv_D} \\
-\dfrac{1}{N}\sum\limits_{n=1}^N h(z_{(n)}) &\xrightarrow[N\rightarrow\infty]{} \mathbb{E}_{f}[h(z)]
+Z^{(N)} &\xrightarrow[N\rightarrow\infty]{\mathcal{D}} Z, \quad Z \sim f(z) \label{eq:Teo_Erg_Conv_D} \\
+\dfrac{1}{N}\sum\limits_{n=1}^N h\left(z^{(n)}\right) &\xrightarrow[N\rightarrow\infty]{} \mathbb{E}_{f}[h(z)]
 \label{eq:Teo_Erg_Conv_Prom}
 \end{align}
 \end{subequations}
@@ -66,7 +66,7 @@ Z_{(N)} &\xrightarrow[N\rightarrow\infty]{\mathcal{D}} Z, \quad Z \sim f(z) \lab
 Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones necesarias y cuya distribución límite sea la distribución de la cual se quiere simular. Así, después de $N$ transiciones de la cadena, la simulación convergería a la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
 
 \begin{equation*}
-h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h(z_{(n)})}{N}
+h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h\left(z^{(n)}\right)}{N}
 \end{equation*}
 
 \subsection{Metropolis Hastings}
@@ -122,16 +122,16 @@ Por esto, para simular valores de una distribución posterior $f(\theta|y)$ medi
 
 \begin{algorithm}
 \DontPrintSemicolon
-Valor inicial arbitrario o simulado $\theta_{(0)}$\;
+Valor inicial arbitrario o simulado $\theta^{(0)}$\;
 \For{$n \leftarrow 1$ \KwTo $N$}{
-$\theta \leftarrow \theta_{(n-1)}$\;
+$\theta \leftarrow \theta^{(n-1)}$\;
 $\tilde{\theta} \sim q(\tilde{\theta}|\theta)$\;
 $\alpha(\tilde{\theta};\theta) \leftarrow min\left\lbrace\dfrac{f(y|\tilde{\theta})f(\tilde{\theta})q(\theta|\tilde{\theta})}{f(y|\theta)f(\theta)q(\tilde{\theta}|\theta)},1\right\rbrace$\;
 $u \sim U[0,1]$ \;
 \eIf{$u \leq \alpha(\tilde{\theta};\theta)$}{
-	$\theta_{(n)} \leftarrow \tilde{\theta}$\;
+	$\theta^{(n)} \leftarrow \tilde{\theta}$\;
 	}{
-	$\theta_{(n)} \leftarrow \theta $\;
+	$\theta^{(n)} \leftarrow \theta $\;
 	}
 }
 
@@ -213,22 +213,57 @@ El rectángulo más amplio propone valores que se alejan de la región crítica,
     \caption{Comparación de kerneles uniformes de propuestas para simular una normal bivariada con correlación $0.95$ mediante RWM. Las tres cadenas presentan las primeras $30$ transiciones, aunque no se repiten los puntos en los que la cadena permanece en el mismo estado. Fuente: elaboración propia.}\label{fig:RWM_Corr}
 \end{figure}
 
-Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que sean relativamente eficientes \parencites{GelmanRobertsGilks96,Geyer05,YangRdz13}. Para el ejemplo original de normales bivariadas no correlacionadas elegí el rectángulo uniforme de lado $3$ porque \textcite{YangRdz13} encuentran que este es el ancho óptimo para simular una normal estándar mediante un kernel uniforme. Sin embargo, nada garantiza que esto sea \textit{el} kernel óptimo para una normal bivariada o para normales correlacionadas. El uso del kernel uniforme se debe a que es fácil de entender y fue el utilizado por los científicos de Los Álamos, pero pueden haber kérneles más eficientes como reporta el mismo artículo.\\ 
+Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que sean relativamente eficientes \parencites{GelmanRobertsGilks96,Geyer05,YangRdz13}. Para el ejemplo original de normales bivariadas no correlacionadas elegí el rectángulo uniforme de lado $3$ porque \textcite{YangRdz13} encuentran que este es el ancho óptimo para simular una normal estándar mediante un kernel uniforme. El uso del kernel uniforme se debe a que es fácil de entender y fue el utilizado por los científicos de Los Álamos, pero pueden haber kérneles más eficientes como reporta el mismo artículo.\\ 
 
  El problema crece porque la dimensionalidad de los problemas hace que muy rápidamente nos alejemos de los ejemplos triviales y seamos incapaces de proponer kérneles de transición que funcionen de manera adecuada. ¿Qué hacer? Por varios años esto desalentó el uso de los métodos MCMC, hasta la década de los 90 cuando hubo una ``epifanía'' en el mundo de la estadística bayesiana \parencite{RobertCasella11}. 
 
 \subsection{Gibbs Sampler}
 
-\textcite{GelfandSmith90} presentaron un artículo titulado \textit{Sampling-Based Approaches to Calculating Marginal Densities}. En él rescataron tres métodos de simulación para obtener densidades que no pueden ser conocidas de manera analítica. Sin embargo, el método que provocó la explosión de los métodos bayesianos fue el llamado \textit{Gibbs Sampler}.\\ 
+\textcite{GelfandSmith90} presentaron un artículo titulado \textit{Sampling-Based Approaches to Calculating Marginal Densities}. En él rescataron tres algoritmos de simulación para obtener densidades que no pueden ser conocidas de manera analítica. Sin embargo, el que provocó la explosión de los métodos bayesianos fue el llamado \textit{Gibbs Sampler}.\\ 
 
-Este algoritmo de MCMC fue propuesto por \textcite{GemanGeman84} mientras trabajaban en problemas de reconstrucción de imágenes, pero ya estaba oculto en el artículo de \textcite{Hastings70} cuando sugería que para simular de una distribución multidimensional se podría cambiar de manera secuencial una única coordenada o, incluso, subgrupos de coordenadas. En otras palabras, ``divide y vencerás''; si el problema es que la distribución objetivo es de alta dimensionalidad y compleja, ¿por qué no intentar simularla por partes más simples en lugar de querer simularla directamente? La gran contribución de los hermanos Geman fue encontrar una manera simple y poderosa de llevarlo a cabo. La chispa de Gelfand y Smith fue mostrarle al mundo estadístico que, sin ser el método más eficiente para cualquier problema, podía ser bastante eficiente en un amplio rango de problemas comúnmente encontrados en la práctica y, mejor aún, era efectivamente simple y universal \parencite{GelfandEtAl90}.\\
+Este algoritmo de MCMC fue propuesto por \textcite{GemanGeman84} mientras trabajaban en problemas de reconstrucción de imágenes, pero ya estaba oculto en el artículo de \textcite{Hastings70} cuando sugería que para simular de una distribución multidimensional se podría cambiar de manera secuencial una única coordenada o, incluso, subgrupos de coordenadas. En otras palabras, ``divide y vencerás''; si el problema es que la distribución objetivo es de alta dimensionalidad y compleja, ¿por qué no intentar simularla por partes más simples en lugar de querer simularla directamente?\\ 
 
-Cuando el vector que queremos simular es bivariado--- digamos $Z = (X,Y)$--- el algoritmo consiste en alternar simulaciones simples de una variable condicional en el valor de la otra, conservando los vectores bivariados de cada ciclo de dos \textit{pasos de Gibbs}. Primero simulamos de $X|Y$, luego de $Y|X$; volvemos a simular otra $X$ dada la $Y$ anterior, luego otra $Y$ dada la nueva $X$ y así sucesivamente. Una analogía imperfecta pero que me funciona como recurso pnemotécnico para recordar el \textit{Gibbs Sampler} es imaginar que mi objetivo es cruzar de algún punto en una acera a otro punto en la acera contraria. En lugar de cruzar la calle de manera diagonal en un solo paso, cruzamos mediante dos. El primero es caminar por la misma banqueta hasta alguna esquina y el segundo es cruzar la calle sobre el paso peatonal. Estos dos pasos constituirían una \textit{transición de Gibss} y repitiendo transiciones de este tipo podríamos caminar de una dirección alejada a algún punto de interés en la ciudad.\\ 
+La gran contribución de los hermanos Geman fue encontrar una manera simple y poderosa de llevarlo a cabo. La chispa de Gelfand y Smith fue mostrarle al mundo estadístico que--- sin ser el método más eficiente para cualquier problema--- podía ser bastante eficiente en un amplio rango de problemas comúnmente encontrados en la práctica y, mejor aún, era efectivamente simple y universal \parencite{GelfandEtAl90}.\\
 
-De manera más general, el \textit{Gibbs Sampler} construye una cadena de Markov con base en las llamadas distribuciones \textit{condicionales completas}. Estas no son otra cosa más que las distribuciones condicionales de una o más variables dentro de un vector, dado el resto. Supongamos que tenemos un vector de variables $Z$ de dimensión $d$ expresado mediante una partición $Z = (Z_1, Z_2, \dots, Z_k)$ donde $Z_i \in \mathbb{R}^{d_i}$ y $\sum\limits_{i=1}^k d_i = d$. Para cada subvector $Z_j$, definimos la correspondiente condicional completa como $f_j(Z_j|Z_{-j})$, donde $Z_{-j}$ significa todos los componentes del vector menos el $j-ésimo$.\\
+Cuando el vector que queremos simular es bivariado--- digamos $Z = (X,Y)$--- el algoritmo consiste en alternar simulaciones simples de cada variable condicional en la otra, conservando los vectores bivariados de cada ciclo de dos \textit{pasos de Gibbs}. Primero simulamos de $X|Y$, luego de $Y|X$; volvemos a simular otra $X$ dada la $Y$ anterior, luego otra $Y$ dada la nueva $X$ y así sucesivamente. Una analogía imperfecta pero que me funciona como recurso pnemotécnico para recordar el \textit{Gibbs Sampler} es imaginar que mi objetivo es cruzar de algún punto en una acera a otro punto en la acera contraria. En lugar de cruzar la calle de manera diagonal en un solo paso, cruzamos mediante dos. El primero es caminar por la misma banqueta hasta alguna esquina y el segundo es cruzar la calle sobre el paso peatonal. Estos dos pasos constituirían una \textit{transición de Gibss} y repitiendo transiciones de este tipo podríamos caminar de una dirección alejada a algún punto de interés en la ciudad.\\ 
 
-Una transición de Gibbs se construye, al igual que en el caso bivariado y la analogía, mediante pasos de Gibbs intermedios. Empezando en un vector $z^{(0)}$ en el espacio de estados multidimensional, caminamos sobre la banqueta, simulando un valor $z_1^{(1)}$ dejando el resto de las variables fijas. Sustituimos este valor en el vector y, ahora, simulamos un valor $z_2^{(1)}$ de la correspondiente condicional completa. Así, cada subvector $z_j$ se simula con base en los nuevos valores de subvectores que van primero en la secuencia pero con los valores de la transición anterior para los subvectores que sigan en la secuencia. El último paso de la transición será entonces simular $z_k^{(1)}$ dados todos los nuevos valores simulados. 
+De manera más general, el \textit{Gibbs Sampler} construye una cadena de Markov con base en las llamadas distribuciones \textit{condicionales completas}. Estas no son otra cosa más que las distribuciones condicionales de una o más variables dentro de un vector, dado el resto. Supongamos que tenemos un vector de parámetros $\theta$ de dimensión $d$ expresado mediante una partición $\theta = (\theta_1, \theta_2, \dots, \theta_k)$ donde $\theta_j \in \mathbb{R}^{d_j}$ y $\sum\limits_{j=1}^k d_j = d$. Para cada subvector $\theta_j$, definimos la correspondiente condicional completa como $f(\theta_j|\theta_{-j},y)$, donde $\theta_{-j}$ significa todos los componentes del vector menos el $j$-ésimo. Como estamos en un contexto de aprendizaje bayesiano, las distribuciones son posteriores; es decir, también condicionamos en los datos observados $y$.\\
 
+Una transición de Gibbs se construye, al igual que en el caso bivariado y la analogía, mediante pasos de Gibbs intermedios, como puede verse en el \textbf{Algoritmo \ref{alg:GS}}. Empezando en un vector $\theta^{(0)}$ en el espacio de estados multidimensional, caminamos sobre la banqueta, simulando un valor $\theta_1^{(1)}$ dejando el resto de las variables fijas. Sustituimos este valor en el vector y, ahora, simulamos un valor $\theta_2^{(1)}$ de la correspondiente condicional completa. Así, cada subvector $\theta_j^{(1)}$ se simula con base en los nuevos valores de subvectores que van primero en la secuencia pero con los valores de la transición anterior para los subvectores que sigan en la secuencia. El último paso de la transición será entonces simular $\theta_k^{(1)}$ dados todos los nuevos valores simulados.\\ 
+
+\begin{algorithm}
+\DontPrintSemicolon
+Valor inicial arbitrario o simulado $\theta^{(0)}\leftarrow (\theta_1^{(0)},\theta_2^{(0)},\dots,\theta_k^{(0)})$\;
+\For{$n \leftarrow 1$ \KwTo $N$}{
+$\theta_1^{(n)} \sim f(\theta_1|\theta_{-1}^{(n-1)},y)$\;
+\For{$j \leftarrow 2$ \KwTo $k-1$}{
+	$\theta_j^{(n)} \sim f(\theta_j|\theta_1^{(n)},\dots, \theta_{j-1}^{(n)}, \theta_{j+1}^{(n-1)}, \dots, \theta_k^{(n-1)}, y)$\;
+}
+$\theta_k^{(n)} \sim f(\theta_k|\theta_{-k}^{(n)},y)$\;
+$\theta^{(n)} \leftarrow (\theta_1^{(n)},\theta_2^{(n)},\dots,\theta_k^{(n)})$\;
+}
+
+\caption{Gibbs Sampler para el aprendizaje bayesiano \label{alg:GS}}
+\end{algorithm}
+
+El algoritmo podría parecer a primera vista poco práctico porque, si no se conoce la distribución conjunta, ¿cómo conoceríamos las $k$ condicionales completas? Sin embargo, como mostraron \textcite{GelfandSmith90} o \textcite{GelfandEtAl90}, es factible aplicarlo a modelos tan variados como multinomiales, normales multivariadas y modelos jerárquicos como regresiones de interceptos y coeficientes variables. La clave está en que las condicionales completas son proporcionales a la posterior pero simplificadas, pues al condicionar solo conservamos los términos que incluyen al respectivo subvector $\theta_j$. Esto permite generalmente identificar una familia de distribuciones conocida o encontrar un algoritmo relativamente sencillo para simular de dicha distribución no normalizada.\\
+
+Quizás la familia de modelos que mejor ejemplifican la utilidad del \textit{Gibbs Sampler} son los modelos jerárquicos. La propia estructura jerárquica implica de manera natural que las condicionales completas se simplifiquen puesto que cada grupo de parámetros es condicionalmente independiente de los otros, dados los hiperparámetros correspondientes. Para verlo podemos seguir el ejemplo de \textcite{GP16}, suponiendo el siguiente modelo jerárquico simple de 3 niveles. Los datos $y$ provienen de $m$ subpoblaciones con el respectivo vector de parámetros $\omega$ que, a su vez, depende de un vector de hiperparámetros $\phi$ con su respectiva hiperinicial: 
+\begin{align*}
+&f(y|\omega) = \prod\limits_{i=1}^m f(y_i|\omega_i)\\
+&f(\omega|\phi) = \prod\limits_{i=1}^m f(\omega_i|\phi)\\
+&f(\phi)
+\end{align*}
+
+Tenemos en total $m+1$ parámetros $\theta = (\omega, \phi) = (\omega_1,\omega_2,\dots,\omega_m,\phi)$ cuya distribución posterior --- $f(\theta = (\omega, \phi)|y) \propto f(\phi)\prod\limits_{i=1}^m f(y_i|\omega_i)f(\omega_i|\phi)$--- presenta una factorización que simplifica las condicionales completas: 
+\begin{align*}
+f(\theta_1|\theta_{-1},y) &\propto f(\omega_1|\phi,y_1) \\
+\vdots &\\
+f(\theta_m|\theta_{-m},y) &\propto f(\omega_m|\phi,y_m) \\
+f(\theta_{m+1}|\theta_{-(m+1)},y) &\propto f(\omega|\phi)f(\phi)
+\end{align*}
+
+La consagración del \textit{Gibbs Sampler} como la principal herramienta de simulación y aprendizaje práctico bayesiano se dio cuando en la primera mitad de la década de los 90 fue presentado el 	software BUGS, que es un acrónimo para \textit{Bayesian inference Using Gibbs Sampling}. Ya era posible automatizar la aplicación del algoritmo para una clase amplia de modelos que el usuario define mediante distribuciones iniciales, verosimilitudes y datos. Como bien dicen \textcite{CasellaGeorge92}, al liberar a los estadísticos de tener que tratar con cálculos complicados, la atención principal se puede dedicar a los aspectos estadísticos de los problemas. 
 
 \subsection{Convergencia}
 
