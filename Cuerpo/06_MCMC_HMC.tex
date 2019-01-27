@@ -263,7 +263,60 @@ f(\theta_m|\theta_{-m},y) &\propto f(\omega_m|\phi,y_m) \\
 f(\theta_{m+1}|\theta_{-(m+1)},y) &\propto f(\omega|\phi)f(\phi)
 \end{align*}
 
-La consagración del \textit{Gibbs Sampler} como la principal herramienta de simulación y aprendizaje práctico bayesiano se dio cuando en la primera mitad de la década de los 90 fue presentado el 	software BUGS, que es un acrónimo para \textit{Bayesian inference Using Gibbs Sampling}. Ya era posible automatizar la aplicación del algoritmo para una clase amplia de modelos que el usuario define mediante distribuciones iniciales, verosimilitudes y datos. Como bien dicen \textcite{CasellaGeorge92}, al liberar a los estadísticos de tener que tratar con cálculos complicados, la atención principal se puede dedicar a los aspectos estadísticos de los problemas. 
+La consagración del \textit{Gibbs Sampler} como la principal herramienta de simulación y aprendizaje práctico bayesiano se dio cuando en la primera mitad de la década de los 90 fue presentado el 	software BUGS, que es un acrónimo para \textit{Bayesian inference Using Gibbs Sampling} \parencite{Betancourt18}. Ya era posible automatizar la aplicación del algoritmo para una clase amplia de modelos que el usuario define mediante distribuciones iniciales, verosimilitudes y datos. Como bien dicen \textcite{CasellaGeorge92}, al liberar a los estadísticos de tener que tratar con cálculos complicados, la atención principal se puede dedicar a los aspectos estadísticos de los problemas.\\ 
+
+Al igual que en el caso del \textit{Random Walk Metropolis}, podemos observar el comportamiento del \textit{Gibbs Sampler} para el ejemplo trivial de las normales independientes. El algoritmo funciona de manera mucho más eficiente que la implementación de \textit{Random Walk Metropolis}--- comparar \textbf{Figuras \ref{fig:GS_indep} y \ref{fig:RWM}}---. Esto no debería sorprendernos tanto, puesto que la independencia de normales implica que las condicionales completas son en realidad las verdaderas marginales. Sin embargo, pocas veces contamos con tanta suerte como para tener completa independencia. Normalmente los parámetros que queremos simular están correlacionados entre sí. En la \textbf{Figura \ref{fig:GS_corr}} podemos ver cómo el \textbf{Gibbs Sampler} también se desempeña mucho mejor en este caso que RWM.\\
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_A}
+        \caption{El algoritmo consiste en dar pasos de Gibbs intermedios mediante las condicionales completas. Cada transición de Gibbs se señala como un cuadrado.}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_B}
+        \caption{Después de 1,250 transiciones, la cadena cubre completamente la región crítica.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_C}
+        \caption{Los promedios ergódicos convergen rápidamente a las medias teóricas, al rededor de la iteración 500. }
+     \end{subfigure}
+     \caption{Ilustración de una cadena de \textit{Gibbs Sampling} para una normal bivariada sin correlación. Fuente: elaboración propia.}\label{fig:GS_indep}
+\end{figure}
+ 
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara1}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2A}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara2}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2B}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara3}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2C}
+    \end{subfigure}
+    \caption{Comparación del \textit{Gibbs Sampler} con \textit{Random Walk Metropolis} para simular de una normal bivariada de correlación 0.95. Las condicionales completas le permiten al \textit{Gibbs sampler} llegar a la región crítica más rápidamente que al kernel uniforme de RWM que se retrasa en cada propuesta rechazada. Si comparamos todos los valores simulados después de 1,250 iteraciones vemos cómo aquellos de GS cubren de mejor manera la región crítica que los de RWM, mismos que se disturbaron ligeramente para presentar también los valores que se repiten por los rechazos. Asimismo, los promedios ergódicos convergen más rápidamente para Gibbs que para RWM. Fuente: elaboración propia.}\label{fig:GS_corr}
+\end{figure}
+
+Por otro lado, si comparamos entre los dos casos del \textit{Gibbs sampler}, vemos que el desempeño se vio afectado al agregar correlación. Este es un fenómeno que se debe tener siempre presente: cuando la parametrización del modelo genera alta correlación entre los componentes, el algoritmo se hace más lento. El motivo es un equivalente al caso de un kernel de transiciones más estrecho. La correlación de los parámetros implica que las distribuciones condicionales completas están muy concentradas, determinadas fuertemente por el valor actual; es decir, la simulación no puede generar un valor muy alejado del actual y el avance de la cadena es más lento.\\
+
+
 
 \subsection{Convergencia}
 

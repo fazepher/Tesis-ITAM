@@ -275,6 +275,49 @@ ejemplo_est_corr_compara <- graf_base_corr +
 
 ggsave("Bayes/Ejemplo_RWM_Compara2.pdf",plot = ejemplo_est_corr_compara, device = cairo_pdf, width = 10, height = 8)
 
+ejemplo_est_corr_a <- graf_base_corr + 
+  geom_point(data = filter(Ejemplo_Est_Corr$Propuestas,Rechazada, n <= 10), 
+             color = "steelblue4", size = rel(5), shape = 88) + 
+  geom_point(data = Ejemplo_Est_Corr$Simulaciones[1,], 
+             color = "steelblue4", size = rel(2)) + 
+  geom_path(data = filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 10), 
+            color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+  scale_x_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
+  scale_y_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
+  labs(title = "Primeras 10 iteraciones de RWM")
+
+ggsave("Bayes/Ejemplo_RWM_Compara2A.pdf",plot = ejemplo_est_corr_a, device = cairo_pdf, width = 10, height = 8)
+
+ejemplo_est_corr_b <- graf_base_corr + 
+  geom_jitter(data = filter(Ejemplo_Est_Corr$Simulaciones, n <= 1250), 
+              color = "steelblue4", size = rel(1.25), shape = 18, width = 0.025, height = 0.025) + 
+  scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
+  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
+  labs(title = "1,250 iteraciones de RWM")
+
+ggsave("Bayes/Ejemplo_RWM_Compara2B.pdf",plot = ejemplo_est_corr_b, device = cairo_pdf, width = 10, height = 8)
+
+ejemplo_est_corr_c <- Ejemplo_Est_Corr$Simulaciones %>% 
+  filter(n <= 1250) %>% 
+  mutate_if(is.double,funs(Media = cummean(.))) %>% 
+  select(n,ends_with("Media")) %>% 
+  gather(Variable,Media,-n) %>% 
+  separate(Variable,c("Variable","Aux")) %>% 
+  ggplot(aes(x=n,y=Media,group=Variable)) + 
+  geom_segment(x = 0, xend = 1250, y = 0, yend = 0, color = "darkorange", size = rel(1.5)) +
+  geom_path(size = rel(1), color = "steelblue4") + 
+  annotate("text",x = 50, y = c(-2.75,2.75), label = c("Var1","Var2"), size = rel(6)) + 
+  annotate("text",x = 1300, y = 0, label = "Media real", size = rel(6), hjust = 0, vjust = 0.5) + 
+  labs(title = "Promedios Ergódicos para RWM") + 
+  ylab("Promedio ergódico") + 
+  scale_x_continuous(limits = c(0,1500), breaks = seq(0,1250,by=250))+ 
+  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
+  theme_minimal() + 
+  lucify_basics() + 
+  theme(panel.grid = element_blank())  
+
+ggsave("Bayes/Ejemplo_RWM_Compara2C.pdf",plot = ejemplo_est_corr_c, device = cairo_pdf, width = 10, height = 8)
+
 set.seed(31122018)
 r=2.5
 Ejemplo_Est_Corr <- RWM_Norm2_KTunif(N = 2500,inicio = c(-2.5,2.5),r = r,
