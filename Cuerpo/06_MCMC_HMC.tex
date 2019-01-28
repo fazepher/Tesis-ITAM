@@ -265,7 +265,9 @@ f(\theta_{m+1}|\theta_{-(m+1)},y) &\propto f(\omega|\phi)f(\phi)
 
 La consagración del \textit{Gibbs Sampler} como la principal herramienta de simulación y aprendizaje práctico bayesiano se dio cuando en la primera mitad de la década de los 90 fue presentado el 	software BUGS, que es un acrónimo para \textit{Bayesian inference Using Gibbs Sampling} \parencite{Betancourt18}. Ya era posible automatizar la aplicación del algoritmo para una clase amplia de modelos que el usuario define mediante distribuciones iniciales, verosimilitudes y datos. Como bien dicen \textcite{CasellaGeorge92}, al liberar a los estadísticos de tener que tratar con cálculos complicados, la atención principal se puede dedicar a los aspectos estadísticos de los problemas.\\ 
 
-Al igual que en el caso del \textit{Random Walk Metropolis}, podemos observar el comportamiento del \textit{Gibbs Sampler} para el ejemplo trivial de las normales independientes. El algoritmo funciona de manera mucho más eficiente que la implementación de \textit{Random Walk Metropolis}--- comparar \textbf{Figuras \ref{fig:GS_indep} y \ref{fig:RWM}}---. Esto no debería sorprendernos tanto, puesto que la independencia de normales implica que las condicionales completas son en realidad las verdaderas marginales. Sin embargo, pocas veces contamos con tanta suerte como para tener completa independencia. Normalmente los parámetros que queremos simular están correlacionados entre sí. En la \textbf{Figura \ref{fig:GS_corr}} podemos ver cómo el \textbf{Gibbs Sampler} también se desempeña mucho mejor en este caso que RWM.\\
+Debo decir que hasta ahora no he mencionado ninguna justificación teórica de convergencia para el algoritmo, pero el lector más inquieto puede consultar el artículo de \textcite{CasellaGeorge92}, donde además de discutir la convergencia también se da una explicación más detallada de por qué funciona. Otra manera de justificar el algoritmo se puede consultar en \textcite{Geyer05}, en donde se muestra que, de hecho, es una versión específica de la versión general de Metropolis Hastings, aunque normalmente es considerado un algoritmo distinto por derecho propio.\\  
+
+Al igual que en el caso de \textit{Random Walk Metropolis}, podemos observar el comportamiento del \textit{Gibbs Sampler} para el ejemplo trivial de las normales independientes. El algoritmo funciona de manera mucho más eficiente que la implementación de \textit{Random Walk Metropolis}--- comparar \textbf{Figuras \ref{fig:GS_indep} y \ref{fig:RWM}}---. Esto no debería sorprendernos tanto, puesto que la independencia de normales implica que las condicionales completas son en realidad las verdaderas marginales.\\ 
 
 \begin{figure}[h]
     \centering
@@ -286,40 +288,76 @@ Al igual que en el caso del \textit{Random Walk Metropolis}, podemos observar el
      \caption{Ilustración de una cadena de \textit{Gibbs Sampling} para una normal bivariada sin correlación. Fuente: elaboración propia.}\label{fig:GS_indep}
 \end{figure}
  
+En realidad, pocas veces contamos con tanta suerte como para tener completa independencia. Normalmente los parámetros que queremos simular están correlacionados entre sí. En la \textbf{Figura \ref{fig:GS_corr}} podemos ver cómo el \textbf{Gibbs Sampler} también se desempeña mucho mejor en este caso que RWM.\\
+ 
 \begin{figure}[h]
     \centering
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara1}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2A}
-    \end{subfigure}
-    ~
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara2}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2B}
-    \end{subfigure}
-    ~
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara3}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2A}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2B}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2C}
     \end{subfigure}
     \caption{Comparación del \textit{Gibbs Sampler} con \textit{Random Walk Metropolis} para simular de una normal bivariada de correlación 0.95. Las condicionales completas le permiten al \textit{Gibbs sampler} llegar a la región crítica más rápidamente que al kernel uniforme de RWM que se retrasa en cada propuesta rechazada. Si comparamos todos los valores simulados después de 1,250 iteraciones vemos cómo aquellos de GS cubren de mejor manera la región crítica que los de RWM, mismos que se disturbaron ligeramente para presentar también los valores que se repiten por los rechazos. Asimismo, los promedios ergódicos convergen más rápidamente para Gibbs que para RWM. Fuente: elaboración propia.}\label{fig:GS_corr}
 \end{figure}
 
-Por otro lado, si comparamos entre los dos casos del \textit{Gibbs sampler}, vemos que el desempeño se vio afectado al agregar correlación. Este es un fenómeno que se debe tener siempre presente: cuando la parametrización del modelo genera alta correlación entre los componentes, el algoritmo se hace más lento. El motivo es un equivalente al caso de un kernel de transiciones más estrecho. La correlación de los parámetros implica que las distribuciones condicionales completas están muy concentradas, determinadas fuertemente por el valor actual; es decir, la simulación no puede generar un valor muy alejado del actual y el avance de la cadena es más lento.\\
+Por otro lado, si comparamos entre los dos casos del \textit{Gibbs sampler}, vemos que el desempeño se vio afectado al agregar correlación. Este es un fenómeno que se debe tener siempre presente: cuando la parametrización del modelo genera alta correlación entre los componentes, el algoritmo se hace más lento. El motivo es un equivalente al caso de un kernel de transiciones más estrecho. La correlación de los parámetros implica que las distribuciones condicionales completas están muy concentradas, determinadas fuertemente por el valor actual; es decir, la simulación no puede generar un valor muy alejado del actual y el avance de la cadena es más lento.\\ 
 
+En la práctica el \textit{Gibbs Sampler} puede sucumbir ante problemas de alta correlación. Sabemos que convergerá, pero no lo hace en un tiempo razonable y pueden pasar cientos de miles de iteraciones antes de poder llegar a converger. Se pueden buscar parametrizaciones e implementaciones de Gibbs que mejoren el desempeño, pero como dice el equipo de {\color{red} Stan}, 
+\begin{quote}
+...incluso una implementación eficiente y escalable no resuelve el problema subyacente de que \textit{Gibbs sampling} no se desempeña bien con posteriores altamente correlacionadas. Finalmente nos dimos cuenta que necesitábamos un mejor muestreador, no una mejor implementación.
+\end{quote}
 
+Ese mejor muestreador se materealizó en el software \textit{Stan}--- nombrado así en honor al propio Stan Ulam--- cuya primera versión estable fue liberada en 2013 y que introduciré más adelante. Pero antes de hacerlo, quisiera detenerme en un tema que he omitido por ahora.\\
 
 \subsection{Convergencia}
 
-La convergencia de los promedios ergódicos que implica \eqref{eq:Teo_Erg_Conv_Prom} es ciertamente importante. Sin embargo, en un análisis bayesiano la única receta indica tener una muestra aleatoria de la distribución posterior. Si observamos con cuidado \eqref{eq:Teo_Erg_Conv_D}, vemos que la última simulación de la cadena es la que podemos considerar como proveniente de la distribución objetivo límite. Si quisiéramos una muestra de tamaño $N$ deberíamos correr $N$ cadenas independientes. Afortunadamente, en las cadenas de MH y MCMC en general, la distribución límite es también lo que se conoce como \textit{distribución estacionaria} de la cadena de Markov. Esto quiere decir que, si se tiene una observación distribuida\\
+La convergencia de los promedios ergódicos que implica \eqref{eq:Teo_Erg_Conv_Prom} es ciertamente importante. Sin embargo, en un análisis bayesiano la única receta indica tener una muestra aleatoria de la distribución posterior. Si observamos con cuidado \eqref{eq:Teo_Erg_Conv_D}, vemos que la última simulación de la cadena es la que podemos considerar como proveniente de la distribución objetivo límite. Si quisiéramos una muestra de tamaño $N$ deberíamos correr $N$ cadenas independientes. Afortunadamente, en las cadenas de MCMC en general, la distribución límite es también lo que se conoce como \textit{distribución estacionaria} de la cadena de Markov. Esto quiere decir que el kernel de transición de la cadena mantiene estable la distribución de las simulaciones, una vez que se alcanza la distribución estacionaria \parencite{Neal93}.\\
+
+Esta característica estacionaria de la distribución límite implica que si reiniciamos la cadena una vez que se llega a la convergencia, podemos después de algún número de transiciones adicionales contar con otra observación prácticamente independiente proveniente de la misma distribución objetivo. Así, aunque los algoritmos de MCMC producen cadenas correlacionadas, podemos equipararlas con una muestra aleatoria de la distribución objetivo si conservamos solo las simulaciones cada $m$ transiciones de manera que la correlación entre ellas sea prácticamente nula.\\ 
+
+En este sentido, la forma usual de aplicar la única receta de la inferencia bayesiana mediante MCMC se resume de la manera siguiente: 
+
+\begin{enumerate}
+\item Elegir un número $c$ de cadenas para simular.
+\item Iniciar cada cadena en un punto distinto y disperso del espacio parametral. 
+\item Correr de manera independiente las $c$ cadenas por un \textit{periodo de calentamiento} hasta que ``alcancen la convergencia''. 
+\item Una vez que se considera que las cadenas convergieron, se desechan las transiciones de calentamiento. 
+\item Para cada cadena se conservan las simulaciones solo cada $m$ transiciones de manera que la correlación sea prácticamente nula. 
+\end{enumerate}
+
+El número de cadenas se puede elegir en función del número de procesos paralelos que la computadora puede realizar, para aprovechar la eficiencia que implica el cómputo paralelo. Usualmente se corren 3, 4 o 5 cadenas. Por su parte, seleccionar el espaciamiento $m$ de las cadenas normalmente implica realizar gráficos de autocorrelación.\\
+
+En realidad, el punto más delicado es determinar la convergencia del algoritmo. Desafortunadamente los teoremas ergódicos son asintóticos, es decir, solo se garantiza la convergencia en el infinito. Las cotas existentes para los errores, normalmente no son útiles, aunque hay casos en los que sí \parencite{SmithRoberts93}. En la práctica se han desarrollado diferentes técnicas para considerar que la cadena ya convergió, sin embargo ninguna lo garantiza totalmente. Por ello es recomendable considerar diferentes técnicas para disminuir la probabilidad de pasar por alto algún problema de convergencia.\\
+
+La primera técnica ya la he utilizado en los ejemplos de RWM y Gibbs: graficar los promedios ergódicos para diferentes variables o resúmenes inferenciales para observar en qué punto se estabilizan. La segunda es precisente iniciar en puntos dispersos del espacio parametral para evitar que las cadenas exploren solo una parte del espacio y, por ejemplo, queden atrapadas en una sola moda cuando la distribución posterior pueda ser multimodal. Al mismo tiempo, tener diferentes cadenas nos permite comparar las estimaciones dentro de cada cadena así como a través de las cadenas.\\ 
+
+En el fondo, hay dos características que se buscan para declarar la convergencia \parencite{Gelman13}. Queremos que las cadenas lleguen a la estacionariedad, pues la distribución límite es también estacionaria. Las estimaciones deben estabilizarse. También, y dicho de manera coloquial, buscamos que las cadenas \textit{mezclen} bien. Es decir, que las estimaciones para cada cadena sean parecidas a las estimaciones de todas las cadenas en su conjunto.\\ 
+
+Uno de los diagnósticos gráficos más utilizados son los llamados gráficos de oruga o \textit{trace plots}. Graficamos para cada cadena, la secuencia de iteraciones válidas, es decir, después del descarte del periodo de calentamiento y el espaciamiento para evitar la correlación. Si las cadenas son estacionarias entonces el gráfico se verá como una oruga, de ahí el nombre, saltando de un punto a otro dentro de un rango de valores que determinan la región crítica. Si las cadenas mezclan bien, entonces las diferentes secuencias estarán oscilando en la misma región crítica. {\color{red} GRÁFICA}.\\
+
+Otro diagnóstico gráfico es el de comparar histogramas o densidades estimadas para varios parámetros y resúmenes inferenciales y verificar que estos son estables--- comparándolos para la primera mitad de la muestra y para la segunda, por ejemplo--- y mezclan bien--- los gráficos para las diferentes cadenas se parecen al gráfico de todas juntas---. {\color{red} GRÁFICA}.\\
+
+También hay resúmenes estadísticos para evaluar convergencia. Una estadística frecuentemente utilizada y que es reportada en softwares como BUGS o Stan es el \textit{factor de reducción de escala} $\hat{R}$ propuesto por \textcite{GelmanRubin92}. Este estadístico está basado en comparar las varianzas de los parámetros o resúmenes inferenciales a través de las cadenas con aquellos dentro de cada cadena. La $\hat{R}$ tiende a 1 conforme la convergencia aumenta. Asimismo es posible calcular un \textit{tamaño efectivo de muestra} que aproxima el tamaño de una muestra aleatoria auténticamente independiente proveniente de la distribución objetivo cuyas estimaciones equivaldrían a las que hacemos con la muestra simulada. Recordemos la intuición de Poisson: entre más muestra tengamos, podremos estimar lo que queramos con mayor precisión. Los detalles de ambas estadísticas y algunas otras recomendaciones generales pueden consultarse en \textcite{Gelman13}.\\
+
+Una vez que estamos satisfechos con las pruebas de convergencia, podemos utilizar todas las simulaciones como una sola muestra que caracteriza la distribución posterior y realizar las necesarias estimaciones por Monte Carlo. 
+
 
 \section{Hamiltonian Monte Carlo}

@@ -157,7 +157,7 @@ ggsave("Bayes/Ejemplo_GS_Compara1.pdf",plot = ejemplo_est_corr_a, device = cairo
 
 ejemplo_est_corr_b <- graf_base_corr + 
   geom_point(data = Ejemplo_Est_Corr,
-             color = "steelblue4", size = rel(1.25), shape = 18) + 
+             color = "steelblue4", size = rel(0.75), shape = 18) + 
   scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   labs(title = "1,250 transiciones de GS")

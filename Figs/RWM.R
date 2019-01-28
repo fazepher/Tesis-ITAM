@@ -289,8 +289,10 @@ ejemplo_est_corr_a <- graf_base_corr +
 ggsave("Bayes/Ejemplo_RWM_Compara2A.pdf",plot = ejemplo_est_corr_a, device = cairo_pdf, width = 10, height = 8)
 
 ejemplo_est_corr_b <- graf_base_corr + 
-  geom_jitter(data = filter(Ejemplo_Est_Corr$Simulaciones, n <= 1250), 
-              color = "steelblue4", size = rel(1.25), shape = 18, width = 0.025, height = 0.025) + 
+  geom_point(data = filter(Ejemplo_Est_Corr$Simulaciones, !Rechazada, n <= 1250), 
+             color = "steelblue4", size = rel(0.75), shape = 18) + 
+  geom_jitter(data = filter(Ejemplo_Est_Corr$Simulaciones, Rechazada, n <= 1250), 
+              color = "steelblue4", size = rel(0.75), shape = 18, width = 0.02, height = 0.02) + 
   scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   labs(title = "1,250 iteraciones de RWM")
