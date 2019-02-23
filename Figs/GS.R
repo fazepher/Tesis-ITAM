@@ -80,6 +80,19 @@ graf_base_corr <- expand.grid(seq(-3,3,by = 0.05),seq(-3,3,by = 0.05)) %>%
   lucify_basics() + 
   theme(panel.grid = element_blank())  
 
+graf_base_convergencia <- expand.grid(seq(-5,5,by = 0.05),seq(-5,5,by = 0.05)) %>% 
+  as_data_frame %>% 
+  {mutate(., Densidad = mvtnorm::dmvnorm(., mean = c(0,0), 
+                                         sigma = matrix(c(3,-0.99*sqrt(3*1.5),-0.99*sqrt(3*1.5),1.5), nrow=2)))} %>% 
+  ggplot(aes(x=Var1,y=Var2)) + 
+  geom_raster(aes(fill = Densidad)) + 
+  geom_contour(aes(z=Densidad),
+               color = rgb(red = 60, green = 60, blue = 60, maxColorValue = 255), bins = 10, size = rel(.25)) + 
+  scale_fill_gradient(low = "transparent", high = "darkorange") + 
+  theme_minimal() + 
+  lucify_basics() + 
+  theme(panel.grid = element_blank())  
+
 #### Ejemplo Base ####
 set.seed(31122018)
 Ejemplo_Est_Indep <- GS_Norm2(N = 1250,inicio = c(3,-3))
@@ -183,3 +196,112 @@ ejemplo_est_corr_c <- Ejemplo_Est_Corr %>%
   theme(panel.grid = element_blank())  
 
 ggsave("Bayes/Ejemplo_GS_Compara3.pdf",plot = ejemplo_est_corr_c, device = cairo_pdf, width = 10, height = 8)
+
+#### Ejemplos para Convergencia ####
+set.seed(31122018)
+datos_graf <- data_frame(V1 = c(-5,5,5,-5),
+                         V2 = c(-5,5,-5,5),
+                         Cadena = 1:4) %>% 
+  pmap_dfr(~GS_Norm2(N = 6000, inicio = c(..1,..2), var1 = 3, var2 = 1.5, rho = -0.8) %>% 
+             mutate(Cadena = as.character(..3))) 
+
+datos_graf %>% 
+  filter(Tipo == "Simulación") %>% 
+  group_by(Cadena) %>% 
+  mutate_at(c("Var1","Var2"), funs(Media = cummean(.))) %>% 
+  ungroup %>% 
+  select(n,ends_with("Media"),Cadena) %>% 
+  gather(Variable,Media,-n,-Cadena) %>% 
+  separate(Variable,c("Variable","Aux")) %>% 
+  ggplot(aes(x=n,y=Media,color=Cadena)) + 
+  annotate("rect",xmin = 0, xmax = 1200, ymin = -6, ymax = 6, alpha = 0.4, fill = "gray85") + 
+  geom_segment(x = 0, xend = 6050, y = 0, yend = 0, color = "darkorange", size = rel(1.5)) +
+  geom_path(size = rel(1)) + 
+  facet_grid(Variable~.) + 
+  annotate("text",x = 600, y = 4, label = "Calentamiento") + 
+  labs(title = "Promedios Ergódicos de GS para 4 cadenas") + 
+  ylab("Promedio ergódico") + 
+  scale_color_manual(values = c("#4E67C8","#2D9779","#F78D7C","#B8C2E9")) + 
+  theme_minimal() + 
+  lucify_basics() + 
+  theme(panel.grid = element_blank()) 
+
+datos_graf %>% 
+  filter(Tipo == "Simulación") %>% 
+  gather(Variable,Valor,Var1,Var2) %>% 
+  ggplot(aes(x=n,y = Valor, color = Cadena)) + 
+  annotate("rect",xmin = 0, xmax = 1200, ymin = -8, ymax = 8, alpha = 0.4, fill = "gray85") + 
+  annotate("text",x = 600, y = 7, label = "Calentamiento") + 
+  geom_path() + 
+  facet_grid(Variable~.) + 
+  scale_color_manual(values = c("#4E67C8","#2D9779","#F78D7C","#B8C2E9")) + 
+  labs(title = "Traceplot inicial de GS para 4 cadenas") + 
+  theme_minimal() + 
+  lucify_basics() + 
+  theme(legend.position = "top")
+
+datos_graf %>% 
+  filter(Tipo == "Simulación") %>% 
+  gather(Variable,Valor,Var1,Var2) %>% 
+  unite(Aux,Cadena,Variable) %>% 
+  split(.$Aux) %>% 
+  map_dfr(~ acf(.x$Valor,plot=FALSE) %>% 
+            extract2("acf") %>% 
+            as_data_frame %>% 
+            set_colnames("acf") %>% 
+            mutate(lag = 1:n()-1, Aux = unique(.x$Aux)) %>% 
+            separate(Aux,c("Cadena","Variable"))) %>% 
+  ggplot(aes(x=lag,y=acf)) + 
+  geom_col() + 
+  facet_grid(Variable~Cadena) + 
+  labs(title = "Autocorrelación de las cadenas completas") + 
+  theme_minimal() + 
+  lucify_basics()
+
+datos_graf %>% 
+  filter(Tipo == "Simulación", mod(n,10) %>% equals(0), n > 1200) %>% 
+  group_by(Cadena) %>% 
+  mutate(n = 1:n()) %>% 
+  ungroup %>% 
+  gather(Variable,Valor,Var1,Var2) %>% 
+  ggplot(aes(x=n,y = Valor, color = Cadena)) + 
+  geom_path() + 
+  facet_grid(Variable~.) + 
+  scale_color_manual(values = c("#4E67C8","#2D9779","#F78D7C","#B8C2E9")) + 
+  labs(title = "Traceplot final de GS para 4 cadenas",
+       subtitle = "Calentamiento de 1200 y espaciamiento de 10 iteraciones") + 
+  theme_minimal() + 
+  lucify_basics() + 
+  theme(legend.position = "top")
+
+datos_graf %>% 
+  filter(Tipo == "Simulación", mod(n,10) %>% equals(0), n > 1200) %>% 
+  gather(Variable,Valor,Var1,Var2) %>% 
+  unite(Aux,Cadena,Variable) %>% 
+  split(.$Aux) %>% 
+  map_dfr(~ acf(.x$Valor,plot=FALSE) %>% 
+            extract2("acf") %>% 
+            as_data_frame %>% 
+            set_colnames("acf") %>% 
+            mutate(lag = 1:n()-1, Aux = unique(.x$Aux)) %>% 
+            separate(Aux,c("Cadena","Variable"))) %>% 
+  ggplot(aes(x=lag,y=acf)) + 
+  geom_col() + 
+  facet_grid(Variable~Cadena) + 
+  labs(title = "Autocorrelación de las cadenas después del calentamiento y espaciamiento") + 
+  theme_minimal() + 
+  lucify_basics()
+
+datos_graf %>% 
+  filter(Tipo == "Simulación", mod(n,10) %>% equals(0), n > 1200) %>% 
+  gather(Variable,Valor,Var1,Var2) %>% 
+  {bind_rows(.,mutate(.,Cadena="Todas juntas"))} %>% 
+  {ggplot(data = ., aes(x=Valor,fill = Cadena, y = ..density..)) + 
+      geom_histogram(binwidth = 0.15) + 
+      facet_grid(Variable~Cadena) + 
+      scale_fill_manual(values = c("#4E67C8","#2D9779","#F78D7C","#B8C2E9","gray45")) + 
+      labs(title = "Histogramas de las muestras por cadena y todas juntas") + 
+      theme_minimal() + 
+      lucify_basics() + 
+      theme(legend.position = "none",
+            panel.grid = element_blank())}
