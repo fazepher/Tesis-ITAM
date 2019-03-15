@@ -80,18 +80,18 @@ graf_base_corr <- expand.grid(seq(-3,3,by = 0.05),seq(-3,3,by = 0.05)) %>%
   lucify_basics() + 
   theme(panel.grid = element_blank())  
 
-graf_base_convergencia <- expand.grid(seq(-5,5,by = 0.05),seq(-5,5,by = 0.05)) %>% 
-  as_data_frame %>% 
-  {mutate(., Densidad = mvtnorm::dmvnorm(., mean = c(0,0), 
-                                         sigma = matrix(c(3,-0.99*sqrt(3*1.5),-0.99*sqrt(3*1.5),1.5), nrow=2)))} %>% 
-  ggplot(aes(x=Var1,y=Var2)) + 
-  geom_raster(aes(fill = Densidad)) + 
-  geom_contour(aes(z=Densidad),
-               color = rgb(red = 60, green = 60, blue = 60, maxColorValue = 255), bins = 10, size = rel(.25)) + 
-  scale_fill_gradient(low = "transparent", high = "darkorange") + 
-  theme_minimal() + 
-  lucify_basics() + 
-  theme(panel.grid = element_blank())  
+# graf_base_convergencia <- expand.grid(seq(-5,5,by = 0.05),seq(-5,5,by = 0.05)) %>% 
+#   as_data_frame %>% 
+#   {mutate(., Densidad = mvtnorm::dmvnorm(., mean = c(0,0), 
+#                                          sigma = matrix(c(3,-0.99*sqrt(3*1.5),-0.99*sqrt(3*1.5),1.5), nrow=2)))} %>% 
+#   ggplot(aes(x=Var1,y=Var2)) + 
+#   geom_raster(aes(fill = Densidad)) + 
+#   geom_contour(aes(z=Densidad),
+#                color = rgb(red = 60, green = 60, blue = 60, maxColorValue = 255), bins = 10, size = rel(.25)) + 
+#   scale_fill_gradient(low = "transparent", high = "darkorange") + 
+#   theme_minimal() + 
+#   lucify_basics() + 
+#   theme(panel.grid = element_blank())  
 
 #### Ejemplo Base ####
 set.seed(31122018)
@@ -202,10 +202,10 @@ set.seed(31122018)
 datos_graf <- data_frame(V1 = c(-5,5,5,-5),
                          V2 = c(-5,5,-5,5),
                          Cadena = 1:4) %>% 
-  pmap_dfr(~GS_Norm2(N = 6000, inicio = c(..1,..2), var1 = 3, var2 = 1.5, rho = -0.8) %>% 
+  pmap_dfr(~GS_Norm2(N = 6000, inicio = c(..1,..2), var1 = 3, var2 = 1.5, rho = -0.92) %>% 
              mutate(Cadena = as.character(..3))) 
 
-datos_graf %>% 
+promedios_cadenas <- datos_graf %>% 
   filter(Tipo == "Simulación") %>% 
   group_by(Cadena) %>% 
   mutate_at(c("Var1","Var2"), funs(Media = cummean(.))) %>% 
@@ -214,7 +214,7 @@ datos_graf %>%
   gather(Variable,Media,-n,-Cadena) %>% 
   separate(Variable,c("Variable","Aux")) %>% 
   ggplot(aes(x=n,y=Media,color=Cadena)) + 
-  annotate("rect",xmin = 0, xmax = 1200, ymin = -6, ymax = 6, alpha = 0.4, fill = "gray85") + 
+  annotate("rect",xmin = 0, xmax = 1200, ymin = -7, ymax = 7, alpha = 0.4, fill = "gray85") + 
   geom_segment(x = 0, xend = 6050, y = 0, yend = 0, color = "darkorange", size = rel(1.5)) +
   geom_path(size = rel(1)) + 
   facet_grid(Variable~.) + 
@@ -226,7 +226,10 @@ datos_graf %>%
   lucify_basics() + 
   theme(panel.grid = element_blank()) 
 
-datos_graf %>% 
+ggsave("Bayes/Ejemplos_Convergencia_Prom_Erg.pdf",
+       plot = promedios_cadenas, device = cairo_pdf, width = 20, height = 10)
+
+traceplot_inicial <- datos_graf %>% 
   filter(Tipo == "Simulación") %>% 
   gather(Variable,Valor,Var1,Var2) %>% 
   ggplot(aes(x=n,y = Valor, color = Cadena)) + 
@@ -240,7 +243,11 @@ datos_graf %>%
   lucify_basics() + 
   theme(legend.position = "top")
 
-datos_graf %>% 
+ggsave("Bayes/Ejemplos_Convergencia_Traceplot_Inicial.pdf",
+       plot = traceplot_inicial, device = cairo_pdf, width = 20, height = 10)
+
+
+autocorr_completas <- datos_graf %>% 
   filter(Tipo == "Simulación") %>% 
   gather(Variable,Valor,Var1,Var2) %>% 
   unite(Aux,Cadena,Variable) %>% 
@@ -251,15 +258,21 @@ datos_graf %>%
             set_colnames("acf") %>% 
             mutate(lag = 1:n()-1, Aux = unique(.x$Aux)) %>% 
             separate(Aux,c("Cadena","Variable"))) %>% 
-  ggplot(aes(x=lag,y=acf)) + 
+  ggplot(aes(x=lag,y=acf,fill=Cadena)) + 
   geom_col() + 
   facet_grid(Variable~Cadena) + 
+  scale_fill_manual(values = c("#4E67C8","#2D9779","#F78D7C","#B8C2E9")) + 
   labs(title = "Autocorrelación de las cadenas completas") + 
   theme_minimal() + 
-  lucify_basics()
+  lucify_basics() + 
+  theme(legend.position = "none")
 
-datos_graf %>% 
-  filter(Tipo == "Simulación", mod(n,10) %>% equals(0), n > 1200) %>% 
+ggsave("Bayes/Ejemplos_Convergencia_Autocorr_Completas.pdf",
+       plot = autocorr_completas, device = cairo_pdf, width = 20, height = 10)
+
+
+traceplot_final <- datos_graf %>% 
+  filter(Tipo == "Simulación", mod(n,15) %>% equals(0), n > 1200) %>% 
   group_by(Cadena) %>% 
   mutate(n = 1:n()) %>% 
   ungroup %>% 
@@ -269,12 +282,16 @@ datos_graf %>%
   facet_grid(Variable~.) + 
   scale_color_manual(values = c("#4E67C8","#2D9779","#F78D7C","#B8C2E9")) + 
   labs(title = "Traceplot final de GS para 4 cadenas",
-       subtitle = "Calentamiento de 1200 y espaciamiento de 10 iteraciones") + 
+       subtitle = "Calentamiento de 1200 y espaciamiento de 15 iteraciones") + 
   theme_minimal() + 
   lucify_basics() + 
   theme(legend.position = "top")
 
-datos_graf %>% 
+ggsave("Bayes/Ejemplos_Convergencia_Traceplot_Final.pdf",
+       plot = traceplot_final, device = cairo_pdf, width = 20, height = 10)
+
+
+autocorr_final <- datos_graf %>% 
   filter(Tipo == "Simulación", mod(n,10) %>% equals(0), n > 1200) %>% 
   gather(Variable,Valor,Var1,Var2) %>% 
   unite(Aux,Cadena,Variable) %>% 
@@ -285,15 +302,20 @@ datos_graf %>%
             set_colnames("acf") %>% 
             mutate(lag = 1:n()-1, Aux = unique(.x$Aux)) %>% 
             separate(Aux,c("Cadena","Variable"))) %>% 
-  ggplot(aes(x=lag,y=acf)) + 
+  ggplot(aes(x=lag,y=acf,fill=Cadena)) + 
   geom_col() + 
   facet_grid(Variable~Cadena) + 
+  scale_fill_manual(values = c("#4E67C8","#2D9779","#F78D7C","#B8C2E9")) + 
   labs(title = "Autocorrelación de las cadenas después del calentamiento y espaciamiento") + 
   theme_minimal() + 
-  lucify_basics()
+  lucify_basics() + 
+  theme(legend.position = "none")
+
+ggsave("Bayes/Ejemplos_Convergencia_Autocorr_Final.pdf",
+       plot = autocorr_final, device = cairo_pdf, width = 20, height = 10)
 
 datos_graf %>% 
-  filter(Tipo == "Simulación", mod(n,10) %>% equals(0), n > 1200) %>% 
+  filter(Tipo == "Simulación", mod(n,5) %>% equals(0), n > 1200) %>% 
   gather(Variable,Valor,Var1,Var2) %>% 
   {bind_rows(.,mutate(.,Cadena="Todas juntas"))} %>% 
   {ggplot(data = ., aes(x=Valor,fill = Cadena, y = ..density..)) + 
@@ -305,3 +327,18 @@ datos_graf %>%
       lucify_basics() + 
       theme(legend.position = "none",
             panel.grid = element_blank())}
+
+datos_graf %>% 
+  split(.$Cadena) %>% 
+  map(~ select(.x,Var1,Var2) %>% 
+        as.matrix %>% 
+        mcmc) %>% 
+  as.mcmc.list %>% 
+  gelman.diag() %>% 
+  extract2("psrf") %>% 
+  as.data.frame %>% 
+  rownames_to_column(var="Var") %>% 
+  as_tibble %>% 
+  set_colnames(c("Variable","Estimado","Cota"))
+
+
