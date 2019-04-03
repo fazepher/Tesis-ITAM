@@ -21,7 +21,7 @@ La simulación por computadora ha permitido el desarrollo de la estadística bay
 
 Uno de esos científicos fue un matemático polaco-estadounidense llamado Stanislaw Ulam. En 1946, aburrido convaleciendo por una enfermedad, comenzó a preguntarse sobre la probabilidad de ganar en un juego de solitario. Después de mucho batallar con los cálculos de combinatoria se planteó si no sería más práctico estimarla simulando muchas partidas en una de las primeras computadoras electrónicas. Y ahí surgió el eureka: ¿por qué no hacer lo mismo para los problemas de física nuclear en los que estaban trabajando en Los Alamos? \parencite{Eckhardt87}. Al igual que las partidas de solitario, podrían simular muchas realizaciones de los procesos físicos bajo estudio y estimar los resultados más probables.\\ 
 
-Stan compartió su idea con John von Neumann quien, sorprendido y emocionado con la idea, le envió una carta a Richard Richtmayer--- el líder del equipo en Los Alamos--- con todos los cálculos necesarios para llevar a cabo el proyecto \parencite{vonNeumann47}. El método fue rápidamente adoptado por todos en Los Alamos, tanto que otro físico, Nicholas Metropolis, sugirió llamarlo \textit{Monte Carlo}, bromeando sobre un tío apostador de Stan, que vivía pidiendo prestado dinero porque ``simplemente tenía que ir a Monte Carlo" \parencite{Metropolis87}. Después de un arduo trabajo, el método pareció funcionar--- gracias en buena medida al trabajo de programación de Klara von Neumann \parencite{Haigh14}--- y el propio Metropolis publicó, junto con Stan, un primer paper presentándolo a grandes rasgos \parencite{MetropolisUlam49}.\\
+Stan compartió su idea con John von Neumann quien, sorprendido y emocionado, le envió una carta a Richard Richtmayer--- el líder del equipo en Los Alamos--- con todos los cálculos necesarios para llevar a cabo el proyecto \parencite{vonNeumann47}. El método fue rápidamente adoptado por todos en Los Alamos, tanto que otro físico, Nicholas Metropolis, sugirió llamarlo \textit{Monte Carlo}, bromeando sobre un tío apostador de Stan, que vivía pidiendo prestado dinero porque ``simplemente tenía que ir a Monte Carlo" \parencite{Metropolis87}. Después de un arduo trabajo, el método pareció funcionar--- gracias en buena medida al trabajo de programación de Klara von Neumann \parencite{Haigh14}--- y el propio Metropolis publicó, junto con Stan, un primer paper presentándolo a grandes rasgos \parencite{MetropolisUlam49}.\\
 
 De manera concreta, el método es la conjunción de la simulación con la ley de los grandes números. Las cantidades que requerían calcular eran valores esperados de la siguiente forma: 
 \begin{equation}
@@ -35,7 +35,7 @@ h^\star \approx \hat{h} = \sum\limits_{i=1}^N \dfrac{h(z_i)}{N}
 
 Entonces, los científicos en Los Alamos se dedicaron a encontrar algoritmos eficientes para obtener una muestra aleatoria de variables provenientes de diferentes distribuciones $f$.\\ 
 
-Lo importante para este trabajo es que este es exactamente el mismo probelma que se tiene en la aplicación de la estadística bayesiana y que hizo que por décadas--- por no decir siglos--- fuera poco menos que imposible llevar a cabo análisis bayesianos no triviales, como ya anticipa en \ref{sec:Prob_Analitico}. Muchas de las integrales que surgen en la estadística bayesiana no pueden ser calculadas de manera analítica. El ejemplo más frecuente es la constante normalizadora del teorema de Bayes. ¿Cómo aplicar el teorema si el denominador no puede ser calculado?\\ 
+Lo importante para este trabajo es que este es exactamente el mismo problema que se tiene en la aplicación de la estadística bayesiana y que hizo que por décadas--- por no decir siglos--- fuera poco menos que imposible llevar a cabo análisis bayesianos no triviales, como ya anticipa en \ref{sec:Prob_Analitico}. Muchas de las integrales que surgen en la estadística bayesiana no pueden ser calculadas de manera analítica. El ejemplo más frecuente es la constante normalizadora del teorema de Bayes. ¿Cómo aplicar el teorema si el denominador no puede ser calculado?\\ 
 
 No obstante, la forma de \eqref{eq:IntegralMC} permite llevar a cabo una gran variedad de \textit{resúmenes inferenciales} \parencite{GP97}. La posibilidad de realizar las correspondientes \textit{integraciones por Monte Carlo} hace que, en la práctica, exista una dualidad entre una distribución o densidad y una muestra proveniente de ella \parencite{SmithGelfand92}. La única receta de la inferencia bayesiana--- ver la página \pageref{receta_bayesiana}---, en la práctica se convierte en obtener una muestra aleatoria de la distribución posterior lo suficientemente grande para, con ella, estimar por Monte Carlo los resúmenes inferenciales requeridos.\\
 
@@ -91,15 +91,15 @@ Siguiendo la argumentación de \textcite{ChibGreenberg95}, \eqref{eq:Balance_Det
 
 De manera un poco informal, tenemos que el miembro izquierdo de la desigualdad refleja las probabilidades relativas ``necesarias'' entre estar en el estado $z$ y el estado $\tilde{z}$. El miembro derecho, por su parte, indica las probabilidades relativas de transitar a dichos estados bajo el kernel de transición de la cadena. La desigualdad indica que la cadena estaría transitando a $\tilde{z}$ más de lo necesario y, equivalentemente, transitaría a $z$ menos de lo necesario.\\ 
 
-Para conseguir el balance requerido para aplicar el teorema ergódico, necesitamos hacer una \textit{corrección de Metropolis} al kernel de transición, reduciendo el número relativo de veces que la cadena transite de $z$ a $\tilde{z}$ y aumentando el número relativo de transiciones de $\tilde{z}$ a $z$. La forma de hacer la corrección es comenzar con un kernel, $q(\tilde{z}|z)$, que \textit{proponga} un estado y agregar una \textit{probabilidad de aceptación} de la propuesta, $\alpha(\tilde{z};z)$. Si es rechazada, la cadena permanece en el mismo estado, reduciendo a la vez el número de transiciones hacia estados sobremuestreados y aumentando el número relativo de veces que estamos en el estado originalmente submuestreado. Estos dos pasos constituyen un kernel de transición de Metropolis Hastings de la siguiente forma: 
+Para conseguir el balance requerido para aplicar el teorema ergódico, necesitamos hacer una \textit{corrección de Metropolis} al kernel de transición, reduciendo el número relativo de veces que la cadena transite de $z$ a $\tilde{z}$ y aumentando el número relativo de transiciones de $\tilde{z}$ a $z$. La forma de hacer la corrección es comenzar con un kernel, $q(\tilde{z}|z)$, que \textit{proponga} un estado y agregar una \textit{probabilidad de aceptación} $\alpha(\tilde{z};z)$. Si la propuesta es rechazada, la cadena permanece en el mismo estado, reduciendo a la vez el número de transiciones hacia estados sobremuestreados y aumentando el número relativo de veces que estamos en el estado originalmente submuestreado. Estos dos pasos constituyen un kernel de transición de Metropolis Hastings de la siguiente forma: 
 \begin{align*}
-p_{MH}(\tilde{z}|z) &= q(\tilde{z}|z)\alpha(\tilde{z};z) \quad z \neq \tilde{z} \\
-p_{MH}(z|z) &= 1 - \int\limits_{\tilde{\mathcal{Z}}} p_{MH}(\tilde{z}|z)d\tilde{z}
+p_{\scriptscriptstyle{MH}}(\tilde{z}|z) &= q(\tilde{z}|z)\alpha(\tilde{z};z) \quad z \neq \tilde{z} \\
+p_{\scriptscriptstyle{MH}}(z|z) &= 1 - \int\limits_{\tilde{\mathcal{Z}}} p_{\scriptscriptstyle{MH}}(\tilde{z}|z)d\tilde{z}
 \end{align*}
 
-Queremos que el kernel $p_{MH}$ satisfaga \eqref{eq:Balance_Detallado}, entonces:
+Queremos que el kernel $p_{\scriptscriptstyle{MH}}$ satisfaga \eqref{eq:Balance_Detallado}, esto es:
 \begin{equation*}
-f(z)p_{MH}(\tilde{z}|z)=f(\tilde{z})p_{MH}(z|\tilde{z}) \quad \Leftrightarrow \quad f(z)q(\tilde{z}|z)\alpha(\tilde{z};z)=f(\tilde{z})q(z|\tilde{z})\alpha(z;\tilde{z}) 
+f(z)p_{\scriptscriptstyle{MH}}(\tilde{z}|z)=f(\tilde{z})p_{\scriptscriptstyle{MH}}(z|\tilde{z}) \quad \Leftrightarrow \quad f(z)q(\tilde{z}|z)\alpha(\tilde{z};z)=f(\tilde{z})q(z|\tilde{z})\alpha(z;\tilde{z}) 
 \end{equation*}
 
 De acuerdo a nuestra desigualdad supuesta en \eqref{eq:Inbalance_Detallado}, las transiciones de $\tilde{z}$ a $z$ se dan demasiado poco, por lo que deberíamos siempre aceptar este tipo de transiciones a fin de corregir el submuestreo. Tomemos entonces $\alpha(z;\tilde{z}) = 1$ y observemos que $\alpha(\tilde{z};z)$ queda determinada de tal forma que logremos el balance necesario: 
@@ -142,14 +142,14 @@ $u \sim U[0,1]$ \;
 
 Si la posterior es propia, entonces el mayor problema, claro está, es el de encontrar un kernel de propuestas conveniente. Una alternativa son aquellos que exploran progresivamente el espacio de estados de manera local. Estos se conocen como \textit{Random Walk Metropolis} o RWM \parencite{RobertCasella10}. De hecho, el algoritmo inicial de \textcite{Metropolis53} era de este tipo, usando una distribución uniforme en una vecindad del estado actual; pero también se pueden usar otras distribuciones, como una normal o una $t$ de Student centrada en dicho estado. \textcite{Robert15} hace la analogía con alguien que para ver una pintura en un cuarto oscuro tiene que ir alumbrando el cuadro con una antorcha, iluminando secuencialmente diferentes segmentos del lienzo.\\
 
-Estos kérneles de caminata aleatoria son \textit{simétricos}--- esto es,  $q(\tilde{\theta}|\theta) = q(\theta |\tilde{\theta})$--- lo que simplifica los cálculos de probabilidades de aceptación:
+Estos kérneles de caminata aleatoria resultan ser \textit{simétricos}--- esto es,  $q(\tilde{\theta}|\theta) = q(\theta |\tilde{\theta})$--- lo que simplifica los cálculos de probabilidades de aceptación:
 \begin{equation*}
 \alpha_{RWM}(\tilde{\theta};\theta)=min\left\lbrace\dfrac{f(\tilde{\theta}|y)q(\theta|\tilde{\theta})}{f(\theta|y)q(\tilde{\theta}|\theta)},1\right\rbrace = min\left\lbrace\dfrac{f(\tilde{\theta}|y)}{f(\theta|y)},1\right\rbrace
 \end{equation*}
 
 Un ejemplo trivial puede ayudar a visualizar cómo funcionan. Supongamos que quisiéramos simular de una posterior que, en realidad, es una normal bivariada cuyas marginales son normales estándar. Un posible kernel de transición sería una distribución uniforme en un rectángulo de $3$ de lado centrado en el estado actual de la cadena, por lo que tendríamos un kernel simétrico y un algoritmo de \textit{Random Walk Metropolis}.\\ 
 
-Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo--- como quedará más claro después--- encontrar esta \textit{región crítica} y explorarla es el objetivo de un algoritmo de integración por MCMC \parencites{Neal93,Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió varias veces y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
+Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo--- como espero explicar más claro después--- encontrar esta \textit{región crítica} y explorarla lo suficientemente bien para poder calcular los resúmenes inferenciales de interés es el verdadero objetivo de un algoritmo de integración por MCMC \parencites{Neal93,Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió varias veces y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
 
 \begin{figure}[h]
     \centering
@@ -344,15 +344,52 @@ En este sentido, la forma usual de aplicar la única receta de la inferencia bay
 \item Se continúan realizando simulaciones después del calentamiento y el adelgazamiento hasta obtener una muestra ``lo suficientemente grande''.  
 \end{enumerate}
 
-El número de cadenas se puede elegir en función del número de procesos paralelos que la computadora puede realizar, para aprovechar la eficiencia que implica el cómputo paralelo. Usualmente se corren 3, 4 o 5 cadenas. Por su parte, seleccionar el espaciamiento $m$ de las cadenas normalmente implica realizar gráficos de autocorrelación para algunas pruebas preliminares cuyo objetivo es también determinar la convergencia del algoritmo. En realidad, el punto más delicado es precisamente este último.\\ 
+El número de cadenas se puede elegir en función del número de procesos paralelos que la computadora puede realizar para aprovechar la eficiencia que implica el cómputo paralelo. Usualmente se corren 3, 4 o 5 cadenas. Por su parte, seleccionar el espaciamiento $m$ de las cadenas normalmente implica realizar gráficos de autocorrelación para algunas pruebas preliminares cuyo objetivo es también determinar la convergencia del algoritmo. En realidad, el punto más delicado es precisamente este último, declarar la convergencia.\\ 
 
 Desafortunadamente, los teoremas ergódicos son asintóticos, por lo que solo se garantiza la convergencia en el infinito. Aunque hay cotas para los errores, normalmente no son muy útiles, salvo algunos casos \parencite{SmithRoberts93}. Por ello, en la práctica se han desarrollado diferentes técnicas de diagnóstico de convergencia. Sin embargo, ninguna puede garantizarnos totalmente que la cadena ya haya convergido. Entonces, es recomendable considerar diferentes técnicas para disminuir la probabilidad de pasar por alto algún problema de convergencia.\\
 
-La primera técnica ya la he utilizado en los ejemplos de RWM y Gibbs: graficar los promedios ergódicos para diferentes variables o resúmenes inferenciales para observar en qué punto se estabilizan. La segunda es precisente iniciar en puntos dispersos del espacio parametral para evitar que las cadenas exploren solo una parte del espacio y, por ejemplo, queden atrapadas en una sola moda cuando la distribución posterior pueda ser multimodal. Al mismo tiempo, tener diferentes cadenas nos permite comparar las estimaciones dentro de cada cadena así como a través de las cadenas. Un ejemplo de promedios ergódicos para 4 cadenas iniciadas en puntos dispersos del espacio parametral puede verse en la {\color{Red} GRÁFICA}.\\ 
+La primera técnica ya la he utilizado en los ejemplos de RWM y Gibbs: graficar los promedios ergódicos para diferentes variables o resúmenes inferenciales para observar en qué punto se estabilizan. La segunda es precisente iniciar en puntos dispersos del espacio parametral para evitar que las cadenas exploren solo una parte del espacio y, por ejemplo, queden atrapadas en una sola moda cuando la distribución posterior pueda ser multimodal. Al mismo tiempo, tener diferentes cadenas nos permite comparar las estimaciones dentro de cada cadena así como a través de las cadenas. Un ejemplo de promedios ergódicos para 4 cadenas de \textit{Gibbs Sampler} (GS) iniciadas en puntos dispersos del espacio parametral puede verse en la \textbf{Figura \ref{fig:Conv_Prom_Erg}}.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Prom_Erg}
+	\caption{Ilustración de la convergencia de dos promedios ergódicos para 4 cadenas de \textit{Gibbs Sampling} iniciadas en puntos dispersos del espacio parametral. Vemos cómo las estimaciones de distintas cadenas se estabilizan y mezclan. Esto ayuda a detectar la fase de calentamiento. Fuente: elaboración propia.}
+	\label{fig:Conv_Prom_Erg}	
+\end{figure}
 
 En el fondo, hay dos características que se buscan para declarar la convergencia \parencite{Gelman13}. Queremos que las cadenas lleguen a la estacionariedad, pues la distribución límite es también estacionaria. Las estimaciones deben estabilizarse. También, y dicho de manera coloquial, buscamos que las cadenas \textit{mezclen} bien. Es decir, que las estimaciones para cada cadena sean parecidas a las estimaciones de todas las cadenas en su conjunto. Por ello un buen algoritmo de MCMC buscará recorrer y explorar todas las regiones críticas de la distribución objetivo \parencites{Neal93,Betancourt18}.\\ 
 
-Uno de los diagnósticos gráficos más utilizados son los llamados gráficos de oruga o \textit{trace plots}. Graficamos la secuencia de iteraciones válidas para cada cadena, es decir, después del descarte del periodo de calentamiento y el espaciamiento para evitar la correlación. Si las cadenas son estacionarias entonces el gráfico se verá como una oruga, de ahí el nombre, saltando de un punto a otro dentro de un rango de valores que determinan la región crítica. Si las cadenas mezclan bien, entonces las diferentes secuencias estarán oscilando en la misma región crítica. {\color{red} GRÁFICA}.\\
+Uno de los diagnósticos gráficos más utilizados son los llamados gráficos de oruga o \textit{trace plots}. En ellos se grafica la secuencia de iteraciones, es decir en el eje $x$ se encuentra el número de iteración y en el eje $y$ el valor de la cadena en dicha iteración. Si las cadenas son estacionarias entonces el gráfico se verá como una oruga, de ahí el nombre, saltando de un punto a otro dentro de un rango de valores que determinan la región crítica. Si las cadenas mezclan bien, entonces las diferentes secuencias estarán oscilando en la misma región crítica. El \textit{trace plot} del ejemplo de esta sección puede verse en la \textbf{Figura \ref{fig:Conv_Trace_Inicial}}. También podemos ver en la \textbf{Figura \ref{fig:Conv_Trace_Final}}, el gráfico correspondiente a las iteraciones válidas para cada cadena, es decir, después del descarte del periodo de calentamiento y el espaciamiento para evitar la correlación.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Traceplot_Inicial}
+	\caption{Ilustración de un \textit{trace plot} para las 4 cadenas de \textit{Gibbs Sampling}. Vemos el comportamiento de oruga, al rededor de una banda de valores. Fuente: elaboración propia.}
+	\label{fig:Conv_Prom_Erg}	
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Traceplot_Final}
+	\caption{Ilustración de un \textit{trace plot} para las 4 cadenas de \textit{Gibbs Sampling} considerando solo las iteraciones válidas. Fuente: elaboración propia.}
+	\label{fig:Conv_Prom_Erg}	
+\end{figure}
+
+En este caso, el espaciamiento elegido fue de 15. La reducción en la autocorrelación que esto tiene se puede apreciar en la \textbf{Figura \ref{fig:Conv_Autocorr}}.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.7\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Autocorr_Completas}
+        \caption{Si consideramos.}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}{0.7\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Autocorr_Final}
+        \caption{Después de 1,250 transiciones, la cadena cubre completamente la región crítica.}
+    \end{subfigure}
+    \caption{Ilustración de una cadena de \textit{Gibbs Sampling} para una normal bivariada sin correlación. Fuente: elaboración propia.}\label{fig:Conv_Autocorr}
+\end{figure}
 
 Otro diagnóstico gráfico es el de comparar histogramas o densidades estimadas para varios parámetros y resúmenes inferenciales y verificar que estos son estables--- comparándolos para la primera mitad de la muestra y para la segunda, por ejemplo--- y mezclan bien--- los gráficos para las diferentes cadenas se parecen al gráfico de todas juntas---. {\color{red} GRÁFICA}. No obstante, los diagnósticos gráficos pueden ser engañosos si la distribución es multimodal, por ejemplo.\\
 
