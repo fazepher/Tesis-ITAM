@@ -1,6 +1,8 @@
 library(tidyverse)
 library(magrittr)
 
+rosa <- "#F78D7C"
+azul <- "#4E67C8"
 lucify_basics <- function(){
   theme(line = element_line(colour = rgb(red = 102, green = 102, blue = 102, maxColorValue = 255)),
         rect = element_rect(colour = rgb(red = 198, green = 198, blue = 198, maxColorValue = 255)),
@@ -86,7 +88,7 @@ graf_base <- expand.grid(seq(-3,3,by = 0.05),seq(-3,3,by = 0.05)) %>%
   geom_raster(aes(fill = Densidad)) + 
   geom_contour(aes(z=Densidad),
                color = rgb(red = 60, green = 60, blue = 60, maxColorValue = 255), bins = 10, size = rel(.25)) + 
-  scale_fill_gradient(low = "transparent", high = "darkorange") + 
+  scale_fill_gradient(low = "transparent", high = rosa) + 
   theme_minimal() + 
   lucify_basics() + 
   theme(panel.grid = element_blank())  
@@ -98,7 +100,7 @@ graf_base_corr <- expand.grid(seq(-3,3,by = 0.05),seq(-3,3,by = 0.05)) %>%
   geom_raster(aes(fill = Densidad)) + 
   geom_contour(aes(z=Densidad),
                color = rgb(red = 60, green = 60, blue = 60, maxColorValue = 255), bins = 10, size = rel(.25)) + 
-  scale_fill_gradient(low = "transparent", high = "darkorange") + 
+  scale_fill_gradient(low = "transparent", high = rosa) + 
   theme_minimal() + 
   lucify_basics() + 
   theme(panel.grid = element_blank())  
@@ -115,11 +117,11 @@ Ejemplo_Est_Indep %<>%
 
 ejemplo_est_indep_a <- graf_base + 
   geom_point(data = filter(Ejemplo_Est_Indep$Propuestas,Rechazada, n <= 10), 
-             color = "steelblue4", size = rel(5), shape = 88) + 
+             color = azul, size = rel(5), shape = 88) + 
   geom_point(data = Ejemplo_Est_Indep$Simulaciones[1,], 
-             color = "steelblue4", size = rel(2)) + 
+             color = azul, size = rel(2)) + 
   geom_path(data = filter(Ejemplo_Est_Indep$Simulaciones,not(Rechazada), n <= 10), 
-            color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+            color = azul, size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
   scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   labs(title = "Primeras iteraciones")
@@ -128,11 +130,11 @@ ggsave("Bayes/Ejemplo_RWM_A.pdf",plot = ejemplo_est_indep_a, device = cairo_pdf,
 
 ejemplo_est_indep_b <- graf_base + 
   geom_point(data = filter(Ejemplo_Est_Indep$Propuestas,Rechazada), 
-             color = "steelblue4", size = rel(1.5), shape = 88) + 
+             color = azul, size = rel(1.5), shape = 88) + 
   geom_point(data = Ejemplo_Est_Indep$Simulaciones[1,], 
-             color = "steelblue4", size = rel(1)) + 
+             color = azul, size = rel(1)) + 
   geom_path(data = filter(Ejemplo_Est_Indep$Simulaciones,not(Rechazada)), 
-            color = "steelblue4", size = rel(0.2)) + 
+            color = azul, size = rel(0.2)) + 
   scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   labs(title = "2,500 iteraciones")
@@ -145,8 +147,8 @@ ejemplo_est_indep_c <- Ejemplo_Est_Indep$Simulaciones %>%
   gather(Variable,Media,-n) %>% 
   separate(Variable,c("Variable","Aux")) %>% 
   ggplot(aes(x=n,y=Media,group=Variable)) + 
-  geom_segment(x = 0, xend = 2500, y = 0, yend = 0, color = "darkorange", size = rel(1.5)) +
-  geom_path(size = rel(1), color = "steelblue4") + 
+  geom_segment(x = 0, xend = 2500, y = 0, yend = 0, color = rosa, size = rel(1.5)) +
+  geom_path(size = rel(1), color = azul) + 
   annotate("text",x = 110, y = c(3.15,-3.15), label = c("Var1","Var2"), size = rel(6)) + 
   annotate("text",x = 2550, y = 0, label = "Media real", size = rel(6), hjust = 0, vjust = 0.5) + 
   labs(title = "Promedios Ergódicos por variable") + 
@@ -171,11 +173,11 @@ Ejemplo_Est_Indep %<>%
 
 ejemplo_est_indep_a <- graf_base + 
   geom_point(data = filter(Ejemplo_Est_Indep$Propuestas,Rechazada, n <= 10), 
-             color = "steelblue4", size = rel(5), shape = 88) + 
+             color = azul, size = rel(5), shape = 88) + 
   geom_point(data = Ejemplo_Est_Indep$Simulaciones[1,], 
-             color = "steelblue4", size = rel(2)) + 
+             color = azul, size = rel(2)) + 
   geom_path(data = filter(Ejemplo_Est_Indep$Simulaciones,not(Rechazada), n <= 10), 
-            color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+            color = azul, size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
   scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   labs(title = "Primeras iteraciones")
@@ -184,11 +186,11 @@ ggsave("Bayes/Ejemplo2_RWM_A.pdf",plot = ejemplo_est_indep_a, device = cairo_pdf
 
 ejemplo_est_indep_b <- graf_base + 
   geom_point(data = filter(Ejemplo_Est_Indep$Propuestas,Rechazada), 
-             color = "steelblue4", size = rel(1.5), shape = 88) + 
+             color = azul, size = rel(1.5), shape = 88) + 
   geom_point(data = Ejemplo_Est_Indep$Simulaciones[1,], 
-             color = "steelblue4", size = rel(1)) + 
+             color = azul, size = rel(1)) + 
   geom_path(data = filter(Ejemplo_Est_Indep$Simulaciones,not(Rechazada)), 
-            color = "steelblue4", size = rel(0.2)) + 
+            color = azul, size = rel(0.2)) + 
   scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   labs(title = "2,500 iteraciones")
@@ -201,8 +203,8 @@ ejemplo_est_indep_c <- Ejemplo_Est_Indep$Simulaciones %>%
   gather(Variable,Media,-n) %>% 
   separate(Variable,c("Variable","Aux")) %>% 
   ggplot(aes(x=n,y=Media,group=Variable)) + 
-  geom_segment(x = 0, xend = 2500, y = 0, yend = 0, color = "darkorange", size = rel(1.5)) +
-  geom_path(size = rel(1), color = "steelblue4") + 
+  geom_segment(x = 0, xend = 2500, y = 0, yend = 0, color = rosa, size = rel(1.5)) +
+  geom_path(size = rel(1), color = azul) + 
   annotate("text",x = 110, y = c(3.15,-3.15), label = c("Var1","Var2"), size = rel(6)) + 
   annotate("text",x = 2550, y = 0, label = "Media real", size = rel(6), hjust = 0, vjust = 0.5) + 
   labs(title = "Promedios Ergódicos por variable") + 
@@ -233,13 +235,13 @@ aux <- filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30) %>%
   select(Var1,Var2)
 ejemplo_est_corr_compara <- graf_base_corr + 
   geom_point(data = filter(Ejemplo_Est_Corr$Propuestas,Rechazada, n <= 30), 
-             color = "steelblue4", size = rel(5), shape = 88) + 
+             color = azul, size = rel(5), shape = 88) + 
   geom_point(data = Ejemplo_Est_Corr$Simulaciones[1,], 
-             color = "steelblue4", size = rel(2)) + 
+             color = azul, size = rel(2)) + 
   geom_path(data = filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30), 
-            color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+            color = azul, size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
   annotate("rect", xmin = aux$Var1 - r, xmax = aux$Var1 + r, ymin = aux$Var2 - r, ymax = aux$Var2 + r,
-           color = "steelblue4", alpha = 0.2) +
+           color = azul, alpha = 0.2) +
   scale_x_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
   scale_y_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
   labs(title = "Rectángulo de propuestas estrecho de lado 0.5")
@@ -262,13 +264,13 @@ aux <- filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30) %>%
   select(Var1,Var2)
 ejemplo_est_corr_compara <- graf_base_corr + 
   geom_point(data = filter(Ejemplo_Est_Corr$Propuestas,Rechazada, n <= 30), 
-             color = "steelblue4", size = rel(5), shape = 88) + 
+             color = azul, size = rel(5), shape = 88) + 
   geom_point(data = Ejemplo_Est_Corr$Simulaciones[1,], 
-             color = "steelblue4", size = rel(2)) + 
+             color = azul, size = rel(2)) + 
   geom_path(data = filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30), 
-            color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+            color = azul, size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
   annotate("rect", xmin = aux$Var1 - r, xmax = aux$Var1 + r, ymin = aux$Var2 - r, ymax = aux$Var2 + r,
-           color = "steelblue4", alpha = 0.2) +
+           color = azul, alpha = 0.2) +
   scale_x_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
   scale_y_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
   labs(title = "Rectángulo de propuestas intermedio de lado 3")
@@ -277,11 +279,11 @@ ggsave("Bayes/Ejemplo_RWM_Compara2.pdf",plot = ejemplo_est_corr_compara, device 
 
 ejemplo_est_corr_a <- graf_base_corr + 
   geom_point(data = filter(Ejemplo_Est_Corr$Propuestas,Rechazada, n <= 10), 
-             color = "steelblue4", size = rel(5), shape = 88) + 
+             color = azul, size = rel(5), shape = 88) + 
   geom_point(data = Ejemplo_Est_Corr$Simulaciones[1,], 
-             color = "steelblue4", size = rel(2)) + 
+             color = azul, size = rel(2)) + 
   geom_path(data = filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 10), 
-            color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+            color = azul, size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
   scale_x_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
   scale_y_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
   labs(title = "Primeras 10 iteraciones de RWM")
@@ -290,9 +292,9 @@ ggsave("Bayes/Ejemplo_RWM_Compara2A.pdf",plot = ejemplo_est_corr_a, device = cai
 
 ejemplo_est_corr_b <- graf_base_corr + 
   geom_point(data = filter(Ejemplo_Est_Corr$Simulaciones, !Rechazada, n <= 1250), 
-             color = "steelblue4", size = rel(0.75), shape = 18) + 
+             color = azul, size = rel(0.75), shape = 18) + 
   geom_jitter(data = filter(Ejemplo_Est_Corr$Simulaciones, Rechazada, n <= 1250), 
-              color = "steelblue4", size = rel(0.75), shape = 18, width = 0.02, height = 0.02) + 
+              color = azul, size = rel(0.75), shape = 18, width = 0.02, height = 0.02) + 
   scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
   labs(title = "1,250 iteraciones de RWM")
@@ -306,8 +308,8 @@ ejemplo_est_corr_c <- Ejemplo_Est_Corr$Simulaciones %>%
   gather(Variable,Media,-n) %>% 
   separate(Variable,c("Variable","Aux")) %>% 
   ggplot(aes(x=n,y=Media,group=Variable)) + 
-  geom_segment(x = 0, xend = 1250, y = 0, yend = 0, color = "darkorange", size = rel(1.5)) +
-  geom_path(size = rel(1), color = "steelblue4") + 
+  geom_segment(x = 0, xend = 1250, y = 0, yend = 0, color = rosa, size = rel(1.5)) +
+  geom_path(size = rel(1), color = azul) + 
   annotate("text",x = 50, y = c(-2.75,2.75), label = c("Var1","Var2"), size = rel(6)) + 
   annotate("text",x = 1300, y = 0, label = "Media real", size = rel(6), hjust = 0, vjust = 0.5) + 
   labs(title = "Promedios Ergódicos para RWM") + 
@@ -336,13 +338,13 @@ aux <- filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30) %>%
   select(Var1,Var2)
 ejemplo_est_corr_compara <- graf_base_corr + 
   geom_point(data = filter(Ejemplo_Est_Corr$Propuestas,Rechazada, n <= 30), 
-             color = "steelblue4", size = rel(5), shape = 88) + 
+             color = azul, size = rel(5), shape = 88) + 
   geom_point(data = Ejemplo_Est_Corr$Simulaciones[1,], 
-             color = "steelblue4", size = rel(2)) + 
+             color = azul, size = rel(2)) + 
   geom_path(data = filter(Ejemplo_Est_Corr$Simulaciones,not(Rechazada), n <= 30), 
-            color = "steelblue4", size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+            color = azul, size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
   annotate("rect", xmin = aux$Var1 - r, xmax = aux$Var1 + r, ymin = aux$Var2 - r, ymax = aux$Var2 + r,
-           color = "steelblue4", alpha = 0.2) +
+           color = azul, alpha = 0.2) +
   scale_x_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
   scale_y_continuous(limits = c(-5,5), breaks = seq(-4,4,by=2))+ 
   labs(title = "Rectángulo de propuestas amplio de lado 5")
