@@ -318,7 +318,7 @@ En realidad, pocas veces contamos con tanta suerte como para tener completa inde
 
 Por otro lado, si comparamos entre los dos casos del \textit{Gibbs sampler}, vemos que el desempeño se vio afectado al agregar correlación. Este es un fenómeno que se debe tener siempre presente: cuando la parametrización del modelo genera alta correlación entre los componentes, el algoritmo se hace más lento. El motivo es un equivalente al caso de un kernel de transiciones más estrecho. La correlación de los parámetros implica que las condicionales completas están muy concentradas, determinadas fuertemente por el valor actual; es decir, la simulación no puede generar un valor muy alejado del actual y el avance de la cadena es más lento.\\ 
 
-Por ello, el \textit{Gibbs Sampler} puede sucumbir en la práctica ante problemas no triviales de alta correlación. Sabemos que convergerá, pero puede no hacerlo en un tiempo razonable, llegando a pasar cientos de miles de iteraciones antes de converger. Se pueden buscar parametrizaciones e implementaciones de Gibbs que mejoren el desempeño, pero como dice el equipo de {\color{red} Stan}, 
+Por ello, el \textit{Gibbs Sampler} puede sucumbir en la práctica ante problemas no triviales de alta correlación. Sabemos que convergerá, pero puede no hacerlo en un tiempo razonable, llegando a pasar cientos de miles de iteraciones antes de converger. Se pueden buscar parametrizaciones e implementaciones de Gibbs que mejoren el desempeño, pero como dice el \textcite{Stan17}, 
 \begin{quote}
 ...incluso una implementación eficiente y escalable no resuelve el problema subyacente de que \textit{Gibbs sampling} no se desempeña bien con posteriores altamente correlacionadas. Finalmente nos dimos cuenta que necesitábamos un mejor muestreador, no una mejor implementación.
 \end{quote}
@@ -407,3 +407,24 @@ Por otro lado, existen también resúmenes estadísticos para evaluar convergenc
 Finalmente, querría comentar que hay 3 factores principales que permiten tener un buen muestreador de MCMC \parencite{Neal93}. El primero es la cantidad de cómputo requerida para simular cada transición; esta, por ejemplo, podría ser una ventaja de \textit{Gibbs Sampling} sobre \textit{Random Walk Metropolis} pues al aceptar todas las propuestas nos ahorramos la necesidad de realizar la corrección de Metropolis. El segundo factor es el tiempo que le lleva a la cadena alcanzar la convergencia; esto indica de manera general la cantidad de cómputo invertido en el periodo de calentamiento que se descartará. El tercer y útlimo factor está relacionado con el segundo pero es ligeramente diferente: las transiciones necesarias para movernos de un estado en la distribución objetivo a otro prácticamente independiente. Esto nos indicará el tamaño de la simulación requerido para realizar una estimación con alguna precisión deseada. Es normalmente este tercer factor el que motiva el uso de un muestreador distinto a RWM o a \textit{Gibbs Sampler} y que introduzco a continuación.
 
 \section{Hamiltonian Monte Carlo}
+
+Una distribución posterior puede ser vista como una superficie de cimas y valles. Por ejemplo, la distribución normal es usualmente identificada por su típica forma de campana. Imaginemos que queremos tener una muestra aleatoria de esta distribución. Esperaríamos tener más muestra en la región central--- al rededor de la moda--- que en las colas de la distribución, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Original}}. Si volteamos la función de densidad--- tomando el menos logaritmo, por ejemplo--- esta se convierte en una especie de tazón. Las regiones cercanas a la moda ahora son zonas bajas y las de baja densidad son zonas altas. La muestra se concentra en el fondo del tazón y no en los bordes, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Volteada}}.\\
+
+\begin{figure}[h]
+	\centering	
+	\begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Muestra_Normal}
+        \caption{La densidad original puede verse como una superficie con una cumbre, al rededor de la cual se concentra la mayoría de las observaciones provenientes de una muestra aleatoria. Por consiguiente, hay menos muestra en las colas de la distribución.}
+        \label{fig:Muestra_Normal_Original}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Muestra_Normal_Volteada}
+        \caption{Si volteamos la densidad aplicando el menos logaritmo, podemos considerarla una ``función de energía'' cuya gráfica parece un tazón. La muestra se concentra en el fondo del tazón, en lugar de en los bordes del mismo.}
+        \label{fig:Muestra_Normal_Volteada}
+    \end{subfigure}
+	\caption{Una muestra aleatoria proveniente de la distribución normal tiende a concentrarse al rededor de la moda. Fuente: elaboración propia con base en la explicación de {\color{Red} Bed Lambert}.}
+	\label{fig:Muestra_Normal}	
+\end{figure}
+
+ La idea de voltear la densidad parece rara al inicio, ¿cuál es el objetivo? Podemos tener una analogía con el mundo de la física. El menos logaritmo de la densidad puede considerarse una función de energía potencial para una partícula ficticia. Si se le aplica un \textit{momentum} a una partícula en el tazón, esta rodaría por el tazón siguiendo las leyes de la física y tendería a llegar al fondo del mismo, a los estados de baja energía potencial. 
