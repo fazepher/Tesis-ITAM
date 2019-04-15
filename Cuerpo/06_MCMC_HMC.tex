@@ -408,23 +408,31 @@ Finalmente, querría comentar que hay 3 factores principales que permiten tener 
 
 \section{Hamiltonian Monte Carlo}
 
-Una distribución posterior puede ser vista como una superficie de cimas y valles. Por ejemplo, la distribución normal es usualmente identificada por su típica forma de campana. Imaginemos que queremos tener una muestra aleatoria de esta distribución. Esperaríamos tener más muestra en la región central--- al rededor de la moda--- que en las colas de la distribución, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Original}}. Si volteamos la función de densidad--- tomando el menos logaritmo, por ejemplo--- esta se convierte en una especie de tazón. Las regiones cercanas a la moda ahora son zonas bajas y las de baja densidad son zonas altas. La muestra se concentra en el fondo del tazón y no en los bordes, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Volteada}}.\\
+Una distribución posterior puede ser vista como una superficie de cimas y valles. Por ejemplo, la distribución normal es usualmente identificada por su típica forma de campana. Imaginemos que queremos tener una muestra aleatoria de esta distribución. Esperaríamos tener más muestra en la región central--- al rededor de la moda--- que en las colas de la distribución, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Original}}. Si volteamos la función de densidad--- tomando el menos logaritmo, por ejemplo--- esta se convierte en una especie de tazón. Las regiones cercanas a la moda ahora son zonas bajas y las colas son zonas altas. La muestra se concentra en el fondo del tazón y no en los bordes, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Volteada}}.\\
 
 \begin{figure}[h]
 	\centering	
 	\begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Muestra_Normal}
-        \caption{La densidad original puede verse como una superficie con una cumbre, al rededor de la cual se concentra la mayoría de las observaciones provenientes de una muestra aleatoria. Por consiguiente, hay menos muestra en las colas de la distribución.}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Muestra_Normal_Original}
+        \caption{La densidad original puede verse como una superficie con una cumbre al rededor de la cual se concentra la mayoría de las observaciones provenientes de una muestra aleatoria.}
         \label{fig:Muestra_Normal_Original}
     \end{subfigure}
     ~ 
     \begin{subfigure}{0.45\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Muestra_Normal_Volteada}
-        \caption{Si volteamos la densidad aplicando el menos logaritmo, podemos considerarla una ``función de energía'' cuya gráfica parece un tazón. La muestra se concentra en el fondo del tazón, en lugar de en los bordes del mismo.}
+        \caption{Si volteamos y suavizamos la densidad aplicando el menos logaritmo, vemos que ahora la gráfica parece un tazón. La muestra se concentra en el fondo del tazón, en lugar de en los bordes del mismo.}
         \label{fig:Muestra_Normal_Volteada}
     \end{subfigure}
-	\caption{Una muestra aleatoria proveniente de la distribución normal tiende a concentrarse al rededor de la moda. Fuente: elaboración propia con base en la explicación de {\color{Red} Bed Lambert}.}
+	\caption{Una muestra aleatoria proveniente de una distribución tiende a concentrarse al rededor de las modas. En los gráficos las observaciones de una muestra aleatoria particular proveniente de la distribución normal se muestran mediante un \textit{rug plot} como marcas azules en el eje horizontal. Fuente: elaboración propia con base en la explicación de {\color{Red} Ben Lambert}.}
 	\label{fig:Muestra_Normal}	
 \end{figure}
 
- La idea de voltear la densidad parece rara al inicio, ¿cuál es el objetivo? Podemos tener una analogía con el mundo de la física. El menos logaritmo de la densidad puede considerarse una función de energía potencial para una partícula ficticia. Si se le aplica un \textit{momentum} a una partícula en el tazón, esta rodaría por el tazón siguiendo las leyes de la física y tendería a llegar al fondo del mismo, a los estados de baja energía potencial. 
+ Imaginemos una partícula ficticia en algún punto de la superficie del tazón. Si le aplicáramos una cantidad de movimiento o \textit{momentum}, esta rodaría por el tazón hacia el fondo del mismo, siguiendo las leyes de la física. Si asumimos que no existe fricción, la partícula continuaría subiendo y bajando, intercambiando energía cinética por energía potencial y viceversa. Bajo esta dinámica, la mayor parte del tiempo la partícula estaría más cerca del fondo del tazón que de los bordes.\\ 
+ 
+ Lo maravilloso de esta idea es que puede ser utilizada para obtener realizaciones provenientes de una distribución objetivo. Es decir, podemos simular este sistema físico ficticio para obtener una muestra aleatoria que no solo cumpla la intuición de tener más observaciones cerca de las modas que en las colas, sino que lo haga en la proporción correcta que marca la ley de probabilidad objetivo.\\ 
+ 
+ De manera informal, lo único que debemos hacer es imaginar una partícula y ``empujarla'' en alguna dirección. Luego seguimos por un tiempo la trayectoria que las leyes de la física determinarían sobre la superficie de nuestra densidad volteada y la ``detenemos''. En este punto registramos su posición en el eje horizontal como una realización de nuestra variable aleatoria. Si volvemos a ponerla en movimiento en una nueva dirección y la seguimos por otro periodo de tiempo llegaríamos a una nueva posición que sería nuestra siguiente observación. Repitiendo este procedimiento obtendríamos una secuencia de observaciones que consituirían nuestra muestra aleatoria. Este método de muestreo se conoce como \textit{Hamiltonian Monte Carlo} o HMC.\\
+ 
+  
+ 
+ 

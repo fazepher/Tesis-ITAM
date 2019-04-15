@@ -34,9 +34,58 @@ lucify_basics <- function(){
         strip.text = element_text(size = rel(1.1),
                                   margin = margin(t = 8, r = 8, b = 8, l = 8)))
 }
-
+extrafont::loadfonts(device = "win")
 theme_set(theme_minimal() + lucify_basics())
 set.seed(51295)
 
-muestra_normal <- 
+distr_normal <- tibble(theta = seq(-3,3,by=0.05),
+                       dens = dnorm(theta),
+                       ener = -log(dens))
+muestra_normal <- tibble(theta = rnorm(500))
+
+muestra_normal_original <- ggplot(distr_normal, aes(x = theta)) + 
+  geom_path(aes(y = dens), color = rosa, size = rel(2)) + 
+  geom_rug(data = muestra_normal, color = azul) + 
+  annotate("text",x=0,y=0.05,label= "Más muestra", size = rel(8)) + 
+  annotate("text",x=-2.5,y=0.05,label= "Menos muestra", size = rel(4)) + 
+  annotate("text",x=2.5,y=0.05,label= "Menos muestra", size = rel(4)) + 
+  labs(title ="Densidad normal original", 
+       subtitle = "Más muestra cerca de la moda y menos en las colas") + 
+  xlab(expression(theta)) + 
+  ylab(expression(f(theta))) + 
+  theme(panel.grid = element_blank())
+
+ggsave("Bayes/Muestra_Normal_Original.pdf",
+       plot = muestra_normal_original, device = cairo_pdf, width = 20, height = 10)
+
+muestra_normal_volteada <- ggplot(distr_normal, aes(x = theta)) + 
+  geom_path(aes(y = ener), color = rosa, size = rel(2)) + 
+  geom_rug(data = muestra_normal, color = azul) + 
+  annotate("text",x=0,y=1.5,label= "Más muestra", size = rel(8)) + 
+  annotate("text",x=-2.5,y=1.5,label= "Menos muestra", size = rel(4)) + 
+  annotate("text",x=2.5,y=1.5,label= "Menos muestra", size = rel(4)) + 
+  labs(title ="Densidad normal volteada", 
+       subtitle = "Más muestra al fondo del tazón y menos en los bordes") + 
+  xlab(expression(theta)) + 
+  ylab(expression(-ln(f(theta)))) + 
+  theme(panel.grid = element_blank())
+
+ggsave("Bayes/Muestra_Normal_Volteada.pdf",
+       plot = muestra_normal_volteada, device = cairo_pdf, width = 20, height = 10)
+
+muestra_normal_volteada <- ggplot(distr_normal, aes(x = theta)) + 
+  geom_path(aes(y = ener), color = rosa, size = rel(2)) + 
+  geom_rug(data = muestra_normal, color = azul) + 
+  annotate("text",x=0,y=1.5,label= "Más muestra", size = rel(8)) + 
+  annotate("text",x=-2.5,y=1.5,label= "Menos muestra", size = rel(4)) + 
+  annotate("text",x=2.5,y=1.5,label= "Menos muestra", size = rel(4)) + 
+  labs(title ="Densidad normal volteada", 
+       subtitle = "Más muestra al fondo del tazón y menos en los bordes") + 
+  xlab(expression(theta)) + 
+  ylab(expression(-ln(f(theta)))) + 
+  theme(panel.grid = element_blank())
+
+ggsave("Bayes/Muestra_Normal_Volteada.pdf",
+       plot = muestra_normal_volteada, device = cairo_pdf, width = 20, height = 10)
+
 
