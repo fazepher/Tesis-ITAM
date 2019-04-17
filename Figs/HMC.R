@@ -73,19 +73,41 @@ muestra_normal_volteada <- ggplot(distr_normal, aes(x = theta)) +
 ggsave("Bayes/Muestra_Normal_Volteada.pdf",
        plot = muestra_normal_volteada, device = cairo_pdf, width = 20, height = 10)
 
-muestra_normal_volteada <- ggplot(distr_normal, aes(x = theta)) + 
-  geom_path(aes(y = ener), color = rosa, size = rel(2)) + 
-  geom_rug(data = muestra_normal, color = azul) + 
-  annotate("text",x=0,y=1.5,label= "Más muestra", size = rel(8)) + 
-  annotate("text",x=-2.5,y=1.5,label= "Menos muestra", size = rel(4)) + 
-  annotate("text",x=2.5,y=1.5,label= "Menos muestra", size = rel(4)) + 
-  labs(title ="Densidad normal volteada", 
-       subtitle = "Más muestra al fondo del tazón y menos en los bordes") + 
+part_rodando_a <- ggplot(distr_normal, aes(x = theta, y = ener)) + 
+  geom_path(color = rosa, size = rel(2)) + 
+  geom_path(data = tibble(theta = 2.25*cos(seq(0,pi/2.25,by=0.05)),
+                          ener = -log(dnorm(theta)) + 0.08),
+            color = azul, size = rel(2), arrow = arrow()) + 
+  geom_point(data = tibble(theta = 2.25*cos(0), ener = -log(dnorm(theta)) + 0.08),
+             color = azul, size = rel(5)) + 
+  labs(title ="Sistema físico ficticio", 
+       subtitle = "Una partícula con momentum rodaría siguiendo las leyes de la física") + 
+  xlab(expression(theta)) + 
+  ylab(expression(-ln(f(theta)))) + theme(panel.grid = element_blank())
+
+ggsave("Bayes/Part_Rodando_A.pdf",
+       plot = part_rodando_a, device = cairo_pdf, width = 20, height = 10)
+
+part_rodando_b <- ggplot(distr_normal, aes(x = theta, y = ener)) + 
+  geom_path(color = rosa, size = rel(2)) + 
+  geom_path(data = tibble(theta = 2.25*cos(seq(pi/2,0,by=-0.05)),
+                          ener = -log(dnorm(theta)) + 0.08),
+            color = azul, size = rel(1.75), arrow = arrow()) + 
+  geom_path(data = tibble(theta = 2.25*cos(seq(pi/2,pi,by=0.05)),
+                          ener = -log(dnorm(theta)) + 0.08),
+            color = azul, size = rel(1.75), arrow = arrow()) + 
+  geom_point(data = tibble(theta = 2.25*cos(pi/2.25), ener = -log(dnorm(theta)) + 0.08),
+             color = azul, size = rel(5)) + 
+  annotate("text",x=1.5,y=3.75,label= "Más energía potencial", size = rel(6),color="gray25") + 
+  annotate("text",x=-1.5,y=3.75,label= "Más energía potencial", size = rel(6),color="gray25") + 
+  annotate("text",x=0,y=1.5,label= "Más energía cinética", size = rel(6),color="gray25") + 
+  labs(title ="Sistema sin fricción", 
+       subtitle = "La partícula subiría y regresaría constantemente") + 
   xlab(expression(theta)) + 
   ylab(expression(-ln(f(theta)))) + 
   theme(panel.grid = element_blank())
 
-ggsave("Bayes/Muestra_Normal_Volteada.pdf",
-       plot = muestra_normal_volteada, device = cairo_pdf, width = 20, height = 10)
+ggsave("Bayes/Part_Rodando_B.pdf",
+       plot = part_rodando_b, device = cairo_pdf, width = 20, height = 10)
 
 

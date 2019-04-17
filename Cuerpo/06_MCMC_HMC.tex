@@ -408,7 +408,7 @@ Finalmente, querría comentar que hay 3 factores principales que permiten tener 
 
 \section{Hamiltonian Monte Carlo}
 
-Una distribución posterior puede ser vista como una superficie de cimas y valles. Por ejemplo, la distribución normal es usualmente identificada por su típica forma de campana. Imaginemos que queremos tener una muestra aleatoria de esta distribución. Esperaríamos tener más muestra en la región central--- al rededor de la moda--- que en las colas de la distribución, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Original}}. Si volteamos la función de densidad--- tomando el menos logaritmo, por ejemplo--- esta se convierte en una especie de tazón. Las regiones cercanas a la moda ahora son zonas bajas y las colas son zonas altas. La muestra se concentra en el fondo del tazón y no en los bordes, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Volteada}}.\\
+Una distribución posterior puede ser vista como una superficie de cimas y valles. Por ejemplo, la distribución normal--- identificada por su típica forma de campana--- sería una cima central. Imaginemos que queremos tener una muestra aleatoria de esta distribución. Esperaríamos tener más muestra en la región central--- al rededor de la moda--- que en las colas de la distribución, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Original}}. Si volteamos la función de densidad--- tomando el menos logaritmo, por ejemplo--- esta se convierte en una especie de tazón. Las regiones cercanas a la moda ahora son zonas bajas y las colas son zonas altas. La muestra se concentra en el fondo del tazón y no en los bordes, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Volteada}}.\\
 
 \begin{figure}[h]
 	\centering	
@@ -423,16 +423,56 @@ Una distribución posterior puede ser vista como una superficie de cimas y valle
         \caption{Si volteamos y suavizamos la densidad aplicando el menos logaritmo, vemos que ahora la gráfica parece un tazón. La muestra se concentra en el fondo del tazón, en lugar de en los bordes del mismo.}
         \label{fig:Muestra_Normal_Volteada}
     \end{subfigure}
-	\caption{Una muestra aleatoria proveniente de una distribución tiende a concentrarse al rededor de las modas. En los gráficos las observaciones de una muestra aleatoria particular proveniente de la distribución normal se muestran mediante un \textit{rug plot} como marcas azules en el eje horizontal. Fuente: elaboración propia con base en la explicación de {\color{Red} Ben Lambert}.}
+	\caption{Una muestra aleatoria proveniente de una distribución tiende a concentrarse al rededor de las modas. En los gráficos, las observaciones de una muestra aleatoria particular proveniente de la distribución normal se muestran mediante un \textit{rug plot} como marcas azules en el eje horizontal. Fuente: elaboración propia con base en la explicación de {\color{Red} Ben Lambert}.}
 	\label{fig:Muestra_Normal}	
 \end{figure}
 
- Imaginemos una partícula ficticia en algún punto de la superficie del tazón. Si le aplicáramos una cantidad de movimiento o \textit{momentum}, esta rodaría por el tazón hacia el fondo del mismo, siguiendo las leyes de la física. Si asumimos que no existe fricción, la partícula continuaría subiendo y bajando, intercambiando energía cinética por energía potencial y viceversa. Bajo esta dinámica, la mayor parte del tiempo la partícula estaría más cerca del fondo del tazón que de los bordes.\\ 
+ Imaginemos una partícula ficticia en algún punto de la superficie del tazón, también ficticio. Si le aplicáramos una cantidad de movimiento o \textit{momentum}, esta rodaría hacia el fondo del mismo, siguiendo las leyes de la física, como ilustro en la \textbf{Figura \ref{fig:Part_Rodando_A}}}. Si asumimos que no existe fricción, la partícula continuaría subiendo y bajando, intercambiando energía cinética por energía potencial y viceversa ( \textbf{Figura \ref{fig:Part_Rodando_B}}).\\ 
  
- Lo maravilloso de esta idea es que puede ser utilizada para obtener realizaciones provenientes de una distribución objetivo. Es decir, podemos simular este sistema físico ficticio para obtener una muestra aleatoria que no solo cumpla la intuición de tener más observaciones cerca de las modas que en las colas, sino que lo haga en la proporción correcta que marca la ley de probabilidad objetivo.\\ 
+\begin{figure}[h]
+	\centering	
+	\begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Part_Rodando_A}
+        \caption{Si una partícula en algún punto del tazón es puesta en movimiento, esta seguiría las leyes de la física y rodaría hacia el fondo del tazón.}
+        \label{fig:Part_Rodando_A}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Part_Rodando_B}
+        \caption{Si suponemos que no hay fricción, la partícula recorrería continuamente una trayectoria en la que intercambiaría energía potencial y cinética, mientras sube y baja sobre la superficie, pasando por el fondo del tazón.}
+        \label{fig:Part_Rodando_B}
+    \end{subfigure}
+	\caption{Para una densidad, podemos construir un sistema físico ficticio en el que partículas imaginarias recorrerían trayectorias sobre la superficie de la densidad volteada. Fuente: elaboración propia con base en la explicación de {\color{Red} Ben Lambert}.}
+	\label{fig:Part_Rodando}	
+\end{figure}
  
- De manera informal, lo único que debemos hacer es imaginar una partícula y ``empujarla'' en alguna dirección. Luego seguimos por un tiempo la trayectoria que las leyes de la física determinarían sobre la superficie de nuestra densidad volteada y la ``detenemos''. En este punto registramos su posición en el eje horizontal como una realización de nuestra variable aleatoria. Si volvemos a ponerla en movimiento en una nueva dirección y la seguimos por otro periodo de tiempo llegaríamos a una nueva posición que sería nuestra siguiente observación. Repitiendo este procedimiento obtendríamos una secuencia de observaciones que consituirían nuestra muestra aleatoria. Este método de muestreo se conoce como \textit{Hamiltonian Monte Carlo} o HMC.\\
+ Si tomamos otra partícula con otro \textit{momentum}, esta tendría una trayectoria distinta pero que también recorrería la superficie del tazón. Bajo esta dinámica, podemos conjeturar que una partícula tendería a estar más cerca del fondo del tazón que de los bordes, justo como una observación muestreada de la distribución que diera origen al tazón. Lo maravilloso de esta idea es que puede ser utilizada para obtener realizaciones provenientes de una distribución objetivo. Es decir, podemos simular este sistema físico ficticio para obtener una muestra aleatoria que no solo cumpla la intuición de tener más observaciones cerca de las modas que en las colas, sino que lo haga en la proporción correcta que marca la ley de probabilidad objetivo.\\ 
  
-  
+ De manera informal, lo único que debemos hacer es imaginar una partícula y ``empujarla'' en alguna dirección. Luego seguimos por un tiempo la trayectoria que las leyes de la física determinarían sobre la superficie de nuestra densidad volteada y la ``detenemos''. En este punto registramos su posición en el eje horizontal como una realización de nuestra variable aleatoria. Si volvemos a ponerla en movimiento en una nueva dirección y la seguimos por otro periodo de tiempo llegaríamos a una nueva posición que sería nuestra siguiente observación. Repitiendo este procedimiento obtendríamos una secuencia de observaciones que consituirían nuestra muestra aleatoria.\\ 
  
+ Este método de muestreo se conoce como \textit{Hamiltonian Monte Carlo} o HMC y procederé a exponerlo a continuación. Pero para entenderlo mejor, primero hay que introducir un poco de terminología del campo de la física estadística, para lo que seguiré la explicación de \textcite{Neal93}.\\
  
+ Imaginemos que tuviéramos una descripción microscópica completa de un sistema físico. Por ejemplo, que conociéramos la posición y velocidad de todas las partículas de un sistema en un momento dado en el tiempo. Esta descripción se conoce como el \textit{microestado} del sistema. Evidentemente, en la realidad no podemos observar dicho microestado; más bien observamos el \textit{macroestado} del sistema. Esto incluye la temperatura, el volumen y la masa.\\ 
+ 
+ Debido a que diferentes microestados pueden llevar a diferentes macroestados, podemos asignar una medida de probabilidad sobre los microestados que dependa del macroestado que observamos. Por ejemplo, supongamos que tenemos un sistema que mantiene una temperatura constante $T$ pero en el que cada microestado $s$ tiene una cierta energía $H(s)$.\footnote{Normalmente en física, y en la referencia de \textcite{Neal93}, se utiliza la notación $E(s)$, pero para evitar confuciones con el valor esperado de $s$ y para facilitar la explicación de Hamiltonian Monte Carlo, utilizo la letra $H$.} Normalmente se supone que se satisface la siguiente \textit{distribución canónica}, también conocida como de Gibbs o de Boltzmann: 
+ 
+\begin{equation}
+\label{eq:Gibbs_Distr_Can}
+ f(s) = \dfrac{exp\left\lbrace-H(s)/T\right\rbrace}{Z},
+\end{equation}
+ 
+ donde $Z$ es la constante de normalización y $H(s)$ es la función de energía del sistema y que depende del microestado en el que este se encuentre.\\
+ 
+ Esta distribución canónica es particularmente útil porque \textit{cualquier} distribución de probabilidad puede ser expresada de esta manera. En efecto, consideremos que tenemos un vector de variables aleatorias $s$, cuya distribución de probabilidad es $f(s)$. Esta puede considerarse una distribución canónica como \eqref{eq:Gibbs_Distr_Can} si suponemos que $s$ representa los microestados de un sistema físico ficticio con temperatura $T$ y constante de normalización $Z$ cuya función de energía esté dada por $H(\phi) = -T\,ln\left[Z\,f(s)\right]$. Por construcción, podríamos decir que la temperatura constante es $T=1$ y eliminarla de las ecuaciones.\\
+ 
+ De manera particular, consideremos un vector de parámetros $\phi$ y datos $y$ en el contexto de inferencia bayesiana. Veamos qué sucede si definimos la temperatura como $T=1$ y la función de energía como el producto de inicial por verosimilitud, 
+ 
+\begin{equation*}
+ H(\phi|y) = -ln\left[f(y|\phi)f(\phi)\right].
+\end{equation*}  
+ 
+ La constante de normalización $Z$ estaría dada por la integral sobre todos los microestados de la distribución canónica sin normalizar: 
+ 
+\begin{equation*}
+ Z = \int\limits_\Phi exp\left\lbrace-H(\phi|y)\right\rbrace d\phi = \int\limits_\Phi f(y|\phi)f(\phi)d\phi = f(y)
+\end{equation*}
