@@ -75,10 +75,10 @@ ggsave("Bayes/Muestra_Normal_Volteada.pdf",
 
 part_rodando_a <- ggplot(distr_normal, aes(x = theta, y = ener)) + 
   geom_path(color = rosa, size = rel(2)) + 
-  geom_path(data = tibble(theta = 2.25*cos(seq(0,pi/2.25,by=0.05)),
+  geom_path(data = tibble(theta = 2.1*cos(seq(0,pi/2.25,by=0.05)),
                           ener = -log(dnorm(theta)) + 0.08),
             color = azul, size = rel(2), arrow = arrow()) + 
-  geom_point(data = tibble(theta = 2.25*cos(0), ener = -log(dnorm(theta)) + 0.08),
+  geom_point(data = tibble(theta = 2.1*cos(0), ener = -log(dnorm(theta)) + 0.08),
              color = azul, size = rel(5)) + 
   labs(title ="Sistema físico ficticio", 
        subtitle = "Una partícula con momentum rodaría siguiendo las leyes de la física") + 
@@ -90,16 +90,16 @@ ggsave("Bayes/Part_Rodando_A.pdf",
 
 part_rodando_b <- ggplot(distr_normal, aes(x = theta, y = ener)) + 
   geom_path(color = rosa, size = rel(2)) + 
-  geom_path(data = tibble(theta = 2.25*cos(seq(pi/2,0,by=-0.05)),
+  geom_path(data = tibble(theta = 2.1*cos(seq(pi/2,0,by=-0.05)),
                           ener = -log(dnorm(theta)) + 0.08),
             color = azul, size = rel(1.75), arrow = arrow()) + 
-  geom_path(data = tibble(theta = 2.25*cos(seq(pi/2,pi,by=0.05)),
+  geom_path(data = tibble(theta = 2.1*cos(seq(pi/2,pi,by=0.05)),
                           ener = -log(dnorm(theta)) + 0.08),
             color = azul, size = rel(1.75), arrow = arrow()) + 
-  geom_point(data = tibble(theta = 2.25*cos(pi/2.25), ener = -log(dnorm(theta)) + 0.08),
+  geom_point(data = tibble(theta = 2.1*cos(pi/2.25), ener = -log(dnorm(theta)) + 0.08),
              color = azul, size = rel(5)) + 
-  annotate("text",x=1.5,y=3.75,label= "Más energía potencial", size = rel(6),color="gray25") + 
-  annotate("text",x=-1.5,y=3.75,label= "Más energía potencial", size = rel(6),color="gray25") + 
+  annotate("text",x=1.5,y=3.25,label= "Más energía potencial", size = rel(6),color="gray25") + 
+  annotate("text",x=-1.5,y=3.25,label= "Más energía potencial", size = rel(6),color="gray25") + 
   annotate("text",x=0,y=1.5,label= "Más energía cinética", size = rel(6),color="gray25") + 
   labs(title ="Sistema sin fricción", 
        subtitle = "La partícula subiría y regresaría constantemente") + 
@@ -110,4 +110,51 @@ part_rodando_b <- ggplot(distr_normal, aes(x = theta, y = ener)) +
 ggsave("Bayes/Part_Rodando_B.pdf",
        plot = part_rodando_b, device = cairo_pdf, width = 20, height = 10)
 
+
+datos_espacio_fase <- map_dfr(seq(0.3,3,length.out = 10), ~ 
+          tibble(t = seq(0,2*pi,length.out = 50),
+                 r = .x,
+                 theta = r*cos(t),
+                 m = -r*sin(t),
+                 dens_theta = dnorm(theta),
+                 ener_pot = -log(dens_theta),
+                 dens_m = dnorm(m),
+                 ener_cin = -log(dens_m),
+                 hamilton = ener_pot + ener_cin)) 
+
+distr_conjunta <- expand.grid(seq(-3,3,by = 0.05),seq(-3,3,by = 0.05)) %>% 
+  as_tibble %>% 
+  rename(theta = Var1, m = Var2) %>% 
+  {mutate(., 
+          Dens_theta = dnorm(theta),
+          Ener_Pot = -log(Dens_theta),
+          Dens_m = dnorm(m),
+          Ener_Cin = -log(Dens_m),
+          Dens_Fase = mvtnorm::dmvnorm(., mean = c(0,0), sigma = matrix(c(1,0,0,1), nrow=2)),
+          Hamiltoniano = Ener_Pot + Ener_Cin)}
+
+trayectoria <- datos_espacio_fase %>% 
+  ggplot(aes(x=theta,y=m)) + 
+  geom_raster(data = distr_conjunta, aes(fill=Hamiltoniano)) + 
+  geom_path(aes(group=r),color = rgb(red = 60, green = 60, blue = 60, maxColorValue = 255)) + 
+  geom_path(data = tibble(t = seq(0,pi/2.25,by=0.05),
+                          theta = 2.1*cos(t),
+                          m = -2.1*sin(t)),
+            color = azul, size = rel(2), arrow = arrow()) + 
+  geom_point(data = tibble(theta = 2.1*cos(0), m = -2.1*sin(0)),
+             color = azul, size = rel(5)) + 
+  scale_fill_gradient(low = rosa, high = "transparent") + 
+  labs(title ="Trayectoria en el espacio de fases", 
+       subtitle = "Las curvas de nivel de la distribución canónica representan trayectorias con energía constante") + 
+  xlab(expression(theta)) + 
+  ylab(expression(m)) + 
+  theme(panel.grid = element_blank())
+
+ggsave("Bayes/Trayectoria_Espacio_Fase.pdf",
+       plot = trayectoria, device = cairo_pdf, width = 15, height = 10)
+
+
+
+  
+  
 
