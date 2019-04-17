@@ -463,16 +463,33 @@ Una distribución posterior puede ser vista como una superficie de cimas y valle
  
  donde $Z$ es la constante de normalización y $H(s)$ es la función de energía del sistema y que depende del microestado en el que este se encuentre.\\
  
- Esta distribución canónica es particularmente útil porque \textit{cualquier} distribución de probabilidad puede ser expresada de esta manera. En efecto, consideremos que tenemos un vector de variables aleatorias $s$, cuya distribución de probabilidad es $f(s)$. Esta puede considerarse una distribución canónica como \eqref{eq:Gibbs_Distr_Can} si suponemos que $s$ representa los microestados de un sistema físico ficticio con temperatura $T$ y constante de normalización $Z$ cuya función de energía esté dada por $H(\phi) = -T\,ln\left[Z\,f(s)\right]$. Por construcción, podríamos decir que la temperatura constante es $T=1$ y eliminarla de las ecuaciones.\\
+ Esta distribución canónica es particularmente útil porque \textit{cualquier} distribución de probabilidad que no valga cero en ningún punto puede ser expresada de esta manera. En efecto, consideremos que tenemos un vector de variables aleatorias $s$, cuya distribución de probabilidad es $f(s)$. Esta puede considerarse una distribución canónica como \eqref{eq:Gibbs_Distr_Can} si suponemos que $s$ representa los microestados de un sistema físico ficticio con temperatura $T$ y constante de normalización $Z$ cuya función de energía esté dada por $H(s) = -T\,ln\left[Z\,f(s)\right]$. Por construcción, podríamos decir que la temperatura constante es $T=1$ y eliminarla de las ecuaciones.\\
  
- De manera particular, consideremos un vector de parámetros $\phi$ y datos $y$ en el contexto de inferencia bayesiana. Veamos qué sucede si definimos la temperatura como $T=1$ y la función de energía como el producto de inicial por verosimilitud, 
+ Ahora consideremos el caso en que queremos muestrear de la distribución posterior $f(\theta|y$) de nuestro vector de parámetros de interés $\theta \,\in\, \mathbb{R}^d$. Imaginemos que tenemos un vector adicional $m \,\in\, \mathbb{R}^d$, con una variable $m_i$ para cada uno de los $d$ parámetros $\theta_i$. Como estamos imaginando el vector $m$, podemos decidir que se distribuye de manera independiente a $\theta$ y a los datos $y$ de acuerdo a alguna ley $f(m)$. Así pues, tenemos ahora un espacio ampliado $2d$-dimencional y una distribución conjunta $f(\theta,m|y)=f(\theta|y)f(m)$.\\ 
  
-\begin{equation*}
- H(\phi|y) = -ln\left[f(y|\phi)f(\phi)\right].
-\end{equation*}  
+ Dicho espacio ampliado lo llamaremos \textit{espacio de fases}, a causa de la interpretación física que le daremos a cada vector. A nuestro vector de parámetros $\theta = (\theta_1,\dots,\theta_d)$ lo llamaremos el vector de \textit{posiciones} de una partícula en un sistema físico ficticio. El vector $m=(m_1,\dots,m_d)$ será el vector de \textit{momentum} de dicha partícula. Cada uno de estos vectores tiene su propia distribución canónica que relacione su distribución de probabilidad con una función de energía. En el caso de las parámetros, esta es la \textit{energía potencial} $Q(\theta;y)$. Para el vector auxiliar, tendríamos una \textit{energía cinética} $K(m)$: 
  
- La constante de normalización $Z$ estaría dada por la integral sobre todos los microestados de la distribución canónica sin normalizar: 
+ \begin{equation*}
+ f(\theta|y)=\dfrac{exp\left\lbrace -Q(\theta;y)\right\rbrace}{Z_\theta} \qquad f(m)=\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}
+ \end{equation*}
  
-\begin{equation*}
- Z = \int\limits_\Phi exp\left\lbrace-H(\phi|y)\right\rbrace d\phi = \int\limits_\Phi f(y|\phi)f(\phi)d\phi = f(y)
-\end{equation*}
+ Más importante aún, también podemos construir la distribución canónica en el espacio de fases, con una función de energía total $H(\theta,m;y) = Q(\theta;y) + K(m)$ que se llama el \textit{Hamiltoniano} del sistema: 
+ 
+ \begin{align*}
+ f(\theta,m|y)&=f(\theta|y)f(m)\\
+ &=\dfrac{exp\left\lbrace -Q(\theta;y)\right\rbrace}{Z_\theta}\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}\\
+ &=\dfrac{exp\left\lbrace -\left[ Q(\theta;y) + K(m)\right]\right\rbrace}{Z_\theta\,Z_m}\\
+ &=\dfrac{exp\left\lbrace -H(\theta,m;y)\right\rbrace}{Z_H},
+ \end{align*}
+ 
+ donde $Z_H = Z_\theta\,Z_m$.\\ 
+ 
+ Si muestreamos de esta distribución canónica en el espacio de fases, automáticamente estaríamos muestreando de la distribución posterior de nuestros parámetros $\theta$, pues solo debemos ignorar los valores del vector auxiliar $m$. La forma de hacerlo es aprovechar el Hamiltoniano de nuestro sistema ficticio y simular la dinámica que seguiría una partícula con posición $\theta$ y \textit{momentum} $m$ en el espacio de fases. Una partícula, bajo la dinámica definida por el Hamiltoniano, seguiría una trayectoria en el tiempo $\tau$  que satisfaría las \textit{ecuaciones de Hamilton}: 
+ 
+ \begin{align*}
+ \label{eq:Ecuaciones_Hamilton}
+ \dfrac{d\theta}{d\tau}&=+\dfrac{\partial H}{\partial m} = \dfrac{\partial K}{\partial m} \\ 
+ \dfrac{d\,m}{d\tau}&=-\dfrac{\partial H}{\partial \theta} = \dfrac{\partial Q}{\partial \theta}
+ \end{align*}
+ 
+ Para ilustrar estas trayectorias, recordemos el ejemplo con el que introducía la sección. Nuestro parámetro $\theta$ se distribuye $N(0,1)$. Introduzcamos una variable independiente de \textit{momentum} $m$ también distribuida $N(0,1)$. 
