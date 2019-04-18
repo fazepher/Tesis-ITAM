@@ -154,7 +154,59 @@ ggsave("Bayes/Trayectoria_Espacio_Fase.pdf",
        plot = trayectoria, device = cairo_pdf, width = 15, height = 10)
 
 
+tiempos <- seq(0,pi/2.25, by = 0.05)
+simulados <- tibble(i = 0,
+                    a = 0,
+                    r = 2.1,
+                    t = tiempos) %>% 
+  mutate(theta = r*cos(a + t),
+         m = -r*sin(a + t)) %>% 
+  bind_rows(tibble(i = rep(NA,1000*length(tiempos)))) %>% 
+  mutate(t = rep(tiempos,1001))
 
-  
-  
+set.seed(130435)
 
+for(i in 1:1000){
+  ind_aux <- i*length(tiempos)+1
+  ind_aux2 <- ind_aux+length(tiempos)-1
+  simulados$i[ind_aux:ind_aux2] <- i
+  simulados$theta[ind_aux] <- simulados$theta[ind_aux-1]
+  simulados$m[ind_aux] <- rnorm(1)
+  simulados$a[ind_aux:ind_aux2] <- simulados$m[ind_aux] %>% 
+    divide_by(simulados$theta[ind_aux]) %>% 
+    multiply_by(-1) %>% 
+    atan
+  simulados$r[ind_aux:ind_aux2] <- simulados$theta[ind_aux] %>% 
+    divide_by(cos(simulados$a[ind_aux]))
+  simulados[ind_aux:ind_aux2,] <- slice(simulados,ind_aux:ind_aux2) %>% 
+    mutate(theta = r*cos(a + t),
+           m = -r*sin(a + t))
+}
+
+
+datos_espacio_fase %>% 
+  ggplot(aes(x=theta,y=m)) + 
+  geom_raster(data = distr_conjunta, aes(fill=Hamiltoniano)) + 
+  geom_path(data = length(tiempos) %>% multiply_by(1:5) %>% 
+              map_dfr(~slice(simulados,add(.x,c(0,1))) %>% mutate(Aux = .x)),
+            aes(group = Aux),
+            color = "gray85", size = rel(1)) + 
+  geom_path(data = slice(simulados, 1:(5*length(tiempos))), aes(group = i),
+            color = azul, size = rel(1), arrow = arrow()) + 
+  geom_point(data = length(tiempos) %>% multiply_by(0:5) %>% add(1) %>% {slice(simulados,.)},
+             color = azul, size = rel(5)) + 
+  geom_rug(data = length(tiempos) %>% multiply_by(0:i) %>% add(1) %>% {slice(simulados,.)},
+           color = azul) + 
+  scale_fill_gradient(low = rosa, high = "transparent") + 
+  labs(title ="Trayectoria en el espacio de fases", 
+       subtitle = "Las curvas de nivel de la distribución canónica representan trayectorias con energía constante") + 
+  xlab(expression(theta)) + 
+  ylab(expression(m)) + 
+  xlim(c(-3,3)) + 
+  ylim(c(-3,3)) + 
+  theme(panel.grid = element_blank())
+  
+length(tiempos) %>% multiply_by(0:i) %>% add(1) %>% {slice(simulados,.)} %>% 
+  ggplot(aes(x=theta)) + 
+  geom_histogram(binwidth = 0.075, fill = azul) + 
+  geom_vline(aes(xintercept=mean(theta)),color=rosa, size = 1.5)
