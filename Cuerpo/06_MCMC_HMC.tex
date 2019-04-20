@@ -452,6 +452,8 @@ Una distribución posterior puede ser vista como una superficie de cimas y valle
  
  Este método de muestreo se conoce como \textit{Hamiltonian Monte Carlo} o HMC y procederé a exponerlo a continuación. Pero para entenderlo mejor, primero hay que introducir un poco de terminología del campo de la física estadística, para lo que seguiré la explicación de \textcite{Neal93}.\\
  
+\subsection{Sistemas físicos} 
+ 
  Imaginemos que tuviéramos una descripción microscópica completa de un sistema físico. Por ejemplo, que conociéramos la posición y velocidad de todas las partículas de un sistema en un momento dado en el tiempo. Esta descripción se conoce como el \textit{microestado} del sistema. Evidentemente, en la realidad no podemos observar dicho microestado; más bien observamos el \textit{macroestado} del sistema, que incluye la temperatura o el volumen. Por ello, debemos asignar una medida de probabilidad sobre los microestados que podrían llevar al macroestado que observamos. Por ejemplo, supongamos que tenemos un sistema que mantiene una temperatura constante $T$ pero en el que cada microestado $s$ tiene una cierta energía $H(s)$.\footnote{En física, y en la referencia de \textcite{Neal93}, se utiliza la notación $E(s)$, pero para evitar confuciones con el valor esperado de $s$ y para facilitar la explicación de Hamiltonian Monte Carlo, utilizo la letra $H$. Asimismo, utilizaré otras notaciones no comunes en física, con la intención de ser más adecuadas al contexto estadístico.} Normalmente se supone que se satisface la siguiente \textit{distribución canónica}, también conocida como de Gibbs o de Boltzmann: 
  
 \begin{equation}
@@ -463,9 +465,9 @@ Una distribución posterior puede ser vista como una superficie de cimas y valle
  
  Esta distribución canónica es particularmente útil porque \textit{cualquier} distribución de probabilidad que no valga cero en ningún punto puede ser expresada de esta manera. En efecto, consideremos que tenemos un vector de variables aleatorias $s$, cuya distribución de probabilidad es $f(s)$. Esta puede considerarse una distribución canónica como \eqref{eq:Gibbs_Distr_Can} si suponemos que $s$ representa los microestados de un sistema físico ficticio con temperatura $T$ y constante de normalización $Z$ cuya función de energía esté dada por $H(s) = -T\,ln\left[Z\,f(s)\right]$. Por construcción, podríamos decir que la temperatura constante es $T=1$ y eliminarla de las ecuaciones. Es decir, podemos interpretar a una variable aleatoria como microestado de un sistema físico imaginario con distribución canónica para alguna función de energía conveniente.\\
  
- En particular, regresemos al caso en que queremos muestrear de la distribución posterior $f(\theta|y)$ de nuestro vector de parámetros de interés $\theta = (\theta_1,\dots,\theta_d)$. Pensaremos que los parámetros representan las coordenadas de la \textit{posición} de una partícula en un sistema físico. Podemos expresarla como una distribución canónica con \textit{energía potencial} $Q(\theta|y) = -ln\left[f(y|\theta)f(\theta)\right]$: 
+ En particular, regresemos al caso en que queremos muestrear de la distribución posterior $f(\theta|y)$ de nuestro vector de parámetros de interés $\theta = (\theta_1,\dots,\theta_d)$. Pensaremos que los parámetros representan las coordenadas de la \textit{posición} de una partícula en un sistema físico. Podemos expresarla como una distribución canónica con \textit{energía potencial} $U(\theta|y) = -ln\left[f(y|\theta)f(\theta)\right]$: 
 \begin{equation*}
- f(\theta|y)=\dfrac{f(y|\theta)f(\theta)}{f(y)}=\dfrac{exp\left\lbrace -Q(\theta|y)\right\rbrace}{Z_y},
+ f(\theta|y)=\dfrac{f(y|\theta)f(\theta)}{f(y)}=\dfrac{exp\left\lbrace -U(\theta|y)\right\rbrace}{Z_y},
 \end{equation*} 
 con $Z_y = f(y)$. Esta energía potencial es, precisamente, la forma de ``voltear'' la densidad que mencionaba al inicio de la sección.\\
  
@@ -474,38 +476,44 @@ con $Z_y = f(y)$. Esta energía potencial es, precisamente, la forma de ``voltea
 f(m)=\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}
  \end{equation*} 
  
- Así pues, tenemos un espacio ampliado $2d$-dimencional y una distribución conjunta $f(\theta,m|y)=f(\theta|y)f(m)$. Dicho espacio para la posición y el \textit{momentum} de una partícula se conoce en física como \textit{espacio de fases}. De nueva cuenta, podemos construir la distribución canónica en este espacio; ahora, la función de energía total se llama el \textit{Hamiltoniano} del sistema y resulta ser igual a la suma de las energías potencial y cinética, $H(\theta,m|y) = Q(\theta|y) + K(m)$. En efecto, ignorando las constantes de normalización, 
+ Así pues, tenemos un espacio ampliado $2d$-dimencional y una distribución conjunta $f(\theta,m|y)=f(\theta|y)f(m)$. Dicho espacio para la posición y el \textit{momentum} de una partícula se conoce en física como \textit{espacio de fases}. De nueva cuenta, podemos construir la distribución canónica en este espacio; ahora, la función de energía total se llama el \textit{Hamiltoniano} del sistema y resulta ser igual a la suma de las energías potencial y cinética, $H(\theta,m|y) = U(\theta|y) + K(m)$. En efecto, ignorando las constantes de normalización, 
  \begin{align*}
  f(\theta,m|y)&=f(\theta|y)f(m)\\
- &\propto exp\left\lbrace -Q(\theta|y)\right\rbrace \, exp\left\lbrace -K(m)\right\rbrace\\
- &\propto exp\left\lbrace -\left[ Q(\theta|y) + K(m)\right]\right\rbrace\\
+ &\propto exp\left\lbrace -U(\theta|y)\right\rbrace \, exp\left\lbrace -K(m)\right\rbrace\\
+ &\propto exp\left\lbrace -\left[ U(\theta|y) + K(m)\right]\right\rbrace\\
  &\propto exp\left\lbrace -H(\theta,m|y)\right\rbrace.
  \end{align*}
  
- Notemos que si muestreamos de esta distribución canónica conjunta en el espacio de fases, automáticamente estaríamos muestreando de la distribución de nuestros parámetros $\theta$, pues solo debemos marginalizar ignorando los valores del vector auxiliar $m$. Para ello aprovecharemos que este sistema físico ficticio satisfaría las leyes de la mecánica hamiltoniana--- que es solo una reformulación de la mecánica clásica--- y utilizaremos una estrategia tipo \textit{Gibbs Sampling}.\\ 
+ Notemos que si muestreamos de esta distribución canónica conjunta en el espacio de fases, automáticamente estaríamos muestreando de la distribución de nuestros parámetros $\theta$, pues solo debemos marginalizar ignorando los valores del vector auxiliar $m$. Para ello aprovecharemos que este sistema físico ficticio satisfaría las leyes de la mecánica hamiltoniana--- que es solo una reformulación de la mecánica clásica--- y utilizaremos una estrategia de dos pasos.\\ 
  
  En ausencia de fricción o injerencia externa, tendríamos que la energía total de una partícula--- es decir el Hamiltoniano que definimos como la suma de las dos energías--- se mantiene constante. Para ello, una partícula en movimiento debe ir convirtiendo energía potencial en energía cinética y viceversa. Recordemos la concepción de una densidad como una superficie de cimas y valles con una partícula deslizándose sobre ella, como ilustraba en la \textbf{Figura \ref{fig:Part_Rodando_B}}. La energía potencial de la partícula en cada instante es proporcional a la altura de la superficie en la posición en que se encuentre. Conforme se desliza hacia abajo, la energía potencial se va convirtiendo en energía cinética hasta llegar al fondo del tazón y empezar a deslizarse hacia arriba. Ahora la energía cinética es la que se va convirtiendo en energía potencial hasta llegar a un punto donde la partícula se detiene momentáneamente y comienza a deslizarse de regreso, repitiendo el proceso.\\ 
  
  La trayectoria que dicha partícula seguiría en el tiempo $\tau$ cumpliría las \textit{ecuaciones de Hamilton}: 
  \begin{equation}
  \label{eq:Ecuaciones_Hamilton}
- \dfrac{d\theta}{d\tau}=+\dfrac{\partial H}{\partial m} = \dfrac{\partial K}{\partial m} \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}=-\dfrac{\partial H}{\partial \theta} = -\dfrac{\partial Q}{\partial \theta}
+ \dfrac{d\theta}{d\tau}=+\dfrac{\partial H}{\partial m} = \dfrac{\partial K}{\partial m} \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}=-\dfrac{\partial H}{\partial \theta} = -\dfrac{\partial U}{\partial \theta}
  \end{equation}
  
- Estas ecuaciones diferenciales nos dicen cómo cambiarían $\theta$ y $m$ conforme avanza el tiempo en una simulación dinámica del sistema físico que construimos. La estrategia tipo \textit{Gibbs} para muestrear de la distribución canónica en el espacio de fases es ir alternando pasos: muestrear primero de la distribución de $m$ y luego de la ``distribución condicional'' de $\theta$ dada la cantidad de movimiento $m$, misma que resulta ser la trayectoria determinística que indican las ecuaciones de Hamilton.\\
- 
- Para ilustrarlo, recordemos que en el ejemplo con el que introducía la sección, nuestro parámetro $\theta$ se distribuía como una normal estándar. Introduzcamos una variable independiente de \textit{momentum} $m$ también distribuida $N(0,1)$. En este caso, ambas energías son el menos logaritmo del kernel de una normal estándar, por lo que tendríamos que $Q(\theta)=\dfrac{\theta^2}{2}$ y $K(m)=\dfrac{m^2}{2}$. Las ecuaciones de Hamilton \eqref{eq:Ecuaciones_Hamilton} resultan entonces ser
+ Estas ecuaciones diferenciales nos dicen cómo cambiarían $\theta$ y $m$ conforme avanza el tiempo en una simulación dinámica del sistema físico que construimos. Asimismo, podemos verificar que la energía se mantiene constante, viendo cómo el hamiltoniano no cambia con el tiempo, sustituyendo \eqref{eq:Ecuaciones_Hamilton}:
  \begin{equation*}
- \dfrac{d\theta}{d\tau}= \dfrac{dK}{dm} = m \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}= -\dfrac{dQ}{d\theta} = -\theta
+ \dfrac{dH}{d\tau} = \sum\limits_{i=1}^d \dfrac{\partial H}{\partial \theta_i}\dfrac{d\theta_i}{d\tau} + \dfrac{\partial H}{\partial m_i}\dfrac{dm_i}{d\tau} = \sum\limits_{i=1}^d \dfrac{\partial H}{\partial \theta_i}\dfrac{\partial H}{\partial m_i} - \dfrac{\partial H}{\partial m_i}\dfrac{\partial H}{\partial \theta_i} = 0
  \end{equation*}
- y cuyas soluciones tienen una forma analítica conveniente \parencite{Neal11}:
+ 
+\subsection{HMC ideal} 
+ 
+ La estrategia para muestrear de la distribución canónica en el espacio de fases es ir alternando pasos. Muestreamos primero de la distribución de $m$, dada una $\theta$ inicial, que en el caso de independencia es simplemente la marginal de $m$. Luego, seguimos la trayectoria determinística que indican las ecuaciones de Hamilton.\\
+ 
+ Para ilustrarlo, recordemos que en el ejemplo con el que empezaba la sección, el parámetro $\theta$ se distribuía como una normal estándar. Introduzcamos una variable independiente de \textit{momentum} $m$ también distribuida $N(0,1)$. En este caso, ambas energías son el menos logaritmo del kernel de una normal estándar, por lo que tendríamos que $U(\theta)=\dfrac{\theta^2}{2}$ y $K(m)=\dfrac{m^2}{2}$. Las ecuaciones de Hamilton \eqref{eq:Ecuaciones_Hamilton} resultan entonces ser
  \begin{equation*}
+ \dfrac{d\theta}{d\tau}= \dfrac{dK}{dm} = m \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}= -\dfrac{dU}{d\theta} = -\theta,
+ \end{equation*}
+ cuyas soluciones tienen una forma analítica conveniente, para algunas constantes $r$ y $a$ \parencite{Neal11}:
+ \begin{equation}
+ \label{eq:Trayectorias_Normal}
  \theta(\tau) = r\,cos(a + \tau) \qquad \text{y} \qquad m(\tau) = -sen(a + \tau)
- \end{equation*}
+ \end{equation}
  
- La distribución canónica en el estado de fases es una normal bivariada cuyas curvas de nivel determinan órbitas con energía/hamiltoniano constante a lo largo de los cuales se desplazarían las partículas ficticias sobre las trayectorias definidas por las ecuaciones de Hamilton.\\ 
-
-La partícula de la \textbf{Figura \ref{fig:Part_Rodando}}, en el espacio de fases se vería como en la \textbf{Figura \ref{fig:Trayectorias_Espacio_Fase}}. Si iniciamos con un valor de $\theta^{(0)}$, muestreamos un valor $m^{(0)} \sim f(m)$. Esto coloca a la partícula sobre una órbita particular con valor constante del hamiltoniano $H(\theta^{(0)},m^{(0)})$. Ahora seguimos por un tiempo la trayectoria
+ La partícula de la \textbf{Figura \ref{fig:Part_Rodando}}, en el espacio de fases se vería como en la \textbf{Figura \ref{fig:Primera_Trayectoria}}. La distribución canónica es una normal bivariada cuyas curvas de nivel determinan órbitas con energía/hamiltoniano constante a lo largo de los cuales se desplazarían las partículas ficticias sobre las trayectorias definidas por las ecuaciones de Hamilton. Si iniciamos con un valor de $\theta^{(0)}$, muestreamos un valor $m^{(0)} \sim f(m)$. Esto coloca a la partícula sobre una órbita particular con valor constante del hamiltoniano $H(\theta^{(0)},m^{(0)})$. Ahora seguimos por un tiempo $\tau$ la trayectoria definida por \eqref{eq:Trayectorias_Normal}. Esto nos lleva a una nueva coordenada $(\theta^{(1)},m^{(0,\star)})$, desde la que registramos la posición $\theta^{(1)}$ como nuestra propuesta de observación muestreada. En este punto repetimos el procedimiento: generamos un nuevo valor $m^{(1)} \sim f(m)$, saltamos a una nueva órbita con hamiltoniano $H(\theta^{(1)},m^{(1)})$, seguimos la trayectoria por otro periodo $\tau$ para obtener $\theta^{(2)}$. En la \textbf{Figura \ref{fig:Primeras_Trayectorias}} se muestran 10 iteraciones de este procedimiento con los valores muestreados en los márgenes del gráfico como \textit{rug plot}.\\ 
 
 \begin{figure}[h]
 	\centering	
@@ -517,10 +525,27 @@ La partícula de la \textbf{Figura \ref{fig:Part_Rodando}}, en el espacio de fas
     ~ 
     \begin{subfigure}{0.45\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Primeras_Trayectorias}
-        \caption{Con una posición inicial $\theta$, se muestrea una cantidad de movimiento aleatoria $m$ (líneas punteadas). Esto lleva la partícula a una órbita específica. Después se sigue la trayectoria por un tiempo y se registra la nueva posición $\theta$ (flechas continuas). Se muestran las primeras 10 iteraciones de este procedimiento, con los valores muestreados como gráfico \textit{rug}.}
+        \caption{Con una posición inicial $\theta$, se muestrea una cantidad de movimiento aleatoria $m$ (líneas punteadas). Esto lleva la partícula a una órbita específica. Después se sigue la trayectoria por un tiempo y se registra la nueva posición $\theta$ (flechas continuas). Se presentan las primeras 10 iteraciones de este procedimiento, con los valores muestreados como gráfico \textit{rug}.}
         \label{fig:Primeras_Trayectorias}
     \end{subfigure}
-	\caption{Ilustración de las trayectorias definidas por la distribución canónica de un espacio de fases en el que tanto la posición como el \textit{momentum} se distribuyen normal estándar y en donde se muestrea mediante una estrategia tipo \textit{Gibbs}. Fuente: elaboración propia con base en \textcite{Betancourt17}.}
+	\caption{Ilustración de las trayectorias definidas por la distribución canónica de un espacio de fases en el que tanto la posición como el \textit{momentum} se distribuyen normal estándar y en donde se muestrea mediante una estrategia de dos pasos. Fuente: elaboración propia con base en \textcite{Betancourt17}.}
 	\label{fig:Trayectorias_Espacio_Fase}	
 \end{figure}
  
+Esta estrategia de dos pasos funcionaría como un algoritmo de \textit{Gibbs dentro de Metropolis-Hastings}. El primer paso--- muestrear un nuevo valor de \textit{momentum}--- constituye un paso de Gibbs pues, en general, estaríamos muestreando de la condicional de $m$ dada la $\theta$ anterior. Integrar las ecuaciones de Hamilton por un tiempo $\tau$, constituiría un paso de Metropolis-Hastings, respecto a la distribución canónica $f(\theta,m)$. Es decir, podemos pensar que seguir la trayectoria de la partícula por un tiempo $\tau$ constituye un kernel de propuestas $q(\tilde{\theta},\tilde{m}|\theta,m)$.\\ 
+
+La única consideración téorica adicional es que, al finalizar de integrar la trayectoria por un tiempo $\tau$, se deberían negar las variables de \textit{momentum} para garantizar la reversibilidad de la cadena de Markov \parencite{Neal93,Neal11,Betancourt17}. Esta negación en la \textbf{Figura \ref{fig:Part_Rodando_A}} se vería simplemente como voltear la flecha. En las \textbf{Figuras \ref{fig:Trayectorias_Espacio_Fase}} la partícula saltaría al lado contrario de la misma órbita. Ahora bien, debemos notar que esta negación del \textit{momentum} vuelve al kernel de propuestas simétrico. Esta característica, junto con la propiedad de conservación del hamiltoniano--- pues no hemos cambiamos de órbita--- lleva a que siempre aceptemos las propuestas.\\ 
+
+En efecto, si comenzamos en un punto $(\theta,m)$ y seguimos la trayectoria un tiempo $\tau$, llegamos a un nuevo punto $(\theta_\tau,m_\tau)$; negando el \textit{momentum} llegaríamos al punto $(\theta_\tau,-m_\tau)$ de manera determinista, por lo que  $q(\theta_\tau,-m_\tau|\theta,m) = 1$. Si ahora comenzamos en $(\theta_\tau,-m_\tau)$, la trayectoria ``regresaría sobre sus propios pasos'' excepto que con el signo contrario del \textit{momentum} hasta $(\theta,-m)$ \parencite{Betancourt17}. Al completar la propuesta, negando de nueva cuenta el \textit{momentum}, regresaríamos exactamente a $(\theta,m)$. Así pues, resulta que también $q(\theta,m|\theta_\tau,-m_\tau) = 1$. Esto lleva a una probabilidad de aceptación \eqref{eq:Proba_Aceptar_MH} de 1:
+\begin{align*}
+\alpha(\theta_\tau,-m_\tau;\theta,m) &= min\left\lbrace\dfrac{f(\theta_\tau,-m_\tau)q(\theta,m|\theta_\tau,-m_\tau)}{f(\theta,m)q(\theta_\tau,-m_\tau|\theta,m)},1\right\rbrace\\
+&= min\left\lbrace\dfrac{f(\theta_\tau,-m_\tau)}{f(\theta,m)},1\right\rbrace\\
+&= min\left\lbrace\dfrac{exp\left[ -H(\theta_\tau,-m_\tau)\right]}{exp\left[ -H(\theta,m)\right]},1\right\rbrace\\
+&= min\left\lbrace exp\left[ H(\theta,m)-H(\theta_\tau,-m_\tau)\right],1\right\rbrace,\\
+\intertext{y por conservación del hamiltoniano $H(\theta,m)=H(\theta_\tau,-m_\tau)$, por lo que}
+\alpha(\theta_\tau,-m_\tau;\theta,m)&= min\left\lbrace e^0,1\right\rbrace = 1.
+\end{align*}
+Finalmente, como solo nos interesa conservar la nueva posición $\tilde{\theta}=\theta_\tau$ antes de muestrear un nuevo \textit{momentum}, la negación al final de la trayectoria no necesita llevarse a cabo \textit{en realidad}, por lo que el algoritmo puede proceder normalmente como los dos pasos antes mencionados.\\
+
+\subsection{HMC en la práctica} 
+

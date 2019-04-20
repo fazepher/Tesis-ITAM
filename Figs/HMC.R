@@ -184,29 +184,45 @@ for(i in 1:1000){
 }
 
 
-datos_espacio_fase %>% 
+primeras_trayectorias <- datos_espacio_fase %>% 
   ggplot(aes(x=theta,y=m)) + 
   geom_raster(data = distr_conjunta, aes(fill=Hamiltoniano)) + 
-  geom_path(data = length(tiempos) %>% multiply_by(1:5) %>% 
+  geom_path(data = length(tiempos) %>% multiply_by(1:9) %>% 
               map_dfr(~slice(simulados,add(.x,c(0,1))) %>% mutate(Aux = .x)),
             aes(group = Aux),
-            color = "gray85", size = rel(1)) + 
-  geom_path(data = slice(simulados, 1:(5*length(tiempos))), aes(group = i),
-            color = azul, size = rel(1), arrow = arrow()) + 
-  geom_point(data = length(tiempos) %>% multiply_by(0:5) %>% add(1) %>% {slice(simulados,.)},
+            color = "#B8C2E9", size = rel(1), linetype = 2) + 
+  geom_path(data = slice(simulados, 1:(10*length(tiempos))), aes(group = i),
+            color = azul, size = rel(1), arrow = arrow(length = unit(0.15, "inches"))) + 
+  geom_point(data = length(tiempos) %>% multiply_by(0:9) %>% add(1) %>% {slice(simulados,.)},
              color = azul, size = rel(5)) + 
-  geom_rug(data = length(tiempos) %>% multiply_by(0:i) %>% add(1) %>% {slice(simulados,.)},
-           color = azul) + 
+  geom_rug(data = length(tiempos) %>% multiply_by(1:10) %>% add(1) %>% {slice(simulados,.)},
+           color = azul, size = rel(1.5)) + 
   scale_fill_gradient(low = rosa, high = "transparent") + 
-  labs(title ="Trayectoria en el espacio de fases", 
-       subtitle = "Las curvas de nivel de la distribución canónica representan trayectorias con energía constante") + 
+  labs(title ="Trayectorias en el espacio de fases", 
+       subtitle = "Primeras 10 iteraciones del sistema físico") + 
   xlab(expression(theta)) + 
   ylab(expression(m)) + 
   xlim(c(-3,3)) + 
   ylim(c(-3,3)) + 
   theme(panel.grid = element_blank())
   
-length(tiempos) %>% multiply_by(0:i) %>% add(1) %>% {slice(simulados,.)} %>% 
-  ggplot(aes(x=theta)) + 
-  geom_histogram(binwidth = 0.075, fill = azul) + 
-  geom_vline(aes(xintercept=mean(theta)),color=rosa, size = 1.5)
+ggsave("Bayes/Primeras_Trayectorias.pdf",
+       plot = primeras_trayectorias, device = cairo_pdf, width = 15, height = 10)
+
+# length(tiempos) %>% 
+#   multiply_by(0:i) %>% 
+#   add(1) %>% 
+#   {slice(simulados,.)} %>% 
+#   mutate(Aux = 1,
+#          media = cummean(theta), 
+#          sd = sqrt(cumsum((theta-media)^2)/(cumsum(Aux)-1))) %>% 
+#   select(i,theta,media,sd) %>% 
+#   gather(estimado,valor,-i) %>% 
+#   ggplot(aes(x=i,y=valor)) + 
+#   geom_path(color=azul) + 
+#   facet_grid(estimado~.)
+# 
+# length(tiempos) %>% multiply_by(0:i) %>% add(1) %>% {slice(simulados,.)} %>% 
+#   ggplot(aes(x=theta)) + 
+#   geom_histogram(binwidth = 0.15, fill = azul) + 
+#   geom_vline(aes(xintercept=mean(theta)),color=rosa, size = 1.5)
