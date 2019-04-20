@@ -489,18 +489,38 @@ f(m)=\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}
  La trayectoria que dicha partícula seguiría en el tiempo $\tau$ cumpliría las \textit{ecuaciones de Hamilton}: 
  \begin{equation}
  \label{eq:Ecuaciones_Hamilton}
- \dfrac{d\theta}{d\tau}=+\dfrac{\partial H}{\partial m} = \dfrac{\partial K}{\partial m} \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}=-\dfrac{\partial H}{\partial \theta} = \dfrac{\partial Q}{\partial \theta}
+ \dfrac{d\theta}{d\tau}=+\dfrac{\partial H}{\partial m} = \dfrac{\partial K}{\partial m} \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}=-\dfrac{\partial H}{\partial \theta} = -\dfrac{\partial Q}{\partial \theta}
  \end{equation}
  
- Etas ecuaciones diferenciales nos dicen cómo cambiarían $\theta$ y $m$ conforme avanza el tiempo en una simulación dinámica del sistema físico que construimos. La estrategia tipo \textit{Gibbs Sampling} para muestrear de la distribución canónica en el espacio de fases es ir alternando pasos: muestrear primero de la distribución de $m$ y luego de la ``distribución condicional'' de $\theta$ dada la cantidad de movimiento $m$ misma que resulta ser la trayectoria determinística que indican las ecuaciones de Hamilton.\\
+ Estas ecuaciones diferenciales nos dicen cómo cambiarían $\theta$ y $m$ conforme avanza el tiempo en una simulación dinámica del sistema físico que construimos. La estrategia tipo \textit{Gibbs} para muestrear de la distribución canónica en el espacio de fases es ir alternando pasos: muestrear primero de la distribución de $m$ y luego de la ``distribución condicional'' de $\theta$ dada la cantidad de movimiento $m$, misma que resulta ser la trayectoria determinística que indican las ecuaciones de Hamilton.\\
  
- Para ilustrarlas, recordemos que en el ejemplo con el que introducía la sección, nuestro parámetro $\theta$ se distribuía como una normal. Introduzcamos una variable independiente de \textit{momentum} $m$ también distribuida $N(0,1)$. La distribución canónica en el estado de fases es una normal bivariada cuyas curvas de nivel determinan trayectorias con energía/hamiltoniano constante a lo largo de los cuales se desplazarían las partículas ficticias. La partícula de la \textbf{Figura \ref{fig:Part_Rodando}}, en el espacio de fases se vería como en la \textbf{Figura \ref{fig:Trayectoria_Espacio_Fase}}.
+ Para ilustrarlo, recordemos que en el ejemplo con el que introducía la sección, nuestro parámetro $\theta$ se distribuía como una normal estándar. Introduzcamos una variable independiente de \textit{momentum} $m$ también distribuida $N(0,1)$. En este caso, ambas energías son el menos logaritmo del kernel de una normal estándar, por lo que tendríamos que $Q(\theta)=\dfrac{\theta^2}{2}$ y $K(m)=\dfrac{m^2}{2}$. Las ecuaciones de Hamilton \eqref{eq:Ecuaciones_Hamilton} resultan entonces ser
+ \begin{equation*}
+ \dfrac{d\theta}{d\tau}= \dfrac{dK}{dm} = m \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}= -\dfrac{dQ}{d\theta} = -\theta
+ \end{equation*}
+ y cuyas soluciones tienen una forma analítica conveniente \parencite{Neal11}:
+ \begin{equation*}
+ \theta(\tau) = r\,cos(a + \tau) \qquad \text{y} \qquad m(\tau) = -sen(a + \tau)
+ \end{equation*}
  
- \begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{Figs/Bayes/Trayectoria_Espacio_Fase}
-	\caption{Ilustración de las trayectorias definidas por la distribución canónica de un espacio de fases en el que tanto la posición como el \textit{momentum} se distribuyen normal estándar. Cada curva de nivel constituye una órbita o trayectoria con valor constante del hamiltoniano. Fuente: elaboración propia con base en \textcite{Betancourt17}.}
-	\label{fig:Trayectoria_Espacio_Fase}	
+ La distribución canónica en el estado de fases es una normal bivariada cuyas curvas de nivel determinan órbitas con energía/hamiltoniano constante a lo largo de los cuales se desplazarían las partículas ficticias sobre las trayectorias definidas por las ecuaciones de Hamilton.\\ 
+
+La partícula de la \textbf{Figura \ref{fig:Part_Rodando}}, en el espacio de fases se vería como en la \textbf{Figura \ref{fig:Trayectorias_Espacio_Fase}}. Si iniciamos con un valor de $\theta^{(0)}$, muestreamos un valor $m^{(0)} \sim f(m)$. Esto coloca a la partícula sobre una órbita particular con valor constante del hamiltoniano $H(\theta^{(0)},m^{(0)})$. Ahora seguimos por un tiempo la trayectoria
+
+\begin{figure}[h]
+	\centering	
+	\begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Trayectoria_Espacio_Fase}
+        \caption{Una partícula se mueve en el espacio de fase a lo largo de trayectorias definidas por las ecuaciones de Hamilton y que coinciden con las curvas de nivel de la distribución que mantienen el valor del hamiltoniano constante.}
+        \label{fig:Primera_Trayectoria}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Primeras_Trayectorias}
+        \caption{Con una posición inicial $\theta$, se muestrea una cantidad de movimiento aleatoria $m$ (líneas punteadas). Esto lleva la partícula a una órbita específica. Después se sigue la trayectoria por un tiempo y se registra la nueva posición $\theta$ (flechas continuas). Se muestran las primeras 10 iteraciones de este procedimiento, con los valores muestreados como gráfico \textit{rug}.}
+        \label{fig:Primeras_Trayectorias}
+    \end{subfigure}
+	\caption{Ilustración de las trayectorias definidas por la distribución canónica de un espacio de fases en el que tanto la posición como el \textit{momentum} se distribuyen normal estándar y en donde se muestrea mediante una estrategia tipo \textit{Gibbs}. Fuente: elaboración propia con base en \textcite{Betancourt17}.}
+	\label{fig:Trayectorias_Espacio_Fase}	
 \end{figure}
  
- Para
