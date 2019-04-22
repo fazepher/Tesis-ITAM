@@ -544,14 +544,15 @@ Esta estrategia de dos pasos funcionaría como un algoritmo de \textit{Gibbs den
 La única consideración téorica adicional es que, al finalizar de integrar la trayectoria por un tiempo $\tau$, se deberían negar las variables de \textit{momentum} para garantizar la reversibilidad de la cadena de Markov \parencite{Neal93,Neal11,Betancourt17}. Esta negación en la \textbf{Figura \ref{fig:Part_Rodando_A}} se vería simplemente como voltear la flecha. En las \textbf{Figuras \ref{fig:Trayectorias_Espacio_Fase}} la partícula saltaría al lado contrario de la misma órbita. Ahora bien, debemos notar que esta negación del \textit{momentum} vuelve al kernel de propuestas simétrico. Esta característica, junto con la propiedad de conservación del hamiltoniano--- pues no hemos cambiamos de órbita--- lleva a que siempre aceptemos las propuestas.\\ 
 
 En efecto, si comenzamos en un punto $(\theta,m)$ y seguimos la trayectoria un tiempo $\tau$, llegamos a un nuevo punto $(\theta_\tau,m_\tau)$; negando el \textit{momentum} llegaríamos al punto $(\theta_\tau,-m_\tau)$ de manera determinista, por lo que  $q(\theta_\tau,-m_\tau|\theta,m) = 1$. Si ahora comenzamos en $(\theta_\tau,-m_\tau)$, la trayectoria ``regresaría sobre sus propios pasos'' excepto que con el signo contrario del \textit{momentum} hasta $(\theta,-m)$. Al completar la propuesta, negando de nueva cuenta el \textit{momentum}, regresaríamos exactamente a $(\theta,m)$. Así pues, resulta que también $q(\theta,m|\theta_\tau,-m_\tau) = 1$. Esto lleva a una probabilidad de aceptación \eqref{eq:Proba_Aceptar_MH} de 1:
-\begin{align*}
-\alpha(\theta_\tau,-m_\tau;\theta,m) &= min\left\lbrace\dfrac{f(\theta_\tau,-m_\tau)q(\theta,m|\theta_\tau,-m_\tau)}{f(\theta,m)q(\theta_\tau,-m_\tau|\theta,m)},1\right\rbrace\\
-&= min\left\lbrace\dfrac{f(\theta_\tau,-m_\tau)}{f(\theta,m)},1\right\rbrace\\
-&= min\left\lbrace\dfrac{exp\left[ -H(\theta_\tau,-m_\tau)\right]}{exp\left[ -H(\theta,m)\right]},1\right\rbrace\\
-&= min\left\lbrace exp\left[ H(\theta,m)-H(\theta_\tau,-m_\tau)\right],1\right\rbrace,\\
+\begin{align}
+\alpha(\theta_\tau,-m_\tau;\theta,m) &= min\left\lbrace\dfrac{f(\theta_\tau,-m_\tau)q(\theta,m|\theta_\tau,-m_\tau)}{f(\theta,m)q(\theta_\tau,-m_\tau|\theta,m)},1\right\rbrace \nonumber \\
+&= min\left\lbrace\dfrac{f(\theta_\tau,-m_\tau)}{f(\theta,m)},1\right\rbrace \nonumber\\
+&= min\left\lbrace\dfrac{exp\left[ -H(\theta_\tau,-m_\tau)\right]}{exp\left[ -H(\theta,m)\right]},1\right\rbrace \nonumber\\
+&= min\left\lbrace exp\left[ H(\theta,m)-H(\theta_\tau,-m_\tau)\right],1\right\rbrace, \nonumber\\
 \intertext{y por conservación del hamiltoniano, $H(\theta,m)=H(\theta_\tau,-m_\tau)$, por lo que}
 \alpha(\theta_\tau,-m_\tau;\theta,m)&= min\left\lbrace e^0,1\right\rbrace = 1.
-\end{align*}
+\label{eq:Proba_Acepta_HMC_ideal}
+\end{align}
 Finalmente, como solo nos interesa conservar la nueva posición $\tilde{\theta}=\theta_\tau$ antes de muestrear un nuevo \textit{momentum}, la negación al final de la trayectoria no necesita llevarse a cabo \textit{en realidad}, por lo que el algoritmo puede proceder normalmente como los dos pasos antes mencionados.\\
 
 Empero, todavía tenemos que considerar un detalle. Normalmente no tenemos tanta suerte como en el caso de la normal estándar y las ecuaciones de Hamilton no tienen una solución analítica simple. Esto quiere decir que tenemos que \textit{aproximar} las trayectorias. Afortunadamente existe una familia poderosa de métodos, conocidos como \textit{integradores simplécticos} que aproximan de buena manera. El lector interesado en la discusión sobre las características y ventajas de esta familia de integradores numéricos puede consultar \textcite{Betancourt17} y \textcite{Neal93}. Para efectos de esta tesis, consideraré que se ha elegido ya una implementación de este tipo, siendo la más conocida el \textbf{Algoritmo \ref{alg:Leapfrog}}, conocido como \textit{leapfrog}. \\
@@ -568,6 +569,25 @@ $m_{t} \leftarrow m_{t+1/2} - \dfrac{\epsilon}{2}\dfrac{\partial U}{\partial\the
 \caption{Integrador simpléctico de \textit{Leapfrog} \label{alg:Leapfrog}}
 \end{algorithm}
 
-Cuando se utiliza un método simpléctico para aproximar las trayectorias de una partícula, la propuesta no se mantiene exactamente sobre la misma órbita. Esto implica que el hamiltoniano al inicio de la trayectoria simulada y al final son distintos. Sin embargo, todavía podemos considerar esta aproximación como una propuesta de Metropolis-Hastings.
+Cuando se utiliza un método simpléctico para aproximar las trayectorias de una partícula, la propuesta no se mantiene exactamente sobre la misma órbita. Esto implica que el hamiltoniano al inicio de la trayectoria simulada y al final son distintos. Sin embargo, si la aproximación es buena, la propuesta estará en una órbita muy cercana a la verdadera y la diferencia en hamiltonianos será pequeña. Si la aproximación es mala, la propuesta estará más lejos y la diferencia en hamiltonianos será mayor. Afortunadamente, la corrección de Metropolis-Hastings, nos sirve precisamente para compensar estos sesgos. Las buenas aproximaciones se aceptan con alta probabilidad y las malas aproximaciones tienden a ser rechazadas.\\
 
+Para ver por qué, notemos que el integrador simpléctico sigue siendo un algoritmo determinista y seguimos negando el \textit{momentum} de la propuesta final. Esto quiere decir que podemos seguir considerando estos dos pasos--- generación de trayectoria y negación de \textit{momentum}--- como un kernel de propuestas simétrico para Metropolis-Hastings y eliminarlo del cálculo de la probabilidad de aceptación, igual que en \eqref{eq:Proba_Acepta_HMC_ideal}. La única diferencia es que ahora el hamiltoniano no se conserva exactamente, por lo que la probabilidad de aceptación depende del cambio en energía que se tiene al realizar la aproximación de la trayectoria mediante el integrador simpléctico y proponer $(\tilde{\theta},\tilde{m})$:
+\begin{equation}
+\alpha(\tilde{\theta},\tilde{m};\theta,m) = min\left\lbrace exp\left[ H(\theta,m)-H(\tilde{\theta},\tilde{m})\right],1\right\rbrace.
+\label{eq:Proba_Acepta_HMC}
+\end{equation}
+Esta diferencia es positiva cuando la energía de la propuesta es menor a aquella inicial. Una energía menor corresponde a un valor mayor de la distribución canónica, por lo que en términos coloquiales estaríamos proponiendo un estado más probable. Así pues, la probabilidad de aceptación en estos casos es siempre 1. En el caso contrario, cuando la diferencia es negativa, diríamos que estamos proponiendo un estado menos probable por lo que no necesariamente querríamos movernos. Entre más negativa resulte la diferencia en energías, $exp\left[ H(\theta,m)-H(\theta_\tau,-m_\tau)\right]$ será más cercana a $0$, por lo que tenderemos a rechazar las propuestas que nos llevarían a estados mucho menos probables.\\
+
+De manera conceptual, entonces, el algoritmo de \textit{Hamiltonian Monte Carlo} o HMC es un método de MCMC para simular de una distribución $f(\theta)$ de acuerdo con los siguientes pasos: 
+\begin{enumerate}
+\item La distribución $f(\theta)$ se representa de manera canónica \eqref{eq:Gibbs_Distr_Can} para una función de energía potencial conveniente.
+\item Comenzando con un valor inicial $\theta^{(0)}$, se genera un valor auxiliar de \textit{momentum} $m^{(0)}$ de una distribución especificada por el usuario y representada también de manera canónica con energía cinética.
+\item Mediante algún método válido simulamos una trayectoria de la dinámica hamiltoniana que seguiría una partícula en el espacio de fases iniciando en $(\theta^{(0)},m^{(0)})$ y proponemos un nuevo estado $(\tilde{\theta},\tilde{m})$.
+\item Aceptamos $(\theta^{(1)},m^{(1)})=(\tilde{\theta},\tilde{m})$ con probabilidad de aceptación \eqref{eq:Proba_Acepta_HMC}; en caso de rechazar la propuesta, $(\theta^{(1)},m^{(1)})=(\theta^{(0)},m^{(0)})$. 
+\item Repetimos el procedimiento para generar $(\theta^{(2)},m^{(2)}),\dots,(\theta^{(N)},m^{(N)})$
+\end{enumerate}
+
+En estos pasos entonces hay dos grandes decisiones que el usuario debe tomar. En primer lugar, la elección de la distribución de \textit{momentum} y que, general pero no necesariamente, resulta ser una normal centrada en cero independiente de $\theta$. En segundo lugar tenemos el paso de simulación de la dinámica hamiltoniana. Sobre este punto vale la pena hacer unos comentarios generales. El método más básico de HMC considera un tiempo fijo de integración $\tau$, un tamaño de paso $\epsilon$ también constante y con estos parámetros genera  trayectorias aproximadas de la misma longitud mediante el \textbf{Algoritmo \ref{alg:Leapfrog}}. No obstante, como mencionaba anteriormente, este no es el único método válido.\\ 
+
+Recientemente han surgido métodos que también simulan de una manera válida la dinámica hamiltoniana pero que, además, van adaptando el tiempo de integración $\tau$ y, por tanto, la longitud de las trayectorias generadas. El más famoso se conoce como NUTS o \textit{No-U-Turn Sampler} \parencite{NUTS11}. La heurística detrás de NUTS es que se pueden generar trayectorias hamiltonianas eficientes si integramos no por un tiempo constante sino hasta el punto en que la partícula vaya a dar una ``vuelta en U'' \parencite{Betancourt17,McElreath17}. Por su parte, el software \textit{Stan} utiliza también una implementación adaptativa de HMC parecida. Además de ir adaptando el tiempo de integración de las trayectorias, elige la propuesta mediante un muestreo multinomial dentro de la trayectoria generada y no necesariamente como el punto final de la trayectoria \parencite{Betancourt16,TuitSimpson18}. 
 
