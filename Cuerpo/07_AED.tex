@@ -1,6 +1,8 @@
 \chapter{Datos franceses}
 
-Como adelantaba en la introducción, la tercera parte de este trabajo consiste concretamente en el modelado estadístico de los datos franceses que permitan la exploración de las configuraciones sociales que favorecieron o inhibieron el voto por el \textit{Front National} en las elecciones Presidenciales y Legislativas de 2007 y 2012. Por lo mismo, debo comenzar  presentando dichos datos y realizando un análisis exploratorio.
+Como adelantaba en la introducción, la tercera parte de este trabajo consiste concretamente en el modelado estadístico de los datos franceses que permitan la exploración de las configuraciones sociales que favorecieron o inhibieron el voto por el \textit{Front National} en las elecciones Presidenciales y Legislativas de 2007 y 2012. Por lo mismo, debo iniciar presentando dichos datos y realizando un análisis exploratorio; ese es el objetivo de este capítulo.\\
+
+No obstante, antes de comenzar con el análisis exploratorio de datos, vale la pena decir que la unidad básica de estudio son las \textit{comunas} pues el objetivo del modelado es explorar \textit{configuraciones sociales}. Es decir, no estaré enfocándome en el nivel de individuo sino en los niveles de \textit{colectividades territoriales} de Francia. Como recordatorio de la {\color{Red} sección de división territorial francesa}, los 3 niveles administrativos de Francia son, en órden de jerarquía, las regiones, los departamentos y las comunas; es decir, una comuna pertenece a un departamento, que a su vez pertenece a una región.\\ 
 
 \section{Datos electorales}
 
@@ -303,7 +305,9 @@ En la \textbf{Figura \ref{fig:Partidos_07_12}} pueden observarse representacione
 	\label{fig:Partidos_07_12}	
 \end{figure}
 
-Debido a que el FN compitió primordialmente en las primeras vueltas en las 4 elecciones, solo me enfocaré en ellas y no en las segundas vueltas. Asimismo, el fenómeno electoral es marcadamente distinto en la metrópoli francesa que en los territorios de ultramar donde, naturalmente, el FN es prácticamente inexistente. Por tanto, el análisis también se circunscribe a los resultados dentro de la metrópoli francesa. 
+Debido a que el FN compitió primordialmente en las primeras vueltas en las 4 elecciones, solo me enfocaré en ellas y no en las segundas vueltas. Asimismo, el fenómeno electoral es marcadamente distinto en la metrópoli francesa que en los territorios de ultramar donde, naturalmente, el FN es prácticamente inexistente. Por tanto, el análisis también se circunscribe a los resultados dentro de la metrópoli francesa. En consecuencia, a partir de este momento, todos los resultados electorales se refieren a las primeras vueltas de las 4 elecciones sin considerar los territorios de ultramar.\\
+
+Ahora bien, la distribución geográfica de los votos no es uniforme. Existen zonas de fortaleza para los diferentes partidos. Una forma de observar esto es agrupar las comunas de cada región francesa y comparar la distribución del voto para cada etiqueta política en cada región frente a la distribución agregada de toda la metrópoli. Como ejemplo, podemos ver esta comparación para la elección presidencial de 2012 en la \textbf{Figura \ref{fig:Geofacet_Distr_Reg_P12}}. Los \textit{geofacets} representan las distribuciones de voto de cada etiqueta política. Dentro de cada uno de ellos comparo los histogramas de los porcentajes de votos que recibió la etiqueta política en las comunas de cada región con la distribución de los porcentajes para todas las comunas de la metrópoli. La intensidad del color de los histogramas depende del cociente del \% mediano de votos en la región entre el \% mediano de votos en toda la metrópoli, por lo que representa la fuerza relativa de cada etiqueta en la región.\\
 
 \begin{figure}[h]
 	\centering
@@ -334,6 +338,8 @@ Debido a que el FN compitió primordialmente en las primeras vueltas en las 4 el
 	\begin{subfigure}{0.3\textwidth}
 	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Reg_P12_Otros}
 	\end{subfigure}
-	\caption{Representación esquemática de los partidos, candidaturas y etiquetas políticas en las elecciones francesas de 2007 y 2012. Fuente: elaboración propia.}
+	\caption{\textit{Geofacets} de la distribución del \% de votos obtenido por las 7 distintas etiquetas políticas en las elecciones presidenciales del 2012. Los histogramas representan la distribución de los porcentajes por comuna para cada una de las regiones. Las densidades transparentes representan la distribución de referencia considerando todas las comunas de la metrópoli francesa. La intensidad del color de los histogramas refleja la fuerza relativa de cada etiqueta en la región. Fuente: elaboración propia.}
 	\label{fig:Geofacet_Distr_Reg_P12}	
 \end{figure}
+
+Vemos que, en las regiones del noreste francés como Picardie o Alsace, los histogramas del FN están desplazados a la derecha de la distribución de referencia y, por tanto, están coloreados con mayor intensidad. Por el contrario, en regiones occidentales como Bretagne, Limousin o Aquitaine, los histogramas reflejan menores porcentajes de votos para el FN y, por ejemplo, mayores votos a la izquierda. Así pues, una clave geográfica para el voto frontista es la diagonal que va de Normandía--- Haute y Basse Normandie--- hacia PACA: si la comuna se encuentra al noreste de la diagonal, tenderá a manifestar mayor apoyo al Front National que si se encuentra al sudoeste de la misma.\\ 
