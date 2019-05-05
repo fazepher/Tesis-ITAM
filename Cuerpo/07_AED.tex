@@ -369,3 +369,51 @@ Podemos desagregar las distribuciones un nivel más y observarlas mediante diagr
 \end{figure}
 
 Podemos notar algunas cosas. En primer lugar, es evidente que el FN sufre un efecto arrastre en las elecciones legislativas. Al ganar la presidencia un candidato de otro partido, dicha plataforma se ve beneficiada en las legislativas; por ello, el voto por las demás opciones disminuye, como es el caso del FN. Por otro lado, vemos que dentro de las regiones con mayor apoyo en general, este es relativamente homogéneo a través de los departamentos. En efecto, las distribuciones reflejadas en diagramas de violines para los departamentos dentro de Lorraine, Champagne-Ardenne o Picardie aparentan ser similares, salvo casos especiales como el departamento 10-Aube en las legislativas de 2012. No obstante, existen regiones--- como Île de France o Aquitaine--- cuyos departamentos presentan distribuciones más diferentes. Este es un elemento que podría empezar a sugerir un modelado jerárquico de los datos.
+
+\section{Datos censales}
+
+Por otro lado, Francia cuenta con un sistema censal rotante que permite realizar estimaciones anuales. A partir de estos datos oficiales anuales que publica el INSEE, podemos descomponer las distribuciones poblacionales en las comunas francesas a lo largo de algunas variables. En particular, para este análisis he calculado el porcentaje de individuos como proporción de la población comunal de cada categoría dentro de 5 variables sociodemográficas básicas. 
+
+\begin{table}[H]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{|c | c | c | c |}
+\hline
+\textbf{Base de origen} &
+\textbf{Variable} & 
+\textbf{Abreviatura} & 
+\textbf{Categoría}\\[2pt] 
+\hline
+\multirow{8}{*}{POB1B} & 
+\multirow{2}{*}{Sexo} &  
+Hom & Hombres\\ 
+&& Muj & Mujeres \\ \cline{2-4}
+& \multirow{6}{*}{Edad} & 
+Ed1 & 0 a 17 años\\ 
+&& Ed2 & 18 a 24 años\\  
+&& Ed3 & 25 a 39 años\\  
+&& Ed4 & 40 a 54 años\\ 
+&& Ed5 & 55 a 64 años\\  
+&& Ed6 & 65+ años\\ \hline
+\multirow{10}{*}{NAT3A} & 
+\multirow{2}{*}{Nacionalidad} & 
+Fra & Franceses\\
+&& Ext & Extranjeros\\ \cline{2-4}
+& \multirow{8}{*}{Categoría Socioprofesional} & 
+CSP1 & Agricultores\\
+&& CSP2 & Artesanos, comerciantes y empresarios\\
+&& CSP3 & Cuadros y profesiones intelectuales superiores\\
+&& CSP4 & Profesiones intermediarias\\
+&& CSP5 & Empleados\\
+&& CSP6 & Obreros\\
+&& CSP7 & Retirados\\
+&& CSP8 & Otras personas sin actividad\\ \hline
+\multirow{2}{*}{IMG1/IMG1A} & 
+\multirow{2}{*}{Condición migratoria} & 
+Inm & Inmigrantes\\
+&& Loc & Locales\\ \hline
+\end{tabular}
+}
+\caption{Variables censales a utilizar en el análisis.}
+\label{tbl:Variables_Censales}
+\end{table}
