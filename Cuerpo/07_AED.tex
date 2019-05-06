@@ -372,9 +372,9 @@ Podemos notar algunas cosas. En primer lugar, es evidente que el FN sufre un efe
 
 \section{Datos censales}
 
-Por otro lado, Francia cuenta con un sistema censal rotante que permite realizar estimaciones anuales. A partir de estos datos oficiales anuales que publica el INSEE, podemos descomponer las distribuciones poblacionales en las comunas francesas a lo largo de algunas variables. En particular, para este análisis he calculado el porcentaje de individuos como proporción de la población comunal de cada categoría dentro de 5 variables sociodemográficas básicas. 
+Por otro lado, Francia cuenta con un sistema censal rotante que permite realizar estimaciones anuales. A partir de estos datos oficiales anuales que publica el INSEE, podemos descomponer las distribuciones poblacionales en las comunas francesas a lo largo de algunas variables. Para ello he calculado el porcentaje de individuos como proporción de la población comunal de cada categoría dentro de las 5 variables sociodemográficas básicas provenientes de 3 bases distintas que se pueden ver en el \textbf{Cuadro \ref{tbl:Variables_Censales}}: sexo, edad, nacionalidad, categoría socioprofesional y condición migratoria.\\ 
 
-\begin{table}[H]
+\begin{table}[h]
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabular}{|c | c | c | c |}
@@ -417,3 +417,40 @@ Inm & Inmigrantes\\
 \caption{Variables censales a utilizar en el análisis.}
 \label{tbl:Variables_Censales}
 \end{table}
+
+Para iniciar el análisis exploratorio de estos datos quiero hacer notar que los cambios en los porcentajes para la misma comuna entre 2012 y 2007 tienden a ser relativamente pequeños para la mayoría de las variables. Para observarlo podemos calcular, para cada categoría de cada variable, la diferencia en los porcentajes de la población en cada comuna entre ambos años. Posteriormente calculamos los percentiles al 2.5\%, 10\%, 90\% y 97.5\% para obtener intervalos empíricos que capturen al 95\% y 80\% de las observaciones así como un resumen de tendencia central como puede ser la mediana. Si graficamos estos intervalos junto con la mediana ordenados de menor a mayor longitud del intervalo al 95\%, vemos en la \textbf{Figura \ref{fig:Dif_Pct_Cat}} que la mayoría de las categorías tienen cambios menores a 10 puntos porcentuales. La excepción sería la variable de Categorías Socioprofesionales, donde sí hay más comunas con cambios mayores a dichos 10 puntos.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/AED/Cambio_Pct_Comunal_Cat}
+	\caption{Diferencias entre 2012 y 2007 de los porcentajes de la población comunal que representó cada categoría. Se presentan intervalos empíricos al 95\% y 80\% así como la mediana de las observaciones. Fuente: elaboración propia con los datos censales.}
+	\label{fig:Dif_Pct_Cat}	
+\end{figure}
+
+Estas pequeñas diferencias sirven para que el lector esté tranquilo que las variaciones en la mayoría de las distribuciones son pequeñas entre 2007 y 2012, por lo que aquí se presentan solo para un año.\footnote{Quien esté interesado el resto de las distribuciones pueden verse en {\color{red} ¿Anexo, Github, Shiny?} (ya están hechos los gráficos).} Asimismo, debido a que las variables de Sexo, Nacionalidad e Inmigración cuentan solo con dos categorías, solo presento las distribuciones de una categoría de referencia, pues la otra solo es el complemento de esta.\\
+
+Comenzando con la distribución del porcentaje de Mujeres en las comunas en 2012 vemos que, como es de esperarse, la mayoría de los departamentos tienen distribuciones muy concentradas al rededor del 50\% de la población. Las únicas distribuciones que llaman la atención en la \textbf{Figura \ref{fig:Distr_por_Dpto_Muj_2012}} son las de los departamentos de Île de France, con porcentajes un poco mayores que el resto de la metrópoli.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.5\textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Muj_2012}
+	\caption{Distribuciones departamentales del porcentaje de mujeres como proporción de la población de las comunas en 2012. Fuente: elaboración propia con los datos censales.}
+	\label{fig:Distr_por_Dpto_Muj_2012}	
+\end{figure}
+
+Las variables de nacionalidad y condición migratoria son similares pero no idénticas. El INSEE define a un extranjero como alguien que no posee la nacionalidad francesa y a un inmigrante como aquella persona nacida fuera del territorio francés; esto quiere decir, por ejemplo, que hay individuos con franceses considerados inmigrantes pues pudieron haberse naturalizado, así como extranjeros considerados locales porque nacieron en territorio francés sin tener derecho a la nacionalidad.\\ 
+
+En la \textbf{Figura \ref{fig:Distr_por_Dpto_Nac_Inm_2012}} vemos las distribuciones para los extranjeros y los inmigrantes en 2012. Debido a que la mayoría de inmigrantes son extranjeros, vemos que las distribuciones siguen un patrón muy parecido, salvo que en general siempre hay más inmigrantes que extranjeros. Mientras que en regiones del norte hay pocos extranjeros e inmigrantes, vemos que en la región parisina de île de France tienen una presencia considerable. Las regiones más sureñas como Corse o PACA también tienen comunas con mayor presencia de extranjeros e inmigrantes.\\
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Ext_2012}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Inm_2012}
+	\end{subfigure}
+	\caption{Distribuciones departamentales del porcentaje de extranjeros y de inmigrantes como proporción de la población de las comunas en 2012. Fuente: elaboración propia con los datos censales.}
+	\label{fig:Distr_por_Dpto_Nac_Inm_2012}	
+\end{figure}
