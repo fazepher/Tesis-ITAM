@@ -418,13 +418,13 @@ Inm & Inmigrantes\\
 \label{tbl:Variables_Censales}
 \end{table}
 
-Para iniciar el análisis exploratorio de estos datos quiero hacer notar que los cambios en los porcentajes para la misma comuna entre 2012 y 2007 tienden a ser relativamente pequeños para la mayoría de las variables. Para observarlo podemos calcular, para cada categoría de cada variable, la diferencia en los porcentajes de la población en cada comuna entre ambos años. Posteriormente calculamos los percentiles al 2.5\%, 10\%, 90\% y 97.5\% para obtener intervalos empíricos que capturen al 95\% y 80\% de las observaciones así como un resumen de tendencia central como puede ser la mediana. Si graficamos estos intervalos junto con la mediana ordenados de menor a mayor longitud del intervalo al 95\%, vemos en la \textbf{Figura \ref{fig:Dif_Pct_Cat}} que la mayoría de las categorías tienen cambios menores a 10 puntos porcentuales. La excepción sería la variable de Categorías Socioprofesionales, donde sí hay más comunas con cambios mayores a dichos 10 puntos.\\ 
+Para iniciar el análisis exploratorio de estos datos quiero hacer notar que los cambios en los porcentajes para la misma comuna entre 2012 y 2007 tienden a ser relativamente pequeños para la mayoría de las variables. Para observarlo podemos calcular, para cada categoría de cada variable, la diferencia en los porcentajes de la población en cada comuna entre ambos años. Posteriormente calculamos los percentiles al 2.5\%, 10\%, 90\% y 97.5\% para obtener intervalos empíricos que capturen al 95\% y 80\% de las observaciones así como un resumen de tendencia central como puede ser la mediana. Si graficamos estos intervalos junto con la mediana ordenados de menor a mayor longitud del intervalo al 95\%, vemos en la \textbf{Figura \ref{fig:Dif_Pct_Cat_Censales}} que la mayoría de las categorías tienen cambios menores a 10 puntos porcentuales. La excepción sería la variable de Categorías Socioprofesionales, donde sí hay más comunas con cambios mayores a dichos 10 puntos.\\ 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{Figs/AED/Cambio_Pct_Comunal_Cat}
 	\caption{Diferencias entre 2012 y 2007 de los porcentajes de la población comunal que representó cada categoría. Se presentan intervalos empíricos al 95\% y 80\% así como la mediana de las observaciones. Fuente: elaboración propia con los datos censales.}
-	\label{fig:Dif_Pct_Cat}	
+	\label{fig:Dif_Pct_Cat_Censales}	
 \end{figure}
 
 Estas pequeñas diferencias sirven para que el lector esté tranquilo que las variaciones en la mayoría de las distribuciones son pequeñas entre 2007 y 2012, por lo que aquí se presentan solo para un año.\footnote{Quien esté interesado el resto de las distribuciones pueden verse en {\color{red} ¿Anexo, Github, Shiny?} (ya están hechos los gráficos).} Asimismo, debido a que las variables de Sexo, Nacionalidad e Inmigración cuentan solo con dos categorías, solo presento las distribuciones de una categoría de referencia, pues la otra solo es el complemento de esta.\\
@@ -488,12 +488,6 @@ Ahora bien, la estructura generacional de las comunas francesas va cambiando. Si
 
 Finalmente, vemos en la \textbf{Figura \ref{fig:Distr_por_Dpto_CSP_2012}} las distribuciones para las diferentes categorías socioprofesionales. El primer dato que salta a la vista es que la región parisina tiene una composición socioprofesional distintiva. En efecto, Île de France es una región que comparativamente hablando, casi no tiene agricultores, obreros o retirados. Por el contrario, tiene un fuerte componente de los llamados cuadros y profesiones intelectuales superiores, pero su distribución es distinta a través de los departamentos que conforman la zona metropolitana. Dentro de la ciudad de París (departamento 75) representan el mayor porcentaje. Pero también forman un porcentaje importante de las poblaciones comunales de los departamentos al poniente y al sur de este departamento.  Estos departamentos son el 92-Hauts-de-Seine y 94-Val-de-Marne, dentro de la llamada \textit{pequeña corona} de París y los departamentos occidentales de la \textit{gran corona} de París, que incluye 78-Yvelines, 91-Essonne y 95-Val-d'Oise. Por el contrario, en el oriente de la zona metropolitana, en los departamentos de 93-Seine-Saint-Denis y 77-Seine-et-Marne, viven los empleados de la metrópoli. Las profesiones intermediarias viven más bien en la \textit{gran corona}, es decir en los departamentos 77, 78, 91 y 95.\\
  
- En el resto de la metrópoli francesa procederé a comentar categoría por categoría. Los agricultores están presentes sobre todo en las regiones centrales y sureñas. La pequeña burguesía--- es decir los artesanos, comerciantes y empresarios--- tiene presencia en general nacional, pero resaltan las regiones de la costa mediterránea como PACA y Languedoc-Rousillon. Los cuadros y las profesiones intelectuales superiores están más representadas en las grandes ciudades como son Lyon, Marsella, Toulouse, Niza o Lille--- departamentos 69 en Rhône-Alpes, 13 en PACA, 31 en Midi-Pyrénées, 06 en PACA y 59 en Nord-Pas-de-Calais respectivamente---.\\ 
- 
- Las profesiones intermediarias tienen una variabilidad intraregional que se puede observar por la progresión de intensidades en los colores de los violines; es decir, dentro de cada región tienden a haber departamentos con medianas superiores a la mediana nacional y otros con medianas inferiores. Los empleados, por el contrario, parecen distribuirse de manera relativamente homogénea a través de los departamentos de una misma región, salvo por algunas comunas atípicas que alargan las colas de algunos violines. El norte industrial es visible desde las distribuciones de los obreros, quienes están más presentes en las regiones del norte y oeste que en el sureste.\\
- 
-  Las distribuciones de las proporciones de las poblaciones que representan las personas retiradas permite confirmar que el sur de Francia está más avejentado que el norte, aunque también observamos que dentro de algunas regiones como Aquitaine, Midi-Pyrénées o Bourgogne existe variabilidad a través de sus departamentos. Finalmente, la categoría de personas sin actividad es más bien residual y un poco más difícil de interpretar en este nivel, pues incorpora tanto menores de edad como personas sin trabajo, incluidos estudiantes. Podemos, sin embargo, observar similitudes con las distribuciones de los menores de edad y seguir pensando que las regiones del norte tienen una estructura más juvenil que regiones más avejentadas como Limousin y Auvergne.\\
-
 \begin{sidewaysfigure}[h]
 	\centering
 	\begin{subfigure}{0.235\textwidth}
@@ -530,5 +524,83 @@ Finalmente, vemos en la \textbf{Figura \ref{fig:Distr_por_Dpto_CSP_2012}} las di
 	\caption{Distribuciones departamentales del porcentaje de los distintos grupos de categorías socioprofesionales como proporción de la población de las comunas en 2012. Fuente: elaboración propia con los datos censales.}
 	\label{fig:Distr_por_Dpto_CSP_2012}	
 \end{sidewaysfigure}
-
  
+ En el resto de la metrópoli francesa procederé a comentar categoría por categoría. Los agricultores están presentes sobre todo en las regiones centrales y sureñas. La pequeña burguesía--- es decir los artesanos, comerciantes y empresarios--- tiene presencia en general nacional, pero resaltan las regiones de la costa mediterránea como PACA y Languedoc-Rousillon. Los cuadros y las profesiones intelectuales superiores están más representadas en las grandes ciudades como son Lyon, Marsella, Toulouse, Niza o Lille--- departamentos 69 en Rhône-Alpes, 13 en PACA, 31 en Midi-Pyrénées, 06 en PACA y 59 en Nord-Pas-de-Calais respectivamente---.\\ 
+ 
+ Las profesiones intermediarias tienen una variabilidad intraregional que se puede observar por la progresión de intensidades en los colores de los violines; es decir, dentro de cada región tienden a haber departamentos con medianas superiores a la mediana nacional y otros con medianas inferiores. Los empleados, por el contrario, parecen distribuirse de manera relativamente homogénea a través de los departamentos de una misma región, salvo por algunas comunas atípicas que alargan las colas de algunos violines. El norte industrial es visible desde las distribuciones de los obreros, quienes están más presentes en las regiones del norte y oeste que en el sureste.\\
+ 
+  Las distribuciones de las proporciones de las poblaciones que representan las personas retiradas permite confirmar que el sur de Francia está más avejentado que el norte, aunque también observamos que dentro de algunas regiones como Aquitaine, Midi-Pyrénées o Bourgogne existe variabilidad a través de sus departamentos. Finalmente, la categoría de personas sin actividad es más bien residual y un poco más difícil de interpretar en este nivel, pues incorpora tanto menores de edad como personas sin trabajo, incluidos estudiantes. Podemos, sin embargo, observar similitudes con las distribuciones de los menores de edad y seguir pensando que las regiones del norte tienen una estructura más juvenil que regiones más avejentadas como Limousin y Auvergne.\\
+
+\clearpage
+\section{Otros datos a nivel comuna}
+
+Derivado del marco teórico sobre el voto NAP existen otras variables explicativas de interés que ayuden a perfilar el clivaje de escolaridad o el estado económico del lugar. Afortunadamente el INSEE también publica datos sobre el máximo grado escolar que tienen los habitantes mayores de 15 años de cada comuna, así como el número de habitantes que siguen estudiando. El sistema educativo francés tiene una estructura distinta al mexicano, así que para las categorías en el \textbf{Cuadro \ref{tbl:Otros_datos_comuna}} Dip2 incluye CEP, BEPC o Brevet; Dip3 se refiere a CAP, BEP, varios tipos de Baccalauréat, BEA, BEC, BEI, BEH, BTS, DUT, entre otros; para clasificarse en Dip4 se requieren al menos 2 años de ciclos universitarios. Por otro lado, también es posible obtener el número de personas empleadas y desempleadas dentro de las comunas para 3 grupos de edad.\\ 
+
+\begin{table}[h]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{|c | c | c | c |}
+\hline
+\textbf{Base de origen} &
+\textbf{Variable} & 
+\textbf{Abreviatura} & 
+\textbf{Categoría}\\[2pt] 
+\hline
+\multirow{5}{*}{Diplômes-formation} & 
+\multirow{5}{*}{Escolaridad} &  
+Dip1 & Personas sin escolaridad\\ 
+&& Dip2 & Primaria o secundaria\\  
+&& Dip3 & Preparatoria o equivalente\\  
+&& Dip4 & Universidad o más\\ 
+&& Esc & Personas aún estudiando\\ \hline
+\multirow{6}{*}{Emploi-population active} & 
+\multirow{6}{*}{Empleo} & 
+Ocu1 & Empleados de 15 a 24 años\\
+&& Des1 & Desempleados de 15 a 24 años\\
+&& Ocu2 & Empleados de 25 a 54 años\\
+&& Des2 & Desempleados de 25 a 54 años\\
+&& Ocu3 & Empleados de 55 a 64 años\\
+&& Des3 & Desempleados de 55 a 64 años\\
+\hline
+\end{tabular}
+}
+\caption{Otros datos a nivel comuna a utilizar en el análisis.}
+\label{tbl:Otros_datos_comuna}
+\end{table}
+
+Si repetimos el análisis exploratorio hecho para los datos censales, vemos en la \textbf{Figura \ref{fig:Dif_Pct_Cat_Otros}} que las categorías de escolaridad no cambian tanto de 2007 a 2012, salvo un pequeño aumento en las personas que lograron un nivel de preparatoria o equivalente (Dip3). Por el contrario, las tasas de desempleo, particularmente entre los jóvenes y las personas próximas al retiro sí tuvieron variaciones importantes, muy probablemente derivados de la crisis financiera de 2008 y 2009. Por lo mismo, sí presentaré las distribuciones de las tasas de desempleo para ambos años.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/AED/Cambio_Pct_Comunal_Cat_Otros}
+	\caption{Diferencias entre 2012 y 2007 de los porcentajes que representó cada categoría dentro de la subpoblación comunal correspondiente. Se presentan intervalos empíricos al 95\% y 80\% así como la mediana de las observaciones. Fuente: elaboración propia con los datos del INSEE.}
+	\label{fig:Dif_Pct_Cat_Otros}	
+\end{figure}
+
+En la \textbf{Figura \ref{fig:Distr_por_Dpto_Esc_2012}} observamos las distribuciones departamentales por nivel escolar en 2012. En primer lugar, confirmamos la singularidad de Île de France respecto al resto del país. Es claramente la región con los departamentos más escolarizados de Francia, en el sentido de que tienden a tener una población con mayores niveles de población escolarizada y con diploma universitario--- notablemente en París intramuros,75, y el acaudalado 92-Hauts-de-Seine---. Asimismo, observamos menores porcentajes de personas sin ningún diploma escolar, salvo el caso aparentemente atípico de 93-Seine-Saint-Denis, pero que veíamos en la sección anterior que era el departamento de más inmigrantes, empleados y obreros. Resulta ilustrativo el patrón de personas con preparatoria pues hay un contraste entre París y su \textit{petite courone} y la \textit{grande courone}--- 75, 92, 93 y 94 vs 78, 95, 91 y 77---. 
+
+ Respecto al panorama general de la metrópoli, de nueva cuenta se refleja el patrón generacional de un norte más joven que el sur observando las distribuciones de personas todavía estudiando. Resaltan departamentos en Corse, Poitou-Charentes, Basse-Normandie o Picardie como lugares con altas poblaciones no escolarizadas. Por su parte, Limousin, Auvergne, Champagne-Ardenne y, en cierto sentido, Midi-Pyrinées son regiones con fuertes poblaciones cuyo máximo nivel de estudios es la educación básica. En cuanto a las personas con preparatoria, ambos departamentos en Alsace se ubican por encima de la mediana nacional. En términos de población con diploma universitario encontramos lugares cercanos a grandes universidades francesas como la de Aix-Marsaille, 13 en PACA, o en Rhône-Alpes las de Grenoble-Alpes (38) y la ENS-Lyon (69). También en dicha región resalta que el departamento con mayor mediana es 74-Haute-Savoie, probablemente se debe a su carácter conurbado con la ciudad suiza de Ginebra.\\
+ 
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.3\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Esc_2012}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.3\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Dip1_2012}
+	\end{subfigure}\\
+	\begin{subfigure}{0.3\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Dip2_2012}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.3\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Dip3_2012}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.3\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Dip4_2012}
+	\end{subfigure}
+	\caption{Distribuciones departamentales del porcentaje de los distintos grupos de escolaridad como proporción de la población de las comunas en 2012. Fuente: elaboración propia con los datos del INSEE.}
+	\label{fig:Distr_por_Dpto_Esc_2012}	
+\end{figure}
