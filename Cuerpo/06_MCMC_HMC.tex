@@ -102,7 +102,7 @@ Queremos que el kernel $p_{\scriptscriptstyle{MH}}$ satisfaga \eqref{eq:Balance_
 f(z)p_{\scriptscriptstyle{MH}}(\tilde{z}|z)=f(\tilde{z})p_{\scriptscriptstyle{MH}}(z|\tilde{z}) \quad \Leftrightarrow \quad f(z)q(\tilde{z}|z)\alpha(\tilde{z};z)=f(\tilde{z})q(z|\tilde{z})\alpha(z;\tilde{z}) 
 \end{equation*}
 
-De acuerdo a nuestra desigualdad supuesta en \eqref{eq:Inbalance_Detallado}, las transiciones de $\tilde{z}$ a $z$ se dan demasiado poco, por lo que deberíamos siempre aceptar este tipo de transiciones a fin de corregir el submuestreo. Tomemos entonces $\alpha(z;\tilde{z}) = 1$ y observemos que $\alpha(\tilde{z};z)$ queda determinada de tal forma que logremos el balance necesario: 
+De acuerdo a nuestra desigualdad supuesta en \eqref{eq:Inbalance_Detallado}, las transiciones de $\tilde{z}$ a $z$ se dan demasiado poco, por lo que siempre deberíamos aceptar este tipo de transiciones a fin de corregir el submuestreo. Tomemos entonces $\alpha(z;\tilde{z}) = 1$ y observemos que $\alpha(\tilde{z};z)$ queda determinada de tal forma que logremos el balance necesario: 
 \begin{equation*}
 \alpha(\tilde{z};z)=\dfrac{f(\tilde{z})q(z|\tilde{z})}{f(z)q(\tilde{z}|z)}
 \end{equation*}
@@ -151,6 +151,8 @@ Un ejemplo trivial puede ayudar a visualizar cómo funcionan. Supongamos que qui
 
 Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo--- como espero explicar más claro después--- encontrar esta \textit{región crítica} y explorarla lo suficientemente bien para poder calcular los resúmenes inferenciales de interés es el verdadero objetivo de un algoritmo de integración por MCMC \parencites{Neal93,Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió varias veces y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
 
+Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qué usar $3$ como lado y no $0.5$? ¿Qué hubiera pasado en ese caso? Podemos observarlo en la \textbf{Figura \ref{fig:RWM2}}. El rectángulo de propuestas es más pequeño y eso tiene dos efectos: hay menos propuestas rechazadas pero la cadena avanza más lentamente. Vemos cómo aún después de las mismas 2,500 iteraciones la cadena no ha explorado por completo el área de mayor densidad y los promedios ergódicos apenas comienzan a converger.\\ 
+
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.3\textwidth}
@@ -169,8 +171,6 @@ Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \r
     \end{subfigure}
     \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis}. Fuente: elaboración propia.}\label{fig:RWM}
 \end{figure}
-
-Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qué usar $3$ como lado y no $0.5$? ¿Qué hubiera pasado en ese caso? Podemos observarlo en la \textbf{Figura \ref{fig:RWM2}}. El rectángulo de propuestas es más pequeño y eso tiene dos efectos: hay menos propuestas rechazadas pero la cadena avanza más lentamente. Vemos cómo aún después de las mismas 2,500 iteraciones la cadena no ha explorado por completo el área de mayor densidad y los promedios ergódicos apenas comienzan a converger.\\ 
 
 \begin{figure}[h]
     \centering
@@ -191,7 +191,9 @@ Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qu
     \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis} con un kernel de propuestas estrecho. Fuente: elaboración propia.}\label{fig:RWM2}
 \end{figure}
 
-El rectángulo más amplio propone valores que se alejan de la región crítica, mismos que tienden a ser rechazados. Sin embargo, también permite proponer valores más distantes del punto actual, lo que en este caso hace que la cadena avance rápidamente. El rectángulo más pequeño avanza más bien ``lento pero seguro''... quizás demasiado lento. Ambas cadenas convergerán, pero este ejemplo ilustra uno de los principales problemas de los algoritmos de MH, en general. Elegir un kernel de propuestas eficiente no es sencillo. Si la escala del kernel es demasiado pequeña, los saltos son demasiado pequeños y la cadena avanza demasiado lento. Si la escala es demasiado grande, corremos el riesgo de que la cadena rechace casi todas las propuestas y quede ``atorada'' en algún lugar; si la cadena repite el mismo valor varias veces seguidas, también alenta su avance. Debe haber un justo medio entre ambos extremos. Esto podemos verlo comparando el comportamiento de tres kérneles cuando intentan simular normales ahora altamente correlacionadas, en la \textbf{Figura \ref{fig:RWM_Corr}}.\\ 
+El rectángulo más amplio propone valores que se alejan de la región crítica, mismos que tienden a ser rechazados. Sin embargo, también permite proponer valores más distantes del punto actual, lo que en este caso hace que la cadena avance rápidamente. El rectángulo más pequeño avanza más bien ``lento pero seguro''... quizás demasiado lento. Ambas cadenas convergerán, pero este ejemplo ilustra uno de los principales problemas de los algoritmos de MH, en general.\\ 
+
+Elegir un kernel de propuestas eficiente no es sencillo. Si la escala del kernel es demasiado pequeña, los saltos son demasiado pequeños y la cadena avanza demasiado lento. Si la escala es demasiado grande, corremos el riesgo de que la cadena rechace casi todas las propuestas y quede ``atorada'' en algún lugar; si la cadena repite el mismo valor varias veces seguidas, también alenta su avance. Debe haber un justo medio entre ambos extremos. Esto podemos verlo comparando el comportamiento de tres kérneles cuando intentan simular normales ahora altamente correlacionadas, en la \textbf{Figura \ref{fig:RWM_Corr}}.\\ 
 
 \begin{figure}[h]
     \centering
@@ -219,7 +221,7 @@ Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que sean r
 
 \subsection{Gibbs Sampler}
 
-Alan Gelfand y Adrian Smith presentaron en 1990 un artículo titulado \textit{Sampling-Based Approaches to Calculating Marginal Densities} \parencite{GelfandSmith90}. En él rescataron tres algoritmos de simulación para obtener densidades que no pueden ser conocidas de manera analítica. Sin embargo, el que provocó la explosión de los métodos bayesianos fue el llamado \textit{Gibbs Sampler}. Este algoritmo de MCMC fue propuesto por los hermanos Stuart y Donald Geman mientras trabajaban en problemas de reconstrucción de imágenes \textcite{GemanGeman84}, pero ya estaba oculto en el artículo de \textcite{Hastings70} cuando sugería que para simular de una distribución multidimensional se podría cambiar de manera secuencial una única coordenada o, incluso, subgrupos de coordenadas.\\ 
+Alan Gelfand y Adrian Smith presentaron en 1990 un artículo titulado \textit{Sampling-Based Approaches to Calculating Marginal Densities} \parencite{GelfandSmith90}. En él rescataron tres algoritmos de simulación para obtener densidades que no pueden ser conocidas de manera analítica. Sin embargo, el que provocó la explosión de los métodos bayesianos fue el llamado \textit{Gibbs Sampler}. Este algoritmo de MCMC fue propuesto por los hermanos Stuart y Donald Geman mientras trabajaban en problemas de reconstrucción de imágenes \parencite{GemanGeman84}, pero ya estaba oculto en el artículo de \textcite{Hastings70} cuando sugería que para simular de una distribución multidimensional se podría cambiar de manera secuencial una única coordenada o, incluso, subgrupos de coordenadas.\\ 
 
 En otras palabras, ``divide y vencerás''; si el problema es que la distribución objetivo es de alta dimensionalidad y compleja, ¿por qué no intentar simularla por partes más simples en lugar de querer simularla directamente? La gran contribución de los hermanos Geman fue encontrar una manera simple y poderosa de llevarlo a cabo. La chispa de Gelfand y Smith fue mostrarle al mundo estadístico que--- sin ser el método óptimo para cualquier problema--- podía ser bastante eficiente en un amplio rango de problemas comúnmente encontrados en la práctica y, mejor aún, era efectivamente simple y universal \parencite{GelfandEtAl90}.\\
 

@@ -6,7 +6,7 @@ Parafraseando a \textcite{DraperSmith98}, al realizar un análisis estadístico 
  
 En el caso más sencillo, tendríamos que $y=f(x)$. Sin embargo, en la mayoría de los casos este modelo tomado literalmente podría parecernos una mala aproximación. Pensemos en el caso en el que se busca describir el peso en kilogramos de una persona a partir de la estatura. Es claro que a una misma estatura le podrían corresponder distintos valores de peso. A pesar de ello, podemos observar empíricamente que a mayor estatura \textit{esperamos} un mayor peso. Esto nos llevaría a pensar que podemos modelar el \textit{valor esperado} de nuestra variable de interés mediante alguna función de las variables explicativas.\\
 
-Esto quiere decir, bajo una perspectiva bayesiana paramétrica, que modelaremos la incertidumbre sobre la variable de interés $Y$ mediante una distribución de probabilidad condicional $f(y|\theta,x)$. Las variables explicativas $X$ determinan esta distribución condicional a través del valor esperado mediante una función $h(\theta_d,X)$ que depende también de un subconjunto de parámetros $\theta_d$: 
+Esto quiere decir que, bajo una perspectiva bayesiana paramétrica, modelaremos la incertidumbre sobre la variable de interés $Y$ mediante una distribución de probabilidad condicional $f(y|\theta,x)$. Las variables explicativas $X$ determinan esta distribución condicional a través del valor esperado mediante una función que depende también de un subconjunto de parámetros $\theta_d$: 
 \begin{equation} \label{eq:regr_gral}
 Y|\theta,X \sim f(y|\theta,x) \qquad \E{Y|\theta,X} = h(\theta_d,X)
 \end{equation} 
@@ -20,7 +20,7 @@ Debido a que no conocemos la verdadera relación entre nuestras variables, tenem
 
 Como bien notan tanto \textcite{Gelman13} como \textcite{Congdon06}, el modelo más general debería incorporar también la incertidumbre que pudiera existir sobre las variables explicativas $X$ derivada, por ejemplo, de posibles errores de medición. Sin embargo, si se puede asumir que los parámetros $\varphi$ de la distribución de $X$, $f(x|\varphi)$, son independientes de $\theta$--- es decir $f(\varphi,\theta)=f(\varphi)f(\theta)$--- al aplicar el Teorema de Bayes veríamos que la distribución posterior $f(\theta|y,x)$ no dependería de $\varphi$ por lo que podemos proceder ignorando dicha incertidumbre para efectos de las inferencias sobre $\theta$. Por eso--- y para simplificar la notación--- a partir de aquí omitiré la condicional en $X$, con lo que $f(\theta|y,x)$ se convierte en $f(\theta|y)$, por ejemplo. \\
 
-El modelo de regresión más usual es cuando se asume que la variable de interés se distribuye normal con una media que depende linealmente de las variables explicativas. Esto es, supongamos que tenemos $N$ conjuntos de observaciones, condicionalmente independientes, $\left\lbrace(y_i,x_{i,1},\dots,x_{i,k-1})\right\rbrace_{i=1}^{N}$ donde nuestra variable de interés es $Y$ y contamos con $d-1$ variables explicativas $\left\lbrace X_j\right\rbrace_{j=1}^{d-1}$, la regresión lineal normal bajo los supuestos usuales es: 
+El modelo de regresión más usual es cuando se asume que la variable de interés se distribuye normal con una media que depende linealmente de las variables explicativas. Esto es, supongamos que tenemos $N$ conjuntos de observaciones, condicionalmente independientes, $\left\lbrace(y_i,x_{i,1},\dots,x_{i,d-1})\right\rbrace_{i=1}^{N}$ donde nuestra variable de interés es $Y$ y contamos con $d-1$ variables explicativas $\left\lbrace X_j\right\rbrace_{j=1}^{d-1}$, la regresión lineal normal bajo los supuestos usuales es: 
 \begin{align*} 
 y_i = \beta_0 + \beta_1 x_{i,1} + \dots + \beta_{d-1} x_{i,d-1} + \epsilon_i \qquad \epsilon_i \sim N(0,\sigma^2) \quad \forall i = 1,\dots, N. 
 \end{align*}
@@ -49,7 +49,7 @@ donde $N_N(X\beta,\sigma^2\mathbb{I}_N)$ representa una distribución normal $N-
 
 \subsection{Problema de multicolinealidad} \label{prob_multicolinealidad}
 
-Antes de continuar, debo señalar un posible problema cuando uno ajusta modelos de regresión. En el {\color{Red} ANEXO} se muestra un desarrollo del modelo lineal normal utilizando iniciales conjugadas--- que pueden ser informativas o débilmente informativas--- así como un caso límite que resulta ser la inicial no informativa de Jeffreys. El estimador máximo verosimil $b=(X^TX)^{-1}X^Ty$ es clave para el análisis. En dicho desarrollo asumo que es posible calcular $b$, aún cuando no siempre es el caso.\\
+Antes de continuar, debo señalar un posible problema cuando uno ajusta modelos de regresión. En el \textbf{Anexo \ref{Anexo_modelo_lineal}} se muestra el desarrollo del modelo lineal normal utilizando iniciales conjugadas--- que pueden ser informativas o débilmente informativas--- así como un caso límite que resulta ser la inicial no informativa de Jeffreys. El estimador máximo verosimil $b=(X^TX)^{-1}X^Ty$ es clave para el análisis. En dicho desarrollo asumo que es posible calcular $b$, aún cuando no siempre es el caso.\\
 
 El estimador involucra la matriz inversa $(X^TX)^{-1}$, pero no siempre es posible invertir una matriz. Para ello se requiere que todas sus columnas sean lo que en álgebra lineal se conoce como \textit{linealmente independientes}. Esto no pasa si hay variables explicativas tales que exista una combinación lineal de ellas que sea igual a $0$ para todos los datos \parencite{GelmanHill06}. Cuando esto sucede se dice que dichas variables son linealmente dependientes o bien que son \textit{colineales}.\\
 
@@ -178,14 +178,16 @@ ln\left(\dfrac{p_i}{1-p_i}\right)&=ln(p_i)-ln(1-p_i)\\
 
 \subsubsection{Problema analítico} \label{sec:Prob_Analitico}
 
-Ahora supongamos que queremos realizar un análisis bayesiano y actualizar nuestras creencias mediante el teorema de Bayes. Podríamos llevarnos la desagradable sorpresa de que una regresión logística no tiene las mismas facilidades analíticas que sí tiene el modelo normal. De manera particular, no podemos encontrar una distribución conjugada. En efecto, definiendo $\theta_i = ln\left(\dfrac{p_i}{1-p_i}\right)=X_i\beta$ y utilizando la forma de la función de verosimilitud en \eqref{eq:Veros_Binomial}, donde $y$ representa el vector de observaciones de nuestra variable de interés: 
+Ahora supongamos que queremos realizar un análisis bayesiano y actualizar nuestras creencias mediante el teorema de Bayes. Podríamos llevarnos la desagradable sorpresa de que una regresión logística no tiene las mismas facilidades analíticas que sí tiene el modelo normal del \textbf{Anexo \ref{Anexo_modelo_lineal}}. De manera particular, no podemos encontrar una distribución conjugada.\\ 
+
+En efecto, definiendo $\theta_i = ln\left(\dfrac{p_i}{1-p_i}\right)=X_i\beta$ y utilizando la forma de la función de verosimilitud en \eqref{eq:Veros_Binomial}, donde $y$ representa el vector de observaciones de nuestra variable de interés: 
 \begin{align} \label{eq:Veros_Binomial_MLG} 
 f(y|\beta) &= f(y_1,\dots,y_N|\beta)= \prod_{i=1}^N f(y_i|\beta) \nonumber\\
 &= \prod_{i=1}^N {n_i\choose y_i}\,exp\left\lbrace y_i\,X_i\beta-n_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace \nonumber\\
 &\propto \prod_{i=1}^N exp\left\lbrace y_i\,X_i\beta-n_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace \nonumber\\
 &\propto exp\left\lbrace \sum\limits_{i=1}^Ny_i\,X_i\beta-n_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace 
 \end{align}
-Esta no es una forma funcional que permita encontrar facilmente una inicial conjugada conocida.\\
+Esta no es una forma funcional que permita encontrar fácilmente una inicial conjugada conocida.\\
 
 En el mismo sentido, supongamos que tomamos como iniciales independientes para los coeficientes, distribuciones normales centradas en $0$ con cierta desviación estándar común $\sigma$, conocida. Veamos cómo luce la actualización de la verosimilitud en \eqref{eq:Veros_Binomial_MLG} por esta inicial normal multivariada: 
 \begin{align*}
@@ -198,7 +200,9 @@ f(\beta) &= \dfrac{1}{\sqrt{(2\pi)|\sigma^2 \mathbb{I}_N|}}exp\left\lbrace -\dfr
 &\propto exp\left\lbrace -\dfrac{1}{2\sigma^2}\left[\beta^T\beta - 2\sigma^2(\beta yX)^T\right]\right\rbrace\prod_{i=1}^N \left(1+e^{X_i\beta}\right)^{-n_i}
 \end{align*}
 
-Esta expresión tampoco permite un tratamiento analítico bajo una forma funcional conocida. No es posible integrarla para conocer la constante de normalización y así tener completa la distribución posterior. ¿Acaso es posible llevar a cabo una simple regresión logística bajo el paradigma bayesiano? Por mucho tiempo la respuesta a esta pregunta era prácticamente no. Como la integral no se puede calcular, la alternativa es obtenerla mediante aproximaciones analíticas como la llamada \textit{aproximación de Laplace} o bien mediante integración numérica mediante métodos de cuadratura \parencites{Nieto16,GP97}. Sin embargo, estos métodos son muy difíciles de aplicar cuando la dimensión del problema empieza a crecer.\\ 
+Esta expresión tampoco permite un tratamiento analítico bajo una forma funcional conocida. No es posible integrarla para conocer la constante de normalización y así tener completa la distribución posterior.\\
+
+¿Acaso es posible llevar a cabo una simple regresión logística bajo el paradigma bayesiano? Por mucho tiempo la respuesta a esta pregunta era prácticamente no. Como la integral no se puede calcular, la alternativa es obtenerla mediante aproximaciones analíticas como la llamada \textit{aproximación de Laplace} o bien mediante integración numérica mediante métodos de cuadratura \parencites{Nieto16,GP97}. Sin embargo, estos métodos son muy difíciles de aplicar cuando la dimensión del problema empieza a crecer.\\ 
 
 Afortunadamente, el desarrollo de las computadoras permitió superar este obstáculo y, desde la década de 1990, el paradigma bayesiano ha ido creciendo con fuerza. Hoy es posible aplicar modelos como la regresión logística y más complejos sin problemas. Por ello, pospongo el tema de cómo calcular las integrales al \autoref{chap:Cap_MCMC} y continúo con la discusión general de los modelos de regresión. 
 
@@ -235,14 +239,9 @@ Dicha \textit{naturalidad} puede justificarse a partir de un caso particular del
 \begin{equation*}
 f(x_1,\dots,x_n) = \int\limits_\Theta \prod\limits_{i=1}^n f(x_i|\theta)f(\theta)d\theta.
 \end{equation*} 
-El lector interesado puede consultar \textcite{GP98} o \textcite{BernardoSmith00}. Cabe aclarar que la condición de intercambiabilidad que supone el Teorema de representación de De Finetti es de intercambiabilidad infinita, pero normalmente al modelar tratamos con observables que más bien satisfarían solamente una intercambiabilidad finita. A pesar de esto, si se da el caso en el que la secuencia finita de variables aleatorias observadas pueda representar una parte de una secuencia más larga de variables finitamente intercambiables, es posible asumir intercambiabilidad infinita como una aproximación suficientemente buena y proceder en consecuencia\parencite{BernardoSmith00}. Este es el supuesto, a veces tácito, que normalmente se hace en un modelo estadístico \parencite{Gelman13}.\\
+El lector interesado puede consultar \textcite{GP98} o \textcite{BernardoSmith00}.\\ 
 
-Ahora bien, un modelo jerárquico establece la intercambiabilidad de las observaciones al interior de cada subpoblación mediante la independencia condicional dado un parámetro grupal. Esto haría también un modelo de no agregación, mientras que una agregación completa asume esto para toda la población. Lo que distingue a un modelo jerárquico es que adicionalmente supone intercambiabilidad para los parámetros de cada grupo de manera que estos sean condicionalmente independientes dado uno o más \textit{hiperparámetros} poblacionales. Esto puede verse de manera esquemática en la \textbf{Figura \ref{fig:Esquema_Modelo_Jer}}, mientras que en términos de las distribuciones del modelo tendríamos los siguientes niveles: 
-\begin{align*}
-&\text{I Datos} \quad & f(y|\theta)&=f(y_1,\dots,y_J|\theta_1,\dots,\theta_J)=\prod\limits_{j=1}^Jf(y_j|\theta_j) \\
-&\text{II Parámetros} \quad & f(\theta|\varphi)&=f(\theta_1,\dots,\theta_J|\varphi) = \prod\limits_{j=1}^Jf(\theta_j|\varphi)  \\
-&\text{III Hiperparámetros} \quad & f(\varphi)&
-\end{align*}
+Cabe aclarar que la condición de intercambiabilidad que supone el Teorema de representación de De Finetti es de intercambiabilidad infinita, pero normalmente al modelar tratamos con observables que más bien satisfarían solamente una intercambiabilidad finita. A pesar de esto, si se da el caso en el que la secuencia finita de variables aleatorias observadas pueda representar una parte de una secuencia más larga de variables finitamente intercambiables, es posible asumir intercambiabilidad infinita como una aproximación suficientemente buena y proceder en consecuencia \parencite{BernardoSmith00}. Este es el supuesto, a veces tácito, que normalmente se hace en un modelo estadístico \parencite{Gelman13}.\\
 
 \begin{figure}[h]
 	\centering
@@ -250,6 +249,13 @@ Ahora bien, un modelo jerárquico establece la intercambiabilidad de las observa
 	\caption{Esquema de un modelo jerárquico básico para $J$ subpoblaciones. Los datos de cada subpoblación $y_j$ son condicionalmente independientes dado un parámetro $\theta_j$. Los parámetros $\theta$ son, a su vez, intercambiables y se modelan condicionalmente independientes dado un hiperparámetro poblacional $\varphi$. Fuente: elaboración propia.}
 	\label{fig:Esquema_Modelo_Jer}	
 \end{figure}
+
+Ahora bien, un modelo jerárquico establece la intercambiabilidad de las observaciones al interior de cada subpoblación mediante la independencia condicional dado un parámetro grupal. Esto haría también un modelo de no agregación, mientras que una agregación completa asume esto para toda la población. Lo que distingue a un modelo jerárquico es que adicionalmente supone intercambiabilidad para los parámetros de cada grupo de manera que estos sean condicionalmente independientes dado uno o más \textit{hiperparámetros} poblacionales. Esto puede verse de manera esquemática en la \textbf{Figura \ref{fig:Esquema_Modelo_Jer}}, mientras que en términos de las distribuciones del modelo tendríamos los siguientes niveles: 
+\begin{align*}
+&\text{I Datos} \quad & f(y|\theta)&=f(y_1,\dots,y_J|\theta_1,\dots,\theta_J)=\prod\limits_{j=1}^Jf(y_j|\theta_j) \\
+&\text{II Parámetros} \quad & f(\theta|\varphi)&=f(\theta_1,\dots,\theta_J|\varphi) = \prod\limits_{j=1}^Jf(\theta_j|\varphi)  \\
+&\text{III Hiperparámetros} \quad & f(\varphi)&
+\end{align*}
 
 Un modelo jerárquico aumenta el número de parámetros a estimar al agregar los hiperparámetros. Entonces, tenemos que la distribución inicial de los parámetros depende de un hiperparámetro mismo que, para realizar el aprendizaje bayesiano, deberá tener una distribución \textit{hiperinicial}. El problema consiste en inferir tanto las características de las subpoblaciones, $\theta_j$, como aquellas poblacionales, $\varphi$ \parencite{GP98}: 
 \begin{align*}
@@ -262,6 +268,8 @@ f(\theta,\varphi|y) & \propto f(y|\theta,\varphi)f(\theta,\varphi) \\
 \subsection{Regresiones jerárquicas}
 
 En términos de regresiones, los modelos jerárquicos son aquellos en los que los coeficientes también son modelados mediante hiperparámetros estimados con los mismos datos \parencite{GelmanHill06}. Esto permite pensar en regresiones a distintos niveles y con variables grupales, estudios con base en muestreo estratificado e incluso estructuras no necesariamente anidadas. Las ventajas de los modelos jerárquicos hacen que, para algunos investigadores, las regresiones multinivel merezcan ser el enfoque predeterminado \parencite{McElreath15}.\\
+
+De manera general es posible clasificar las regresiones jerárquicas en tres grandes categorías: interceptos variables, pendientes variables e interceptos y pendientes variables. De manera gráfica estos pueden verse en la \textbf{Figura \ref{fig:Ejemplos_Jer}}. Para presentarlas, supongamos que tenemos $N$ observaciones $\left\lbrace(y_i,x_i,u_{j[i]})\right\rbrace_{i=1}^{N}$ agrupadas en $J$ grupos. Nuestra variable de interés es $Y$, contamos con una variable explicativa a nivel individuo, $X$,  y una a nivel grupo,  $U$.  Debido a que ahora tenemos $J$ grupos, indico con la notación $j[i]$ el grupo al que pertenece el $i$-ésimo individuo. En el \textbf{Cuadro \ref{tbl:Regr_Jer_Lineales}} presento ejemplos esquemáticos de este tipo para modelos lineales en los que $\alpha$ representa el intercepto y $\beta$ la pendiente de la recta; en el caso de los \textit{hipercoeficientes} estos se representan por $a$ y $b$.\\
 
 \begin{figure}[h]
     \centering
@@ -285,7 +293,7 @@ En términos de regresiones, los modelos jerárquicos son aquellos en los que lo
     \caption{Ilustración de los tres tipos generales de modelos jerárquicos. Fuente: elaboración propia con base en la figura (11.1) de \textcite{GelmanHill06}.}\label{fig:Ejemplos_Jer}
 \end{figure}
 
-De manera general es posible clasificar las regresiones jerárquicas en tres grandes categorías: interceptos variables, pendientes variables e interceptos y pendientes variables. De manera gráfica estos pueden verse en la \textbf{Figura \ref{fig:Ejemplos_Jer}}. Para presentarlas, supongamos que tenemos $N$ observaciones $\left\lbrace(y_i,x_i,u_{j[i]})\right\rbrace_{i=1}^{N}$ agrupadas en $J$ grupos. Nuestra variable de interés es $Y$, contamos con una variable explicativa a nivel individuo, $X$,  y una a nivel grupo,  $U$.  Debido a que ahora tenemos $J$ grupos, indico con la notación $j[i]$ el grupo al que pertenece el $i$-ésimo individuo. En el \textbf{Cuadro \ref{tbl:Regr_Jer_Lineales}} presento ejemplos esquemáticos de este tipo para modelos lineales en los que $\alpha$ representa el intercepto y $\beta$ la pendiente de la recta; en el caso de los \textit{hipercoeficientes} estos se representan por $a$ y $b$.\\
+Una de las ventajas que tienen los modelos jerárquicos es que cuando se tiene una variable categórica--- a diferencia de lo que sucede en un modelo lineal normal (ver página \pageref{prob_multicolinealidad})--- no es necesario excluir una categoría de referencia. Por el contrario, es posible conservar el intercepto y todas las variables indicadoras dicotómicas con sus respectivos coeficientes. La clave está en que los coeficientes ahora tienen a su vez una distribución que los modela, misma que tiene el efecto de agregar un término a la matriz $X^TX$, lo que la convierte en una matriz invertible y elimina este caso particular de multicolinealidad \parencite{GelmanHill06}. 
 
 \begin{table}
 \centering
@@ -320,7 +328,6 @@ III. Hiperparámetros &
 \label{tbl:Regr_Jer_Lineales}
 \end{table}
 
-Una de las ventajas que tienen los modelos jerárquicos es que cuando se tiene una variable categórica--- a diferencia de lo que sucede en un modelo lineal normal (ver página \pageref{prob_multicolinealidad})--- no es necesario excluir una categoría de referencia. Por el contrario, es posible conservar el intercepto y todas las variables indicadoras dicotómicas con sus respectivos coeficientes. La clave está en que los coeficientes ahora tienen a su vez una distribución que los modela, misma que tiene el efecto de agregar un término a la matriz $X^TX$, lo que la convierte en una matriz invertible y elimina este caso particular de multicolinealidad \parencite{GelmanHill06}. 
 
 \subsubsection*{Regresión logística jerárquica}
 
@@ -330,8 +337,8 @@ y_i|\alpha_{j[i]},\beta_{j[i]} & \sim Binom(n_i,p_i) \\
 ln\left(\dfrac{p_i}{1-p_i}\right) &= \alpha_{j[i]} + \beta_{j[i]} x_i  \\ 
 \alpha_{j[i]} & \sim N(a_{\alpha} + b_{\alpha} u_{j[i]}, \sigma_{\alpha}^2) \\ 
 \beta_{j[i]} & \sim N(a_{\beta} + b_{\beta} u_{j[i]}, \sigma_{\beta}^2) \\ 
-a_{\alpha} \sim N(0,5) \quad & a_{\beta} \sim N(0,5) \quad \sigma_{\alpha} \sim HCauchy(0,1) \\
-b_{\alpha} \sim N(0,5) \quad & b_{\beta} \sim N(0,5) \quad \sigma_{\beta} \sim HCauchy(0,1)
+a_{\alpha} \sim N(0,5) & \quad  a_{\beta} \sim N(0,5) \\
+b_{\alpha} \sim N(0,5) & \quad  b_{\beta} \sim N(0,5) 
 \end{align*}
 
-Como puede intuirse, la estructura de un modelo jerárquico crece rápidamente. Sin embargo, recordemos que la \textit{única receta de la inferencia bayesiana} sigue siendo la misma: encontrar la distribución condicional de todas aquellas cantidades de interés cuyo valor desconocemos, dado el valor conocido de las variables observadas. Gracias a las herramientas computacionales este cálculo es posible para modelos cada vez más complejos. En el siguiente capítulo, entonces, discutiré algunos métodos computacionales que permiten este aprendizaje bayesiano. 
+Como puede intuirse, la estructura de un modelo jerárquico crece rápidamente. Sin embargo, recordemos que la \textit{única receta de la inferencia bayesiana} sigue siendo la misma: encontrar la distribución condicional de todas aquellas cantidades de interés cuyo valor desconocemos, dado el valor conocido de las variables observadas. Gracias a herramientas computacionales este cálculo es posible para modelos cada vez más complejos. En el siguiente capítulo, entonces, discutiré algunos métodos computacionales que permiten este aprendizaje bayesiano. 
