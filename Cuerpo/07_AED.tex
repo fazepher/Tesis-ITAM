@@ -1,148 +1,12 @@
 \chapter{Datos franceses}
 
-Como adelantaba en la introducción, la tercera parte de este trabajo consiste concretamente en el modelado estadístico de los datos franceses que permitan la exploración de las configuraciones sociales que favorecieron o inhibieron el voto por el \textit{Front National} en las elecciones Presidenciales y Legislativas de 2007 y 2012. Por lo mismo, debo iniciar presentando dichos datos y realizando un análisis exploratorio; ese es el objetivo de este capítulo.\\
+Como adelantaba en la introducción, la tercera parte de este trabajo consiste concretamente en el modelado estadístico de los datos franceses que permitan la exploración de las configuraciones sociales que favorecieron o inhibieron el voto por el \textit{Front National} en las elecciones Presidenciales de 2012. Por lo mismo, comienzo presentando los datos y realizando un análisis exploratorio; ese es el objetivo de este capítulo.\\
 
-No obstante, antes de comenzar con el análisis exploratorio de datos, vale la pena decir que la unidad básica de estudio son las \textit{comunas} pues el objetivo del modelado es explorar \textit{configuraciones sociales}. Es decir, no estaré enfocándome en el nivel de individuo sino en los niveles de \textit{colectividades territoriales} de Francia. Como recordatorio de la {\color{Red} sección de división territorial francesa}, los 3 niveles administrativos de Francia son, en órden de jerarquía, las regiones, los departamentos y las comunas; es decir, una comuna pertenece a un departamento, que a su vez pertenece a una región.\\ 
+Debido a que el objetivo del modelado es explorar \textit{configuraciones sociales}, la unidad básica de estudio son las \textit{comunas}. Es decir, no estaré enfocándome en el nivel de individuo sino en los niveles de \textit{colectividades territoriales} de Francia. Por ello, antes de comenzar, vale la pena recordar que los 3 niveles administrativos de Francia son, en órden de jerarquía, las regiones, los departamentos y las comunas; es decir, una comuna pertenece a un departamento, que a su vez pertenece a una región.\\ 
 
 \section{Datos electorales}
 
-En las elecciones de 2007 la derecha fue la ganadora, como puede verse en los \textbf{Cuadros \ref{tbl:Resul_Oficiales_P07} y \ref{tbl:Resul_Oficiales_L07}}. En primer lugar, Nicolas Sarkozy obtuvo la presidencia con el 53.06\% de los votos en la segunda vuelta, frente a la candidata socialista Ségolène Royal. En las elecciones legislativas, ya con Sarkozy como presidente electo, su partido, el UMP, obtuvo 313 escaños en la Asamblea Nacional; además 22 diputados electos compitieron bajo la etiqueta de Mayoría Presidencial. Por su parte, Jean-Marie Le Pen como candidato presidencial frontista en 2007 obtuvo 10.44\% de la votación efectiva en la primera vuelta, quedando en cuarta posición y fuera de la segunda vuelta. Asimismo, el FN no logró conseguir ningún diputado a pesar de obtener más de 1 millón de votos en las primeras vueltas.\\ 
-
-\begin{table}[h]
-\centering
-\resizebox{\linewidth}{!}{
-\begin{tabular}{l c r r r r}
-\multicolumn{6}{c}{\textbf{Elecciones Presidenciales 2007}} \\[5pt] 
-\multirow{2}{*}{\textbf{Candidatura}} & 
-\multirow{2}{*}{\textbf{Partido}} & 
-\multicolumn{1}{c}{\textbf{Votos}} & \textbf{\% Ef.} & 
-\multicolumn{1}{c}{\textbf{Votos}} & \textbf{\% Ef.}\\ 
-& &  
-\multicolumn{2}{c}{1ra vuelta} & 
-\multicolumn{2}{c}{2da vuelta} \\[2pt] 
-\hline
- & & & & & \\[\dimexpr-\normalbaselineskip+3pt]
-Nicolas Sarkozy & UMP & 11,448,663 & 31.18 & 18,983,138 & 53.06 \\
-Ségolène Royal & PS & 9,500,112 & 25.87 & 16,790,440 & 46.94\\
-\hdashline
-François Bayrou & UDF & 6,820,119 & 18.57 & & \\
-Jean Marie Le Pen & FN & 3,834,530 & 10.44 & & \\
-Olivier Besancenot & LRO & 1,498,581 & 4.08 & & \\
-Philippe de Villiers & MPF & 818,407 & 2.23 & & \\
-Marie-George Buffet & PC & 707,268 & 1.93 & & \\
-Dominique Voynet & Verts & 576,666 & 1.57 & & \\
-Arlette Laguiller & LO & 487,857 & 1.33 & & \\
-José Bové & Indep. & 483,008 & 1.32 & & \\
-Frédérick Nihous & CPNT & 420,645 & 1.15 & & \\
-Gérard Schivardi & PT & 123,540 & 0.34 & & \\[3pt]
-\hline
- & & & & & \\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Votación efectiva}} 
-& 36,719,396 &
-& 35,773,578 & \\
-\multicolumn{2}{l}{Blancos o nulos} 
-& 534,846 & 
-& 1,568,426 & \\[3pt]
-\hline
- & & & & & \\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Votación emitida}} 
-& 37,254,242 & 
-& 37,342,004 & \\
-\multicolumn{2}{l}{Abstenciones} 
-& 7,218,592 & 
-& 7,130,729 & \\[3pt]
-\hline
- & & & & & \\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Lista nominal}} 
-& 44,472,834 & 
-& 44,472,733 & \\
-\end{tabular}
-}
-\caption{Resultados de las elecciones presidenciales francesas de 2007, resultando presidente electo Nicolas Sarkozy (UMP). Fuente: elaboración propia con los datos oficiales del Ministerio del Interior.}
-\label{tbl:Resul_Oficiales_P07}
-\end{table}
-
-\begin{sidewaystable}[ph!]
-\centering
-\resizebox{\linewidth}{!}{
-\begin{tabular}{l c r r c r r c c}
-\multicolumn{9}{c}{\textbf{Elecciones Legislativas 2007}} \\[5pt] 
-\multicolumn{2}{c}{\multirow{2}{*}{\textbf{Plataforma política}}} & 
-\textbf{Votos} & 
-\textbf{\% Ef.} & 
-\textbf{Asientos} &
-\textbf{Votos} & 
-\textbf{\% Ef.} & 
-\textbf{Asientos} &
-\multirow{2}{*}{\textbf{Total de Asientos}}\\ 
-\multicolumn{2}{c}{} 
-& \multicolumn{3}{c}{1ra vuelta} 
-& \multicolumn{3}{c}{2da vuelta} 
-& \\[2pt] 
-\hline
- & & & & & & & &\\[\dimexpr-\normalbaselineskip+3pt]
-Union pour un Mouvement Populaire & UMP 
-& 10,289,737 & 39.54 & 98 & 9,460,710 & 46.36 & 215 & 313 \\
-Socialiste & SOC 
-& 6,436,520 & 24.73 & 1 & 8,624,861 & 42.27 & 185 & 186 \\
-Majorité Présidentielle & MAJ
-& 616,440 & 2.37 & 8 & 433,057 & 2.12 & 14 & 22\\
-Parti Communiste Français & COM 
-& 1,115,663 & 4.29 & - & 464,739 & 2.28 & 15 & 15\\
-Divers Gauche & DVG
-& 513,407 & 1.97 & - & 503,556 & 2.47 & 15 & 15\\
-Divers Droite & DVD 
-& 641,842 & 2.47 & 2 & 238,588 & 1.17 & 7 & 9\\
-Radicales de Gauche & RDG
-& 343,565 & 1.32 & - & 333,194 & 1.63 & 7 & 7\\
-Les Verts & VEC
-& 845,977 & 3.25 & - & 90,975 & 0.45 & 4 & 4\\
-Union pour la Démocratie Française & UDFD 
-& 1,981,107 & 7.61 & - & 100,115 & 0.49 & 3 & 3\\
-Mouvement pour la France & MPF
-& 312,581 & 1.20 & 1 & - & - & - & 1\\
-Divers & DIV 
-& 267,760 & 1.03 & - & 33,068 & 0.16 & 1 & 1\\
-Régionaliste & REG
-& 133,473 & 0.51 & - & 106,484 & 0.52 & 1 & 1\\
-Front National & FN 
-& 1,116,136 & 4.29 & - & 17,107 & 0.08 & - & -\\
-Extrême Gauche & EXG 
-& 888,250 & 3.41 & - & -  & - & - & -\\
-Chase Pêche Nature Traditions & CPNT 
-& 213,427 & 0.82 & - & - & - & - & -\\
-Ecologistes & ECO 
-& 208,456 & 0.80 & - & - & - & - & -\\
-Extrême Droite & EXD 
-& 102,124 & 0.39 & - & - & - & - & -\\[3pt]
-\hline
- & & & & & & & & \\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Votación efectiva}} 
-& 26,026,465 & &
-& 20,406,454 & & & \\
-\multicolumn{2}{l}{Blancos o nulos} 
-& 495,357 & &
-& 722,585 & & & \\[3pt]
-\hline
- & & & & & & & &\\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Votación emitida}} 
-& 26,521,822 & &
-& 21,129,039 & & & \\
-\multicolumn{2}{l}{Abstenciones} 
-& 17,374,011 & &
-& 14,096,209 & & & \\[3pt]
-\hline
- & & & & & & &\\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Lista nominal}} 
-& 43,895,833 & &
-& 35,225,248 & & & \\
-\end{tabular}
-}
-\caption{Resultados de las elecciones legislativas de 2007 para el conjunto del territorio francés, incluyendo el ultramar. Fuente: elaboración propia con los datos oficiales del Ministerio del Interior.}
-\label{tbl:Resul_Oficiales_L07}
-\end{sidewaystable}
-
-En 2012, sin embargo, Sarkozy perdió la reelección frente al socialista François Hollande, como puede verse en el \textbf{Cuadro \ref{tbl:Resul_Oficiales_P12}}. En el poder legislativo, la izquierda tomó el control del Hemiciclo gracias a los 280 diputados electos bajo las siglas del PS (\textbf{Cuadro \ref{tbl:Resul_Oficiales_L12}}). En lo que respecta al FN, este tuvo un crecimiento considerable. Con Marine Le Pen como lideresa y candidata, el partido obtuvo 17.90\% de la votación efectiva en la primera vuelta presidencial. Dicho porcentaje representó el 3er lugar en la elección, mejorando el 4to puesto de 2007. No obstante, de nueva cuenta fue insuficiente para disputar la segunda vuelta electoral. En las elecciones legislativas, sin embargo, el FN logró alrededor de 3 millones y medio de sufragios en la primera vuelta--- equivalentes al 13.60\%--- y consiguió 2 diputaciones.\\
+En las elecciones de 2012, el presidente en funciones Nicolas Sarkozy perdió la reelección frente al socialista François Hollande, como puede verse en el \textbf{Cuadro \ref{tbl:Resul_Oficiales_P12}}. En lo que respecta al FN, con Marine Le Pen como lideresa y candidata, el partido obtuvo 17.9\% de la votación efectiva en la primera vuelta presidencial. Dicho porcentaje representó el 3er lugar en la elección, mejorando el 4to puesto de 2007. No obstante, fue insuficiente para disputar la segunda vuelta electoral.\\
 
 \begin{table}[h]
 \centering
@@ -196,188 +60,75 @@ Jacques Cheminade & SP & 89,545 & 0.25 & & \\[3pt]
 \label{tbl:Resul_Oficiales_P12}
 \end{table}
 
-\begin{sidewaystable}[ph!]
-\centering
-\resizebox{\linewidth}{!}{
-\begin{tabular}{l c r r c r r c c}
-\multicolumn{9}{c}{\textbf{Elecciones Legislativas 2012}} \\[5pt] 
-\multicolumn{2}{c}{\multirow{2}{*}{\textbf{Plataforma política}}} & 
-\textbf{Votos} & 
-\textbf{\% Ef.} & 
-\textbf{Asientos} &
-\textbf{Votos} & 
-\textbf{\% Ef.} & 
-\textbf{Asientos} &
-\multirow{2}{*}{\textbf{Total de Asientos}}\\ 
-\multicolumn{2}{c}{} 
-& \multicolumn{3}{c}{1ra vuelta} 
-& \multicolumn{3}{c}{2da vuelta} 
-& \\[2pt] 
-\hline
- & & & & & & & &\\[\dimexpr-\normalbaselineskip+3pt]
-Socialiste & SOC 
-& 7,618,326 & 29.35 & 22 & 9,420,889 & 40.91 & 258 & 280 \\
-Union pour un Mouvement Populaire & UMP 
-& 7,037,268 & 27.12 & 9 & 8,740,628 & 37.95 & 185 & 194 \\
-Divers Gauche & DVG
-& 881,555 & 3.40 & 1 & 709,395 & 3.08 & 21 & 22\\
-Europe-Écologie-Les Verts & VEC
-& 1,418,264 & 5.46 & 1 & 829,036 & 3.60 & 16 & 17\\
-Divers Droite & DVD 
-& 910,034 & 3.51 & 1 & 417,940 & 1.81 & 14 & 15\\
-Nouveau Centre & NCE
-& 569,897 & 2.20 & 1 & 568,319 & 2.47 & 11 & 12\\
-Radicales de Gauche & RDG
-& 428,898 & 1.65 & 1 & 538,331 & 2.34 & 11 & 12\\
-Front de Gauche & FG 
-& 1,793,192 & 6.91 & - & 249,498 & 1.08 & 10 & 10\\
-Parti Radical & PRV
-& 321,124 & 1.24 & - & 311,199 & 1.35 & 6 & 6\\
-Front National & FN 
-& 3,528,663 & 13.60 & - & 842,695 & 3.66 & 2 & 2\\
-Le Centre pour la France & CEN
-& 458,098 & 1.77 & 1 & 113,196 & 0.49 & 2 & 2\\
-Alliance Centriste & ALLI 
-& 156,026 & 0.60 & - & 123,132 & 0.53 & 2 & 2\\
-Régionaliste & REG
-& 145,809 & 0.56 & - & 135,312 & 0.59 & 2 & 2\\
-Extrême Droite & EXD 
-& 49,499 & 0.19 & - & 29,738 & 0.13 & 1 & 1\\
-Extrême Gauche & EXG 
-& 253,386 & 0.98 & - & - & - & - & -\\
-Ecologistes & ECO 
-& 249,068 & 0.96 & - & - & - & - & -\\
-Autres & AUT 
-& 133,752 & 0.52 & - & - & - & - & -\\[3pt]
-\hline
- & & & & & & & & \\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Votación efectiva}} 
-& 25,952,859 & &
-& 23,029,308 & & & \\
-\multicolumn{2}{l}{Blancos o nulos} 
-& 416,267 & &
-& 923,178 & & & \\[3pt]
-\hline
- & & & & & & & &\\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Votación emitida}} 
-& 26,369,126 & &
-& 23,952,486 & & & \\
-\multicolumn{2}{l}{Abstenciones} 
-& 19,712,978 & &
-& 19,281,162 & & & \\[3pt]
-\hline
- & & & & & & &\\[\dimexpr-\normalbaselineskip+3pt]
-\multicolumn{2}{l}{\textbf{Lista nominal}} 
-& 46,082,104 & &
-& 43,233,648 & & & \\
-\end{tabular}
-}
-\caption{Resultados de las elecciones legislativas de 2012 para el conjunto del territorio francés, incluyendo el ultramar. Fuente: elaboración propia con los datos oficiales del Ministerio del Interior.}
-\label{tbl:Resul_Oficiales_L12}
-\end{sidewaystable}
+El análisis que realizaré se circunscribe a los resultados dentro de la metrópoli francesa. Esta decisión está basada en dos consideraciones. La principal es que no se cuentan con todos los datos de las variables explicativas para todos los territorios de ultramar. Adicionalmente, el fenómeno político es marcadamente distinto en los \textit{DROM} que en el hexágono. Si el resultado nacional fue de 17.9\%, en la metrópoli llegó al 18.3\% mientras que fuera resultó ser de poco más del 7\%. El \textit{DROM} en el que Marine Le Pen obtuvo el mayor porcentaje efectivo de votos fue la Guyana, con 10.5\%; este resultado fue casi dos puntos porcentuales menos que su peor región metropolitana, Île de France, con 12.3\%. En Mayotte, Le Pen se quedó incluso por debajo del 3\% de la votación efectiva. Más aún, si en lugar de observar la votación efectiva tomamos en cuenta los votos nulos y las abstenciones mediante la votación bruta--- es decir los votos con respecto al número de inscritos en la lista nominal--- la diferencia metrópoli-ultramar es del 14.6\% contra 3.5\%. Las diferencias políticas no solo se reflejan en preferencias electorales y niveles de participación sino que los temas de discusión y al rededor de los cuales se desarrollan las campañas también son diferentes. Así pues, deberá recordarse que cualquier conclusión que se tenga del análisis se refiere exclusivamente a la metrópoli francesa.\\
 
-Ahora bien, como puede verificarse con las cuatro elecciones, en Francia existe una gran variedad de partidos políticos repartidos a lo largo del espectro político, tradicionalmente asociado con las nociones de izquierda y derecha. Adicionalmente, no es raro que los partidos cambien de nombres o formen coaliciones. Por ejemplo, en 2007 hubo 12 candidaturas presidenciales y para  2012 fueron 10. En las elecciones legislativas se presentaron 17 etiquetas políticas diferentes ambas ocasiones. Por ello, y para simplificar el análisis, conviene agrupar las diferentes opciones políticas bajo algunas etiquetas cualitativas generales.\\ 
-
-Dependiendo de la posición--- aproximada--- de la plataforma política en el eje ideológico izquierda-derecha propondría los siguientes grupos. En primer lugar, debido al interés específico en el Front National, este es clasificado individualmente. Posteriormente, tenemos a los partidos tradicionales de derecha e izquierda--- el UMP\footnote{Este partido ya cambió de nombre y ahora se conoce como \textit{Les Republicains}. En 2007, después de que Nicolas Sarkozy ganara las elecciones, además de los candidatos del UMP hubo candidaturas bajo la etiqueta de la \textit{Mayoría presidencial} por lo que también las agrupo junto con el UMP.} y los socialistas del PS, respectivamente---. Además, existen plataformas de centro, así como otras izquierdas y derechas. Finalmente, encontramos opciones con un fuerte componente temático--- como los verdes o los regionalistas--- o con una plataforma política especial de forma tal que resulta más conveniente separarlos del eje y clasificarlos en una categoría residual. Así pues, en total existen 7 grupos generales: 
-
-\begin{itemize}
-\item FN
-\item Derecha
-\item Izquierda
-\item Centro
-\item Otras derechas
-\item Otras izquierdas
-\item Otros
-\end{itemize}
-
-En las \textbf{Figuras \ref{fig:Partidos_07} y \ref{fig:Partidos_12}} pueden observarse representaciones esquemáticas de esta simplificación del espectro político francés para 2007 y 2012, respectivamente.\\
+Esta última consideración nos hace notar que la distribución de los votos no es uniforme. Existen zonas de fortaleza y debilidad del FN. En 70 comunas Le Pen no recibió ningún sufragio mientras que la comuna en la que fue más votada obtuvo 62.5\% de la votación bruta\footnote{Hay que decir que recibió 5 votos de un listado nominal de 8 personas.}. El rango intercuartílico va de 13.54\% a 21.44\% con una mediana de 17.46\%, estos valores están señalados en el eje del histograma de la \textbf{Figura \ref{fig:Distr_Br}}. 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width = 0.9\textwidth]{Figs/FN_Francia/Partidos_07}
-	\caption{Representación esquemática de los partidos, candidaturas y etiquetas políticas en las elecciones francesas de 2007. Fuente: elaboración propia.}
-	\label{fig:Partidos_07}	
+	\includegraphics[width = 0.5\textwidth]{Figs/AED/Distr_Votos_Br_P12_FN}
+	\caption{Histograma del \% bruto de votos obtenido en cada comuna. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés.}
+	\label{fig:Distr_Br}	
 \end{figure}
+
+Podemos agregar los datos a nivel región como en la \textbf{Figura \ref{fig:Pct_Br_Reg_P12}}, para describir de manera más general las zonas de fortaleza o debilidad. Mientras que el porcentaje de votos brutos en la metrópoli fue de 14.6\%, en la región île de France, Marine Le Pen obtuvo el 9.4\% y en Picardie llegó a obtener casi el 20\%.\\
+
+Otra forma de valorar la presencia territorial del partido es considerar las comunas de cada región y comparar su distribución frente a la distribución agregada de toda la metrópoli. Podemos ver este ejercicio mediante el \textit{geofacet} de la \textbf{Figura \ref{fig:Geofacet_Distr_Reg_P12}}. Dentro de él comparo los histogramas de los porcentajes de votos que recibió la candidata frontista en las comunas de cada región con la distribución de los porcentajes para todas las comunas de la metrópoli. La intensidad del color de los histogramas depende del cociente del porcentaje mediano de votos en la región entre el porcentaje mediano de votos en toda la metrópoli, por lo que representa la fuerza relativa de cada etiqueta en la región. En azules encontramos las regiones con medianas superiores a la nacional y en rosas a aquellos con menores.\\
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width = 0.9\textwidth]{Figs/FN_Francia/Partidos_12}
-	\caption{Representación esquemática de los partidos, candidaturas y etiquetas políticas en las elecciones francesas de 2007. Fuente: elaboración propia.}
-	\label{fig:Partidos_12}	
+	\begin{subfigure}{0.425\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Pct_Br_Reg_P12_FN}
+	\caption{Mapa del \% bruto de votos obtenido por Marine Le Pen en las elecciones presidenciales del 2012 en cada región francesa.}
+	\label{fig:Pct_Br_Reg_P12}		
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.475\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Reg_P12_FN}
+	\caption{Los histogramas representan la distribución para cada una de las regiones y las densidades la de la metrópoli francesa.}
+	\label{fig:Geofacet_Distr_Reg_P12}
+	\end{subfigure}
+	\caption{Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
 \end{figure}
 
-Debido a que el FN compitió primordialmente en las primeras vueltas en las 4 elecciones, solo me enfocaré en ellas y no en las segundas vueltas. Asimismo, el fenómeno electoral es marcadamente distinto en la metrópoli francesa que en los territorios de ultramar donde, naturalmente, el FN es prácticamente inexistente. Por tanto, el análisis también se circunscribe a los resultados dentro de la metrópoli francesa. En consecuencia, a partir de este momento, todos los resultados electorales se refieren a las primeras vueltas de las 4 elecciones sin considerar los territorios de ultramar.\\
+Vemos que, en las regiones del noreste francés como Picardie o Alsace, los histogramas del FN están desplazados a la derecha de la distribución de referencia y, por tanto, están coloreados con mayor intensidad de azul. Por el contrario, en regiones occidentales como Bretagne, Limousin o Aquitaine, los histogramas reflejan menores porcentajes de votos para el FN y se colorean más de rosa. Podemos empezar a conjeturar que una clave geográfica para el voto frontista es la diagonal que va de Normandía--- Haute y Basse Normandie--- hacia PACA\footnote{Provence-Alpes-Côtes d'Azur.}: si la comuna se encuentra al noreste de la diagonal, tendería a manifestar mayor apoyo al Front National que si se encuentra al sudoeste de la misma. Este sería a grandes rasgos el eje que \textcite{Goodliffe16} identifica como la línea que une las ciudades de Cherbourg en Normandía y Valence en Rhône-Alpes y después con Perpignan en Languedoc-Rousillon.\\ 
 
-Una vez mencionados los resultados generales de las 4 elecciones, hay que notar que la distribución geográfica de los votos no es uniforme. Existen zonas de fortaleza para los diferentes partidos. Una forma de observar esto es agrupar las comunas de cada región francesa y comparar la distribución del voto para cada etiqueta política en cada región frente a la distribución agregada de toda la metrópoli. Como ejemplo, podemos ver este ejercicio para la elección presidencial de 2012 mediante los \textit{geofacets} de la \textbf{Figura \ref{fig:Geofacet_Distr_Reg_P12}}. Cada \textit{geofacet} representa las distribuciones de voto de cada etiqueta política. Dentro de ellos comparo los histogramas de los porcentajes de votos que recibió la etiqueta política en las comunas de cada región con la distribución de los porcentajes para todas las comunas de la metrópoli. La intensidad del color de los histogramas depende del cociente del porcentaje mediano de votos en la región entre el porcentaje mediano de votos en toda la metrópoli, por lo que representa la fuerza relativa de cada etiqueta en la región.\\
-
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}{0.3\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Reg_P12_FN}
-	\end{subfigure}\\	
-	~
-	\begin{subfigure}{0.3\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Reg_P12_Derecha}
-	\end{subfigure}
-	~
-	\begin{subfigure}{0.3\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Reg_P12_Izquierda}
-	\end{subfigure}
-	~
-	\begin{subfigure}{0.3\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Reg_P12_Centro}
-	\end{subfigure}
-	~
-	\begin{subfigure}{0.3\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Reg_P12_Otras_derechas}
-	\end{subfigure}
-	~
-	\begin{subfigure}{0.3\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Reg_P12_Otras_izquierdas}
-	\end{subfigure}
-	~
-	\begin{subfigure}{0.3\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Reg_P12_Otros}
-	\end{subfigure}
-	\caption{\textit{Geofacets} de la distribución del \% de votos obtenido por las 7 distintas etiquetas políticas en las elecciones presidenciales del 2012. Los histogramas representan la distribución de los porcentajes por comuna para cada una de las regiones. Las densidades transparentes representan la distribución de referencia considerando todas las comunas de la metrópoli francesa. La intensidad del color de los histogramas refleja la fuerza relativa de cada etiqueta en la región. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés.}
-	\label{fig:Geofacet_Distr_Reg_P12}	
-\end{figure}
-
-Vemos que, en las regiones del noreste francés como Picardie o Alsace, los histogramas del FN están desplazados a la derecha de la distribución de referencia y, por tanto, están coloreados con mayor intensidad. Por el contrario, en regiones occidentales como Bretagne, Limousin o Aquitaine, los histogramas reflejan menores porcentajes de votos para el FN y, por ejemplo, mayores votos a la izquierda. Así pues, podemos empezar a conjeturar que una clave geográfica para el voto frontista es la diagonal que va de Normandía--- Haute y Basse Normandie--- hacia PACA\footnote{Provence-Alpes-Côtes d'Azur.}: si la comuna se encuentra al noreste de la diagonal, tendería a manifestar mayor apoyo al Front National que si se encuentra al sudoeste de la misma. Este sería a grandes rasgos el eje que \textcite{Goodliffe16} identifica como la línea que une las ciudades de Cherbourg en Normandía y Valence en Rhône-Alpes y después con Perpignan en Languedoc-Rousillon.\\ 
-
-Podemos desagregar las distribuciones un nivel más y observarlas mediante diagramas de violines por departamento. Los \textit{geofacets} respectivos para el FN en las cuatro elecciones se observan en la \textbf{Figura \ref{fig:Geofacet_Distr_Dptos_FN}}. En cada región se muestran 3 líneas como referencia del rango intercuartílico y la mediana considerando las comunas de toda la metrópoli. El diagrama de violín sin relleno muestra dicha distribución agrupada para toda la metrópoli. Los diagramas de violín con relleno representan, pues, las distribuciones del porcentaje de votos obtenido en cada comuna del departamento correspondiente, identificado mediante su código oficial geográfico. Dentro de cada región los departamentos están ordenados de menor a mayor apoyo al FN con base en las medianas. Al igual que en los histogramas a nivel región, la intensidad del relleno es el cociente de la mediana departamental respecto a la mediana global.\\ 
+Si descendemos un nivel y observamos el mapa a nivel departamento en la \textbf{Figura \ref{fig:Pct_Br_Dptos_P12}}, la división este-oeste se ve de manera más clara. También podemos ver las distribuciones a nivel departamento mediante diagramas de violines. El \textit{geofacet} respectivo se observa en la \textbf{Figura \ref{fig:Geofacet_Distr_Dptos_P12}}. En cada región se muestran 3 líneas como referencia del rango intercuartílico y la mediana considerando las comunas de toda la metrópoli. El diagrama de violín sin relleno muestra dicha distribución agrupada para toda la metrópoli. Los diagramas de violín con relleno representan, pues, las distribuciones del porcentaje de votos obtenido en cada comuna del departamento correspondiente, identificado mediante su código oficial geográfico. Dentro de cada región los departamentos están ordenados de menor a mayor apoyo al FN con base en las medianas. Al igual que en los histogramas a nivel región, la intensidad del relleno es el cociente de la mediana departamental respecto a la mediana global.\\ 
 
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}{0.4\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_P07_FN}
+	\includegraphics[width = \textwidth]{Figs/AED/Mapa_Dptos_Br_P12_FN}
+	\caption{Mapa del \% bruto de votos obtenido por Marine Le Pen en las elecciones presidenciales del 2012 en cada departamento.}
+	\label{fig:Pct_Br_Dpto_P12}	
 	\end{subfigure}
 	~
-	\begin{subfigure}{0.4\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_P12_FN}
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Dpto_P12_FN}
+	\caption{Los violines rellenos de color son las distribuciones dentro del departamento correspondiente mientras que las 3 líneas horizontales representan una referencia al rango intercuartílico y la mediana considerando todas las comunas de la metrópoli, cuya distribución puede verse en el panel superior derecho.}
+	\label{fig:Geofacet_Distr_Dptos_P12}	
 	\end{subfigure}
-	~
-	\begin{subfigure}{0.4\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_L07_FN}
-	\end{subfigure}
-	~
-	\begin{subfigure}{0.4\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_L12_FN}
-	\end{subfigure}
-	\caption{\textit{Geofacets} de la distribución del \% de votos obtenido por el FN en las 4 elecciones; presidenciales arriba, legislativas abajo. los violines rellenos de color son las distribuciones considerando solo las comunas del departamento correspondiente mientras que las 3 líneas horizontales representan una referencia al rango intercuartílico y la mediana de la distribución considerando todas las comunas de la metrópoli, misma que puede verse en el panel superior derecho. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés.}
-	\label{fig:Geofacet_Distr_Dptos_FN}	
+	\caption{Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
 \end{figure}
 
-Podemos notar algunas cosas. En primer lugar, es evidente que el FN sufre un efecto arrastre en las elecciones legislativas. Al ganar la presidencia un candidato de otro partido, dicha plataforma se ve beneficiada en las legislativas; por ello, el voto por las demás opciones disminuye, como es el caso del FN. Por otro lado, vemos que dentro de las regiones con mayor apoyo en general, este es relativamente homogéneo a través de los departamentos. En efecto, las distribuciones reflejadas en diagramas de violines para los departamentos dentro de Lorraine, Champagne-Ardenne o Picardie aparentan ser similares, salvo casos especiales como el departamento 10-Aube en las legislativas de 2012. No obstante, existen regiones--- como Île de France o Aquitaine--- cuyos departamentos presentan distribuciones más diferentes. Este es un elemento que podría empezar a sugerir un modelado jerárquico de los datos.
+Dentro de las regiones con mayor apoyo en general, este es relativamente homogéneo a través de los departamentos. En efecto, las distribuciones reflejadas en diagramas de violines para los departamentos dentro de Lorraine, Champagne-Ardenne o Picardie aparentan ser similares, siempre con cocientes de medianas mayores a 1. No obstante, existen regiones--- como Île de France o Aquitaine--- cuyos departamentos presentan distribuciones más variables. Este es un elemento que podría empezar a sugerir un modelado jerárquico de los datos por departamento.\\
+
+Finalmente, observamos el mapa de los porcentajes de voto brutos que obtuvo Marine Le Pen en cada comuna en la \textbf{Figura \ref{fig:Mapa_Pct_Br}}. De nueva cuenta distinguimos zonas de fuerza o debilidad con respecto a la mediana. Es decir, en tonos de azul se encuentran la mitad de las comunas con mayor porcentaje de votos y en rojos la mitad de menor porcentaje. La variabilidad es clara. Observamos lo que autores como \textcite{LeBras15} llaman las capas del voto FN. En primer lugar la gran zona de fuerza del norte. También hay corredores de fortaleza: el litoral mediterráneo y dos diagonales que parecen desembocar en él; estas serían las márgenes del Ródano que viene del norte y del Garona que viene del Atlántico. La débilidad la encontramos al oeste y en zonas urbanas vistas como manchas rojas rodeadas de color azul, particularmente París.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.5\textwidth]{Figs/AED/Mapa_Votos_Br_P12_FN}
+	\caption{Mapa del \% bruto de votos obtenido por Marine Le Pen en las elecciones presidenciales del 2012. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
+	\label{fig:Mapa_Pct_Br}	
+\end{figure}
 
 \section{Datos censales}
 
-Por otro lado, para caracterizar a las comunas en términos de \textit{configuraciones sociales} relacionadas con el voto nativista y autoritario de corte populista, requerimos su composición en términos de variables sociodemográficas básicas como sexo, edad, nacionalidad, categoría socioprofesional y condición migratoria. Afortunadamente Francia cuenta con un sistema censal rotante que permite realizar estimaciones anuales.\\ 
+Por otro lado, para caracterizar a las comunas en términos de \textit{configuraciones sociales} relacionadas con el voto nativista y autoritario de corte populista, requerimos su composición en términos de variables sociodemográficas. Afortunadamente, desde 2004, Francia cuenta con un sistema censal rotante que permite realizar estimaciones anuales para este tipo de variables.\\ 
 
-{\color{Aquamarine} El censo francés, desde 2004, está compuesto por dos mecanismos distintos dependiendo del tamaño poblacional de la comuna. La comunas de menos de 10,000 habitantes realizan una encuesta censal a razón de una de cada cinco comunas todos los años. Las comunas de 10,000 habitantes o más realizan todos los años una encuesta por muestreo probabilístico del 8\% de sus hogares cada año. Acumulando cinco años, el total de los habitantes de las comunas ``pequeñas'' y al rededor del 40\% de la población de las comunas ``grandes'' son tomados en cuenta. Esta muestra acumulada se trata de manera estadística para estimar la población total en cada comuna al tercer año de una ventana de cinco años. Así, para la estimación de la población al año $n$ se consideran los datos de los años $n-2$, $n-1$, $n$, $n+1$ y $n+2$. Cada año se desecha la información más antigua y se incorpora la información del nuevo año.  La primera estimación anual se tuvo en 2006 considerando la información de 2004 a 2008.
-}
+De acuerdo con el \textcite{FichaCenso}, el censo francés está compuesto por dos mecanismos distintos dependiendo del tamaño poblacional de la comuna. La comunas de menos de 10,000 habitantes realizan una encuesta censal a razón de una de cada cinco comunas todos los años. Las comunas de 10,000 habitantes o más realizan todos los años una encuesta por muestreo probabilístico del 8\% de sus hogares cada año. Acumulando cinco años, el total de los habitantes de las comunas ``pequeñas'' y al rededor del 40\% de la población de las comunas ``grandes'' son tomados en cuenta. Esta muestra acumulada se trata de manera estadística para estimar la población total en cada comuna al tercer año de una ventana de cinco. Así, para la estimación de la población al año $n$ se consideran los datos de los años $n-2$, $n-1$, $n$, $n+1$ y $n+2$. Cada año se desecha la información más antigua y se incorpora la información del nuevo año.  La primera estimación anual se tuvo en 2006 considerando la información de 2004 a 2008.\\
 
-A partir de estos datos oficiales anuales que publica el INSEE, podemos descomponer las distribuciones poblacionales en las comunas francesas a lo largo de dichas variables. Para ello he calculado el porcentaje de individuos como proporción de la población comunal de cada categoría dentro de las 5 variables sociodemográficas básicas provenientes de 3 bases distintas que se pueden ver en el \textbf{Cuadro \ref{tbl:Variables_Censales}}.\\ 
+A partir de estos datos oficiales anuales que publica el INSEE podemos descomponer las distribuciones poblacionales en las comunas francesas a lo largo de algunas variables que la revisión de literatura sugiere: las categorías socioprofesionales, nacionalidad o condición migratoria, sexo y edad. Para ello he calculado el porcentaje de individuos como proporción de la población comunal de cada categoría dentro de estas 5 variables sociodemográficas básicas provenientes de 3 bases distintas que se pueden ver en el \textbf{Cuadro \ref{tbl:Variables_Censales}}.\\ 
 
 \begin{table}[h]
 \centering
@@ -413,26 +164,17 @@ CSP1 & Agricultores\\
 && CSP6 & Obreros\\
 && CSP7 & Retirados\\
 && CSP8 & Otras personas sin actividad\\ \hline
-\multirow{2}{*}{IMG1/IMG1A} & 
+\multirow{2}{*}{IMG1A} & 
 \multirow{2}{*}{Condición migratoria} & 
 Inm & Inmigrantes\\
 && Loc & Locales\\ \hline
 \end{tabular}
 }
-\caption{Variables censales a utilizar en el análisis.}
+\caption{Variables censales del INSEE a utilizar en el análisis.}
 \label{tbl:Variables_Censales}
 \end{table}
 
-Para iniciar el análisis exploratorio de estos datos quiero hacer notar que los cambios en los porcentajes para la misma comuna entre 2012 y 2007 tienden a ser relativamente pequeños para la mayoría de las variables. Para observarlo podemos calcular, para cada categoría de cada variable, la diferencia en los porcentajes de la población en cada comuna entre ambos años. Posteriormente calculamos los percentiles al 2.5\%, 10\%, 90\% y 97.5\% para obtener intervalos empíricos que capturen al 95\% y 80\% de las observaciones así como un resumen de tendencia central como puede ser la mediana. Si graficamos estos intervalos junto con la mediana ordenados de menor a mayor longitud del intervalo al 95\%, vemos en la \textbf{Figura \ref{fig:Dif_Pct_Cat_Censales}} que la mayoría de las categorías tienen cambios menores a 10 puntos porcentuales. La excepción sería la variable de Categorías Socioprofesionales, donde sí hay más comunas con cambios mayores a dichos 10 puntos.\\ 
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{Figs/AED/Cambio_Pct_Comunal_Cat}
-	\caption{Diferencias entre 2012 y 2007 de los porcentajes de la población comunal que representó cada categoría. Se presentan intervalos empíricos al 95\% y 80\% así como la mediana de las observaciones. Fuente: elaboración propia con los datos censales.}
-	\label{fig:Dif_Pct_Cat_Censales}	
-\end{figure}
-
-Estas pequeñas diferencias sirven para que el lector esté tranquilo que las variaciones en la mayoría de las distribuciones son pequeñas entre 2007 y 2012, por lo que aquí se presentan solo para un año.\footnote{Quien esté interesado el resto de las distribuciones pueden verse en {\color{red} ¿Anexo, Github, Shiny?} (ya están hechos los gráficos).} Asimismo, debido a que las variables de Sexo, Nacionalidad e Inmigración cuentan solo con dos categorías, solo presento las distribuciones de una categoría de referencia, pues la otra solo es el complemento de esta.\\
+ Debido a que las variables de Sexo, Nacionalidad e Inmigración cuentan con dos categorías, solo presento las distribuciones de una categoría de referencia, pues la otra solo es el complemento de esta.\\
 
 Comenzando con la distribución del porcentaje de Mujeres en las comunas en 2012 vemos que, como es de esperarse, la mayoría de los departamentos tienen distribuciones muy concentradas al rededor del 50\% de la población. Las únicas distribuciones que llaman la atención en la \textbf{Figura \ref{fig:Distr_por_Dpto_Muj_2012}} son las de los departamentos de Île de France, con porcentajes un poco mayores que el resto de la metrópoli.\\ 
 
@@ -443,9 +185,9 @@ Comenzando con la distribución del porcentaje de Mujeres en las comunas en 2012
 	\label{fig:Distr_por_Dpto_Muj_2012}	
 \end{figure}
 
-Las variables de nacionalidad y condición migratoria son similares pero no idénticas. El INSEE define a un extranjero como alguien que no posee la nacionalidad francesa y a un inmigrante como aquella persona nacida fuera del territorio francés; esto quiere decir, por ejemplo, que hay individuos franceses considerados inmigrantes pues pudieron haberse naturalizado, así como extranjeros considerados locales porque nacieron en territorio francés sin tener derecho a la nacionalidad.\\ 
+Las variables de nacionalidad y condición migratoria son similares pero no idénticas. El \textcite{DefsCenso} define a un extranjero como un residente del territorio francés que no posee la nacionalidad francesa y a un inmigrante como aquella persona nacida extranjera en el extranjero; esto quiere decir, por ejemplo, que hay individuos franceses considerados inmigrantes pues pudieron haberse naturalizado, así como extranjeros considerados locales porque nacieron en territorio francés sin tener derecho a la nacionalidad.\\ 
 
-En la \textbf{Figura \ref{fig:Distr_por_Dpto_Nac_Inm_2012}} vemos las distribuciones para los extranjeros y los inmigrantes en 2012. Debido a que la mayoría de inmigrantes son extranjeros las distribuciones siguen un patrón muy parecido, salvo que en general siempre hay más inmigrantes que extranjeros. Mientras que en regiones del norte hay pocos extranjeros e inmigrantes, vemos que en la región parisina de Île de France tienen una presencia considerable. Las regiones más sureñas como Corse o PACA también tienen comunas con mayor presencia de extranjeros e inmigrantes.\\
+En el proceso del modelado se deberá elegir la ``mejor'' de entre ambas. Por el momento, en la \textbf{Figura \ref{fig:Distr_por_Dpto_Nac_Inm_2012}} vemos las distribuciones para los extranjeros y los inmigrantes en 2012. Debido a que la mayoría de inmigrantes son extranjeros las distribuciones siguen un patrón muy parecido, salvo que en general siempre hay más inmigrantes que extranjeros--- observar líneas de referencia---. Mientras que en regiones del norte las comunas tienden a tener pocos extranjeros e inmigrantes, vemos que en la región parisina de Île de France tienen una presencia considerable. Las regiones más sureñas como Corse o PACA también tienen comunas con mayor presencia de extranjeros e inmigrantes.\\
 
 \begin{figure}[h]
 	\centering
@@ -491,7 +233,7 @@ Ahora bien, la estructura generacional de las comunas francesas va cambiando. Si
 	\label{fig:Distr_por_Dpto_Edades_2012}	
 \end{figure}
 
-Finalmente, vemos en la \textbf{Figura \ref{fig:Distr_por_Dpto_CSP_2012}} las distribuciones para las diferentes categorías socioprofesionales. El primer dato que salta a la vista es que la región parisina tiene una composición socioprofesional distintiva. En efecto, Île de France es una región que comparativamente hablando, casi no tiene agricultores, obreros o retirados. Por el contrario, tiene un fuerte componente de los llamados cuadros y profesiones intelectuales superiores, pero su distribución es distinta a través de los departamentos que conforman la zona metropolitana. Dentro de la ciudad de París (departamento 75) representan el mayor porcentaje. Pero también forman un porcentaje importante de las poblaciones comunales de los departamentos al poniente y al sur de este departamento.  Estos departamentos son el 92-Hauts-de-Seine y 94-Val-de-Marne, dentro de la llamada \textit{pequeña corona} de París y los departamentos occidentales de la \textit{gran corona} de París, que incluye 78-Yvelines, 91-Essonne y 95-Val-d'Oise. Por el contrario, en el oriente de la zona metropolitana, en los departamentos de 93-Seine-Saint-Denis y 77-Seine-et-Marne, viven los empleados de la metrópoli. Las profesiones intermediarias viven más bien en la \textit{gran corona}, es decir en los departamentos 77, 78, 91 y 95.\\
+Finalmente, vemos en la \textbf{Figura \ref{fig:Distr_por_Dpto_CSP_2012}} las distribuciones para las diferentes categorías socioprofesionales. El primer dato que salta a la vista es que la región parisina tiene una composición socioprofesional muy particular. En efecto, Île de France es una región que comparativamente hablando, casi no tiene agricultores, obreros o retirados. Por el contrario, tiene un fuerte componente de los llamados cuadros y profesiones intelectuales superiores, pero su distribución es distinta a través de los departamentos que conforman la zona metropolitana. Dentro de la ciudad de París--- departamento 75--- representan el mayor porcentaje. Pero también forman un porcentaje importante de las poblaciones comunales de los departamentos al poniente y al sur de este departamento.  Estos departamentos son el 92-Hauts-de-Seine y 94-Val-de-Marne, dentro de la llamada \textit{pequeña corona} de París y los departamentos occidentales de la \textit{gran corona} de París, que incluye 78-Yvelines, 91-Essonne y 95-Val-d'Oise. Por el contrario, en el oriente de la zona metropolitana, en los departamentos de 93-Seine-Saint-Denis y 77-Seine-et-Marne, viven los empleados de la metrópoli. Las profesiones intermediarias viven más bien en la \textit{gran corona}, es decir en los departamentos 77, 78, 91 y 95.\\
  
 \begin{sidewaysfigure}[h]
 	\centering
@@ -539,7 +281,7 @@ Finalmente, vemos en la \textbf{Figura \ref{fig:Distr_por_Dpto_CSP_2012}} las di
 \clearpage
 \section{Otros datos a nivel comuna}
 
-Derivado del marco teórico sobre el voto NAP existen otras variables explicativas de interés que ayuden a perfilar el clivaje de escolaridad o el estado económico del lugar. Afortunadamente el INSEE también publica datos sobre el máximo grado escolar que tienen los habitantes mayores de 15 años de cada comuna, así como el número de habitantes que siguen estudiando. El sistema educativo francés tiene una estructura distinta al mexicano, así que para las categorías en el \textbf{Cuadro \ref{tbl:Otros_datos_comuna}} Dip2 incluye CEP, BEPC o Brevet; Dip3 se refiere a CAP, BEP, varios tipos de Baccalauréat, BEA, BEC, BEI, BEH, BTS, DUT, entre otros; para clasificarse en Dip4 se requieren al menos 2 años de ciclos universitarios. Por otro lado, también es posible obtener el número de personas empleadas y desempleadas dentro de las comunas para 3 grupos de edad.\\ 
+Derivado del marco teórico sobre el voto NAP existen otras variables explicativas de interés que ayuden a perfilar el clivaje de escolaridad o el estado económico del lugar. Afortunadamente el INSEE también publica datos sobre el máximo grado escolar que tienen los habitantes mayores de 15 años de cada comuna, así como el número de habitantes que siguen estudiando. El sistema educativo francés tiene una estructura distinta al mexicano, así que para las categorías en el \textbf{Cuadro \ref{tbl:Otros_datos_comuna}} Dip2 incluye CEP, BEPC o Brevet; Dip3 se refiere a CAP, BEP, varios tipos de Baccalauréat, BEA, BEC, BEI, BEH, BTS, DUT, entre otros; para clasificarse en Dip4 se requieren al menos 2 años de ciclos universitarios. Por otro lado, también es posible obtener el número de personas empleadas y desempleadas dentro de las comunas para 3 grupos de edad. La distinción por grupos de edad es importante puesto que referencias como \textcite{LeBras16} o \textcite{Perrineau07} tienden a mencionar la precariedad salarial juvenil como un catalizador del voto frontista.\\ 
 
 \begin{table}[h]
 \centering
@@ -573,16 +315,7 @@ Ocu1 & Empleados de 15 a 24 años\\
 \label{tbl:Otros_datos_comuna}
 \end{table}
 
-Si repetimos el análisis exploratorio hecho para los datos censales, vemos en la \textbf{Figura \ref{fig:Dif_Pct_Cat_Otros}} que las categorías de escolaridad no cambian tanto de 2007 a 2012, salvo un pequeño aumento en las personas que lograron un nivel de preparatoria o equivalente (Dip3). Por el contrario, las tasas de desempleo, particularmente entre los jóvenes y las personas próximas al retiro sí tuvieron variaciones importantes, muy probablemente derivados de la crisis financiera de 2008 y 2009. Por lo mismo, sí presentaré las distribuciones de las tasas de desempleo para ambos años.\\
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{Figs/AED/Cambio_Pct_Comunal_Cat_Otros}
-	\caption{Diferencias entre 2012 y 2007 de los porcentajes que representó cada categoría dentro de la subpoblación comunal correspondiente. Se presentan intervalos empíricos al 95\% y 80\% así como la mediana de las observaciones. Fuente: elaboración propia con los datos del INSEE.}
-	\label{fig:Dif_Pct_Cat_Otros}	
-\end{figure}
-
-En la \textbf{Figura \ref{fig:Distr_por_Dpto_Esc_2012}} observamos las distribuciones departamentales por nivel escolar en 2012. En primer lugar, confirmamos la singularidad de Île de France respecto al resto del país. Es claramente la región con los departamentos más escolarizados de Francia, en el sentido de que tienden a tener una población con mayores niveles de población escolarizada y con diploma universitario--- notablemente en 75-París intramuros y el acaudalado 92-Hauts-de-Seine---. Asimismo, observamos menores porcentajes de personas sin ningún diploma escolar, salvo el caso aparentemente atípico de 93-Seine-Saint-Denis, pero que veíamos en la sección anterior que era el departamento de más inmigrantes, empleados y obreros. Resulta ilustrativo el patrón de personas con preparatoria pues hay un contraste entre París y su \textit{petite courone} y la \textit{grande courone}--- 75, 92, 93 y 94 vs 78, 95, 91 y 77---.\\ 
+Si repetimos el análisis exploratorio hecho para los datos censales, vemos en la \textbf{Figura \ref{fig:Distr_por_Dpto_Esc_2012}} las distribuciones departamentales por nivel escolar en 2012. En primer lugar, confirmamos la singularidad de Île de France respecto al resto del país. Es claramente la región con los departamentos más escolarizados de Francia, en el sentido de que tienden a tener una población con mayores niveles de población escolarizada y con diploma universitario--- notablemente en 75-París intramuros y el acaudalado 92-Hauts-de-Seine---. Asimismo, observamos menores porcentajes de personas sin ningún diploma escolar, salvo el caso aparentemente atípico de 93-Seine-Saint-Denis, pero que veíamos en la sección anterior que era el departamento de más inmigrantes, empleados y obreros. Resulta ilustrativo el patrón de personas con preparatoria pues hay un contraste entre París y su \textit{petite courone} y la \textit{grande courone}--- 75, 92, 93 y 94 vs 78, 95, 91 y 77---.\\ 
 
  Respecto al panorama general de la metrópoli, de nueva cuenta se refleja el patrón generacional de un norte más joven que el sur observando las distribuciones de personas todavía estudiando. Resaltan departamentos en Corse, Poitou-Charentes, Basse-Normandie o Picardie como lugares con altas poblaciones no escolarizadas. Por su parte, Limousin, Auvergne, Champagne-Ardenne y, en cierto sentido, Midi-Pyrinées son regiones con fuertes poblaciones cuyo máximo nivel de estudios es la educación básica.\\ 
  
@@ -611,6 +344,26 @@ En la \textbf{Figura \ref{fig:Distr_por_Dpto_Esc_2012}} observamos las distribuc
 	\caption{Distribuciones departamentales del porcentaje de los distintos grupos de escolaridad como proporción de la población de las comunas en 2012. Fuente: elaboración propia con los datos del INSEE.}
 	\label{fig:Distr_por_Dpto_Esc_2012}	
 \end{figure}
+
+En el caso del empleo, para cada grupo de edad, contamos con el porcentaje de desempleados y su complemento. Bastan presentarse entonces los gráficos para los desempleados en la \textbf{Figura \ref{fig:Distr_por_Dpto_Ocu_2012}}. Lo primero que llama la atención es el rango de variabilidad del porcentaje de desempleados juveniles. Mientras que en el resto de variables aquí consideradas, las comunas que llegan a tener valores de 0 o 100 por ciento son más bien casos atípicos en las colas de las distribuciones, en la distribución nacional de desempleo juvenil observamos modas en 0 en 100. Este carácter multimodal se conserva en la mayoría de los departamentos.\\ 
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.3\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Des1_2012}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.3\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Des2_2012}
+	\end{subfigure}~
+	\begin{subfigure}{0.3\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Des3_2012}
+	\end{subfigure}
+	\caption{Distribuciones departamentales de los porcentajes de desempleados en 2012. Fuente: elaboración propia con los datos del INSEE.}
+	\label{fig:Distr_por_Dpto_Ocu_2012}	
+\end{figure}
+
+Para el desempleo general, 25 a 54 años, las distribuciones son más homogéneas. Notamos algunos casos por encima de la referencia nacional como el popular 93-Seine-Saint-Denis o los departamentos sureños del Languedoc-Rousillon o Corse. En el desempleo de adultos cercanos al retiro, 55-64 años, las distribuciones son mucho más sesgadas a la derecha con algunas colas largas. 
 
 \section{Asociación voto y configuraciones sociales}
 
