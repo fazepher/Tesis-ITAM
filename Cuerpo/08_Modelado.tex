@@ -1,14 +1,12 @@
 \chapter{Modelado}
 
-En este capítulo desarrollo el proceso de modelado de los datos franceses con tal de explorar las configuraciones sociales que favorecieron o inhibieron el voto por el FN en 2012. Para ello hay que notar que los datos electorales que considero son el número de votos por Marine Le Pen en cada comuna así como el número de inscritos en el listado nominal de las mismas. Tenemos entonces, $C$ pares de la forma $\left\lbrace y_c, n_c \right\rbrace$ donde $y_c$ representa el número de votos y $n_c$ el de inscritos en la comuna $c$. Este tipo de datos puede ser modelado como proveniente de una distribución binomial con número de ensayos conocido y parámetro de interés $p_c$: 
+En este capítulo desarrollo el proceso de modelado de los datos franceses con tal de explorar las configuraciones sociales que favorecieron o inhibieron el voto por el FN en 2012. Para ello hay que notar que los datos electorales que considero son el número de votos por Marine Le Pen en cada comuna así como el número de inscritos en el listado nominal de las mismas. Tenemos entonces $C$ pares de la forma $\left\lbrace y_c, n_c \right\rbrace$ donde $y_c$ representa el número de votos y $n_c$ el de inscritos en la comuna $c$. Este tipo de datos puede ser modelado como proveniente de una distribución binomial con número de ensayos conocido y parámetro de interés $p_c$: 
 
 \begin{equation*}
 y_c|p_c \sim Binom(n_c, p_c) \quad \forall \; c \, \in \mathbb{N}_C
 \end{equation*} 
 
-\section{Modelos Individuales}
-
-Podemos interpretar cada parámetro $p_c$ como la propensión de que un elector tomado al azar en la comuna $c$ efectivamente acudiera a votar por Marine Le Pen en la primera vuelta presidencial de 2012. Esta propensión es la que quisiéramos explicar en términos de configuraciones sociales.\\ 
+Podemos interpretar cada parámetro $p_c$ como la afinidad que se tuvo en la comuna $c$ por Marine Le Pen en la primera vuelta presidencial de 2012. Esta afinidad es la que quisiéramos explicar en términos de configuraciones sociales.\\
 
 Recordando la presentación de la regresión logística en la \textbf{\autoref{Sec:Pres_Logis}}, si tenemos un vector $x_c$ de variables explicativas en la comuna $c$, construimos un MLG de la siguiente manera: 
 
@@ -20,13 +18,15 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
 
 En nuestro caso, sin pérdida de generalidad, para la $m$-ésima variable explicativa tenemos un vector de proporciones $x_c=(x_{1,c},\dots,x_{l_m,c})$ donde $l_m$ es el número de categorías de la variable y $x_{j,c}=1 - \sum_{k\neq j} x_{k,c}$ para toda $j \in \mathbb{N}_{l_m}$. Recordando el problema de multicolinealidad que esto ocasionaría al considerar la regresión con intercepto--- \autoref{prob_multicolinealidad}--- podemos definir una restricción de identificabilidad de suma cero para los coeficientes, de manera tal que $\beta_j=-\sum\limits_{k\neq j}\beta_k$.\\
 
-Para ilustrarlo, si tomamos como variable explicativa la composición por edad de la población comunal, tendríamos $x_c=(Ed1_c, \dots, Ed6_c)$ donde $Edj_c$ es la proporción de habitantes del grupo de edad $j$. En este caso, por ejemplo, $\beta_{6} = -\sum\limits_{k = 1}^5 \beta_k$, por lo que en realidad solo tenemos 5 coeficientes libres más el intercepto a la hora de asignar la distribución inicial $f(\theta)$. 
+Para ilustrarlo, si tomáramos como variable explicativa la composición por edad de la población comunal, tendríamos $x_c=(Ed1_c, \dots, Ed6_c)$ donde $Edj_c$ es la proporción de habitantes del grupo de edad $j$. En este caso, por ejemplo, $\beta_{6} = -\sum\limits_{k = 1}^5 \beta_k$, por lo que en realidad solo tenemos 5 coeficientes libres más el intercepto a la hora de asignar la distribución inicial $f(\theta)$. 
 
 \begin{align*}
 y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
 \text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \beta_1Ed1_c + \dots + \beta_6Ed6_c \quad \text{tal que} \quad \beta_6 = -\sum\limits_{k = 1}^5 \beta_k \nonumber \\
 \text{y} \quad \theta &= (\alpha,\beta_1,\dots,\beta_5) \sim f(\theta) 
 \end{align*}
+
+\section{Distribuciones inciales}
 
 ¿Cómo asignamos distribuciones iniciales? Primero hay que tomar en cuenta que las distribuciones normalmente consideradas como mínimo informativas tienen implicaciones particulares en el contexto de la escala logística. Supongamos que quisiéramos asignar una distribución inicial al valor del predictor lineal $\eta = \alpha + \beta X$. Una distribución $N(\mu=0,\sigma^2=100)$ sería normalmente considerada como una distribución mínimo informativa. Tendría una desviación estándar de $10$, por lo que poco más del 95\% de sus observaciones oscilan entre $-20$ y $20$. ¿Qué implicación tiene esto para una proporción $p$ vinculada con $\eta$ mediante la liga logística? Es decir, si asignamos esa distribución inicial a $\eta=ln\left(\dfrac{p}{1-p}\right)$, ¿qué estamos diciendo sobre $p$? Podemos observarlo en el primer histograma de la \textbf{Figura \ref{fig:Malas_Iniciales}}. Simulando $500,000$ observaciones de $\eta\sim N(\mu=0,\sigma_1=10)$ vemos que la mayoría de ellas llevan a valores extremos de $p$ cercanos a 0 o a 1. Incluso repitiendo el ejercicio para desviaciones estándar menores como $\sigma_2=5$ o $\sigma_3=2.5$, la distribución inicial lleva a un histograma para $p$ en forma de U. Tendríamos que tener desviaciones estándar más pequeñas, como $\sigma_4=1.5$, o una normal estándar con $\sigma_5=1$ para estar asignando una distribución poco informativa para $p$.\\ 
 
@@ -46,7 +46,7 @@ El motivo es que la función logística no es lineal y tiene que ``compactar'' v
 	\label{fig:Escala_Logis}
 \end{figure}
 
-Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor lineal en su conjunto, sino para los coeficientes $\beta$ de dicho predictor lineal. Optaré aquí por una posición un poco escéptica o conservadora. Los efectos de variables ecológicas o agregadas, no deberían ser tan grandes. No querría ``inflar'' la magnitud del valor explicativo mediante la distribución inicial pero tampoco negar la posibilidad de que existan algunos efectos importantes. Asimismo, \textit{a priori}, no buscaría asignarle un sentido al efecto. Después de algunas pruebas consideré que una inicial para el coeficiente $\beta\sim N(\mu=0,\sigma=0.5)$ cumple relativamente bien con estas condiciones. Si tomamos el $0$ como referencia y comparamos el valor correspondiente de $p$ con aquel para una $\beta$ una desviación estándar mayor--- i.e. $\beta = 0.5$--- el efecto $\Delta$ sería de aproximadamente $+12$ puntos porcentuales. Si ahora disminuimos $\beta$ en 2 desviaciones estándar,  $\Delta \approx -23$ pp, como puede apreciarse en la \textbf{Figura \ref{fig:Inicial_Coef}}.
+Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor lineal en su conjunto, sino para los coeficientes $\beta$ de dicho predictor lineal. Optaré aquí por una posición un poco escéptica o conservadora. A pesar de lo que sugerían las tendencias ingenuas del capítulo anterior, \textit{a priori}, no buscaría asignarle un sentido al efecto. Asimismo, los efectos de variables ecológicas o agregadas, no deberían ser tan grandes. No querría ``inflar'' la magnitud del valor explicativo mediante la distribución inicial pero tampoco negar la posibilidad de que existan algunos efectos importantes. Considero que una inicial para el coeficiente $\beta\sim N(\mu=0,\sigma=0.5)$ cumple relativamente bien con estas condiciones. Si tomamos el $0$ como referencia y comparamos el valor correspondiente de $p$ con aquel para una $\beta$ una desviación estándar mayor--- i.e. $\beta = 0.5$--- el efecto $\Delta$ sería de aproximadamente $+12$ puntos porcentuales. Si ahora disminuimos $\beta$ en 2 desviaciones estándar,  $\Delta \approx -23$ pp, como puede apreciarse en la \textbf{Figura \ref{fig:Inicial_Coef}}.
 
 \begin{figure}[h]
 	\centering
@@ -83,6 +83,8 @@ y_c|\theta=(\alpha,\beta) & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathb
 
 Estas distribuciones iniciales, como ya he mencionado, son subjetivas. Alguien más podría no estar muy convencido de la elección que realizo, por lo que eran importantes los párrafos anteriores de manera que fuera más transparente el proceso por el cual llegué a elegirlas.\\  
 
+\section{Modelos individuales}
+
 Consideremos entonces, para cada variable explicativa, modelos de la siguiente forma:
 
 \begin{align}\label{eq:Modelo_Nal_Ind}
@@ -98,13 +100,13 @@ A \eqref{eq:Modelo_Nal_Ind} le llamaré un \textbf{Modelo Nacional Individual} p
 y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
 \text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \sum\limits_{j=1}^{l_m} \beta_{d[c],j} x_{j,c} \nonumber\\ 
 \text{tal que} \quad \beta_{d,l_m} &= -\sum\limits_{k = 1}^{l_m} \beta_{d,k} \nonumber \\
-\alpha_d & \sim N(\mu_{\alpha}, 1) \quad \forall \, d \in \mathbb{N}_{96} \nonumber \\
-\beta_{d,j} & \sim N(\mu_{\beta}, 1) \quad \forall \, j \in \mathbb{N}_{l_m-1}  \quad \text{y} \quad d \in \mathbb{N}_{96} \nonumber \\
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad \forall \, d \in \mathbb{N}_{96} \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{l_m-1}  \quad \text{y} \quad d \in \mathbb{N}_{96} \nonumber \\
 \mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
 \mu_{\beta} &\sim N(0,\sigma=0.5)
 \end{align}
 
-Se corrieron cada uno de los 18 modelos mediante el software Stan, simulando vía \textit{Hamiltonian Monte Carlo} las distribuciones posteriores dada la muestra de datos discutida en {\color{Red}sec. muestra}. Una vez con dichas distribuciones posteriores, podemos hacer lo que \textcite{Gelman13} llaman \textit{posterior predictive checks}. Podemos predecir el porcentaje esperado de votos en cada una de las comunas y calcular su error respecto al real. Para el modelo nacional de ocupación laboral juvenil, los resultados están en la \textbf{Figura \ref{fig:Modelo_Nal_Ocu_Juvenil}}.\\
+Se corrieron cada uno de los 18 modelos mediante el software Stan, simulando vía \textit{Hamiltonian Monte Carlo} las distribuciones posteriores dada la muestra de datos discutida en la \autoref{secc:muestra}. Una vez con dichas distribuciones posteriores, podemos hacer lo que \textcite{Gelman13} llaman \textit{posterior predictive checks}. Podemos predecir el porcentaje esperado de votos en cada una de las comunas y calcular su error respecto al real. Para el modelo nacional de ocupación laboral juvenil, los resultados están en la \textbf{Figura \ref{fig:Modelo_Nal_Ocu_Juvenil}}.\\
 
 \begin{figure}[h]
 	\centering
@@ -115,7 +117,7 @@ Se corrieron cada uno de los 18 modelos mediante el software Stan, simulando ví
 
 En el mapa de la izquierda las predicciones se colorean de acuerdo a la escala real que va de 0\% a 62.5\% y donde el cambio de tonos rojos a azules se da en la comuna mediana de 17.5\%. Observamos que la predicción en general subestima el verdadero porcentaje obtenido pues el mapa está prácticamente coloreado en su totalidad de tonos rojos. Sin embargo, las predicciones están cerca de la mediana. De hecho, el mapa de errores--- verde significa poco error y naranjas y rojos más--- es visualmente un negativo del verdadero mapa de resultados que observábamos en la \textbf{Figura \ref{fig:Mapa_Pct_Br}} del capítulo anterior.\\
 
-En general, los modelos nacionales tienen el defecto de no reconocer la enorme variabilidad geográfica del fenómeno electoral. Si construimos distintas medidas de error de predicción vemos que pasar de un modelado nacional a un modelado jerárquico las reduce consistentemente. Para cada simulación posterior predecimos el número de votos en cada comuna, departamento y a nivel nacional. Luego lo convertimos en porcentaje bruto de votos predicho dividiendo entre el número de inscritos en la comuna. Así, podemos tomar los conocidos errores absoluto y cuadrático promedio para el porcentaje de votos a nivel comuna, departamento y nacional. Incluso podemos tomar una pérdida más arbitraria, pero ilustrativa, como el porcentaje promedio de estimaciones que se encuentran a más de 1.5 puntos porcentuales del verdadero valor en los 3 niveles de agregación; a esta medida la llamo tolerancia 1.5 pp. Finalmente se calcula el promedio de las medidas a través del total de simulaciones posteriores y se grafican en la \textbf{Figura \ref{fig:Errores_Modelos_Individuales}}. El gráfico también incluye el cálculo de un cuarto error llamada WAIC para las comunas, pero a él me refiriré más adelante. En el gráfico, los puntos son las medidas para el modelo nacional y las flechas las de los modelos jerárquicos.\\ 
+En general, los modelos nacionales tienen el defecto de no reconocer la enorme variabilidad geográfica del fenómeno electoral. Si construimos distintas medidas de error de predicción vemos que pasar de un modelado nacional a un modelado jerárquico las reduce consistentemente. Para cada simulación posterior predecimos el número de votos en cada comuna, departamento y a nivel nacional. Luego lo convertimos en porcentaje bruto de votos predicho dividiendo entre el número de inscritos en la comuna. Así, podemos tomar los conocidos errores absoluto y cuadrático promedio para el porcentaje de votos a nivel comuna, departamento y nacional. Incluso podemos tomar una pérdida más arbitraria, pero ilustrativa, como el porcentaje promedio de estimaciones que se encuentran a más de 1.5 puntos porcentuales del verdadero valor en los 3 niveles de agregación; a esta medida la llamo tolerancia 1.5 pp. Finalmente se calcula el promedio de las medidas a través del total de simulaciones posteriores y se grafican en la \textbf{Figura \ref{fig:Errores_Modelos_Individuales}}. El gráfico también incluye el cálculo de un cuarto error llamado WAIC para las comunas, pero a él me refiriré más adelante. En el gráfico, los puntos son las medidas para el modelo nacional y las flechas las de los modelos jerárquicos.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -124,13 +126,15 @@ En general, los modelos nacionales tienen el defecto de no reconocer la enorme v
 	\label{fig:Errores_Modelos_Individuales}
 \end{figure} 
 
-Como es de esperarse, los modelos estiman de mejor manera los porcentajes de niveles de mayor agregación que el del nivel comunal. Viendo la pérdida arbitraria llamada de tolerancia 1.5, salvo las variables de sexo y ocupaciones, todas las predicciones estiman un porcentaje de votos nacional a menos de 1.5 puntos porcentuales del real. Sin embargo, vemos que para los 96 departamentos, los modelos nacionales solo logran esta precisión esperada de estimación en al rededor de 70. Esto refleja lo que había mencionado al ver el mapa de predicciones para el modelo nacional individual por ocupación juvenil. Al no permitir que los coeficientes varíen por departamento, el modelo ajusta para el país entero, sacrificando las estimaciones en las diferentes zonas geográficas que estos constituyen. Si observamos medidas de error más tradicionales como la absoluta o la cuadrática vemos que todas las flechas se desplazan significativamente a la izquierda, es decir que se reducen los errores al reconocer esa variabilidad geográfica.\\
+Como es de esperarse, los modelos estiman de mejor manera los porcentajes de niveles de mayor agregación que el del nivel comunal. Viendo la pérdida arbitraria llamada de tolerancia 1.5, salvo las variables de sexo y ocupaciones, todas las predicciones estiman un porcentaje de votos nacional a menos de 1.5 puntos porcentuales del real. Sin embargo, vemos que para los 96 departamentos, los modelos nacionales solo logran esta precisión esperada de estimación en al rededor de 70. Esto refleja lo que había mencionado al ver el mapa de predicciones para el modelo nacional individual por ocupación juvenil. Al no permitir que los coeficientes varíen por departamento, el modelo ajusta para el país entero, sacrificando las estimaciones en las diferentes zonas geográficas que estos constituyen. Si observamos medidas de error más tradicionales como la absoluta o la cuadrática vemos que todas las flechas se dirigen a la izquierda, es decir que se reducen los errores al reconocer esa variabilidad geográfica. Ahora bien, estas 3 medidas tienen más un carácter ilustrativo y sirven para recordar que se pueden construir diferentes errores para diferentes estimadores.\\ 
 
-Ahora bien, las 3 medidas que he mencionado tienen más un carácter ilustrativo y sirven para recordar que se pueden construir diferentes errores para diferentes estimadores. Asimismo, podemos notar que las variables de solo 2 categorías como ocupación, sexo, nacionalidad y condición migratoria tienen peor desempeño que las de más categorías como edad, categoría socioprofesional y escolaridad. ¿Esto quiere decir que son peores variables explicativas? ¿No podría esto deberse a que las últimas tienen más parámetros y como ilustraba Von Neuman al decir que con 4 parámetros podía ajustar un elefante, es más fácil ajustar mejor simplemente por introducir parámetros adicionales?\\
+Ahora notemos que las variables de solo 2 categorías como ocupación, sexo, nacionalidad y condición migratoria tienen peor desempeño que las de más categorías como edad, categoría socioprofesional y escolaridad. ¿Esto quiere decir que son peores variables explicativas? ¿No podría esto deberse a que las últimas tienen más parámetros y es más fácil ajustar mejor simplemente por introducir parámetros adicionales?\\
 
-\subsection*{WAIC}
+\subsection{WAIC}
 
-Pensando en esta posibilidad de mejorar un ajuste simplemente haciendo más complejo el modelo es que una mejor y más aceptada medida de error es el llamado WAIC por sus siglas en inglés \textit{Widely Applicable} o \textit{Watanabe-Akaike Information Criterion} \parencite{Vehtari16}. El WAIC busca estimar la capacidad predictiva de un modelo via las predictivas posteriores de los datos con los que se ajusta el modelo. La intuición es que a mayor valor de la posterior predictiva para el dato observado, mayor la posibilidad de predecir mejor. El WAIC se define de la siguiente manera, para un conjunto de $n$ datos $y=(y_1,\dots,y_n)$ y una muestra posterior de parámetros $\left\lbrace\theta_{(s)}\right\rbrace_{s=1}^S$:
+Pensando en la posibilidad de mejorar un ajuste simplemente haciendo más complejo el modelo es que una mejor y más aceptada medida de error es el llamado WAIC por sus siglas en inglés \textit{Widely Applicable} o \textit{Watanabe-Akaike Information Criterion} \parencite{Vehtari16}. El WAIC busca estimar la capacidad predictiva de un modelo via las predictivas posteriores de los datos con los que se ajusta. La intuición es que a mayor valor de la predictiva posterior para el dato observado, mayor la posibilidad de predecir otros datos.\\ 
+
+Para un conjunto de $n$ datos $y=(y_1,\dots,y_n)$ y una muestra posterior de parámetros $\left\lbrace\theta_{(s)}\right\rbrace_{s=1}^S$, el WAIC se define de la siguiente manera:
 
 \begin{align}\label{WAIC}
 WAIC(y|\theta) &= \widehat{lpd} + \widehat{par} \\
@@ -138,8 +142,204 @@ WAIC(y|\theta) &= \widehat{lpd} + \widehat{par} \\
 \text{y} \quad \widehat{par} &= \sum\limits_{i=1}^n V(y_i|\theta), \nonumber
 \end{align}
 
-donde $V(y_i|\theta)=\dfrac{1}{S-1}\sum\limits_{s=1}^S \mathcal{L}(y_i;\theta_{s})^2$ y $\mathcal{L}(y_i;\theta_{s}) = ln\left[f(y_i|\theta_{(s)})\right] - \dfrac{1}{S}\sum\limits_{s=1}^S ln\left[f(y_i|\theta_{(s)})\right]$.\\
-El WAIC se conforma de dos sumas. La primera, $\widehat{lpd}$, es una aproximación de la log predictiva posterior, es decir una medidad de ajuste. Por otro lado, $\widehat{par}$ es normalmente llamado el \textit{número efectivo estimado de parámetros} y es una medida que mediante sumas de varianzas busca medir la complejidad del modelo. En total, entre menor sea el valor del WAIC, esperaríamos un mejor desempeño predictivo tomando en cuenta la complejidad del modelo. Ahora bien, notemos que con la definición dada, el WAIC es un estimador por lo que tiene una distribución muestral. Gracias al paquete \textit{loo} de $\mathfrak{R}$, podemos estimar tanto los WAICs y sus errores estándar como la diferencia esperada entre dos de ellos y, argumentando un teorema central del límite, la probabilidad de que el WAIC de un modelo sea efectivamente menor o igual al WAIC de otro. Estas comparaciones las observamos en la \textbf{Figura COMPARA WAICS}.\\
+donde $V(y_i|\theta)=\dfrac{1}{S-1}\sum\limits_{s=1}^S \mathcal{L}(y_i;\theta_{s})^2$ y $\mathcal{L}(y_i;\theta_{s}) = ln\left[f(y_i|\theta_{(s)})\right] - \dfrac{1}{S}\sum\limits_{s=1}^S ln\left[f(y_i|\theta_{(s)})\right]$.{}\\
 
-Para la mayoría de las comparaciones es claro que un modelo tiene mejor ajuste que el otro. Podríamos pensar que efectivamente hay un ordenamiento en el poder predictivo de las distintas variables: escolaridad, categorías socioprofesionales, edad, condición migratoria, nacionalidad, sexo y, finalmente, las ocupaciones. Sin concluir todavía nada, parecería que a las hipótesis sobre inseguridad laboral no les corresponde el mejor de los poderes explicativos en términos de estos modelos. 
+El WAIC se conforma de dos sumas. La primera, $\widehat{lpd}$, es una aproximación de la log predictiva posterior, es decir una medidad de ajuste. Por otro lado, $\widehat{par}$ es normalmente llamado el \textit{número efectivo estimado de parámetros} y es una medida que mediante sumas de varianzas busca medir la complejidad del modelo. En total, entre menor sea el valor del WAIC, esperaríamos un mejor desempeño predictivo tomando en cuenta la complejidad del modelo.\\ 
 
+Notemos que con la definición dada, el WAIC es un estimador por lo que tiene una distribución muestral. Gracias al paquete \textit{loo} de $\mathsf{R}$, podemos estimar tanto los WAICs y sus errores estándar como la diferencia esperada entre dos de ellos y, {\color{Red} argumentando un teorema central del límite, la probabilidad de que el WAIC de un modelo sea efectivamente menor o igual al WAIC de otro. Estas comparaciones las observamos en la \textbf{Figura COMPARA WAICS}.}\\
+
+Para la mayoría de las comparaciones es claro que un modelo tiene mejor ajuste que el otro. Podríamos pensar que efectivamente hay un ordenamiento en el poder predictivo de las distintas variables: escolaridad, categorías socioprofesionales, edad, condición migratoria, nacionalidad, sexo y, finalmente, las ocupaciones. Sin concluir todavía nada, parecería que a las hipótesis sobre inseguridad laboral no les corresponde el mejor de los poderes explicativos en términos de estos modelos.\\
+
+\section{Modelos Compuestos}
+
+Este ordenamiento preliminar tiene el objetivo de ayudarme a construir, secuencialmente, un modelo cada vez más complejo. Para comenzar, veamos los mapas de predicción que generó el modelo con menor WAIC, el jerárquico por escolaridad, en la \textbf{Figura \ref{fig:Modelo_Jer_Escolaridad}}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Jer_Escolaridad}
+	\caption{Mapa de predicciones medias del porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad y mapa de los respectivos errores. Fuente: elaboración propia.}
+	\label{fig:Modelo_Jer_Escolaridad}
+\end{figure}
+
+El mapa de errores ya se observa más verde y homogéneo. Las grandes zonas de fortaleza y debilidad del FN comienzan a ser identificadas por el modelo. Sin embargo, los tonos de algunas predicciones son todavía demasiado cercanos a la mediana. En el centro observamos una zona de tonos muy claros, casi blancos, que no corresponden totalmente a la realidad. En general, vemos que hay menor variabilidad dentro de los departamentos de la que se observó en la elección.\\ 
+
+Estas reflexiones sugieren que, en lugar de tomar una a una las variables, podemos ir agregando variables a la regresión en modelos jerárquicos secuenciales que refinen el ajuste. Entonces, comenzando con la escolaridad, iré agrandando el modelo con la inclusión de una nueva variable cada vez.
+
+\subsection*{Modelo A}
+
+El primer modelo compuesto incluye las variables de escolaridad y categorías socioprofesionales. Para distinguir las variables utilizaré diferentes letras griegas para sus coeficientes. Para la configuración social de escolaridad 
+\[x_{escol,c} = (Esc_c,Dip1_c,Dip2_c,Dip3_c,Dip4_c)^T\]
+en la comuna $c$ los coeficientes departamentales serán un vector $\beta_{d[c]} = (\beta_{d[c],1},\dots,\beta_{d[c],5})$. Para las categorías socioprofesionales $x_{csp,c}$ los coeficientes serán $\gamma_{d[c]}$:
+
+\begin{align}\label{eq:Modelo_Comp_A}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} \\ 
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+Al estimar el modelo con ambas variables las predicciones efectivamente mejoran. La diferencia en WAIC del modelo compuesto A y el Jerárquico por escolaridad se estima en {\color{Red} AGREGAR ESTIMADO CON ERROR ESTÁNDAR}. Asimismo, observando los mapas de la \textbf{Figura \ref{fig:Modelo_Compuesto_A}}, vemos que se reduce la gran zona blanquiza del centro, se comienza a observar mayor variabilidad dentro de los departamentos y los tonos también se oscurecen más, sobre todo en el noreste.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Compuesto_A}
+	\caption{Mapas de predicciones medias y respectivos errores para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad y Categorías socioprofesionales. Fuente: elaboración propia.}
+	\label{fig:Modelo_Compuesto_A}
+\end{figure}
+
+\subsection*{Modelo B}
+
+Ahora agregaremos los grupos de edad $x_{edad,c}$ cuyos coeficientes serán $\delta_{d[c]}$:
+
+\begin{align}\label{eq:Modelo_Comp_B}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\ 
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+El WAIC vuelve a disminuir y los respectivos mapas corresponden a la \textbf{Figura \ref{fig:Modelo_Compuesto_B}}.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Compuesto_B}
+	\caption{Mapas de predicciones medias y respectivos errores para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad, Categorías socioprofesionales y Edad. Fuente: elaboración propia.}
+	\label{fig:Modelo_Compuesto_B}
+\end{figure}
+
+\subsection*{Modelo C}
+
+Debido a la similitud entre condición migratoria y nacionalidad, solamente buscaba incorporar una de las dos, tratando de identificar la que tuviera mejor desempeño. De acuerdo al ordenamiento previo en los modelos individuales, consideraré solo la variable migratoria $x_{migr,c}$. El modelo compuesto C la incorpora con coeficientes $\lambda_{d[c]}$:
+
+\begin{align}\label{eq:Modelo_Comp_C}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} + \lambda_{d[c]} x_{migr,c} \\ 
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
+\lambda_{d,1} & \sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Compuesto_C}
+	\caption{Mapas de predicciones medias y respectivos errores para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad, Categorías socioprofesionales, Edad y Condición Migratoria. Fuente: elaboración propia.}
+	\label{fig:Modelo_Compuesto_C}
+\end{figure}
+
+\subsection*{Modelo D}
+
+El modelo D incluye la distribución comunal por sexo $x_{sexo,c}$ con coeficientes $\kappa_{d[c]}$. 
+
+\begin{align}\label{eq:Modelo_Comp_D}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\begin{split}
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
+&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} 
+\end{split}\\
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
+\lambda_{d,1} & \sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\kappa_{d,1} & \sim N(\mu_{\kappa}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Compuesto_D}
+	\caption{Mapas de predicciones medias y respectivos errores para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad, Categorías socioprofesionales, Edad, Condición Migratoria y Sexo. Fuente: elaboración propia.}
+	\label{fig:Modelo_Compuesto_D}
+\end{figure}
+
+\subsection*{Modelos E y F}
+
+Después comenzaríamos a incluir las variables de ocupación. Como mencionaba al presentar las variables, tengo un interés especial en la (des)ocupación juvenil, pues esta sería una variable que referencias como \textcite{LeBras16} y \textcite{Perrineau07} favorecerían. Por ello, al margen del ordenamiento, vamos a construir dos modelos de 6 variables. De manera general ambos incorporarían una variable explicativa $x_{ocu,c}$ con coeficientes $\zeta_{d[c]}$. El modelo E es el modelo D más la ocupación juvenil, mientras que el modelo F es el modelo D más la ocupación general. 
+
+\begin{align}\label{eq:Modelo_Comp_EF}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\begin{split}
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
+&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu,c} 
+\end{split}\\
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
+\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
+\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
+\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+¿Cuál es la comparación de WAICs hasta este punto? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Modelado/Graf_WAIC_Modelos_Compuestos}
+	\caption{Comparativo de WAIC para distintos modelos. Comenzando por los modelos individuales en color rojo, ir agregando una variable adicional disminuye el WAIC. El Modelo de 5 variables ya no parece mejorar tanto. Fuente: elaboración propia.}
+	\label{fig:Compara_WAIC_Compuestos}
+\end{figure}

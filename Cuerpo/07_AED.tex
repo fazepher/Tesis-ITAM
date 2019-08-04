@@ -100,7 +100,7 @@ Si descendemos un nivel y observamos el mapa a nivel departamento en la \textbf{
 	\begin{subfigure}{0.4\textwidth}
 	\includegraphics[width = \textwidth]{Figs/AED/Mapa_Dptos_Br_P12_FN}
 	\caption{Mapa del \% bruto de votos obtenido por Marine Le Pen en las elecciones presidenciales del 2012 en cada departamento.}
-	\label{fig:Pct_Br_Dpto_P12}	
+	\label{fig:Pct_Br_Dptos_P12}	
 	\end{subfigure}
 	~
 	\begin{subfigure}{0.5\textwidth}
@@ -345,9 +345,9 @@ Si repetimos el análisis exploratorio hecho para los datos censales, vemos en l
 	\label{fig:Distr_por_Dpto_Esc_2012}	
 \end{figure}
 
-En el caso del empleo, para cada grupo de edad, contamos con el porcentaje de desempleados y su complemento. Bastan presentarse entonces los gráficos para los desempleados en la \textbf{Figura \ref{fig:Distr_por_Dpto_Ocu_2012}}. Lo primero que llama la atención es el rango de variabilidad del porcentaje de desempleados juveniles. Mientras que en el resto de variables aquí consideradas, las comunas que llegan a tener valores de 0 o 100 por ciento son más bien casos atípicos en las colas de las distribuciones, en la distribución nacional de desempleo juvenil observamos modas en 0 en 100. Este carácter multimodal se conserva en la mayoría de los departamentos.\\ 
+En el caso del empleo, para cada grupo de edad, contamos con el porcentaje de desempleados y su complemento. Bastan presentarse entonces los gráficos para los desempleados en la \textbf{Figura \ref{fig:Distr_por_Dpto_Ocu_2012}}. Lo primero que llama la atención es el rango de variabilidad del porcentaje de desempleados juveniles. Mientras que en el resto de variables aquí consideradas las comunas que llegan a tener valores de 0 o 100 por ciento son más bien casos atípicos en las colas de las distribuciones, en la distribución nacional de desempleo juvenil observamos modas en 0 y en 100. Este carácter multimodal se conserva en la mayoría de los departamentos.\\ 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.3\textwidth}
 	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Distr_por_Dpto_Des1_2012}
@@ -365,6 +365,71 @@ En el caso del empleo, para cada grupo de edad, contamos con el porcentaje de de
 
 Para el desempleo general, 25 a 54 años, las distribuciones son más homogéneas. Notamos algunos casos por encima de la referencia nacional como el popular 93-Seine-Saint-Denis o los departamentos sureños del Languedoc-Rousillon o Corse. En el desempleo de adultos cercanos al retiro, 55-64 años, las distribuciones son mucho más sesgadas a la derecha con algunas colas largas. 
 
-\section{Asociación voto y configuraciones sociales}
+\section{Muestra de comunas}\label{secc:muestra}
 
-Una vez establecidas
+En el proceso de modelado del siguiente capítulo se discutirán una serie de modelos. Debido al costo computacional que implica generarlos todos, decidí seleccionar una muestra aleatoria de comunas para poder llevarlo a cabo. Esta es una práctica recomendada cuando se intentarán explorar varios modelos con el objetivo de ir entendiendo de mejor manera el problema \parencite{GelmanHill06}. Después de algunas pruebas--- tomando en cuenta tanto el tiempo de ajuste como la precisión esperada dado el tamaño de muestra--- decidí que muestrear al rededor de 4,000 comunas de las poco más de 36,000 existentes era adecuado. Debido a que el análisis exploratorio discutido hasta ahora comienza a sugerir un modelado jerárquico de los datos a nivel departamento, el diseño de muestreo considerado es estratificado por departamento.\\ 
+
+París y su pequeña corona--- departamentos 75, 92, 93 y 94--- están conformados por pocas comunas. En efecto, de entre estos, el de mayor número de comunas era el 94-Val-de-Marne, con 46, mientras que del resto de departamentos el que menos comunas tenía era el 90-Territoire de Belfort con 101. Esta diferencia de más del doble motivó la decisión de que para estos 4 departamentos en lugar de muestrear se censaran.\\
+
+Para el resto de departamentos se realizó un muestreo aleatorio simple dentro de cada departamento con un tamaño de muestra proporcional al número de comunas del mismo. Sin embargo, como el departamento 75-París se censaría en sus 20 comunas\footnote{Recordemos que técnicamente París es al mismo tiempo un departamento y una sola comuna. Sin embargo, tanto los resultados electorales como los datos del INSEE se tienen para cada uno de los 20 \textit{arrondisements} en los que se divide. Por ello, cada uno de estos \textit{arrondisements} se consideró como si fueran una comuna. Esto se repitió para los \textit{arrondisements} de las ciudades de Lyon y de Marsella.}, otra consideración fue que el tamaño mínimo de muestra en cada departamento fuera de 20 comunas. En total entonces se obtuvo una muestra de 4,157 comunas. {\color{Red} Tanto el listado de comunas como el script con el que se obtuvo la muestra están disponibles en el repositorio de Github de esta tesis.}\\
+
+En la \textbf{Figura \ref{fig:Compara_Distr_Muestra}} vemos un comparativo de las distribuciones de porcentajes brutos de votos para las comunas muestreadas y aquellas fuera de muestra. Vemos que la muestra cubre correctamente el rango de la distribución, sin embargo está más concentrada en el centro de la misma y no refleja de la mejor manera las colas, sobre todo la moda en 0 que sí presentan las comunas fuera de la muestra. Esto hay que tenerlo en cuenta pues probablemente las predicciones que hagan los modelos serán más concentradas hacia la media o mediana de la distribución nacional y fallarán para comunas con porcentajes observados extremos. Sin embargo, para efectos de construcción del modelo es un sacrificio que aceptamos. La muestra logra delinear las grandes zonas de fuerza y debilidad del FN como vemos en el mapa de la \textbf{Figura \ref{fig:Mapa_Comunas_Muestra}}.\\
+ 
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Distr_Votos_Br_P12_FN_MUESTRA}
+	\caption{}
+	\label{fig:Compara_Distr_Muestra}		
+	\end{subfigure}\\
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[width = \textwidth]{Figs/AED/Mapa_Votos_Br_P12_FN_MUESTRA}
+	\caption{}
+	\label{fig:Mapa_Comunas_Muestra}
+	\end{subfigure}
+	\caption{Distribuciones y mapa del \% bruto de votos para las comunas muestreadas. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
+\end{figure}
+
+Si estimáramos el porcentaje de votos en cada departamento con base en el porcentaje observado en la muestra, tendríamos errores que van de 0 puntos porcentuales para los departamentos censados hasta un máximo de 4.2 pp de error en el Bas-Rhin. 86 de los 96 departamentos tienen errores menores a 2.5 pp, lo que se observa por la mayoría de tonos rosas y morados en la \textbf{Figura \ref{fig:Errores_Est_Muestra}}. Este es un mapa \textit{dorling} en el que cada bolita representa un departamento, identificado con su código geográfico INSEE. Los departamentos que pertenecen a una misma región están unidos mediante las líneas grises.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.45\textwidth]{Figs/AED/Dorling_Errores_P12_FN_MUESTRA}
+	\caption{Errores departamentales de estimación con base en la muestra. Fuente: elaboración propia.}
+	\label{fig:Errores_Est_Muestra}	
+\end{figure}
+
+En general, los mayores errores se encuentran en departamentos del noreste francés, una zona de fortaleza del FN. También recordemos que los departamentos ``sobremuestreados'' por ser censados forman parte de Île de France, una región de debilidad frontista. Por lo mismo, podríamos esperar que las predicciones de los modelos ajustados a estos datos subestimen un poco los porcentajes realmente obtenidos. En este sentido podríamos conjeturar que un modelo ajustado con estos datos se desempeñe de mejor manera en departamentos señalados en azul que en aquellos en rojo. 
+
+\section{Asociaciones}
+
+Con esta muestra podemos explorar las asociaciones entre el voto y las configuraciones sociales definidas por las variables seleccionadas. Debido a que los datos que tenemos son tanto los votos obtenidos como el número de inscritos, es decir el máximo de posibles votos, una buena alternativa de modelado será considerar los datos como binomiales. Por tanto, en lugar de intentar una asociación directamente en la escala de los votos o del porcentaje del voto, podemos buscarla en la escala logística.\\
+
+En la \textbf{Figura \ref{fig:Disper_Voto_Variables}} observamos diagramas de dispersión de los porcentajes brutos de votos observados en la escala logística\footnote{Cuando los porcentajes observados son iguales a 0, la transformación logística no está definida por lo que los puntos son representados como si estuvieran por debajo de cualquier otro valor en el eje vertical. Recordemos que el modelo binomial sí permite una cantidad nula de votos, es solo el logit de un parámetro de probabilidad de éxito igual a 0 lo que no estaría definido.} con respecto a los distintos porcentajes de la población que representa cada categoría de las variables explicativas. Cuando las categorías son dicotómicas, como el caso del sexo, solo se presenta una de las dos.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/AED/Asociaciones_MUESTRA}
+	\caption{Diagramas de dispersión para los porcentajes brutos de voto y las distintas variables explicativas observados en la muestra de comunas. Fuente: elaboración propia.}
+	\label{fig:Disper_Voto_Variables}	
+\end{figure}
+
+Vemos que varias de las categorías presentan patrones de asociación tanto negativa--- Mujeres, Extranjeros, Inmigrantes, Universidad o más--- como positiva--- 0 a 17 años, Obreros---. También observamos que las variables explicativas presentan observaciones en 0 que dificultan a primera vista la asignación de una tendencia.\\
+
+Ahora bien, estas nubes de puntos son para el conjunto de la muestra. Debido a que el fenómeno electoral es variable por departamento, podríamos preguntarnos si existen distintas asociaciones a través de los diferentes departamentos. En caso de existir diferencias, esperaríamos que un modelado jerárquico de los datos fuera una mejor alternativa que un modelo de agregación completa. Para explorar esta hipótesis presento los gráficos de la \textbf{Figura \ref{fig:Tendencias_Ingenuas_Muestra}} que llamo tendencias ingenuas con el objetivo de reafirmar que este es solamente un análisis exploratorio y no concluyente. Mediante el comando \verb|ggplot2::geom_smooth()| en $\mathsf{R}$, podemos ajustar tendencias lineales a todos los datos de la muestra que no hayan presentado un porcentaje de votos igual a 0. Estas son las lineas azules gruesas. Asimismo podemos realizar el ajuste para cada departamento, obteniendo las 96 líneas delgadas en color rosa.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/AED/Tend_Ingenuas_Todas_MUESTRA}
+	\caption{Tendencias ingenuas para la muestra entera y por departamento calculadas mediante ajustes lineales en la escala logística. Fuente: elaboración propia.}
+	\label{fig:Tendencias_Ingenuas_Muestra}	
+\end{figure}
+
+Efectivamente confirmamos que existirían indicios de asociaciones negativas para las categorías de Mujeres, Extranjeros, Inmigrantes y personas con diploma universitario. Pero también observamos pendientes ligeramente negativas para los grupos de edades 18 a 24, 55 a 64 y más de 65 años. Algunas categorías socioprofesionales como agricultores, artesanos, comerciantes y empresarios, cuadros y profesiones intelectuales superiores, profesiones intermediarias y retirados parecen tener también asociaciones negativas. Salvo quizás los casos del desempleo juvenil (15-24 años) y general (25-54 años) o las personas con primaria y secundaria, el resto de las categorías muestran tendencias positivas.\\
+
+Ahora bien, las tendencias generales no son homogéneas a través de los departamentos. Las líneas rosas muestran una gran variabilidad tanto en términos de interceptos como de pendientes. Por ejemplo, aunque los desempleados de entre 25 y 54 años parecerían no tener ninguna relación tomando en cuenta todas las comunas, observamos algunas líneas rosas con claras pendientes. Quizás la categoría poblacional que muestra el comportamiento más homogéneo a través de los departamentos sea la población altamente escolarizada con diplomas de universidad y más.\\
+
+Otro punto importante a notar es que estas tendencias ingenuas solamente se grafican para los rangos observados de los datos. Es decir, no se extrapolan las tendencias para todo el intervalo del $[0,1]$. Esto es importante mencionarlo porque a la hora de analizar los modelos podría caerse en la tentación de querer predecir porcentajes de votos para valores de una categoría de alguna variable explicativa a lo largo de todo el intervalo. Extrapolar de esta manera es riesgoso y, además, en algunos casos podríamos estar cayendo en una falacia ecológica si tomáramos el valor de $1$--- es decir toda la población comunal perteneciente a la misma categoría--- . Más aún, podríamos caer en situaciones ilógicas como hablar de votación emitida por individuos sin derecho al voto como los menores de edad o los extranjeros. No debemos perder de vista que el objetivo del análisis es la identificación de \textit{configuraciones sociales} que favorecieron el voto, no la inferencia sobre qué individuos emitieron los sufragios.\\
+
+Con este análisis exploratorio en mente, procedo a modelar los datos electorales franceses de 2012 mediante regresiones logísticas con la hipótesis de que se obtendrían mejores resultados con una estrategia jerárquica en lugar de agregación completa de los datos. 
+
