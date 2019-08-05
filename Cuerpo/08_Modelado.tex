@@ -18,7 +18,7 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
 
 En nuestro caso, sin pérdida de generalidad, para la $m$-ésima variable explicativa tenemos un vector de proporciones $x_c=(x_{1,c},\dots,x_{l_m,c})$ donde $l_m$ es el número de categorías de la variable y $x_{j,c}=1 - \sum_{k\neq j} x_{k,c}$ para toda $j \in \mathbb{N}_{l_m}$. Recordando el problema de multicolinealidad que esto ocasionaría al considerar la regresión con intercepto--- \autoref{prob_multicolinealidad}--- podemos definir una restricción de identificabilidad de suma cero para los coeficientes, de manera tal que $\beta_j=-\sum\limits_{k\neq j}\beta_k$.\\
 
-Para ilustrarlo, si tomáramos como variable explicativa la composición por edad de la población comunal, tendríamos $x_c=(Ed1_c, \dots, Ed6_c)$ donde $Edj_c$ es la proporción de habitantes del grupo de edad $j$. En este caso, por ejemplo, $\beta_{6} = -\sum\limits_{k = 1}^5 \beta_k$, por lo que en realidad solo tenemos 5 coeficientes libres más el intercepto a la hora de asignar la distribución inicial $f(\theta)$. 
+Para ilustrarlo, si tomáramos como variable explicativa la composición por edad de la población comunal, tendríamos $x_c=(Ed1_c, \dots, Ed6_c)$ donde $Edj_c$ es la proporción de habitantes del grupo de edad $j$. En este caso, $\beta_{6} = -\sum\limits_{k = 1}^5 \beta_k$, por lo que en realidad solo tenemos libres el intercepto y 5 coeficientes a la hora de asignar la distribución inicial $f(\theta)$. 
 
 \begin{align*}
 y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
@@ -28,7 +28,7 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
 
 \section{Distribuciones inciales}
 
-¿Cómo asignamos distribuciones iniciales? Primero hay que tomar en cuenta que las distribuciones normalmente consideradas como mínimo informativas tienen implicaciones particulares en el contexto de la escala logística. Supongamos que quisiéramos asignar una distribución inicial al valor del predictor lineal $\eta = \alpha + \beta X$. Una distribución $N(\mu=0,\sigma^2=100)$ sería normalmente considerada como una distribución mínimo informativa. Tendría una desviación estándar de $10$, por lo que poco más del 95\% de sus observaciones oscilan entre $-20$ y $20$. ¿Qué implicación tiene esto para una proporción $p$ vinculada con $\eta$ mediante la liga logística? Es decir, si asignamos esa distribución inicial a $\eta=ln\left(\dfrac{p}{1-p}\right)$, ¿qué estamos diciendo sobre $p$? Podemos observarlo en el primer histograma de la \textbf{Figura \ref{fig:Malas_Iniciales}}. Simulando $500,000$ observaciones de $\eta\sim N(\mu=0,\sigma_1=10)$ vemos que la mayoría de ellas llevan a valores extremos de $p$ cercanos a 0 o a 1. Incluso repitiendo el ejercicio para desviaciones estándar menores como $\sigma_2=5$ o $\sigma_3=2.5$, la distribución inicial lleva a un histograma para $p$ en forma de U. Tendríamos que tener desviaciones estándar más pequeñas, como $\sigma_4=1.5$, o una normal estándar con $\sigma_5=1$ para estar asignando una distribución poco informativa para $p$.\\ 
+¿Cómo asignamos distribuciones iniciales? Primero hay que tomar en cuenta que las distribuciones normalmente consideradas como mínimo informativas tienen implicaciones particulares en el contexto de la escala logística. Supongamos que quisiéramos asignar una distribución inicial al valor del predictor lineal $\eta = \alpha + \beta X$. Una distribución $N(\mu=0,\sigma^2=100)$ sería normalmente considerada como una distribución mínimo informativa. Tendría una desviación estándar de $10$, por lo que poco más del 95\% de sus observaciones oscilrían entre $-20$ y $20$. ¿Qué implicación tiene esto para una proporción $p$ vinculada con $\eta$ mediante la liga logística? Es decir, si asignamos esa distribución inicial a $\eta=ln\left(\dfrac{p}{1-p}\right)$, ¿qué estamos diciendo sobre $p$? Podemos observarlo en el primer histograma de la \textbf{Figura \ref{fig:Malas_Iniciales}}. Simulando observaciones de $\eta\sim N(\mu=0,\sigma_1=10)$ vemos que la mayoría de ellas llevan a valores extremos de $p$ cercanos a 0 o a 1. Incluso repitiendo el ejercicio para desviaciones estándar menores como $\sigma_2=5$ o $\sigma_3=2.5$, la distribución inicial lleva a un histograma para $p$ en forma de U. Tendríamos que tener desviaciones estándar más pequeñas, como $\sigma_4=1.5$, o una normal estándar con $\sigma_5=1$ para estar asignando una distribución poco informativa para $p$.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -46,7 +46,7 @@ El motivo es que la función logística no es lineal y tiene que ``compactar'' v
 	\label{fig:Escala_Logis}
 \end{figure}
 
-Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor lineal en su conjunto, sino para los coeficientes $\beta$ de dicho predictor lineal. Optaré aquí por una posición un poco escéptica o conservadora. A pesar de lo que sugerían las tendencias ingenuas del capítulo anterior, \textit{a priori}, no buscaría asignarle un sentido al efecto. Asimismo, los efectos de variables ecológicas o agregadas, no deberían ser tan grandes. No querría ``inflar'' la magnitud del valor explicativo mediante la distribución inicial pero tampoco negar la posibilidad de que existan algunos efectos importantes. Considero que una inicial para el coeficiente $\beta\sim N(\mu=0,\sigma=0.5)$ cumple relativamente bien con estas condiciones. Si tomamos el $0$ como referencia y comparamos el valor correspondiente de $p$ con aquel para una $\beta$ una desviación estándar mayor--- i.e. $\beta = 0.5$--- el efecto $\Delta$ sería de aproximadamente $+12$ puntos porcentuales. Si ahora disminuimos $\beta$ en 2 desviaciones estándar,  $\Delta \approx -23$ pp, como puede apreciarse en la \textbf{Figura \ref{fig:Inicial_Coef}}.
+Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor lineal en su conjunto, sino para los coeficientes $\beta$ de dicho predictor lineal. Optaré aquí por una posición un poco escéptica o conservadora. A pesar de lo que sugerían las tendencias ingenuas del capítulo anterior, \textit{a priori}, no buscaría asignarle un sentido al efecto. Asimismo, los efectos de variables ecológicas o agregadas, no deberían ser tan grandes. No querría ``inflar'' la magnitud del valor explicativo mediante la distribución inicial pero tampoco negar la posibilidad de que existan algunos efectos importantes. Considero que una inicial para el coeficiente $\beta\sim N(\mu=0,\sigma=0.5)$ cumple relativamente bien con estas condiciones. Si tomamos el $0$ como referencia y comparamos el valor correspondiente de $p$ con aquel para una $\beta$ una desviación estándar mayor--- i.e. $\beta = 0.5$--- el efecto $\Delta$ sería de aproximadamente $+12$ puntos porcentuales. Si ahora disminuimos $\beta$ en 2 desviaciones estándar,  $\Delta \approx -23$ pp, como puede apreciarse en la \textbf{Figura \ref{fig:Inicial_Coef}}. Sin exagerar su interpretación, pues hay que multiplicar por el valor de la variable explicativa, estos podrían pensarse como los máximos efectos creíbles \textit{a priori}. 
 
 \begin{figure}[h]
 	\centering
@@ -55,7 +55,7 @@ Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor l
 	\label{fig:Inicial_Coef}
 \end{figure}
 
-Por otro lado, debemos detenernos a pensar en la interpretación del intercepto $\alpha$. Por un lado, $\alpha$ es el valor que tomaría el predictor lineal $\eta_c$, si todos los coeficientes fueran iguales a $0$. Esto nos podría hacer pensar que querríamos que \textit{a priori} su distribución nos lleve a valores cercanos al  17.9\%, porcentaje que obtuvo Le Pen en la elección. Sin embargo, también hay que notar que con variables explicativas $x_c$ de configuraciones sociales, $\alpha$ es el valor que tomaría $\eta_c$ si la población estuviera repartida equitativamente entre todas las categorías. En efecto, supongamos que para la $m$-ésima variable con $l_m$ categorías cada $x_{j,c}=l_m^{-1}$. Tendríamos que
+Por otro lado, debemos detenernos a pensar en la interpretación del intercepto $\alpha$. Por un lado, $\alpha$ es el valor que tomaría el predictor lineal $\eta_c$, si todos los coeficientes fueran iguales a $0$. Esto nos podría hacer pensar que querríamos que \textit{a priori} su distribución nos lleve a valores cercanos al  17.9\%, porcentaje que obtuvo Le Pen en la elección. Sin embargo, también hay que notar que con variables explicativas de configuraciones sociales, $x_c$, $\alpha$ es el valor que tomaría $\eta_c$ si la población estuviera repartida equitativamente entre todas las categorías. En efecto, supongamos que para la $m$-ésima variable con $l_m$ categorías cada $x_{j,c}=l_m^{-1}$. Tendríamos que
 
 \begin{align*}
 \eta_c &= \alpha + \sum\limits_{j=1}^{l_m} \beta_j x_{j,c} = \alpha + \sum\limits_{j=1}^{l_m} \dfrac{\beta_j}{l_m} = \alpha + \dfrac{1}{l_m}\sum\limits_{j=1}^{l_m} \beta_j
@@ -63,9 +63,9 @@ Por otro lado, debemos detenernos a pensar en la interpretación del intercepto 
 &= \alpha + \dfrac{1}{l_m}\left(0\right) = \alpha 
 \end{align*}
 
-Tomando en cuenta las teorías del conflicto discutidas en la revisión de literatura, podríamos pensar que si en lugar de tener grupos mayoritarios frente a grupos minoritarios hubiese una sociedad más ``equilibrada'', el voto frontista disminuiría. Así pues, deberíamos buscar una distribución inicial con una media menor al 17.9\% obtenido en las elecciones. También, considerando que puede ser más robusto dilucidar una distribución inicial con base en cuantiles, más que igualar la media podríamos intentar aproximar el rango intercuartílico observado de entre 13.54\% y 21.44\%, pero sesgado un poco a la baja para tomar en cuenta la hipótesis anterior sobre una población equilibrada. Después de algunas pruebas elegí finalmente una distribución inicial para $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$.\\
+Tomando en cuenta las teorías del conflicto discutidas en la revisión de literatura, podríamos pensar que si en lugar de tener grupos mayoritarios frente a grupos minoritarios hubiese una sociedad más ``equilibrada'', el voto frontista disminuiría. Así pues, deberíamos buscar una distribución inicial con una media menor al 17.9\% obtenido en las elecciones. También, considerando que puede ser más robusto dilucidar una distribución inicial con base en cuantiles, más que igualar la media podríamos intentar aproximar el rango intercuartílico observado de entre 13.54\% y 21.44\%, pero sesgado un poco a la baja para tomar en cuenta la hipótesis anterior sobre una población equilibrada. Después de algunas pruebas elegí una distribución inicial para $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$.\\
 
-Si ahora consideramos una ``comuna promedio'', definida como aquella que tuviera valores promedio en las variables explicativas, podemos realizar simulaciones de la distribución predictiva con estas iniciales. Es decir, simulamos de $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$ y para cada $\beta\sim N(\mu = 0,\sigma = 0.5)$. Calculamos el predictor lineal con base en los valores promedio de cada categoría--- considerando también la restricción de suma cero de los coeficientes--- y tomamos el logit inverso. Este proceso, por ejemplo para grupos de edad, nos lleva al histograma de la \textbf{Figura \ref{fig:Predictiva_Inicial}}, con el modelo: 
+Consideremos ahora una ``comuna promedio'', definida como aquella que tuviera valores promedio en las variables explicativas; podemos realizar simulaciones de la distribución predictiva con estas iniciales. Es decir, simulamos de $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$ y para cada $\beta\sim N(\mu = 0,\sigma = 0.5)$. Calculamos el predictor lineal con base en los valores promedio de cada categoría--- considerando también la restricción de suma cero de los coeficientes--- y tomamos el logit inverso. Este proceso, por ejemplo para grupos de edad, nos lleva al histograma de la \textbf{Figura \ref{fig:Predictiva_Inicial}}, con el modelo
 
 \begin{align*}
 y_c|\theta=(\alpha,\beta) & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
@@ -115,7 +115,7 @@ Se corrieron cada uno de los 18 modelos mediante el software Stan, simulando ví
 	\label{fig:Modelo_Nal_Ocu_Juvenil}
 \end{figure}
 
-En el mapa de la izquierda las predicciones se colorean de acuerdo a la escala real que va de 0\% a 62.5\% y donde el cambio de tonos rojos a azules se da en la comuna mediana de 17.5\%. Observamos que la predicción en general subestima el verdadero porcentaje obtenido pues el mapa está prácticamente coloreado en su totalidad de tonos rojos. Sin embargo, las predicciones están cerca de la mediana. De hecho, el mapa de errores--- verde significa poco error y naranjas y rojos más--- es visualmente un negativo del verdadero mapa de resultados que observábamos en la \textbf{Figura \ref{fig:Mapa_Pct_Br}} del capítulo anterior.\\
+En el mapa de la izquierda las predicciones se colorean de acuerdo a la escala real que va de 0\% a 62.5\% y donde el cambio de tonos rojos a azules se da en la comuna mediana de 17.5\%. Observamos que la predicción en general subestima el verdadero porcentaje obtenido pues el mapa está prácticamente coloreado en su totalidad de tonos rojos. Sin embargo, las predicciones están cerca de la mediana. De hecho, el mapa de errores--- verde significa poco error y naranjas y rojos más--- visualmente es prácticamente un negativo del verdadero mapa de resultados que observábamos en la \textbf{Figura \ref{fig:Mapa_Pct_Br}} del capítulo anterior.\\
 
 En general, los modelos nacionales tienen el defecto de no reconocer la enorme variabilidad geográfica del fenómeno electoral. Si construimos distintas medidas de error de predicción vemos que pasar de un modelado nacional a un modelado jerárquico las reduce consistentemente. Para cada simulación posterior predecimos el número de votos en cada comuna, departamento y a nivel nacional. Luego lo convertimos en porcentaje bruto de votos predicho dividiendo entre el número de inscritos en la comuna. Así, podemos tomar los conocidos errores absoluto y cuadrático promedio para el porcentaje de votos a nivel comuna, departamento y nacional. Incluso podemos tomar una pérdida más arbitraria, pero ilustrativa, como el porcentaje promedio de estimaciones que se encuentran a más de 1.5 puntos porcentuales del verdadero valor en los 3 niveles de agregación; a esta medida la llamo tolerancia 1.5 pp. Finalmente se calcula el promedio de las medidas a través del total de simulaciones posteriores y se grafican en la \textbf{Figura \ref{fig:Errores_Modelos_Individuales}}. El gráfico también incluye el cálculo de un cuarto error llamado WAIC para las comunas, pero a él me refiriré más adelante. En el gráfico, los puntos son las medidas para el modelo nacional y las flechas las de los modelos jerárquicos.\\ 
 
@@ -254,12 +254,6 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \
 \mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber
 \end{align}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Compuesto_C}
-	\caption{Mapas de predicciones medias y respectivos errores para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad, Categorías socioprofesionales, Edad y Condición Migratoria. Fuente: elaboración propia.}
-	\label{fig:Modelo_Compuesto_C}
-\end{figure}
 
 \subsection*{Modelo D}
 
@@ -292,13 +286,6 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \
 \mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
 \mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber
 \end{align}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Compuesto_D}
-	\caption{Mapas de predicciones medias y respectivos errores para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad, Categorías socioprofesionales, Edad, Condición Migratoria y Sexo. Fuente: elaboración propia.}
-	\label{fig:Modelo_Compuesto_D}
-\end{figure}
 
 \subsection*{Modelos E y F}
 
@@ -335,7 +322,86 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \
 \mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber
 \end{align}
 
-¿Cuál es la comparación de WAICs hasta este punto? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}}
+\subsection*{Modelo G}
+
+Una vez generados los modelos que agregan por separado la (des)ocupación general y juvenil, podemos considerar un modelo que incorpre ambas variables. Así, para la ocupación general $x_{ocu\_gral,c}$ tendremos coeficientes $\zeta_{d[c]}$ y para la ocupación juvenil $x_{ocu\_juv,c}$, $\xi_{d[c]}$. 
+
+\begin{align}\label{eq:Modelo_Comp_G}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\begin{split}
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
+&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu\_gral,c} + \xi_{d[c]} x_{ocu\_juv,c} 
+\end{split}\\
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
+\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
+\xi_{d,2} &= -\xi_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
+\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
+\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
+\xi{d,1} &\sim N(\mu_{\xi}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber
+\mu_{\xi} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\subsection*{Modelo H}
+
+Finalmente agregamos la última variable considerada, la ocupación para personas de 55 a 64 años $x_{ocu\_may,c}$, mediante coeficientes $\upsilon_{d[c]}$. 
+
+\begin{align}\label{eq:Modelo_Comp_G}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\begin{split}
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
+&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu\_gral,c} + \xi_{d[c]} x_{ocu\_juv,c} + \upsilon_{d[c]} x_{ocu\_may,c} 
+\end{split}\\
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
+\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
+\xi_{d,2} &= -\xi_{d,1} \nonumber \\
+\upsilon_{d,2} &= -\upsilon_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
+\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
+\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
+\xi{d,1} &\sim N(\mu_{\xi}, \sigma=1) \nonumber \\
+\upsilon{d,1} &\sim N(\mu_{\upsilon}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber
+\mu_{\xi} &\sim N(0,\sigma=0.5) \nonumber
+\mu_{\upsilon} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+¿Cuál es la comparación de WAICs hasta este punto? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}} podemos observarlo. En general, el WAIC mejora conforme se van agregando variables. Ciertamente las mayores ganancias se dan al agregar las primeras variables que el análisis individual sugería eran las más explicativas. Esto parece confirmar dicha hipótesis. Por el contrario, en términos de WAIC, la ocupación juvenil no parece ser la más poderosa de las variables. En efecto, la ganancia en WAIC al agregarla en el modelo E, es menor a la ganancia del modelo F. Más aún, al pasar del modelo F al modelo G agregándola de nuevo, la ganancia vuelve a ser poca. {\color{Red}Esto no quiere decir, sin embargo, que no aporte nada a la regresión. Aunque la mejora en WAIC sea pequeña y los intervalos con error estándar se traslapen, la probabilidad de que agregarla produce un mejor modelo es de INSERTAR PROBAS.}
 
 \begin{figure}[h]
 	\centering
