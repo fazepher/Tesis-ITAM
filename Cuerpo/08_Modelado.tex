@@ -217,7 +217,7 @@ Después comenzaríamos a incluir las variables de ocupación. Como mencionaba a
 	\label{fig:Compara_WAIC_Compuestos}
 \end{figure}
 
-\subsection*{Convergencia de HMC}
+\subsection{Convergencia de HMC}
 
 Una vez ajustados los modelos, como adelantaba en {\color{Red} CONVERGENCIA}, habría que verificar que las cadenas construidas mediante la implementación de HMC dentro de Stan hubieran convergido. Debido a la cantidad de parámetros dentro de cada modelo, así como a la cantidad de modelos ajustados en sí, es difícil verificar a detalle todas y cada una de las muestras posteriores. Afortunadamente, \textcite{BetancourtRStanWorkflow} presenta un caso de estudio que permite realizar distintos diagnósticos útiles para todos los parámetros de interés dentro de todos los modelos. Entre ellos encontramos el factor de reducción de escala $\hat{R}$ discutido en {\color{Red} CONVERGENCIA}, así como un cálculo del tamaño efectivo de muestra por iteración y 3 diagnósticos particulares de HMC. Utilizando su código abierto\footnote{Los derechos de autor son de Michael Betancourt y la Universidad de Columbia y las licencias pueden verificarse en el link en las referencias.}, verificamos que los modelos satisfacen los criterios planteados y podemos confiar en la convergencia de las muestras posteriores obtenidas. {\color{Red} Esta comprobación puede reproducirse con el código del repositorio de Github de esta tesis y solicitándome acceso a los archivos .rds con los ajustes de todos los modelos.}\\
 
@@ -247,13 +247,13 @@ Una vez ajustados los modelos, como adelantaba en {\color{Red} CONVERGENCIA}, ha
 
  También analicé la convergencia del modelo H mediante los diagnósticos del paquete shinystan, que permite de manera interactiva observar distintos gráficos y resúmenes respecto al ajuste del modelo vía HMC. De esta exploración, también concluí que el modelo satisfacía suficientemente bien la batería de diagnósticos para darnos confianza en que las muestras obtenidas provienen de la distribución posterior. Una vez verificada la convergencia, podemos proceder al análisis de los resultados. 
  
-\subsection*{Efectos de las variables}
+\subsection{Definiendo efectos}
 
-Interpretar los coeficientes de regresiones logísticas no es sencillo, pues estos se encuentran en la escala logística y muchas veces queremos interpretarlos en la escala de las proporciones o probabilidades que la liga logística define. Como explican \textcite{GelmanHill06}, además de las interpretaciones en términos de momios, un primer impulso a la hora de interpretar coeficientes es considerar el caso cuando la variable explicativa vale 1. Sin embargo, esto no siempre tiene sentido dependiendo del contexto en el que se realiza la regresión. Por motivos que expliqué a la hora de definir las distribuciones iniciales de los modelos, este es mi caso--- ver {\color{Red} Discusión falacia ecológica}---. Es decir, no podría interpretar los coeficientes mediante alguna estrategia de ese tipo.\\ 
+Interpretar los coeficientes de regresiones logísticas no es sencillo, pues estos se encuentran en la escala logística y muchas veces queremos interpretarlos en la escala de las proporciones o probabilidades que la liga logística define. Como explican \textcite{GelmanHill06}, además de las interpretaciones en términos de momios, un primer impulso a la hora de interpretar coeficientes es considerar el caso cuando la variable explicativa vale 1. Sin embargo, esto no siempre tiene sentido dependiendo del contexto en el que se realiza la regresión. Este es mi caso por lo que no podría interpretar los coeficientes mediante alguna estrategia de ese tipo, sobre todo para evitar alguna falacia ecológica--- ver página \pageref{No_Extrapolar}---.\\ 
 
- Por ello, resultan útiles lo que los mismos autores llaman \textit{average predictive comparisons}. Básicamente estos consisten en pensar en los efectos de los coeficientes, tomando en cuenta la incertidumbre que tenemos sobre ellos, en términos de una comparación entre dos valores distintos pero informativos de las variables explicativas de interés--- en mi caso, las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales---. Una alternativa de valores son la media y una desviación estándar por encima de ella. Esta elección tiene la ventaja de que, usualmente, se estaría realizando la interpretación en el rango de valores observado en la variable explicativa y no mediante una extrapolación. Hay que decir, no obstante, que una situación donde esto no sucede es cuando la variable explicativa observada es multimodal y la media cae en uno de los valles.\\ 
-
-La discusión general sobre alternativas de interpretación para regresiones logísticas puede consultarse en la referencia antes citada. Sin embargo, para fijar ideas, supongamos por ahora que estamos analizando un modelo individual nacional para una variable con 3 categorías, $x = (x_1,x_2,x_3)$. Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo el subíndice de las comunas, tendríamos que para alguna comuna en particular,
+ Por ello, resultan útiles lo que los mismos autores llaman \textit{predictive comparisons}. Básicamente estos consisten en pensar en los efectos de los coeficientes en términos de una comparación entre dos valores distintos pero informativos de las variables explicativas de interés--- en mi caso, las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales---. Una alternativa de valores son la media y una desviación estándar por encima de ella. Esta elección tiene la ventaja de que, usualmente, se estaría realizando la interpretación en el rango de valores observado en la variable explicativa y no mediante una extrapolación. Hay que decir, no obstante, que una situación donde esto no sucede es cuando la variable explicativa observada es multimodal y la media cae en uno de los valles. Esta discusión general sobre alternativas de interpretación para regresiones logísticas puede consultarse en la referencia antes citada.\\ 
+ 
+ Por nuestra parte, para fijar ideas, supongamos por ahora que estamos analizando un modelo individual nacional para una variable con 3 categorías, $x = (x_1,x_2,x_3)$. Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo el subíndice de las comunas, tendríamos que para alguna comuna en particular,
 
 \begin{equation*}
 ln\left(\dfrac{p}{1-p}\right) = \alpha + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3.
@@ -262,35 +262,61 @@ ln\left(\dfrac{p}{1-p}\right) = \alpha + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3
 Abusando de la notación, introduzco ahora unas expresiones. En primer lugar
 
 \begin{equation*}
-\eta(\beta_i|x)= \alpha + \beta_i x_i + \sum\limits_{k\neq i} \beta_k x_k, 
+\eta(\beta_i;x)= \alpha + \beta_i x_i + \sum\limits_{k\neq i} \beta_k x_k, 
 \end{equation*} 
 
 para referirme al predictor lineal como función del coeficiente $\beta_i$, considerando la configuración social $x$, el intercepto $\alpha$ y el resto de coeficientes como fijos. Asimismo tomemos 
 
 \begin{equation*}
-p(\beta_i|x)=\dfrac{e^{\eta(\beta_i|x)}}{1+e^{\eta(\beta_i|x)}}=\dfrac{1}{1+e^{-\eta(\beta_i|x)}}
+p(\beta_i;x)=\dfrac{e^{\eta(\beta_i;x)}}{1+e^{\eta(\beta_i;x)}}=\dfrac{1}{1+e^{-\eta(\beta_i;x)}}
 \end{equation*} 
 
 como el valor de la afinidad por Marine Le Pen en la comuna como función del coeficiente $\beta_i$, de nuevo, con el resto del predictor lineal fijo. Buscaríamos entonces definir el efecto que tiene el coeficiente $\beta_i$ como el cambio en puntos porcentuales para dicha afinidad cuando se pasa de una configuración a otra: 
 
 \begin{equation*}
-\Delta(\beta_i|x_{(0)},x_{(1)}) = p(\beta_i|x_{(1)})-p(\beta_i|x_{(0)})
+\Delta(\beta_i;x_{(0)},x_{(1)}) = p(\beta_i;x_{(1)})-p(\beta_i;x_{(0)})
 \end{equation*}
 
-Sin embargo, en nuestro caso no tenemos total libertad para elegir los valores $x_{(0)}$ y $x_{(1)}$, pues recordemos que son proporciones que deben sumar a 1. ¿Cómo elegir entonces los valores? En primer lugar, definamos el punto de referencia $x_{(0)}$ como la media muestral, $x_{(0)}=\bar{x}=(\bar{x}_1,\bar{x}_2,\bar{x}_3)$. Como estamos interesados en el efecto del coeficiente $\beta_i$, empecemos a construir $x_{(1)}$ con base en $x_{i,(1)}=\bar{x}_i + s_i$ donde $s_i$ es la desviación estándar muestral en la $i$-ésima categoría. Ahora, al agregarle una desviación estándar a $x_i$, debemos disminuir el valor del resto de $x_k$ para cumplir la restricción. Sin que sea la única forma de hacerlo, una propuesta es disminuir cada categoría restante de manera proporcional. Esto sería de la siguiente manera: 
+Sin embargo, en nuestro caso no tenemos total libertad para elegir los valores $x_{(0)}$ y $x_{(1)}$ pues recordemos que son proporciones que deben sumar a 1. ¿Cómo elegir entonces los valores?\\ 
+
+En primer lugar, definamos el punto de referencia $x_{(0)}$ como la media muestral, $x_{(0)}=\bar{x}=(\bar{x}_1,\bar{x}_2,\bar{x}_3)$. Posteriormente, como estamos interesados en el efecto del coeficiente $\beta_i$, empecemos a construir $x_{(1)}$ con base en $x_{i,(1)}=\bar{x}_i + s_i$ donde $s_i$ es la desviación estándar muestral en la $i$-ésima categoría. Al agregarle una desviación estándar a $x_i$, para cumplir con la restricción debemos disminuir su valor del resto de $x_k$ en su conjunto. Sin que sea la única forma de hacerlo, una propuesta es quitarle de manera proporcional a cada categoría restante una parte de la desviación estándar que sumamos a la categoría de interés. Esto sería de la siguiente manera: 
 
 \begin{equation*}
 x_{k,(1)}=\bar{x}_k - s_i \dfrac{\bar{x}_k}{1-\bar{x}_i} \quad \forall k \neq i
 \end{equation*}
 
-Con este criterio podemos abusar un poco más de la notación. Si en lugar del caso específico de una configuración social de 3 categorías tenemos $l$ categorías, el efecto para $\beta_1$ sería
+Con este criterio podemos abusar un poco más de la notación. Si en lugar del caso específico de una configuración social de 3 categorías tenemos $l$ categorías, el efecto sería 
 
 \begin{align}\label{eq:Efecto_Enchufado}
-\Delta(\beta_1) &= p(\beta_1|x^\star)-p(\beta_1|\bar{x}) \nonumber \\
-\text{donde} \quad \bar{x} = (\bar{x}_1,\dots,\bar{x}_{l}) \quad &\text{y} \quad x^\star = \left(\bar{x}_1 + s_1,\bar{x}_2 - s_1\dfrac{\bar{x}_2}{1- \bar{x}_1},\dots,\bar{x}_{l} - s_i\dfrac{\bar{x}_{l}}{1-\bar{x}_i}\right). \nonumber \\
-\intertext{Y para el resto de coeficientes}
-\Delta(\beta_i) &= p(\beta_i|x^\star)-p(\beta_i|\bar{x}) \nonumber \\
-\text{donde} \quad \bar{x} = (\bar{x}_1,\dots,\bar{x}_{l}) \quad &\text{y} \quad x^\star = \left(\bar{x}_1 - s_i\dfrac{\bar{x}_1}{1-\bar{x}_i},\dots,\bar{x}_i + s_i,\dots, \bar{x}_{l} - s_i\dfrac{\bar{x}_{l}}{1-\bar{x}_i}\right).
+\Delta(\beta_i) &= p(\beta_i;x^\star)-p(\beta_i;\bar{x}) \quad \forall i \in \mathbb{N}_l \\
+\text{donde} \quad \bar{x} &= (\bar{x}_1,\dots,\bar{x}_{l}), \nonumber \\ 
+x^\star &= 
+\begin{cases} 
+\left(\bar{x}_1 + s_1,\, \bar{x}_2 - s_1\dfrac{\bar{x}_2}{1- \bar{x}_1},\,\dots,\,\bar{x}_{l} - s_i\dfrac{\bar{x}_{l}}{1-\bar{x}_1}\right) \quad i = 1, \\[10pt]
+\left(\bar{x}_1 - s_i\dfrac{\bar{x}_1}{1-\bar{x}_i},\,\dots,\,\bar{x}_i + s_i,\,\dots,\, \bar{x}_{l} - s_i\dfrac{\bar{x}_{l}}{1-\bar{x}_i}\right) \quad 1 < i < l, \\[10pt]
+\left(\bar{x}_1 - s_l\dfrac{\bar{x}_1}{1-\bar{x}_l},\,\dots,\, \bar{x}_{l-1} - s_l\dfrac{\bar{x}_{l-1}}{1-\bar{x}_l},\,\bar{x}_l + s_l\right) \quad i = l.
+\end{cases} \nonumber 
 \end{align}
 
-Ahora bien, quedan dos observaciones por hacer. La primera es que aquí ya construimos una definición de efecto como función de un valor de $\beta_i$, esto sería lo que \textcite{GelmanHill06} pudieran llamar \textit{predictive comparison} porque estaríamos comparando dos predicciones específicas del modelo. Sin embargo, nuestro proceso de modelado bayesiano mediante HMC, nos indica que tenemos incertidumbre sobre el valor específico de $\beta_i$ reflejada mediante una muestra posterior de valores simulados para $\beta_i$. Por lo mismo, vamos a reportar más bien el \textit{\textbf{average} predictive comparison}. Es decir, nuestro efecto debe ser el promedio a través de los distintos valores
+Ahora pensemos que querríamos calcular efectos para modelos jerárquicos. En este caso, simplemente reemplazamos el parámetro de interés por su equivalente jerárquico $\beta_{d,i}$ y tendríamos que calcular la media y la desviación estándar correspondiente dentro de cada departamento $d$: $\bar{x}_{d}$ y $s_{d,i}$. Esto lo indicamos mediante los subíndices:
+
+\begin{equation}
+\Delta(\beta_{d,i}) =  p(\beta_{d,i};x^\star_{d})-p(\beta_{d,i};\bar{x}_{d}) \quad \forall i \in \mathbb{N}_l
+\end{equation}
+
+¿Pero qué pasa cuando tenemos más de una variable? En esta situación, la decisión que tomé fue buscar una comparación \textit{c\ae teris paribus} en la que los sumandos del resto de variables explicativas del predictor lineal toman sus valores promedio en el departamento. Podemos también pensar que estamos modificando el intercepto con los sumandos del resto de categorías con valores promedio. Por ello, si asociamos a $x$ con la variable de la categoría de interés, $\beta$ con sus coeficientes y $z$ con el resto del predictor lineal, una notación más general podría ser
+\begin{align}\label{eq:Efecto_Enchufado_Compuesto}
+\Delta(\beta_{d,i};\bar{z}_d) &= p(\beta_{d,i};x_d^\star,\bar{z}_d)-p(\beta_{d,i};\bar{x}_d,\bar{z}_d) \quad \forall i \in \mathbb{N}_l \\
+\text{donde} \quad p(\beta_{d,i};x_d^\star,\bar{z}_d) &=\dfrac{1}{1+e^{-\eta(\beta_{d,i};x_d^\star,\bar{z}_d)}} \nonumber \\
+\text{y} \quad \eta(\beta_{d,i};x_d,\bar{z}_d) &= \bar{z}_d + \beta_{d,i}x_{d,i} + \sum\limits_{k\neq i} \beta_{d,k}x_{d,k}. \nonumber
+\end{align*}
+
+Por ejemplo, en el caso del modelo compuesto A que incluye a la escolaridad y a las categorías socioprofesionales, el efecto para una categoría de escolaridad dependería de $\bar{z}_d = \alpha_d + \sum\limits_{j=1}^8 \gamma_{d,k}\bar{x}_{csp,k}$, donde no hay que olvidar que $\bar{x}_{csp,k}$ se calcula para el departamento $d$. \\
+
+Hasta aquí ya construimos una propuesta de efecto comparando dos predicciones específicas del modelo ``enchufando'' un valor específico o un estimador puntual de los coeficientes. Sin embargo, nuestro proceso de modelado bayesiano mediante HMC, nos indica que tenemos incertidumbre sobre su valor reflejada mediante una muestra posterior de valores simulados. Por lo mismo, siguiendo la única receta de la estadística bayesiana tendríamos que obtener la distribución posterior de los efectos, calculando \eqref{eq:Efecto_Enchufado_Compuesto} para cada simulación posterior $\beta_{d,i}^{(s)}$ y, correspondientemente, $\bar{z}_d^{(s)}$:
+
+\begin{equation*}
+\Delta(\beta_{d,i}^{(s)};\bar{z}_d^{(s)}) =  p(\beta_{d,i}^{(s)};x^\star_{d},\bar{z}_d^{(s)})-p(\beta_{d,i}^{(s)};\bar{x}_{d},\bar{z}_d^{(s)}) \quad \forall i \in \mathbb{N}_l ,\, s \in \mathbb{N}_S.
+\end{equation*}
+
+Una vez con esta distribución posterior de los efectos podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto medio o mediano. También podríamos reportar intervalos centrales de probabilidad para al 95\%. Siguiendo la práctica común, cuando dichos intervalos contienen al 0, diríamos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto positivo o negativo, respectivamente. 
