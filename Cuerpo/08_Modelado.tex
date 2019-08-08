@@ -163,11 +163,9 @@ Este ordenamiento preliminar tiene el objetivo de ayudarme a construir, secuenci
 
 El mapa de errores ya se observa más verde y homogéneo. Las grandes zonas de fortaleza y debilidad del FN comienzan a ser identificadas por el modelo. Sin embargo, los tonos de algunas predicciones son todavía demasiado cercanos a la mediana. En el centro observamos una zona de tonos muy claros, casi blancos, que no corresponden totalmente a la realidad. En general, vemos que hay menor variabilidad dentro de los departamentos de la que se observó en la elección.\\ 
 
-Estas reflexiones sugieren que, en lugar de tomar una a una las variables, podemos ir agregando variables a la regresión en modelos jerárquicos secuenciales que refinen el ajuste. Entonces, comenzando con la escolaridad, iré agrandando el modelo con la inclusión de una nueva variable cada vez.
+Estas reflexiones sugieren que, en lugar de tomar una a una las variables, podemos ir agregando variables a la regresión en modelos jerárquicos secuenciales que refinen el ajuste. Entonces, comenzando con la escolaridad, iré agrandando el modelo con la inclusión de una nueva variable cada vez.\\ 
 
-\subsection*{Modelo A}
-
-El primer modelo compuesto incluye las variables de escolaridad y categorías socioprofesionales. Para distinguir las variables utilizaré diferentes letras griegas para sus coeficientes. Para la configuración social de escolaridad 
+El primer modelo compuesto incluye las variables de escolaridad y categorías socioprofesionales. A este modelo lo llamaré el \textbf{Modelo A}. Para distinguir las variables utilizaré diferentes letras griegas para sus coeficientes. Para la configuración social de escolaridad 
 \[x_{escol,c} = (Esc_c,Dip1_c,Dip2_c,Dip3_c,Dip4_c)^T\]
 en la comuna $c$ los coeficientes departamentales serán un vector $\beta_{d[c]} = (\beta_{d[c],1},\dots,\beta_{d[c],5})$. Para las categorías socioprofesionales $x_{csp,c}$ los coeficientes serán $\gamma_{d[c]}$:
 
@@ -187,7 +185,7 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \
 \mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber
 \end{align}
 
-Al estimar el modelo con ambas variables las predicciones efectivamente mejoran. La diferencia en WAIC del modelo compuesto A y el Jerárquico por escolaridad se estima en {\color{Red} AGREGAR ESTIMADO CON ERROR ESTÁNDAR}. Asimismo, observando los mapas de la \textbf{Figura \ref{fig:Modelo_Compuesto_A}}, vemos que se reduce la gran zona blanquiza del centro, se comienza a observar mayor variabilidad dentro de los departamentos y los tonos también se oscurecen más, sobre todo en el noreste.\\ 
+Al estimar el modelo con ambas variables las predicciones efectivamente mejoran. La diferencia en WAIC entre el modelo A y el modelo jerárquico por escolaridad se estima en {\color{Red} AGREGAR ESTIMADO CON ERROR ESTÁNDAR}. Asimismo, observando los mapas de la \textbf{Figura \ref{fig:Modelo_Compuesto_A}}, vemos que se reduce la gran zona blanquiza del centro, se comienza a observar mayor variabilidad dentro de los departamentos y los tonos también se oscurecen más, sobre todo en el noreste.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -196,30 +194,8 @@ Al estimar el modelo con ambas variables las predicciones efectivamente mejoran.
 	\label{fig:Modelo_Compuesto_A}
 \end{figure}
 
-\subsection*{Modelo B}
 
-Ahora agregaremos los grupos de edad $x_{edad,c}$ cuyos coeficientes serán $\delta_{d[c]}$:
-
-\begin{align}\label{eq:Modelo_Comp_B}
-y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\ 
-\intertext{tal que} 
-\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
-\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
-\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
-\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
-\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
-\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
-\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
-\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
-\intertext{y}
-\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
-\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber
-\end{align}
-
-El WAIC vuelve a disminuir y los respectivos mapas corresponden a la \textbf{Figura \ref{fig:Modelo_Compuesto_B}}.\\ 
+Los siguientes modelos se llamarán de manera progresiva por letras latinas y sus planteamientos en términos de ecuaciones pueden encontrarse en el \textbf{\autoref{Anexo_modelos_compuestos}}. Por ejemplo, el \textbf{Modelo B} incorpora los grupos de edad $x_{edad,c}$. Al hacerlo, el WAIC vuelve a disminuir y los respectivos mapas corresponden a la \textbf{Figura \ref{fig:Modelo_Compuesto_B}}.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -228,180 +204,11 @@ El WAIC vuelve a disminuir y los respectivos mapas corresponden a la \textbf{Fig
 	\label{fig:Modelo_Compuesto_B}
 \end{figure}
 
-\subsection*{Modelo C}
+Debido a la similitud entre condición migratoria y nacionalidad, solamente buscaba incorporar una de las dos, tratando de identificar la que tuviera mejor desempeño. De acuerdo al ordenamiento previo en los modelos individuales, consideraré solo la variable migratoria $x_{migr,c}$ dentro del \textbf{Modelo C}. Por su parte, el \textbf{Modelo D} incluye la distribución comunal por sexo $x_{sexo,c}$.\\
 
-Debido a la similitud entre condición migratoria y nacionalidad, solamente buscaba incorporar una de las dos, tratando de identificar la que tuviera mejor desempeño. De acuerdo al ordenamiento previo en los modelos individuales, consideraré solo la variable migratoria $x_{migr,c}$. El modelo compuesto C la incorpora con coeficientes $\lambda_{d[c]}$:
+Después comenzaríamos a incluir las variables de ocupación. Como mencionaba al presentarlas, tengo un interés especial en la (des)ocupación juvenil, pues esta sería una variable que referencias como \textcite{LeBras16} y \textcite{Perrineau07} favorecerían. Por ello, al margen del ordenamiento, vamos a construir dos modelos de 6 variables. De manera general ambos incorporarían una variable explicativa $x_{ocu,c}$. El \textbf{Modelo E} es el modelo D más la ocupación juvenil, mientras que el \textbf{Modelo F} es el modelo D más la ocupación general. Una vez generados por separado, podemos considerar un modelo que incorpre ambas variables, este sería el \textbf{Modelo G}.Finalmente agregamos la última variable considerada, la ocupación para personas de 55 a 64 años $x_{ocu\_may,c}$, para obtener el \textbf{Modelo H}.\\
 
-\begin{align}\label{eq:Modelo_Comp_C}
-y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} + \lambda_{d[c]} x_{migr,c} \\ 
-\intertext{tal que} 
-\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
-\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
-\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
-\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
-\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
-\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
-\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
-\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
-\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
-\lambda_{d,1} & \sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
-\intertext{y}
-\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
-\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber
-\end{align}
-
-
-\subsection*{Modelo D}
-
-El modelo D incluye la distribución comunal por sexo $x_{sexo,c}$ con coeficientes $\kappa_{d[c]}$. 
-
-\begin{align}\label{eq:Modelo_Comp_D}
-y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
-\begin{split}
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
-&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} 
-\end{split}\\
-\intertext{tal que} 
-\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
-\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
-\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
-\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
-\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
-\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
-\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
-\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
-\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
-\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
-\lambda_{d,1} & \sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
-\kappa_{d,1} & \sim N(\mu_{\kappa}, \sigma=1) \nonumber \\
-\intertext{y}
-\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
-\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber
-\end{align}
-
-\subsection*{Modelos E y F}
-
-Después comenzaríamos a incluir las variables de ocupación. Como mencionaba al presentar las variables, tengo un interés especial en la (des)ocupación juvenil, pues esta sería una variable que referencias como \textcite{LeBras16} y \textcite{Perrineau07} favorecerían. Por ello, al margen del ordenamiento, vamos a construir dos modelos de 6 variables. De manera general ambos incorporarían una variable explicativa $x_{ocu,c}$ con coeficientes $\zeta_{d[c]}$. El modelo E es el modelo D más la ocupación juvenil, mientras que el modelo F es el modelo D más la ocupación general. 
-
-\begin{align}\label{eq:Modelo_Comp_EF}
-y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
-\begin{split}
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
-&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu,c} 
-\end{split}\\
-\intertext{tal que} 
-\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
-\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
-\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
-\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
-\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
-\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
-\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
-\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
-\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
-\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
-\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
-\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
-\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
-\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
-\intertext{y}
-\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
-\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber
-\end{align}
-
-\subsection*{Modelo G}
-
-Una vez generados los modelos que agregan por separado la (des)ocupación general y juvenil, podemos considerar un modelo que incorpre ambas variables. Así, para la ocupación general $x_{ocu\_gral,c}$ tendremos coeficientes $\zeta_{d[c]}$ y para la ocupación juvenil $x_{ocu\_juv,c}$, $\xi_{d[c]}$. 
-
-\begin{align}\label{eq:Modelo_Comp_G}
-y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
-\begin{split}
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
-&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu\_gral,c} + \xi_{d[c]} x_{ocu\_juv,c} 
-\end{split}\\
-\intertext{tal que} 
-\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
-\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
-\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
-\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
-\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
-\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
-\xi_{d,2} &= -\xi_{d,1} \nonumber \\
-\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
-\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
-\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
-\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
-\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
-\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
-\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
-\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
-\xi{d,1} &\sim N(\mu_{\xi}, \sigma=1) \nonumber \\
-\intertext{y}
-\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
-\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber
-\mu_{\xi} &\sim N(0,\sigma=0.5) \nonumber
-\end{align}
-
-\subsection*{Modelo H}
-
-Finalmente agregamos la última variable considerada, la ocupación para personas de 55 a 64 años $x_{ocu\_may,c}$, mediante coeficientes $\upsilon_{d[c]}$. 
-
-\begin{align}\label{eq:Modelo_Comp_G}
-y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
-\begin{split}
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
-&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu\_gral,c} + \xi_{d[c]} x_{ocu\_juv,c} + \upsilon_{d[c]} x_{ocu\_may,c} 
-\end{split}\\
-\intertext{tal que} 
-\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
-\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
-\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
-\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
-\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
-\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
-\xi_{d,2} &= -\xi_{d,1} \nonumber \\
-\upsilon_{d,2} &= -\upsilon_{d,1} \nonumber \\
-\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
-\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
-\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
-\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
-\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
-\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
-\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
-\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
-\xi{d,1} &\sim N(\mu_{\xi}, \sigma=1) \nonumber \\
-\upsilon{d,1} &\sim N(\mu_{\upsilon}, \sigma=1) \nonumber \\
-\intertext{y}
-\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
-\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber
-\mu_{\xi} &\sim N(0,\sigma=0.5) \nonumber
-\mu_{\upsilon} &\sim N(0,\sigma=0.5) \nonumber
-\end{align}
-
-¿Cuál es la comparación de WAICs hasta este punto? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}} podemos observarlo. En general, el WAIC mejora conforme se van agregando variables. Ciertamente las mayores ganancias se dan al agregar las primeras variables que el análisis individual sugería eran las más explicativas. Esto parece confirmar dicha hipótesis. Por el contrario, en términos de WAIC, la ocupación juvenil no parece ser la más poderosa de las variables. En efecto, la ganancia en WAIC al agregarla en el modelo E, es menor a la ganancia del modelo F. Más aún, al pasar del modelo F al modelo G agregándola de nuevo, la ganancia vuelve a ser poca. {\color{Red}Esto no quiere decir, sin embargo, que no aporte nada a la regresión. Aunque la mejora en WAIC sea pequeña y los intervalos con error estándar se traslapen, la probabilidad de que agregarla produce un mejor modelo es de INSERTAR PROBAS.}
+¿Cuál es la comparación de WAICs entre ellos? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}} podemos observarlo. En general, el WAIC mejora conforme se van agregando variables. Ciertamente las mayores ganancias se dan al agregar las primeras variables que el análisis individual sugería eran las más explicativas. Esto parece confirmar dicha hipótesis. Por el contrario, en términos de WAIC, la ocupación juvenil no parece ser la más poderosa de las variables. En efecto, la ganancia en WAIC al agregarla en el modelo E, es menor a la ganancia del modelo F. Más aún, al pasar del modelo F al modelo G agregándola de nuevo, la ganancia vuelve a ser poca. {\color{Red}Esto no quiere decir, sin embargo, que no aporte nada a la regresión. Aunque la mejora en WAIC sea pequeña y los intervalos con error estándar se traslapen, la probabilidad de que agregarla produce un mejor modelo es de INSERTAR PROBAS.}
 
 \begin{figure}[h]
 	\centering
@@ -409,3 +216,81 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \
 	\caption{Comparativo de WAIC para distintos modelos. Comenzando por los modelos individuales en color rojo, ir agregando una variable adicional disminuye el WAIC. El Modelo de 5 variables ya no parece mejorar tanto. Fuente: elaboración propia.}
 	\label{fig:Compara_WAIC_Compuestos}
 \end{figure}
+
+\subsection*{Convergencia de HMC}
+
+Una vez ajustados los modelos, como adelantaba en {\color{Red} CONVERGENCIA}, habría que verificar que las cadenas construidas mediante la implementación de HMC dentro de Stan hubieran convergido. Debido a la cantidad de parámetros dentro de cada modelo, así como a la cantidad de modelos ajustados en sí, es difícil verificar a detalle todas y cada una de las muestras posteriores. Afortunadamente, \textcite{BetancourtRStanWorkflow} presenta un caso de estudio que permite realizar distintos diagnósticos útiles para todos los parámetros de interés dentro de todos los modelos. Entre ellos encontramos el factor de reducción de escala $\hat{R}$ discutido en {\color{Red} CONVERGENCIA}, así como un cálculo del tamaño efectivo de muestra por iteración y 3 diagnósticos particulares de HMC. Utilizando su código abierto\footnote{Los derechos de autor son de Michael Betancourt y la Universidad de Columbia y las licencias pueden verificarse en el link en las referencias.}, verificamos que los modelos satisfacen los criterios planteados y podemos confiar en la convergencia de las muestras posteriores obtenidas. {\color{Red} Esta comprobación puede reproducirse con el código del repositorio de Github de esta tesis y solicitándome acceso a los archivos .rds con los ajustes de todos los modelos.}\\
+
+ Adicionalmente, podemos observar algunos diagnósticos gráficos para algunos parámetros del modelo H. Por ejemplo, en la \textbf{Figura \ref{fig:Traceplots_H}} observamos en los \textit{traceplots} para algunos parámetros que hay una buena mezcla de las cadenas; esto también se confirma viendo que las densidades por cadena de la \textbf{Figura \ref{fig:Densidades_H}} son parecidas. Finalmente, en la \textbf{Figura \ref{fig:Autocorr_H}} vemos que las autocorrelaciones son pequeñas. De hecho, existe un poco de simulación antitética que permite una mejor eficiencia en el tamaño de muestra {\color{Red} CITAR DISCUSIÓN BLOG GELMAN}.\\ 
+ 
+ \begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[width = \textwidth]{Figs/Convergencia/Convergencia_Traceplots}
+	\caption{Ejemplo de \textit{traceplots} para algunos parámetros del modelo H.}
+	\label{fig:Traceplots_H}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[width = \textwidth]{Figs/Convergencia/Convergencia_Densidades}
+	\caption{Ejemplo de gráficos de densidades por cadena para algunos parámetros del modelo H.}
+	\label{fig:Densidades_H}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.6\textwidth}
+	\includegraphics[width = \textwidth]{Figs/Convergencia/Convergencia_AutoCorr}
+	\caption{Ejemplo de gráficos de autocorrelación para algunos parámetros del modelo H.}
+	\label{fig:Autocorr_H}
+	\end{subfigure}
+	\caption{Fuente: elaboración propia.}
+\end{figure}
+
+ También analicé la convergencia del modelo H mediante los diagnósticos del paquete shinystan, que permite de manera interactiva observar distintos gráficos y resúmenes respecto al ajuste del modelo vía HMC. De esta exploración, también concluí que el modelo satisfacía suficientemente bien la batería de diagnósticos para darnos confianza en que las muestras obtenidas provienen de la distribución posterior. Una vez verificada la convergencia, podemos proceder al análisis de los resultados. 
+ 
+\subsection*{Efectos de las variables}
+
+Interpretar los coeficientes de regresiones logísticas no es sencillo, pues estos se encuentran en la escala logística y muchas veces queremos interpretarlos en la escala de las proporciones o probabilidades que la liga logística define. Como explican \textcite{GelmanHill06}, además de las interpretaciones en términos de momios, un primer impulso a la hora de interpretar coeficientes es considerar el caso cuando la variable explicativa vale 1. Sin embargo, esto no siempre tiene sentido dependiendo del contexto en el que se realiza la regresión. Por motivos que expliqué a la hora de definir las distribuciones iniciales de los modelos, este es mi caso--- ver {\color{Red} Discusión falacia ecológica}---. Es decir, no podría interpretar los coeficientes mediante alguna estrategia de ese tipo.\\ 
+
+ Por ello, resultan útiles lo que los mismos autores llaman \textit{average predictive comparisons}. Básicamente estos consisten en pensar en los efectos de los coeficientes, tomando en cuenta la incertidumbre que tenemos sobre ellos, en términos de una comparación entre dos valores distintos pero informativos de las variables explicativas de interés--- en mi caso, las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales---. Una alternativa de valores son la media y una desviación estándar por encima de ella. Esta elección tiene la ventaja de que, usualmente, se estaría realizando la interpretación en el rango de valores observado en la variable explicativa y no mediante una extrapolación. Hay que decir, no obstante, que una situación donde esto no sucede es cuando la variable explicativa observada es multimodal y la media cae en uno de los valles.\\ 
+
+La discusión general sobre alternativas de interpretación para regresiones logísticas puede consultarse en la referencia antes citada. Sin embargo, para fijar ideas, supongamos por ahora que estamos analizando un modelo individual nacional para una variable con 3 categorías, $x = (x_1,x_2,x_3)$. Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo el subíndice de las comunas, tendríamos que para alguna comuna en particular,
+
+\begin{equation*}
+ln\left(\dfrac{p}{1-p}\right) = \alpha + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3.
+\end{equation*}
+
+Abusando de la notación, introduzco ahora unas expresiones. En primer lugar
+
+\begin{equation*}
+\eta(\beta_i|x)= \alpha + \beta_i x_i + \sum\limits_{k\neq i} \beta_k x_k, 
+\end{equation*} 
+
+para referirme al predictor lineal como función del coeficiente $\beta_i$, considerando la configuración social $x$, el intercepto $\alpha$ y el resto de coeficientes como fijos. Asimismo tomemos 
+
+\begin{equation*}
+p(\beta_i|x)=\dfrac{e^{\eta(\beta_i|x)}}{1+e^{\eta(\beta_i|x)}}=\dfrac{1}{1+e^{-\eta(\beta_i|x)}}
+\end{equation*} 
+
+como el valor de la afinidad por Marine Le Pen en la comuna como función del coeficiente $\beta_i$, de nuevo, con el resto del predictor lineal fijo. Buscaríamos entonces definir el efecto que tiene el coeficiente $\beta_i$ como el cambio en puntos porcentuales para dicha afinidad cuando se pasa de una configuración a otra: 
+
+\begin{equation*}
+\Delta(\beta_i|x_{(0)},x_{(1)}) = p(\beta_i|x_{(1)})-p(\beta_i|x_{(0)})
+\end{equation*}
+
+Sin embargo, en nuestro caso no tenemos total libertad para elegir los valores $x_{(0)}$ y $x_{(1)}$, pues recordemos que son proporciones que deben sumar a 1. ¿Cómo elegir entonces los valores? En primer lugar, definamos el punto de referencia $x_{(0)}$ como la media muestral, $x_{(0)}=\bar{x}=(\bar{x}_1,\bar{x}_2,\bar{x}_3)$. Como estamos interesados en el efecto del coeficiente $\beta_i$, empecemos a construir $x_{(1)}$ con base en $x_{i,(1)}=\bar{x}_i + s_i$ donde $s_i$ es la desviación estándar muestral en la $i$-ésima categoría. Ahora, al agregarle una desviación estándar a $x_i$, debemos disminuir el valor del resto de $x_k$ para cumplir la restricción. Sin que sea la única forma de hacerlo, una propuesta es disminuir cada categoría restante de manera proporcional. Esto sería de la siguiente manera: 
+
+\begin{equation*}
+x_{k,(1)}=\bar{x}_k - s_i \dfrac{\bar{x}_k}{1-\bar{x}_i} \quad \forall k \neq i
+\end{equation*}
+
+Con este criterio podemos abusar un poco más de la notación. Si en lugar del caso específico de una configuración social de 3 categorías tenemos $l$ categorías, el efecto para $\beta_1$ sería
+
+\begin{align}\label{eq:Efecto_Enchufado}
+\Delta(\beta_1) &= p(\beta_1|x^\star)-p(\beta_1|\bar{x}) \nonumber \\
+\text{donde} \quad \bar{x} = (\bar{x}_1,\dots,\bar{x}_{l}) \quad &\text{y} \quad x^\star = \left(\bar{x}_1 + s_1,\bar{x}_2 - s_1\dfrac{\bar{x}_2}{1- \bar{x}_1},\dots,\bar{x}_{l} - s_i\dfrac{\bar{x}_{l}}{1-\bar{x}_i}\right). \nonumber \\
+\intertext{Y para el resto de coeficientes}
+\Delta(\beta_i) &= p(\beta_i|x^\star)-p(\beta_i|\bar{x}) \nonumber \\
+\text{donde} \quad \bar{x} = (\bar{x}_1,\dots,\bar{x}_{l}) \quad &\text{y} \quad x^\star = \left(\bar{x}_1 - s_i\dfrac{\bar{x}_1}{1-\bar{x}_i},\dots,\bar{x}_i + s_i,\dots, \bar{x}_{l} - s_i\dfrac{\bar{x}_{l}}{1-\bar{x}_i}\right).
+\end{align}
+
+Ahora bien, quedan dos observaciones por hacer. La primera es que aquí ya construimos una definición de efecto como función de un valor de $\beta_i$, esto sería lo que \textcite{GelmanHill06} pudieran llamar \textit{predictive comparison} porque estaríamos comparando dos predicciones específicas del modelo. Sin embargo, nuestro proceso de modelado bayesiano mediante HMC, nos indica que tenemos incertidumbre sobre el valor específico de $\beta_i$ reflejada mediante una muestra posterior de valores simulados para $\beta_i$. Por lo mismo, vamos a reportar más bien el \textit{\textbf{average} predictive comparison}. Es decir, nuestro efecto debe ser el promedio a través de los distintos valores

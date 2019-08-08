@@ -1,0 +1,202 @@
+\chapter{Modelos Compuestos}\label{Anexo_modelos_compuestos}
+
+\section{Modelo A}
+
+\begin{align}\label{eq:Modelo_Comp_A_Anexo}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} \\ 
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\section{Modelo B}
+
+\begin{align}\label{eq:Modelo_Comp_B}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\ 
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\section{Modelo C}
+
+\begin{align}\label{eq:Modelo_Comp_C}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} + \lambda_{d[c]} x_{migr,c} \\ 
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
+\lambda_{d,1} & \sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\section{Modelo D}
+
+\begin{align}\label{eq:Modelo_Comp_D}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\begin{split}
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
+&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} 
+\end{split}\\
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} & \sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5} \nonumber \\
+\lambda_{d,1} & \sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\kappa_{d,1} & \sim N(\mu_{\kappa}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\section{Modelos E y F}
+
+\begin{align}\label{eq:Modelo_Comp_EF}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\begin{split}
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} \\
+&+ \lambda_{d[c]} x_{migr,c} + \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu,c} 
+\end{split}\\
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
+\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
+\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
+\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\section{Modelo G}
+
+\begin{align}\label{eq:Modelo_Comp_G}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\begin{split}
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} + \lambda_{d[c]} x_{migr,c} \\
+&+ \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu\_gral,c} + \xi_{d[c]} x_{ocu\_juv,c} 
+\end{split}\\
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
+\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
+\xi_{d,2} &= -\xi_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
+\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
+\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
+\xi_{d,1} &\sim N(\mu_{\xi}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\xi} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
+
+\section{Modelo H}
+
+\begin{align}\label{eq:Modelo_Comp_H}
+y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
+\begin{split}
+\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} + \delta_{d[c]} x_{edad,c} + \lambda_{d[c]} x_{migr,c} \\
+&+ \kappa_{d[c]} x_{sexo,c} + \zeta_{d[c]} x_{ocu\_gral,c} + \xi_{d[c]} x_{ocu\_juv,c} + \upsilon_{d[c]} x_{ocu\_may,c} 
+\end{split}\\
+\intertext{tal que} 
+\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
+\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\delta_{d,6} &= -\sum\limits_{k = 1}^{5} \delta_{d,k} \nonumber \\
+\lambda_{d,2} &= -\lambda_{d,1} \nonumber \\
+\kappa_{d,2} &= -\kappa_{d,1} \nonumber \\
+\zeta_{d,2} &= -\zeta_{d,1} \nonumber \\
+\xi_{d,2} &= -\xi_{d,1} \nonumber \\
+\upsilon_{d,2} &= -\upsilon_{d,1} \nonumber \\
+\intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
+\alpha_d &\sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
+\beta_{d,j} &\sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
+\gamma_{d,j} &\sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\delta_{d,j} &\sim N(\mu_{\delta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{5}  \nonumber \\ 
+\lambda_{d,1} &\sim N(\mu_{\lambda}, \sigma=1) \nonumber \\
+\kappa_{d,1} &\sim N(\mu_{\kappa}, \sigma=1) \nonumber \\ 
+\zeta_{d,1} &\sim N(\mu_{\zeta}, \sigma=1) \nonumber \\
+\xi_{d,1} &\sim N(\mu_{\xi}, \sigma=1) \nonumber \\
+\upsilon_{d,1} &\sim N(\mu_{\upsilon}, \sigma=1) \nonumber \\
+\intertext{y}
+\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
+\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\delta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\lambda} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\kappa} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\zeta} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\xi} &\sim N(0,\sigma=0.5) \nonumber \\
+\mu_{\upsilon} &\sim N(0,\sigma=0.5) \nonumber
+\end{align}
