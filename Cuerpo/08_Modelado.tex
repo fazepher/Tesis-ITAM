@@ -146,13 +146,20 @@ donde $V(y_i|\theta)=\dfrac{1}{S-1}\sum\limits_{s=1}^S \mathcal{L}(y_i;\theta_{s
 
 El WAIC se conforma de dos sumas. La primera, $\widehat{lpd}$, es una aproximación de la log predictiva posterior, es decir una medidad de ajuste. Por otro lado, $\widehat{par}$ es normalmente llamado el \textit{número efectivo estimado de parámetros} y es una medida que mediante sumas de varianzas busca medir la complejidad del modelo. En total, entre menor sea el valor del WAIC, esperaríamos un mejor desempeño predictivo tomando en cuenta la complejidad del modelo.\\ 
 
-Notemos que con la definición dada, el WAIC es un estimador por lo que tiene una distribución muestral. Gracias al paquete \textit{loo} de $\mathsf{R}$, podemos estimar tanto los WAICs y sus errores estándar como la diferencia esperada entre dos de ellos y, {\color{Red} argumentando un teorema central del límite, la probabilidad de que el WAIC de un modelo sea efectivamente menor o igual al WAIC de otro. Estas comparaciones las observamos en la \textbf{Figura COMPARA WAICS}.}\\
+Notemos que con la definición dada, el WAIC es un estimador por lo que tiene una distribución muestral. Gracias al paquete \textit{loo} de $\mathsf{R}$, podemos estimar tanto los WAICs y sus errores estándar como la diferencia esperada entre dos de ellos y, {\color{Red} argumentando un teorema central del límite, la probabilidad de que el WAIC de un modelo sea efectivamente menor o igual al WAIC de otro. Estas comparaciones las observamos en la \textbf{Figura \ref{fig:Compara_WAIC_Individuales}}.}\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Modelado/Graf_WAIC_Probas_Modelos_Individuales}
+	\caption{Comparativo de WAIC para distintos modelos. Fuente: elaboración propia con base en la estimación de la diferencia en WAIC proveniente de la función \textit{compare} del paquete \textit{loo} dentro $\mathsf{R}$ y asumiendo una distribución normal para la diferencia.}
+	\label{fig:Compara_WAIC_Individuales}
+\end{figure}
 
 Para la mayoría de las comparaciones es claro que un modelo tiene mejor ajuste que el otro. Podríamos pensar que efectivamente hay un ordenamiento en el poder predictivo de las distintas variables: escolaridad, categorías socioprofesionales, edad, condición migratoria, nacionalidad, sexo y, finalmente, las ocupaciones. Sin concluir todavía nada, parecería que a las hipótesis sobre inseguridad laboral no les corresponde el mejor de los poderes explicativos en términos de estos modelos.\\
 
 \section{Modelos Compuestos}
 
-Este ordenamiento preliminar tiene el objetivo de ayudarme a construir, secuencialmente, un modelo cada vez más complejo. Para comenzar, veamos los mapas de predicción que generó el modelo con menor WAIC, el jerárquico por escolaridad, en la \textbf{Figura \ref{fig:Modelo_Jer_Escolaridad}}.
+Este ordenamiento preliminar tiene el objetivo de ayudarme a construir, secuencialmente, un modelo cada vez más complejo. Para comenzar, veamos los mapas de predicción que generó el modelo con menor WAIC, el jerárquico por escolaridad, en la \textbf{Figura \ref{fig:Modelo_Jer_Escolaridad}}.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -163,7 +170,7 @@ Este ordenamiento preliminar tiene el objetivo de ayudarme a construir, secuenci
 
 El mapa de errores ya se observa más verde y homogéneo. Las grandes zonas de fortaleza y debilidad del FN comienzan a ser identificadas por el modelo. Sin embargo, los tonos de algunas predicciones son todavía demasiado cercanos a la mediana. En el centro observamos una zona de tonos muy claros, casi blancos, que no corresponden totalmente a la realidad. En general, vemos que hay menor variabilidad dentro de los departamentos de la que se observó en la elección.\\ 
 
-Estas reflexiones sugieren que, en lugar de tomar una a una las variables, podemos ir agregando variables a la regresión en modelos jerárquicos secuenciales que refinen el ajuste. Entonces, comenzando con la escolaridad, iré agrandando el modelo con la inclusión de una nueva variable cada vez.\\ 
+Estas reflexiones sugieren que, en lugar de tomar una a una las variables, podemos ir agregando variables a la regresión en modelos jerárquicos secuenciales que refinen el ajuste. Entonces, este modelo jerárquico por escolaridad podríamos considerarlo el \textbf{Modelo 0}, pues partiremos de él para ir agrandándolo con la inclusión de una nueva variable cada vez.\\ 
 
 El primer modelo compuesto incluye las variables de escolaridad y categorías socioprofesionales. A este modelo lo llamaré el \textbf{Modelo A}. Para distinguir las variables utilizaré diferentes letras griegas para sus coeficientes. Para la configuración social de escolaridad 
 \[x_{escol,c} = (Esc_c,Dip1_c,Dip2_c,Dip3_c,Dip4_c)^T\]
@@ -185,7 +192,7 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \
 \mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber
 \end{align}
 
-Al estimar el modelo con ambas variables las predicciones efectivamente mejoran. La diferencia en WAIC entre el modelo A y el modelo jerárquico por escolaridad se estima en {\color{Red} AGREGAR ESTIMADO CON ERROR ESTÁNDAR}. Asimismo, observando los mapas de la \textbf{Figura \ref{fig:Modelo_Compuesto_A}}, vemos que se reduce la gran zona blanquiza del centro, se comienza a observar mayor variabilidad dentro de los departamentos y los tonos también se oscurecen más, sobre todo en el noreste.\\ 
+Al estimar el modelo con ambas variables las predicciones efectivamente mejoran. La diferencia en WAIC entre el modelo A y el modelo jerárquico por escolaridad se estima en -1594.7 con un error estándar de 175.2. Asimismo, observando los mapas de la \textbf{Figura \ref{fig:Modelo_Compuesto_A}}, vemos que se reduce la gran zona blanquiza del centro, se comienza a observar mayor variabilidad dentro de los departamentos y los tonos también se oscurecen más, sobre todo en el noreste.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -195,7 +202,7 @@ Al estimar el modelo con ambas variables las predicciones efectivamente mejoran.
 \end{figure}
 
 
-Los siguientes modelos se llamarán de manera progresiva por letras latinas y sus planteamientos en términos de ecuaciones pueden encontrarse en el \textbf{\autoref{Anexo_modelos_compuestos}}. Por ejemplo, el \textbf{Modelo B} incorpora los grupos de edad $x_{edad,c}$. Al hacerlo, el WAIC vuelve a disminuir y los respectivos mapas corresponden a la \textbf{Figura \ref{fig:Modelo_Compuesto_B}}.\\ 
+Los siguientes modelos se llamarán de manera progresiva por letras latinas y sus planteamientos en términos de ecuaciones pueden encontrarse en el \autoref{Anexo_modelos_compuestos}. Por ejemplo, el \textbf{Modelo B} incorpora los grupos de edad $x_{edad,c}$. Al hacerlo, el WAIC vuelve a disminuir, ahora 965.4 unidades, y los respectivos mapas corresponden a la \textbf{Figura \ref{fig:Modelo_Compuesto_B}}.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -204,24 +211,24 @@ Los siguientes modelos se llamarán de manera progresiva por letras latinas y su
 	\label{fig:Modelo_Compuesto_B}
 \end{figure}
 
-Debido a la similitud entre condición migratoria y nacionalidad, solamente buscaba incorporar una de las dos, tratando de identificar la que tuviera mejor desempeño. De acuerdo al ordenamiento previo en los modelos individuales, consideraré solo la variable migratoria $x_{migr,c}$ dentro del \textbf{Modelo C}. Por su parte, el \textbf{Modelo D} incluye la distribución comunal por sexo $x_{sexo,c}$.\\
+Debido a la similitud entre condición migratoria y nacionalidad, solamente buscaba incorporar una de las dos, tratando de identificar la que tuviera mejor desempeño. De acuerdo al ordenamiento previo en los modelos individuales, consideraré solo la variable migratoria $x_{migr,c}$ dentro del \textbf{Modelo C}. Por su parte, el \textbf{Modelo D} incluye la distribución comunal por sexo $x_{sexo,c}$. {\color{Red} No presento los mapas por brevedad, pero de necesitarse se incluyen pues ya están generados}.\\
 
-Después comenzaríamos a incluir las variables de ocupación. Como mencionaba al presentarlas, tengo un interés especial en la (des)ocupación juvenil, pues esta sería una variable que referencias como \textcite{LeBras16} y \textcite{Perrineau07} favorecerían. Por ello, al margen del ordenamiento, vamos a construir dos modelos de 6 variables. De manera general ambos incorporarían una variable explicativa $x_{ocu,c}$. El \textbf{Modelo E} es el modelo D más la ocupación juvenil, mientras que el \textbf{Modelo F} es el modelo D más la ocupación general. Una vez generados por separado, podemos considerar un modelo que incorpre ambas variables, este sería el \textbf{Modelo G}.Finalmente agregamos la última variable considerada, la ocupación para personas de 55 a 64 años $x_{ocu\_may,c}$, para obtener el \textbf{Modelo H}.\\
+Después comenzaríamos a incluir las variables de ocupación. Como mencionaba al presentarlas, tengo un interés especial en la (des)ocupación juvenil, pues esta sería una variable que referencias como \textcite{LeBras16} y \textcite{Perrineau07} favorecerían. Por ello, al margen del ordenamiento, construí dos modelos de 6 variables. De manera general ambos incorporan una variable explicativa $x_{ocu,c}$. El \textbf{Modelo E} es el modelo D más la ocupación juvenil, mientras que el \textbf{Modelo F} es el modelo D más la ocupación general. Una vez generados por separado, podemos considerar un modelo que incorpre ambas variables, este sería el \textbf{Modelo G}. Finalmente agregamos la última variable considerada, la ocupación para personas de 55 a 64 años $x_{ocu\_may,c}$, para obtener el \textbf{Modelo H}.\\
 
-¿Cuál es la comparación de WAICs entre ellos? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}} podemos observarlo. En general, el WAIC mejora conforme se van agregando variables. Ciertamente las mayores ganancias se dan al agregar las primeras variables que el análisis individual sugería eran las más explicativas. Esto parece confirmar dicha hipótesis. Por el contrario, en términos de WAIC, la ocupación juvenil no parece ser la más poderosa de las variables. En efecto, la ganancia en WAIC al agregarla en el modelo E, es menor a la ganancia del modelo F. Más aún, al pasar del modelo F al modelo G agregándola de nuevo, la ganancia vuelve a ser poca. {\color{Red}Esto no quiere decir, sin embargo, que no aporte nada a la regresión. Aunque la mejora en WAIC sea pequeña y los intervalos con error estándar se traslapen, la probabilidad de que agregarla produce un mejor modelo es de INSERTAR PROBAS.}
+¿Cuál es la comparación de WAICs entre ellos? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}} podemos observarlo. En general, el WAIC mejora conforme se van agregando variables. Ciertamente las mayores ganancias se dan al agregar las primeras variables que el análisis individual sugería eran las más explicativas. Esto parece confirmar dicha hipótesis. Por el contrario, en términos de WAIC, la ocupación juvenil no parece ser la más poderosa de las variables. En efecto, la ganancia en WAIC frente al modelo D al agregarla en el modelo E es de apenas 46 unidades, menor a la ganancia del modelo F que fue de 162. Más aún, al pasar del modelo F al modelo G agregándola de nuevo, la ganancia vuelve a ser poca, apenas de 29. Esto no quiere decir, sin embargo, que no aporte nada a la regresión. Aunque la mejora en WAIC sea pequeña y los intervalos con error estándar se traslapen, {\color{Red} la probabilidad de que agregarla produce un mejor modelo es de 84\% en el caso del modelo E y de 77\% en el modelo G.}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{Figs/Modelado/Graf_WAIC_Modelos_Compuestos}
-	\caption{Comparativo de WAIC para distintos modelos. Comenzando por los modelos individuales en color rojo, ir agregando una variable adicional disminuye el WAIC. El Modelo de 5 variables ya no parece mejorar tanto. Fuente: elaboración propia.}
+	\caption{Comparativo de WAIC para distintos modelos. Comenzando por el modelo 0 que incluye solo escolaridad se van añadiendo variables hasta incluirlas todas en el modelo H. Fuente: elaboración propia.}
 	\label{fig:Compara_WAIC_Compuestos}
 \end{figure}
 
 \subsection{Convergencia de HMC}
 
-Una vez ajustados los modelos, como adelantaba en {\color{Red} CONVERGENCIA}, habría que verificar que las cadenas construidas mediante la implementación de HMC dentro de Stan hubieran convergido. Debido a la cantidad de parámetros dentro de cada modelo, así como a la cantidad de modelos ajustados en sí, es difícil verificar a detalle todas y cada una de las muestras posteriores. Afortunadamente, \textcite{BetancourtRStanWorkflow} presenta un caso de estudio que permite realizar distintos diagnósticos útiles para todos los parámetros de interés dentro de todos los modelos. Entre ellos encontramos el factor de reducción de escala $\hat{R}$ discutido en {\color{Red} CONVERGENCIA}, así como un cálculo del tamaño efectivo de muestra por iteración y 3 diagnósticos particulares de HMC. Utilizando su código abierto\footnote{Los derechos de autor son de Michael Betancourt y la Universidad de Columbia y las licencias pueden verificarse en el link en las referencias.}, verificamos que los modelos satisfacen los criterios planteados y podemos confiar en la convergencia de las muestras posteriores obtenidas. {\color{Red} Esta comprobación puede reproducirse con el código del repositorio de Github de esta tesis y solicitándome acceso a los archivos .rds con los ajustes de todos los modelos.}\\
+Una vez ajustados los modelos, como adelantaba en la \autoref{sec:Convergencia}, habría que verificar que las cadenas simuladas mediante la implementación de HMC dentro de Stan hubieran convergido. Debido a la cantidad de parámetros dentro de cada modelo, así como a la cantidad de modelos ajustados en sí, es difícil verificar a detalle todas y cada una de las muestras posteriores. Afortunadamente, \textcite{BetancourtRStanWorkflow} desarrolla un caso de estudio en el que ilustra cómo realizar distintos diagnósticos útiles para todos los parámetros de interés dentro de todos los modelos. Entre ellos encontramos el factor de reducción de escala $\hat{R}$, así como un cálculo del tamaño efectivo de muestra por iteración y 3 diagnósticos particulares de HMC. Utilizando su código abierto\footnote{Los derechos de autor son de Michael Betancourt y la Universidad de Columbia y las licencias pueden verificarse en el link en las referencias.}, verificamos que los modelos satisfacen los criterios planteados y podemos confiar en la convergencia de las muestras posteriores obtenidas. {\color{Red} Esta comprobación puede reproducirse con el código del repositorio de Github de esta tesis y solicitándome acceso a los archivos .rds con los ajustes de todos los modelos.}\\
 
- Adicionalmente, podemos observar algunos diagnósticos gráficos para algunos parámetros del modelo H. Por ejemplo, en la \textbf{Figura \ref{fig:Traceplots_H}} observamos en los \textit{traceplots} para algunos parámetros que hay una buena mezcla de las cadenas; esto también se confirma viendo que las densidades por cadena de la \textbf{Figura \ref{fig:Densidades_H}} son parecidas. Finalmente, en la \textbf{Figura \ref{fig:Autocorr_H}} vemos que las autocorrelaciones son pequeñas. De hecho, existe un poco de simulación antitética que permite una mejor eficiencia en el tamaño de muestra {\color{Red} CITAR DISCUSIÓN BLOG GELMAN}.\\ 
+ Adicionalmente, podemos observar algunos diagnósticos gráficos para algunos parámetros del modelo H. Por ejemplo, en la \textbf{Figura \ref{fig:Traceplots_H}} observamos en los \textit{traceplots} para algunos parámetros que hay una buena mezcla de las cadenas; esto también se confirma viendo que las densidades por cadena de la \textbf{Figura \ref{fig:Densidades_H}} son parecidas. Finalmente, en la \textbf{Figura \ref{fig:Autocorr_H}} vemos que las autocorrelaciones son pequeñas. De hecho, existe un poco de simulación antitética que permite una mejor eficiencia en el tamaño de muestra \parencite{BlogAntithetical}.\\ 
  
  \begin{figure}[h]
 	\centering
@@ -245,15 +252,15 @@ Una vez ajustados los modelos, como adelantaba en {\color{Red} CONVERGENCIA}, ha
 	\caption{Fuente: elaboración propia.}
 \end{figure}
 
- También analicé la convergencia del modelo H mediante los diagnósticos del paquete shinystan, que permite de manera interactiva observar distintos gráficos y resúmenes respecto al ajuste del modelo vía HMC. De esta exploración, también concluí que el modelo satisfacía suficientemente bien la batería de diagnósticos para darnos confianza en que las muestras obtenidas provienen de la distribución posterior. Una vez verificada la convergencia, podemos proceder al análisis de los resultados. 
+ También analicé la convergencia del modelo H mediante los diagnósticos del paquete de $\mathsf{R}$ \textit{shinystan}, que permite de manera interactiva observar distintos gráficos y resúmenes respecto al ajuste del modelo vía HMC. De esta exploración, también concluí que el modelo satisfacía suficientemente bien la batería de diagnósticos para darnos confianza en que las muestras obtenidas provienen de la distribución posterior. Una vez verificada la convergencia, podemos proceder al análisis de los resultados para lo cual debemos interpretar lo que los coeficientes simulados nos dicen. 
  
 \subsection{Definiendo efectos}
 
-Interpretar los coeficientes de regresiones logísticas no es sencillo, pues estos se encuentran en la escala logística y muchas veces queremos interpretarlos en la escala de las proporciones o probabilidades que la liga logística define. Como explican \textcite{GelmanHill06}, además de las interpretaciones en términos de momios, un primer impulso a la hora de interpretar coeficientes es considerar el caso cuando la variable explicativa vale 1. Sin embargo, esto no siempre tiene sentido dependiendo del contexto en el que se realiza la regresión. Este es mi caso por lo que no podría interpretar los coeficientes mediante alguna estrategia de ese tipo, sobre todo para evitar alguna falacia ecológica--- ver página \pageref{No_Extrapolar}---.\\ 
+Interpretar los coeficientes de regresiones logísticas no es sencillo, pues estos se encuentran en una escala distinta a la de las proporciones o probabilidades que la liga logística define y que es en la que normalmente estamos interesados. Como explican \textcite{GelmanHill06}, además de las interpretaciones en términos de momios, un primer impulso a la hora de interpretar coeficientes es considerar el caso cuando la variable explicativa vale 1. Sin embargo, esto no siempre tiene sentido dependiendo del contexto en el que se realiza la regresión. Este es mi caso, por lo que no podría interpretar los coeficientes mediante alguna estrategia de ese tipo, sobre todo para evitar alguna falacia ecológica--- ver página \pageref{No_Extrapolar}---.\\ 
 
- Por ello, resultan útiles lo que los mismos autores llaman \textit{predictive comparisons}. Básicamente estos consisten en pensar en los efectos de los coeficientes en términos de una comparación entre dos valores distintos pero informativos de las variables explicativas de interés--- en mi caso, las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales---. Una alternativa de valores son la media y una desviación estándar por encima de ella. Esta elección tiene la ventaja de que, usualmente, se estaría realizando la interpretación en el rango de valores observado en la variable explicativa y no mediante una extrapolación. Hay que decir, no obstante, que una situación donde esto no sucede es cuando la variable explicativa observada es multimodal y la media cae en uno de los valles. Esta discusión general sobre alternativas de interpretación para regresiones logísticas puede consultarse en la referencia antes citada.\\ 
+ Por ello, resultan útiles lo que los mismos autores llaman \textit{predictive comparisons}. Básicamente estos consisten en pensar en los efectos de los coeficientes en términos de una comparación entre dos valores distintos pero informativos de las variables explicativas de interés. Una alternativa de valores son la media y una desviación estándar por encima de ella. Esta elección tiene la ventaja de que, usualmente, se estaría realizando la interpretación en el rango de valores observado en la variable explicativa y no mediante una extrapolación. Hay que decir, no obstante, que una situación donde esto no sucede es cuando la variable explicativa observada es multimodal y la media cae en uno de los valles. Esta discusión general sobre alternativas de interpretación para regresiones logísticas puede consultarse en la referencia antes citada.\\ 
  
- Por nuestra parte, para fijar ideas, supongamos por ahora que estamos analizando un modelo individual nacional para una variable con 3 categorías, $x = (x_1,x_2,x_3)$. Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo el subíndice de las comunas, tendríamos que para alguna comuna en particular,
+ Por nuestra parte, para fijar ideas, recordemos que las variables explicativas son las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales. Supongamos por ahora que estamos analizando un modelo individual nacional para una variable con 3 categorías, $x = (x_1,x_2,x_3)$. Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo el subíndice de las comunas, tendríamos que para alguna comuna en particular,
 
 \begin{equation*}
 ln\left(\dfrac{p}{1-p}\right) = \alpha + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3.
@@ -262,61 +269,62 @@ ln\left(\dfrac{p}{1-p}\right) = \alpha + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3
 Abusando de la notación, introduzco ahora unas expresiones. En primer lugar
 
 \begin{equation*}
-\eta(\beta_i;x)= \alpha + \beta_i x_i + \sum\limits_{k\neq i} \beta_k x_k, 
+\eta(x;\beta_i)= \alpha + \beta_i x_i + \sum\limits_{k\neq i} \beta_k x_k, 
 \end{equation*} 
 
-para referirme al predictor lineal como función del coeficiente $\beta_i$, considerando la configuración social $x$, el intercepto $\alpha$ y el resto de coeficientes como fijos. Asimismo tomemos 
+para referirme al predictor lineal como función de la configuración social $x$ y considerando el intercepto $\alpha$ y los coeficientes como fijos. Sin embargo, ponemos énfasis en el coeficiente $\beta_i$ porque es el efecto que queremos interpretar. Asimismo tomemos 
 
 \begin{equation*}
-p(\beta_i;x)=\dfrac{e^{\eta(\beta_i;x)}}{1+e^{\eta(\beta_i;x)}}=\dfrac{1}{1+e^{-\eta(\beta_i;x)}}
+p(x;\beta_i)=\dfrac{e^{\eta(x;\beta_i)}}{1+e^{\eta(x;\beta_i)}}=\dfrac{1}{1+e^{-\eta(x;\beta_i)}}
 \end{equation*} 
 
-como el valor de la afinidad por Marine Le Pen en la comuna como función del coeficiente $\beta_i$, de nuevo, con el resto del predictor lineal fijo. Buscaríamos entonces definir el efecto que tiene el coeficiente $\beta_i$ como el cambio en puntos porcentuales para dicha afinidad cuando se pasa de una configuración a otra: 
+como el valor de la afinidad por Marine Le Pen en la comuna como función de la configuración social y, de nuevo, con el resto del predictor lineal fijo.\\
+
+ Buscaríamos entonces definir el efecto que tiene el coeficiente $\beta_i$ como el cambio en puntos porcentuales para dicha afinidad cuando se pasa de una configuración a otra. Por ejemplo, suponiendo $x_{(0)}$ como una configuración inicial y $x_{(1)}$ como otra configuración en la que aumenta la categoría de interés, tendríamos que el efecto sería
 
 \begin{equation*}
-\Delta(\beta_i;x_{(0)},x_{(1)}) = p(\beta_i;x_{(1)})-p(\beta_i;x_{(0)})
+\Delta(\beta_i;x_{(0)},x_{(1)}) = p(x_{(1)};\beta_i)-p(x_{(0)};\beta_i)
 \end{equation*}
 
-Sin embargo, en nuestro caso no tenemos total libertad para elegir los valores $x_{(0)}$ y $x_{(1)}$ pues recordemos que son proporciones que deben sumar a 1. ¿Cómo elegir entonces los valores?\\ 
+Sin embargo, en nuestro caso no tenemos total libertad para elegir los valores $x_{(0)}$ y $x_{(1)}$ pues recordemos que son proporciones que deben sumar a 1. ¿Cómo elegirlos entonces?\\ 
 
-En primer lugar, definamos el punto de referencia $x_{(0)}$ como la media muestral, $x_{(0)}=\bar{x}=(\bar{x}_1,\bar{x}_2,\bar{x}_3)$. Posteriormente, como estamos interesados en el efecto del coeficiente $\beta_i$, empecemos a construir $x_{(1)}$ con base en $x_{i,(1)}=\bar{x}_i + s_i$ donde $s_i$ es la desviación estándar muestral en la $i$-ésima categoría. Al agregarle una desviación estándar a $x_i$, para cumplir con la restricción debemos disminuir su valor del resto de $x_k$ en su conjunto. Sin que sea la única forma de hacerlo, una propuesta es quitarle de manera proporcional a cada categoría restante una parte de la desviación estándar que sumamos a la categoría de interés. Esto sería de la siguiente manera: 
+En primer lugar, podemos seleccionar el punto de referencia $x_{(0)}$ como la media muestral, $x_{(0)}=\bar{x}=(\bar{x}_1,\bar{x}_2,\bar{x}_3)$. Posteriormente, como estamos interesados en el efecto del coeficiente $\beta_i$, empecemos a construir $x_{(1)}$ con base en $x_{(1),i}=\bar{x}_i + s_i$ donde $s_i$ es la desviación estándar muestral en la $i$-ésima categoría. Al agregarle una desviación estándar a $x_i$, para cumplir con la restricción, debemos disminuir su valor del resto de $x_k$s en su conjunto. Sin que sea la única forma de hacerlo, una propuesta es quitarle de manera proporcional a cada categoría restante una parte de la desviación estándar que sumamos a la categoría de interés. Esto sería de la siguiente manera: 
 
 \begin{equation*}
-x_{k,(1)}=\bar{x}_k - s_i \dfrac{\bar{x}_k}{1-\bar{x}_i} \quad \forall k \neq i
+x_{(1),k}=\bar{x}_k - s_i \dfrac{\bar{x}_k}{1-\bar{x}_i} \quad \forall k \neq i
 \end{equation*}
 
 Con este criterio podemos abusar un poco más de la notación. Si en lugar del caso específico de una configuración social de 3 categorías tenemos $l$ categorías, el efecto sería 
 
 \begin{align}\label{eq:Efecto_Enchufado}
-\Delta(\beta_i) &= p(\beta_i;x^\star)-p(\beta_i;\bar{x}) \quad \forall i \in \mathbb{N}_l \\
+\Delta(\beta_i) &= p(x^\star;\beta_i)-p(\bar{x};\beta_i) \quad \forall i \in \mathbb{N}_l \\
 \text{donde} \quad \bar{x} &= (\bar{x}_1,\dots,\bar{x}_{l}), \nonumber \\ 
-x^\star &= 
-\begin{cases} 
-\left(\bar{x}_1 + s_1,\, \bar{x}_2 - s_1\dfrac{\bar{x}_2}{1- \bar{x}_1},\,\dots,\,\bar{x}_{l} - s_i\dfrac{\bar{x}_{l}}{1-\bar{x}_1}\right) \quad i = 1, \\[10pt]
-\left(\bar{x}_1 - s_i\dfrac{\bar{x}_1}{1-\bar{x}_i},\,\dots,\,\bar{x}_i + s_i,\,\dots,\, \bar{x}_{l} - s_i\dfrac{\bar{x}_{l}}{1-\bar{x}_i}\right) \quad 1 < i < l, \\[10pt]
-\left(\bar{x}_1 - s_l\dfrac{\bar{x}_1}{1-\bar{x}_l},\,\dots,\, \bar{x}_{l-1} - s_l\dfrac{\bar{x}_{l-1}}{1-\bar{x}_l},\,\bar{x}_l + s_l\right) \quad i = l.
-\end{cases} \nonumber 
+x_i^\star = \bar{x}_i + s_i \quad &\text{y} \quad x_j^\star =\bar{x}_j - s_i\dfrac{\bar{x}_j}{1- \bar{x}_i} \quad \forall j \neq i\nonumber 
 \end{align}
 
 Ahora pensemos que querríamos calcular efectos para modelos jerárquicos. En este caso, simplemente reemplazamos el parámetro de interés por su equivalente jerárquico $\beta_{d,i}$ y tendríamos que calcular la media y la desviación estándar correspondiente dentro de cada departamento $d$: $\bar{x}_{d}$ y $s_{d,i}$. Esto lo indicamos mediante los subíndices:
 
 \begin{equation}
-\Delta(\beta_{d,i}) =  p(\beta_{d,i};x^\star_{d})-p(\beta_{d,i};\bar{x}_{d}) \quad \forall i \in \mathbb{N}_l
+\Delta(\beta_{d,i}) =  p(x^\star_{d};\beta_{d,i})-p(\bar{x}_{d};\beta_{d,i}) \quad \forall i \in \mathbb{N}_l
 \end{equation}
 
 ¿Pero qué pasa cuando tenemos más de una variable? En esta situación, la decisión que tomé fue buscar una comparación \textit{c\ae teris paribus} en la que los sumandos del resto de variables explicativas del predictor lineal toman sus valores promedio en el departamento. Podemos también pensar que estamos modificando el intercepto con los sumandos del resto de categorías con valores promedio. Por ello, si asociamos a $x$ con la variable de la categoría de interés, $\beta$ con sus coeficientes y $z$ con el resto del predictor lineal, una notación más general podría ser
+
 \begin{align}\label{eq:Efecto_Enchufado_Compuesto}
-\Delta(\beta_{d,i};\bar{z}_d) &= p(\beta_{d,i};x_d^\star,\bar{z}_d)-p(\beta_{d,i};\bar{x}_d,\bar{z}_d) \quad \forall i \in \mathbb{N}_l \\
-\text{donde} \quad p(\beta_{d,i};x_d^\star,\bar{z}_d) &=\dfrac{1}{1+e^{-\eta(\beta_{d,i};x_d^\star,\bar{z}_d)}} \nonumber \\
-\text{y} \quad \eta(\beta_{d,i};x_d,\bar{z}_d) &= \bar{z}_d + \beta_{d,i}x_{d,i} + \sum\limits_{k\neq i} \beta_{d,k}x_{d,k}. \nonumber
-\end{align*}
+\Delta(\beta_{d,i};\bar{z}_d) &= p(x_d^\star;\beta_{d,i},\bar{z}_d)-p(\bar{x}_d;\beta_{d,i},\bar{z}_d) \quad \forall i \in \mathbb{N}_l \\
+\text{donde} \quad p(x_d;\beta_{d,i},\bar{z}_d) &=\dfrac{1}{1+e^{-\eta(x_d;\beta_{d,i},\bar{z}_d)}} \nonumber \\
+\text{y} \quad \eta(x_d;\beta_{d,i},\bar{z}_d) &= \bar{z}_d + \beta_{d,i}x_{d,i} + \sum\limits_{k\neq i} \beta_{d,k}x_{d,k}. \nonumber
+\end{align}
 
-Por ejemplo, en el caso del modelo compuesto A que incluye a la escolaridad y a las categorías socioprofesionales, el efecto para una categoría de escolaridad dependería de $\bar{z}_d = \alpha_d + \sum\limits_{j=1}^8 \gamma_{d,k}\bar{x}_{csp,k}$, donde no hay que olvidar que $\bar{x}_{csp,k}$ se calcula para el departamento $d$. \\
+Por ejemplo, en el caso del modelo compuesto A que incluye a la escolaridad y a las categorías socioprofesionales, el efecto para una categoría de escolaridad dependería del intercepto y las 8 categorías socioprofesionales vía $\bar{z}_d = \alpha_d + \sum\limits_{j=1}^8 \gamma_{d,k}\bar{x}_{csp,d,k}$.\\
 
-Hasta aquí ya construimos una propuesta de efecto comparando dos predicciones específicas del modelo ``enchufando'' un valor específico o un estimador puntual de los coeficientes. Sin embargo, nuestro proceso de modelado bayesiano mediante HMC, nos indica que tenemos incertidumbre sobre su valor reflejada mediante una muestra posterior de valores simulados. Por lo mismo, siguiendo la única receta de la estadística bayesiana tendríamos que obtener la distribución posterior de los efectos, calculando \eqref{eq:Efecto_Enchufado_Compuesto} para cada simulación posterior $\beta_{d,i}^{(s)}$ y, correspondientemente, $\bar{z}_d^{(s)}$:
+Hasta aquí ya construimos una propuesta de efecto comparando dos predicciones específicas del modelo ``enchufando'' un valor específico o un estimador puntual de los coeficientes. Sin embargo, nuestro proceso de modelado bayesiano mediante HMC nos indica que tenemos incertidumbre sobre sus valores reflejada mediante muestras posteriores de valores simulados. Por lo mismo, siguiendo la única receta de la estadística bayesiana tendríamos que obtener la distribución posterior de los efectos, calculando \eqref{eq:Efecto_Enchufado_Compuesto} para cada simulación posterior $\beta_{d,i}^{(s)}$ y, correspondientemente, $\bar{z}_d^{(s)}$:
 
 \begin{equation*}
-\Delta(\beta_{d,i}^{(s)};\bar{z}_d^{(s)}) =  p(\beta_{d,i}^{(s)};x^\star_{d},\bar{z}_d^{(s)})-p(\beta_{d,i}^{(s)};\bar{x}_{d},\bar{z}_d^{(s)}) \quad \forall i \in \mathbb{N}_l ,\, s \in \mathbb{N}_S.
+\Delta(\beta_{d,i}^{(s)};\bar{z}_d^{(s)}) =  p(x^\star_{d};\beta_{d,i}^{(s)},\bar{z}_d^{(s)})-p(\bar{x}_{d};\beta_{d,i}^{(s)},\bar{z}_d^{(s)}) \quad \forall i \in \mathbb{N}_l ,\, s \in \mathbb{N}_S.
 \end{equation*}
 
-Una vez con esta distribución posterior de los efectos podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto medio o mediano. También podríamos reportar intervalos centrales de probabilidad para al 95\%. Siguiendo la práctica común, cuando dichos intervalos contienen al 0, diríamos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto positivo o negativo, respectivamente. 
+Esta sería la distribución posterior de los efectos con la que podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto medio o mediano. También podríamos reportar intervalos centrales de probabilidad para al 95\%. Siguiendo la práctica común, cuando dichos intervalos contienen al 0, diríamos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto positivo o negativo, respectivamente. 
+
+\subsection{Efecto de la escolaridad}
+

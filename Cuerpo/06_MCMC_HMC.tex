@@ -327,7 +327,7 @@ Por ello, el \textit{Gibbs Sampler} puede sucumbir en la práctica ante problema
 
 Ese mejor muestreador se materealizó en el software \textit{Stan}--- nombrado así en honor al propio Stan Ulam--- cuya primera versión estable fue liberada en 2013 y que introduciré más adelante. Pero antes de hacerlo, quisiera detenerme en un tema que he omitido por ahora.\\
 
-\subsection{Convergencia}
+\subsection{Convergencia}\label{sec:Convergencia}
 
 La convergencia de los promedios ergódicos que implica \eqref{eq:Teo_Erg_Conv_Prom} es la clave de un análisis de MCMC, pues nos permite aproximar los resúmenes inferenciales que necesitamos, tanto como nuestros recursos computacionales lo permitan. Sin embargo, como ya he mencionado, en un análisis bayesiano la única receta indica tener una muestra aleatoria de la distribución posterior. Si observamos con cuidado \eqref{eq:Teo_Erg_Conv_D}, vemos que la última simulación de la cadena es la que podemos considerar como proveniente de la distribución objetivo límite. Si quisiéramos una muestra de tamaño $N$, podríamos inicialmente pensar que necesitaríamos correr $N$ cadenas independientes.\\ 
 
