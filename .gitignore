@@ -8,3 +8,7 @@
 *.xml
 *.gz
 *.toc
+
+*con_pags.tex
+*_completo.tex
+*07_AED_inicial.tex

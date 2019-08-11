@@ -16,7 +16,7 @@ y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
 \text{y} \quad \theta &= (\alpha,\beta) \sim f(\theta)
 \end{align*}
 
-En nuestro caso, sin pérdida de generalidad, para la $m$-ésima variable explicativa tenemos un vector de proporciones $x_c=(x_{1,c},\dots,x_{l_m,c})$ donde $l_m$ es el número de categorías de la variable y $x_{j,c}=1 - \sum_{k\neq j} x_{k,c}$ para toda $j \in \mathbb{N}_{l_m}$. Recordando el problema de multicolinealidad que esto ocasionaría al considerar la regresión con intercepto--- \autoref{prob_multicolinealidad}--- podemos definir una restricción de identificabilidad de suma cero para los coeficientes, de manera tal que $\beta_j=-\sum\limits_{k\neq j}\beta_k$.\\
+En nuestro caso, sin pérdida de generalidad, para la $m$-ésima variable explicativa tenemos un vector de proporciones $x_c=(x_{1,c},\dots,x_{l_m,c})$ donde $l_m$ es el número de categorías de la variable y $x_{j,c}=1 - \sum_{k\neq j} x_{k,c}$ para toda $j \in \mathbb{N}_{l_m}$. Recordando el problema de multicolinealidad que esto ocasionaría al considerar la regresión con intercepto--- \textbf{\autoref{prob_multicolinealidad}}--- podemos definir una restricción de identificabilidad de suma cero para los coeficientes, de manera tal que $\beta_j=-\sum\limits_{k\neq j}\beta_k$.\\
 
 Para ilustrarlo, si tomáramos como variable explicativa la composición por edad de la población comunal, tendríamos $x_c=(Ed1_c, \dots, Ed6_c)$ donde $Edj_c$ es la proporción de habitantes del grupo de edad $j$. En este caso, $\beta_{6} = -\sum\limits_{k = 1}^5 \beta_k$, por lo que en realidad solo tenemos libres el intercepto y 5 coeficientes a la hora de asignar la distribución inicial $f(\theta)$. 
 
@@ -46,7 +46,9 @@ El motivo es que la función logística no es lineal y tiene que ``compactar'' v
 	\label{fig:Escala_Logis}
 \end{figure}
 
-Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor lineal en su conjunto, sino para los coeficientes $\beta$ de dicho predictor lineal. Optaré aquí por una posición un poco escéptica o conservadora. A pesar de lo que sugerían las tendencias ingenuas del capítulo anterior, \textit{a priori}, no buscaría asignarle un sentido al efecto. Asimismo, los efectos de variables ecológicas o agregadas, no deberían ser tan grandes. No querría ``inflar'' la magnitud del valor explicativo mediante la distribución inicial pero tampoco negar la posibilidad de que existan algunos efectos importantes. Considero que una inicial para el coeficiente $\beta\sim N(\mu=0,\sigma=0.5)$ cumple relativamente bien con estas condiciones. Si tomamos el $0$ como referencia y comparamos el valor correspondiente de $p$ con aquel para una $\beta$ una desviación estándar mayor--- i.e. $\beta = 0.5$--- el efecto $\Delta$ sería de aproximadamente $+12$ puntos porcentuales. Si ahora disminuimos $\beta$ en 2 desviaciones estándar,  $\Delta \approx -23$ pp, como puede apreciarse en la \textbf{Figura \ref{fig:Inicial_Coef}}. Sin exagerar su interpretación, pues hay que multiplicar por el valor de la variable explicativa, estos podrían pensarse como los máximos efectos creíbles \textit{a priori}. 
+Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor lineal en su conjunto, sino para los coeficientes $\beta$ de dicho predictor lineal. Optaré aquí por una posición un poco escéptica o conservadora. A pesar de lo que sugerían las tendencias ingenuas del capítulo anterior, \textit{a priori}, no buscaría asignarle un sentido al efecto. Asimismo, los efectos de variables ecológicas o agregadas, no deberían ser tan grandes. No querría ``inflar'' la magnitud del valor explicativo mediante la distribución inicial pero tampoco negar la posibilidad de que existan algunos efectos importantes.\\ 
+
+Considero que una inicial para el coeficiente $\beta\sim N(\mu=0,\sigma=0.5)$ cumple relativamente bien con estas condiciones. Si tomamos el $0$ como referencia y comparamos el valor correspondiente de $p$ con aquel para una $\beta$ una desviación estándar mayor--- i.e. $\beta = 0.5$--- el efecto $\Delta$ sería de aproximadamente $+12$ puntos porcentuales. Si ahora disminuimos $\beta$ en 2 desviaciones estándar,  $\Delta \approx -23$ pp, como puede apreciarse en la \textbf{Figura \ref{fig:Inicial_Coef}}. Sin exagerar su interpretación, pues hay que multiplicar por el valor de la variable explicativa, estos podrían pensarse como los máximos efectos creíbles \textit{a priori}.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -55,7 +57,7 @@ Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor l
 	\label{fig:Inicial_Coef}
 \end{figure}
 
-Por otro lado, debemos detenernos a pensar en la interpretación del intercepto $\alpha$. Por un lado, $\alpha$ es el valor que tomaría el predictor lineal $\eta_c$, si todos los coeficientes fueran iguales a $0$. Esto nos podría hacer pensar que querríamos que \textit{a priori} su distribución nos lleve a valores cercanos al  17.9\%, porcentaje que obtuvo Le Pen en la elección. Sin embargo, también hay que notar que con variables explicativas de configuraciones sociales, $x_c$, $\alpha$ es el valor que tomaría $\eta_c$ si la población estuviera repartida equitativamente entre todas las categorías. En efecto, supongamos que para la $m$-ésima variable con $l_m$ categorías cada $x_{j,c}=l_m^{-1}$. Tendríamos que
+Por otro lado, debemos detenernos a pensar en la interpretación del intercepto $\alpha$. Por un lado, $\alpha$ es el valor que tomaría el predictor lineal $\eta_c$, si todos los coeficientes fueran iguales a $0$. Esto nos podría hacer pensar que querríamos que \textit{a priori} su distribución nos lleve a valores cercanos al  17.46\%, porcentaje mediano de votos que obtuvo Le Pen en la elección. Sin embargo, también hay que notar que con variables explicativas de configuraciones sociales, $x_c$, $\alpha$ es el valor que tomaría $\eta_c$ si la población estuviera repartida equitativamente entre todas las categorías. En efecto, supongamos que para la $m$-ésima variable con $l_m$ categorías cada $x_{j,c}=l_m^{-1}$. Tendríamos que
 
 \begin{align*}
 \eta_c &= \alpha + \sum\limits_{j=1}^{l_m} \beta_j x_{j,c} = \alpha + \sum\limits_{j=1}^{l_m} \dfrac{\beta_j}{l_m} = \alpha + \dfrac{1}{l_m}\sum\limits_{j=1}^{l_m} \beta_j
@@ -63,7 +65,7 @@ Por otro lado, debemos detenernos a pensar en la interpretación del intercepto 
 &= \alpha + \dfrac{1}{l_m}\left(0\right) = \alpha 
 \end{align*}
 
-Tomando en cuenta las teorías del conflicto discutidas en la revisión de literatura, podríamos pensar que si en lugar de tener grupos mayoritarios frente a grupos minoritarios hubiese una sociedad más ``equilibrada'', el voto frontista disminuiría. Así pues, deberíamos buscar una distribución inicial con una media menor al 17.9\% obtenido en las elecciones. También, considerando que puede ser más robusto dilucidar una distribución inicial con base en cuantiles, más que igualar la media podríamos intentar aproximar el rango intercuartílico observado de entre 13.54\% y 21.44\%, pero sesgado un poco a la baja para tomar en cuenta la hipótesis anterior sobre una población equilibrada. Después de algunas pruebas elegí una distribución inicial para $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$.\\
+Tomando en cuenta las teorías del conflicto discutidas en la revisión de literatura, podríamos pensar que si en lugar de tener grupos mayoritarios frente a grupos minoritarios hubiese una sociedad más ``equilibrada'', el voto frontista disminuiría. Así pues, deberíamos buscar una distribución inicial con una media menor al 17.5\%. También, considerando que puede ser más robusto dilucidar una distribución inicial con base en cuantiles, más que igualar la media podríamos intentar aproximar el rango intercuartílico observado de entre 13.54\% y 21.44\%, pero sesgado un poco a la baja para tomar en cuenta la hipótesis anterior sobre una población equilibrada. Después de algunas pruebas elegí una distribución inicial para $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$.\\
 
 Consideremos ahora una ``comuna promedio'', definida como aquella que tuviera valores promedio en las variables explicativas; podemos realizar simulaciones de la distribución predictiva con estas iniciales. Es decir, simulamos de $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$ y para cada $\beta\sim N(\mu = 0,\sigma = 0.5)$. Calculamos el predictor lineal con base en los valores promedio de cada categoría--- considerando también la restricción de suma cero de los coeficientes--- y tomamos el logit inverso. Este proceso, por ejemplo para grupos de edad, nos lleva al histograma de la \textbf{Figura \ref{fig:Predictiva_Inicial}}, con el modelo
 
@@ -85,7 +87,7 @@ Estas distribuciones iniciales, como ya he mencionado, son subjetivas. Alguien m
 
 \section{Modelos individuales}
 
-Consideremos entonces, para cada variable explicativa, modelos de la siguiente forma:
+Consideremos entonces, para cada variable explicativa con $l_m$ categorías poblacionales, modelos de la siguiente forma:
 
 \begin{align}\label{eq:Modelo_Nal_Ind}
 y_c|\theta=(\alpha,\beta) & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \nonumber \\
@@ -111,13 +113,13 @@ Se corrieron cada uno de los 18 modelos mediante el software Stan, simulando ví
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Nal_Ocu_Juvenil}
-	\caption{Mapa de predicciones medias del porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Nacional por Ocupación Juvenil y mapa de los respectivos errores. Fuente: elaboración propia.}
+	\caption{Mapa de predicciones medias del porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Nacional por Ocupación Juvenil y mapa de los respectivos errores. Fuente: elaboración propia con la cartografía de Open Street Map.}
 	\label{fig:Modelo_Nal_Ocu_Juvenil}
 \end{figure}
 
 En el mapa de la izquierda las predicciones se colorean de acuerdo a la escala real que va de 0\% a 62.5\% y donde el cambio de tonos rojos a azules se da en la comuna mediana de 17.5\%. Observamos que la predicción en general subestima el verdadero porcentaje obtenido pues el mapa está prácticamente coloreado en su totalidad de tonos rojos. Sin embargo, las predicciones están cerca de la mediana. De hecho, el mapa de errores--- verde significa poco error y naranjas y rojos más--- visualmente es prácticamente un negativo del verdadero mapa de resultados que observábamos en la \textbf{Figura \ref{fig:Mapa_Pct_Br}} del capítulo anterior.\\
 
-En general, los modelos nacionales tienen el defecto de no reconocer la enorme variabilidad geográfica del fenómeno electoral. Si construimos distintas medidas de error de predicción vemos que pasar de un modelado nacional a un modelado jerárquico las reduce consistentemente. Para cada simulación posterior predecimos el número de votos en cada comuna, departamento y a nivel nacional. Luego lo convertimos en porcentaje bruto de votos predicho dividiendo entre el número de inscritos en la comuna. Así, podemos tomar los conocidos errores absoluto y cuadrático promedio para el porcentaje de votos a nivel comuna, departamento y nacional. Incluso podemos tomar una pérdida más arbitraria, pero ilustrativa, como el porcentaje promedio de estimaciones que se encuentran a más de 1.5 puntos porcentuales del verdadero valor en los 3 niveles de agregación; a esta medida la llamo tolerancia 1.5 pp. Finalmente se calcula el promedio de las medidas a través del total de simulaciones posteriores y se grafican en la \textbf{Figura \ref{fig:Errores_Modelos_Individuales}}. El gráfico también incluye el cálculo de un cuarto error llamado WAIC para las comunas, pero a él me refiriré más adelante. En el gráfico, los puntos son las medidas para el modelo nacional y las flechas las de los modelos jerárquicos.\\ 
+En general, los modelos nacionales tienen el defecto de no reconocer la enorme variabilidad geográfica del fenómeno electoral. Si construimos distintas medidas de error de predicción vemos que pasar de un modelado nacional a un modelado jerárquico las reduce consistentemente. Para cada simulación posterior predecimos el número de votos en cada comuna, departamento y a nivel nacional. Luego lo convertimos en porcentaje bruto de votos predicho dividiendo entre el número de inscritos. Así, podemos tomar los conocidos errores absoluto y cuadrático promedio para el porcentaje de votos a nivel comuna, departamento y nacional. Incluso podemos tomar una pérdida más arbitraria, pero ilustrativa, como el porcentaje promedio de estimaciones que se encuentran a más de 1.5 puntos porcentuales del verdadero valor en los 3 niveles de agregación; a esta medida la llamo tolerancia 1.5 pp. Finalmente se calcula el promedio de las medidas a través del total de simulaciones posteriores y se grafican en la \textbf{Figura \ref{fig:Errores_Modelos_Individuales}}. El gráfico también incluye el cálculo de un cuarto error para las comunas llamado WAIC, pero a él me refiriré más adelante. En el gráfico, los puntos son las medidas para el modelo nacional y las flechas las de los modelos jerárquicos.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -126,7 +128,9 @@ En general, los modelos nacionales tienen el defecto de no reconocer la enorme v
 	\label{fig:Errores_Modelos_Individuales}
 \end{figure} 
 
-Como es de esperarse, los modelos estiman de mejor manera los porcentajes de niveles de mayor agregación que el del nivel comunal. Viendo la pérdida arbitraria llamada de tolerancia 1.5, salvo las variables de sexo y ocupaciones, todas las predicciones estiman un porcentaje de votos nacional a menos de 1.5 puntos porcentuales del real. Sin embargo, vemos que para los 96 departamentos, los modelos nacionales solo logran esta precisión esperada de estimación en al rededor de 70. Esto refleja lo que había mencionado al ver el mapa de predicciones para el modelo nacional individual por ocupación juvenil. Al no permitir que los coeficientes varíen por departamento, el modelo ajusta para el país entero, sacrificando las estimaciones en las diferentes zonas geográficas que estos constituyen. Si observamos medidas de error más tradicionales como la absoluta o la cuadrática vemos que todas las flechas se dirigen a la izquierda, es decir que se reducen los errores al reconocer esa variabilidad geográfica. Ahora bien, estas 3 medidas tienen más un carácter ilustrativo y sirven para recordar que se pueden construir diferentes errores para diferentes estimadores.\\ 
+Como es de esperarse, los modelos estiman de mejor manera los porcentajes de niveles de mayor agregación que el del nivel comunal. Viendo la pérdida arbitraria llamada de tolerancia 1.5, salvo las variables de sexo y ocupaciones, todas las predicciones estiman un porcentaje de votos nacional a menos de 1.5 puntos porcentuales del real. Sin embargo, vemos que para los 96 departamentos, los modelos nacionales solo logran esta precisión esperada de estimación en alrededor de 70.\\ 
+
+Esto refleja lo que había mencionado al ver el mapa de predicciones para el modelo nacional individual por ocupación juvenil. Al no permitir que los coeficientes varíen por departamento, el modelo ajusta para el país entero, sacrificando las estimaciones en las diferentes zonas geográficas que estos constituyen. Si observamos medidas de error más tradicionales como la absoluta o la cuadrática vemos que todas las flechas se dirigen a la izquierda, es decir que se reducen los errores al reconocer esa variabilidad geográfica. Ahora bien, estas 3 medidas tienen más un carácter ilustrativo y sirven para recordar que se pueden construir diferentes errores para diferentes estimadores.\\ 
 
 Ahora notemos que las variables de solo 2 categorías como ocupación, sexo, nacionalidad y condición migratoria tienen peor desempeño que las de más categorías como edad, categoría socioprofesional y escolaridad. ¿Esto quiere decir que son peores variables explicativas? ¿No podría esto deberse a que las últimas tienen más parámetros y es más fácil ajustar mejor simplemente por introducir parámetros adicionales?\\
 
@@ -144,7 +148,7 @@ WAIC(y|\theta) &= \widehat{lpd} + \widehat{par} \\
 
 donde $V(y_i|\theta)=\dfrac{1}{S-1}\sum\limits_{s=1}^S \mathcal{L}(y_i;\theta_{s})^2$ y $\mathcal{L}(y_i;\theta_{s}) = ln\left[f(y_i|\theta_{(s)})\right] - \dfrac{1}{S}\sum\limits_{s=1}^S ln\left[f(y_i|\theta_{(s)})\right]$.{}\\
 
-El WAIC se conforma de dos sumas. La primera, $\widehat{lpd}$, es una aproximación de la log predictiva posterior, es decir una medidad de ajuste. Por otro lado, $\widehat{par}$ es normalmente llamado el \textit{número efectivo estimado de parámetros} y es una medida que mediante sumas de varianzas busca medir la complejidad del modelo. En total, entre menor sea el valor del WAIC, esperaríamos un mejor desempeño predictivo tomando en cuenta la complejidad del modelo.\\ 
+El WAIC se conforma de dos sumas. La primera, $\widehat{lpd}$, es una aproximación de la log predictiva posterior, es decir una medidad de ajuste. Por otro lado, $\widehat{par}$ es normalmente llamado el \textit{número efectivo estimado de parámetros} y, mediante sumas de varianzas, busca medir la complejidad del modelo. En total, entre menor sea el valor del WAIC, esperaríamos un mejor desempeño predictivo tomando en cuenta la complejidad del modelo.\\ 
 
 Notemos que con la definición dada, el WAIC es un estimador por lo que tiene una distribución muestral. Gracias al paquete \textit{loo} de $\mathsf{R}$, podemos estimar tanto los WAICs y sus errores estándar como la diferencia esperada entre dos de ellos y, {\color{Red} argumentando un teorema central del límite, la probabilidad de que el WAIC de un modelo sea efectivamente menor o igual al WAIC de otro. Estas comparaciones las observamos en la \textbf{Figura \ref{fig:Compara_WAIC_Individuales}}.}\\
 
@@ -180,16 +184,12 @@ en la comuna $c$ los coeficientes departamentales serán un vector $\beta_{d[c]}
 y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
 \text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} \\ 
 \intertext{tal que} 
-\beta_{d,5} &= -\sum\limits_{k = 1}^{4} \beta_{d,k}, \nonumber \\
-\gamma_{d,8} &= -\sum\limits_{k = 1}^{7} \gamma_{d,k} \nonumber \\
+\beta_{d,5} = -\sum\limits_{k = 1}^{4} \beta_{d,k}, \quad & \gamma_{d,8} = -\sum\limits_{k = 1}^{7} \gamma_{d,k}, \nonumber \\
+\alpha_d & \sim N(\mu_{\alpha}, \sigma=1), \nonumber \\
 \intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
-\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad  \nonumber \\
-\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4} \nonumber \\
-\gamma_{d,j} & \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\beta_{d,j} \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4}, & \quad \gamma_{d,j} \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
 \intertext{y}
-\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
-\mu_{\beta} &\sim N(0,\sigma=0.5) \nonumber \\
-\mu_{\gamma} &\sim N(0,\sigma=0.5) \nonumber
+\mu_{\alpha} \sim N(-1.7,\sigma=0.25), \quad \mu_{\beta} &\sim N(0,\sigma=0.5) \quad \text{y} \quad \mu_{\gamma} \sim N(0,\sigma=0.5). \nonumber
 \end{align}
 
 Al estimar el modelo con ambas variables las predicciones efectivamente mejoran. La diferencia en WAIC entre el modelo A y el modelo jerárquico por escolaridad se estima en -1594.7 con un error estándar de 175.2. Asimismo, observando los mapas de la \textbf{Figura \ref{fig:Modelo_Compuesto_A}}, vemos que se reduce la gran zona blanquiza del centro, se comienza a observar mayor variabilidad dentro de los departamentos y los tonos también se oscurecen más, sobre todo en el noreste.\\ 
@@ -254,7 +254,7 @@ Una vez ajustados los modelos, como adelantaba en la \autoref{sec:Convergencia},
  
 \section{Efectos de las variables}
 
-Interpretar los coeficientes de regresiones logísticas no es sencillo pues, por la liga logística, estos se encuentran en una escala distinta a la de las proporciones o probabilidades que es en la que normalmente estamos interesados. Como explican \textcite{GelmanHill06}, además de las interpretaciones en términos de momios, una primera alternativa es considerar el caso cuando la variable explicativa vale 1. Sin embargo, esto no siempre tiene sentido dependiendo del contexto en el que se realiza la regresión. Sobre todo para evitar alguna falacia ecológica--- ver página \pageref{No_Extrapolar}--- este es mi caso, por lo que no podría interpretar los coeficientes mediante alguna estrategia de ese tipo.\\ 
+Interpretar los coeficientes de regresiones logísticas no es sencillo pues, por la función liga, estos se encuentran en una escala distinta a la de las proporciones o probabilidades que es en la que normalmente estamos interesados. Como explican \textcite{GelmanHill06}, además de las interpretaciones en términos de momios, una primera alternativa es considerar el caso cuando la variable explicativa vale 1. Sin embargo, esto no siempre tiene sentido dependiendo del contexto en el que se realiza la regresión. Sobre todo para evitar alguna falacia ecológica--- ver página \pageref{No_Extrapolar}--- yo no podría interpretar los coeficientes mediante alguna estrategia de ese tipo.\\ 
 
  Por ello, resultan útiles lo que los mismos autores llaman \textit{predictive comparisons}. Básicamente estos consisten en pensar en los efectos de los coeficientes en términos de una comparación entre dos valores distintos pero informativos de las variables explicativas de interés; por ejemplo, la media y una desviación estándar por encima de ella. Esta elección tiene la ventaja de que, usualmente, se estaría realizando la interpretación en el rango de valores observado y no mediante una extrapolación. Hay que decir, no obstante, que una situación donde esto puede no suceder es cuando las variables observadas sean multimodales y la media caiga en uno de los valles. Esta discusión general sobre alternativas de interpretación para regresiones logísticas puede consultarse en la referencia antes citada.\\ 
  
@@ -326,7 +326,176 @@ Hasta aquí ya construimos una propuesta de efecto comparando dos predicciones e
 \Delta(\beta_{d,i}^{(s)};\bar{z}_d^{(s)}) =  p(x^\star_{d};\beta_{d,i}^{(s)},\bar{z}_d^{(s)})-p(\bar{x}_{d};\beta_{d,i}^{(s)},\bar{z}_d^{(s)}) \quad \forall i \in \mathbb{N}_l ,\, s \in \mathbb{N}_S.
 \end{equation*}
 
-Esta sería la distribución posterior de los efectos con la que podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto esperado. Asimismo, podemos resumir la distribución reportando intervalos centrales de probabilidad al 50\%, 90\% y 95\%, así como el efecto mediano. Siguiendo la práctica común, cuando los intervalos centrales al 95\% contienen al 0, diremos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto positivo o negativo, respectivamente. 
+Esta sería la distribución posterior de los efectos con la que podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto esperado. Asimismo, podemos resumir la distribución reportando intervalos centrales de probabilidad al 50\%, 90\% y 95\%, así como el efecto mediano. Siguiendo la práctica común, cuando los intervalos centrales al 95\% contienen al 0, diremos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto significativo positivo o negativo, respectivamente. 
+
+\subsection{Evolución de los efectos}
+
+La variable de escolaridad era la que el ordenamiento preliminar sugería que podría ser la más explicativa. Por ello el modelo 0 comienza con solo esa variable y, progresivamente, fui agregando el resto de variables. Al ir construyendo un modelo más complejo podemos ver cómo se van comportando los efectos estimados para las distintas categorías de escolaridad con respecto a distintos criterios. En la \textbf{Figura \ref{fig:Evol_Efectos_Escolaridad}} observamos cómo evolucionaron la estimación puntual de los efectos para cada departamento, la incertidumbre sobre dicha estimación reflejada en la longitud de los intervalos centrales al 95\%, así como el número de departamentos con efectos significativos positivos y negativos.\\ 
+
+\clearpage
+\begin{sidewaysfigure}[h]
+	\centering
+	\includegraphics[width = 0.95\textwidth]{Figs/Efectos/Evol_Efectos_Escolaridad}
+	\caption{Evolución de los efectos de la escolaridad por departamento a través de los distintos modelos. Cada línea gris representa uno de los 96 departamentos. En la fila superior la referencia naranja es un efecto nulo en 0. En la fila de en medio, las líneas verdes representan la longitud promedio a través de los departamentos. En la fila inferior en rosa tenemos efectos negativos y en azul efectos positivos. Fuente: elaboración propia.}
+	\label{fig:Evol_Efectos_Escolaridad}
+\end{sidewaysfigure}
+\clearpage
+
+Vemos por ejemplo que en la mayoría de los departamentos, al agregar las categorías socioprofesionales y, sobre todo, los grupos de edad en el modelo B, los efectos de las personas que todavía estudian se contraen hacia el 0, incrementando su incertidumbre y reduciendo fuertemente la cantidad de departamentos con efectos significativo. Por el contrario, en el caso de las personas sin escolaridad el efecto se va convirtiendo en positivo aumentando el número de departamentos significativos. Si en el modelo 0 había incluso más departamentos con efecto significativo negativo que positivo, para le modelo H ya hay prácticamente puros efectos significativos positivos llegando a superar el número de efectos de este tipo para cualquier otra categoría. Por ejemplo, las personas con preparatoria o equivalente se mantienen con un efecto positivo pero la reducción en el número de departamentos significativos es clara. La categoría aparentemente más significativa sería las personas que tienen diplomas universitarios. Si bien sus coeficientes se van contrayendo hacia el 0 al ir agregando variables, aumentan algo su incertidumbre y, por consiguiente, disminuyen el número de departamentos con efectos significativos, es claro que el número de efectos significativos se mantiene alto siendo 72 de los 96 departamentos.\\
+
+Podemos observar el mismo diagnóstico para las siguientes variables a partir del modelo en el que fueron introducidas. En el caso de las categorías socioprofesionales en la \textbf{Figura \ref{fig:Evol_Efectos_Cat_Socioprof}} vemos que la incertidumbre parece no aumentar mucho conforme se agregan variables, salvo para el caso de los retirados y otras personas sin actividad. Estas son categorías que podríamos llamar ruidosas en el sentido de que observamos mayor incertidumbre y mayor variabilidad tanto en los estimadores puntuales como en el número de efectos significativos. Asimismo, observamos que la categoría más significativa podría ser la de obreros que salvo al agregar edad, mantiene prácticamente el mismo número de departamentos con efecto significativo positivo.\\ 
+	
+\clearpage
+\begin{sidewaysfigure}[h]
+	\centering
+	\includegraphics[width = 0.95\textwidth]{Figs/Efectos/Evol_Efectos_Cat_Socioprof}
+	\caption{Evolución de los efectos de las categorías socioprofesionales por departamento a través de los distintos modelos. Cada línea gris representa uno de los 96 departamentos. En la fila superior la referencia naranja es un efecto nulo en 0. En la fila de en medio, las líneas verdes representan la longitud promedio a través de los departamentos. En la fila inferior en rosa tenemos efectos negativos y en azul efectos positivos. Fuente: elaboración propia.}
+	\label{fig:Evol_Efectos_Cat_Socioprof}
+\end{sidewaysfigure}
+\clearpage
+
+\clearpage
+\begin{sidewaysfigure}[h]
+	\centering
+	\includegraphics[width = 0.95\textwidth]{Figs/Efectos/Evol_Efectos_Edad}
+	\caption{Evolución de los efectos de los grupos de edad por departamento a través de los distintos modelos. Cada línea gris representa uno de los 96 departamentos. En la fila superior la referencia naranja es un efecto nulo en 0. En la fila de en medio, las líneas verdes representan la longitud promedio a través de los departamentos. En la fila inferior en rosa tenemos efectos negativos y en azul efectos positivos. Fuente: elaboración propia.}
+	\label{fig:Evol_Efectos_Edad}
+\end{sidewaysfigure}
+\clearpage
+
+En el caso de las edades--- \textbf{Figura \ref{fig:Evol_Efectos_Edad}}--- tenemos distintos niveles de incertidumbre. Mientras hay departamentos con longitudes prácticamente nulas en los intervalos, en la categoría de 65 años o más observamos un departamento con una longitud de casi 6pp. Sin embargo, no parece incrementarse o reducirse tanto dicho nivel de incertidumbre conforme se agregan variables. No obstante, los efectos parecen irse concentrando hacia el 0 y sí se van reduciendo el número de efectos significativos. Podríamos decir que el grupo de los menores de edad tiene un efecto positivo mientras que el de los jóvenes de 18 a 24 años y los adultos mayores de 65 tendrían efectos negativos. Aquí observamos una primera explicación de por qué las categorías socioprofesionales ruidosas eran los retirados y las personas sin actividad. Existe una correlación alta entre estas categorías y los grupos de edad. Este es un punto a notar hacia el futuro si se quisiera mejorar o modificar el modelo completo H.\\
+
+Finalmente, para las categorías dicotómicas a excepción de la (des)ocupación de 55 a 64--- que no tuvo evolución al estar presente solo en el modelo completo H---, observamos poca variación en los tres diagnósticos, salvo por algunos departamentos atípicos. La prescencia de inmigrantes tiene un buen número de departamentos significativos con efecto negativo mientras que el resto de categorías parecerían mezclar efectos en ambos sentidos. Una vez observada esta evolución de los efectos al ir construyendo el modelo H, podemos analizar con mayor detalle este último modelo.\\ 
+
+\clearpage
+\begin{sidewaysfigure}[h]
+	\centering
+	\includegraphics[width = 0.95\textwidth]{Figs/Efectos/Evol_Efectos_Dicotom}
+	\caption{Evolución de los efectos del resto de variables presentes en al menos dos modelos por departamento. Cada línea gris representa uno de los 96 departamentos. En la fila superior la referencia naranja es un efecto nulo en 0. En la fila de en medio, las líneas verdes representan la longitud promedio a través de los departamentos. En la fila inferior en rosa tenemos efectos negativos y en azul efectos positivos. Fuente: elaboración propia.}
+	\label{fig:Evol_Efectos_Dicotom}
+\end{sidewaysfigure}
+\clearpage
 
 \subsection{Escolaridad}
 
+Comenzamos el análisis de los efectos predichos por el modelo completo por la variable de escolaridad. En la \textbf{Figura \ref{fig:Mapa_Efectos_Escolaridad}} podemos observar el mapa de estimadores puntuales para los efectos departamentales por categorías de escolaridad bajo el modelo H. En cada departamento la intensidad de color refleja la magnitud del efecto mediano; en tonos rojos tenemos efectos negativos y en tonos azules efectos positivos.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Mapa_Efectos_Escolaridad_Modelo_H}
+	\caption{Estimaciones puntuales de los efectos de la escolaridad por departamento francés bajo el modelo H. Fuente: elaboración propia con la cartografía de Open Street Map.}
+	\label{fig:Mapa_Efectos_Escolaridad}
+\end{figure}
+
+Inmediatamente observamos que la categoría universidad o más tiene un efecto negativo en prácticamente todo el hexágono francés. Algunos departamentos tienen magnitudes altas, reflejadas en la intensidad del color. Por el contrario, el aumento en el porcentaje de personas sin escolaridad parece llevar consigo un aumento en las preferencias por Marine Le Pen en la mayoría de departamentos. No obstante, vemos que en Córcega se daría el efecto contrario. En tonos más claros, es decir con una magnitud menor, el porcentaje de personas con escolaridad equivalente a la preparatoria parece también tener un efecto positivo en la afinidad por el FN. Los mapas de las personas que todavía están estudiando y de personas con primaria o secundaria parecen tener efectos mixtos, aunque los segundos se observan más intensos que los primeros.\\
+
+Ahora bien, estos son solo estimadores puntuales. Una de las principales ventajas de los modelos jerárquicos bayesianos es que nos permiten reconocer la variabilidad de los fenómenos bajo estudio así como reportar la incertidumbre sobre ellos de manera más clara. En la \textbf{Figura \ref{fig:Efectos_Escolaridad}} tenemos un resúmen de las distribuciones posteriores de los efectos. Para cada categoría observamos las 96 distribuciones posteriores representadas mediante intervalos centrales de probabilidad al 95\%, 80\% y 50\% así como la mediana como estimador puntual que ordena los departamentos por categoría. Si el efecto se estima significativo--- es decir que el intervalo al 95\% excluye al 0---, observamos la distribución marcada en rosa o azul dependiendo del sentido de dicho efecto.\\
+  
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Efectos_Escolaridad_Modelo_H}
+	\caption{Intervalos centrales de probabilidad al 95\%, 80\% y 50\% para los efectos de la escolaridad por departamento francés bajo el modelo H. Los departamentos se ordenan para cada categoría por magnitud del estimador puntual que es el efecto mediano. Las distribuciones de colores rosa o azul representan que el efecto es significativo al 95\%. Las lineas verticales representan el efecto promedio a través de los departamentos. Fuente: elaboración propia.}
+	\label{fig:Efectos_Escolaridad}
+\end{figure}
+
+Podemos hacer varias lecturas de este gráfico. En primer lugar confirmamos mediante las líneas verticales que, en general, un aumento en la proporción de personas con estudios universitarios disminuyó la afinidad comunal por Le Pen, de hecho la mayoría de departamentos tienen efectos significativos. Departamentos como Isère y Haute-Loire tienen magnitudes estimadas importantes de casi -4 pp. Por el contrario, el resto de categorías de escolaridad tienen efectos positivos en la afinidad frontista, aunque no todas en la misma magnitud y en todos los departamentos. Confirmamos que para las personas sin escolaridad la mayoría de departamentos tienen un efecto positivo, el más grande de al rededor de 2.5 puntos porcentuales por una desviación estándar de incremento frente a la comuna típica. Pero también vemos que, aunque hay bastante incertidumbre reflejada en la longitud del intervalo, en Haute-Corse el efecto es el contrario, aproximadamente de -1.45 pp.\\ 
+
+La categoría de preparatoria tiene muchos departamentos con efectos significativos positivos y ninguno con efecto significativo negativo. Pero aquí también vemos al modelado jerárquico en acción. Aunque hayan muchos departamentos significativos, la incertidumbre es distinta a través de ellos. Comparemos por ejemplo la longitud de los intervalos de un departamento como Alpes-de-Haute-Provence, el décimo con mayor estimador puntual pero alta incertidumbre, con el de París que es el de menor magnitud entre los significativos y sobre el que no tenemos prácticamente nada de incertidumbre. También podemos ver en el caso de las personas que todavía estudian que pueden existir efectos con un estimador puntual mayor al de otros, pero que no son significativos.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Dorling_Efectos_Escolaridad_Modelo_H}
+	\caption{Estimaciones puntuales de los efectos de la escolaridad por departamento francés bajo el modelo H, solo se colorean los efectos significativos. Fuente: elaboración propia.}
+	\label{fig:Dorling_Efectos_Escolaridad}
+\end{figure}
+
+Tomando en cuenta entonces el carácter de significancia o no de un efecto, podemos modificar el mapa de la \textbf{Figura \ref{fig:Mapa_Efectos_Escolaridad}} y convertirlo en el dorling de la \textbf{Figura \ref{fig:Dorling_Efectos_Escolaridad}}. En este último, solo tienen color los departamentos con efecto significativo, aunque reporto los efectos esperados en todos los departamentos. Aquí identificamos que las únicas zonas donde el efecto de los universitarios no parece ser significativo es en departamentos más rurales como el llamado \textit{Massif Central}. Por el contrario, si en general el porcentaje de personas que todavía estudian no parecía ser tan importante, aquí observamos que sus efectos significativos se concentran en la región de Île de France. 
+
+\subsection{Categorías socioprofesionales}
+
+La segunda variable a considerar son las categorías socioprofesionales. Como indicaba en la revisión de literatura esta es probablemente la variable más utilizada en el estudio de la sociología electoral francesa. A pesar de ello, los mapas de la \textbf{Figura \ref{fig:Mapa_Efectos_Cat_Socioprof}} aparecen descolorados para la mayoría de categorías, indicando efectos muy pequeños. Resalta inmediatamente un departamento al noreste francés coloreado con un azul más intenso en el panel de obreros, la que es la categoría que parece tener una mayor asociación positiva con las preferencias por Marine Le Pen. Esto refuerza las hipótesis sobre \textit{gaucho-lépénisme} discutidas en la primera parte de este trabajo. Llama particularmente la atención la falta de intensidad en los efectos de los artesanos, comerciantes y empresarios, un grupo tradicionalmente asociado al FN. Otro punto interesante es notar que los cuadros y las profesiones intelectuales superiores tienen un efecto negativo, salvo en pocos departamentos que aparecen claramente en azul.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Mapa_Efectos_Cat_Socioprof_Modelo_H}
+	\caption{Estimaciones puntuales de los efectos de la categoría socioprofesional por departamento francés bajo el modelo H. Fuente: elaboración propia con la cartografía de Open Street Map.}
+	\label{fig:Mapa_Efectos_Cat_Socioprof}
+\end{figure}
+
+Al observar los intervalos de los efectos en la \textbf{Figura \ref{fig:Efectos_Cat_Socioprof}}, confirmamos que la mayoría de las categorías tienen efectos muy pequeños de acuerdo a los promedios a través de departamentos observados en las líneas verticales. La única categoría con un efecto promedio mayor parece ser la de los obreros donde Meuse es el departamento con el mayor efecto, de más de 4 puntos porcentuales. Esta también sería la categoría socioprofesional más cercana a un sentimiento de clase lo que podría explicar su mayor homogeneidad nacional frente a otras categorías que, como la investigación de \textcite{MayerMichelat81} ya sugería, pueden cambiar más sus inclinaciones políticas dependiendo del contexto local, reafirmando incluso la influencia que la mayor presencia de obreros tiene en la preferencia electoral de otras categorías.\\ 
+
+Llama la atención también que para las profesiones intermediarias la mayoría de los efectos significativos son negativos, sin embargo tenemos 4 departamentos con claros efectos positivos y todos en zonas de fortaleza del FN: Vaucluse, Alpes-Maritimes y Hérault en el litoral mediterráneo y Aube en el noreste francés. El caso de los retirados es interesante porque si bien la mayoría de los efectos son nulos, hay algunos significativos tanto positivos como negativos y la gráfica se ve más dispersa. Este es un ejemplo donde el modelo jerárquico se asemeja más a un modelo de no agregación o regresiones independientes. Por el contrario, las gráficas en la que las curvas son casi verticales, indicando efectos muy parecidos para todos los departamentos, serían casos más parecidos a los modelos de agregación completa o una sola regresión nacional.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Efectos_Cat_Socioprof_Modelo_H}
+	\caption{Intervalos centrales de probabilidad al 95\%, 80\% y 50\% para los efectos de la categoría socioprofesional por departamento francés bajo el modelo H. Los departamentos se ordenan para cada categoría por magnitud del estimador puntual que es el efecto mediano. Las distribuciones de colores rosa o azul representan que el efecto es significativo al 95\%. Las lineas verticales representan el efecto promedio a través de los departamentos. Fuente: elaboración propia.}
+	\label{fig:Efectos_Cat_Socioprof}
+\end{figure}
+
+La geografía de los efectos significativos que se observa en los dorlings de la \textbf{Figura \ref{fig:Dorling_Efectos_Cat_Socioprof}} tiene algunos puntos notables. El norte más industrializado se asocia con mayores efectos de la clase obrera. Vemos la particularidad del litoral mediterráneo en términos de profesiones intermediarias. Quizás sorprende que en París una mayor presencia de cuadros lleva a una mayor preferencia frontista. La explicación podría estar en que los cuadros que logran vivir dentro de París tiendan a ser más cercanos a la derecha, pero esta tendría que ser una hipótesis a explorarse con mayor detalle en otro tipo de estudio.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Dorling_Efectos_Cat_Socioprof_Modelo_H}
+	\caption{Estimaciones puntuales de los efectos de la categoría socioprofesional por departamento francés bajo el modelo H, solo se colorean los efectos significativos. Fuente: elaboración propia.}
+	\label{fig:Dorling_Efectos_Cat_Socioprof}
+\end{figure}
+
+\subsection{Edad}
+
+Las explicaciones culturalistas, principalmente las de la escuela de Inglehart, hablan de que las generaciones de edad crecen con ciertos valores que los llevan a tener determinadas posiciones políticas. En este sentido podríamos leer los mapas de la \textbf{Figura \ref{fig:Mapa_Efectos_Edad}} como reflejo de los valores generacionales, lo que explicaría la mayor homogeneidad frente a las variables antes analizadas. La mayor presencia de adultos mayores estaría relacionada negativamente con el FN porque este grupo de edad tiene una simpatía por la derecha tradicional. Los jóvenes de entre 18 a 24 años, por el contrario, tendrían posiciones políticas contrarias al carácter NAP del FN. La asociación positiva con los menores de edad podría reflejar un efecto cultural en comunas con altas tasas de natalidad o menos avejentadas. Esta hipótesis podría también explicar por qué los departamentos que parecen tener la tendencia contraria son aquelos de Île de France: la mayor presencia de inmigrantes, que normalmente tienen mayores tasas de natalidad, frenaría el voto nativista que los rechaza. Tendríamos que confirmar esto al analizar el efecto que los inmigrantes tuvieron según el modelo.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Mapa_Efectos_Edad_Modelo_H}
+	\caption{Estimaciones puntuales de los efectos del grupo de edad por departamento francés bajo el modelo H. Fuente: elaboración propia con la cartografía de Open Street Map.}
+	\label{fig:Mapa_Efectos_Edad}
+\end{figure}
+
+Al observar los resúmenes distribucionales confirmamos que los menores de edad y los adultos mayores son los grupos de edad que tienen mayor variabilidad e incertidumbre. En la \textbf{Figura \ref{fig:Efectos_Edad}} vemos que sus intervalos son claramente más largos que los del resto de categorías. De nueva cuenta, modelar mediante una estrategia multinivel tiene la ventaja de permitir que los datos determinen el nivel de agrupamiento necesario sin que el estadístico force a que deba ser total, con una sola regresión, o nulo via regresiones independientes.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Efectos_Edad_Modelo_H}
+	\caption{Intervalos centrales de probabilidad al 95\%, 80\% y 50\% para los efectos del grupo de edad por departamento francés bajo el modelo H. Los departamentos se ordenan para cada categoría por magnitud del estimador puntual que es el efecto mediano. Las distribuciones de colores rosa o azul representan que el efecto es significativo al 95\%. Las lineas verticales representan el efecto promedio a través de los departamentos. Fuente: elaboración propia.}
+	\label{fig:Efectos_Edad}
+\end{figure}
+
+Observando los dorlings de la \textbf{Figura \ref{fig:Dorling_Efectos_Edad}} vemos que los efectos significativos negativos del grupo de 18 a 24 años se ubican tanto al oeste francés como en el norte. Por otro lado, los mayores de 65 años parecen tener una mayor influencia en el sur del hexágono. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Dorling_Efectos_Edad_Modelo_H}
+	\caption{Estimaciones puntuales de los efectos del grupo de edad por departamento francés bajo el modelo H, solo se colorean los efectos significativos. Fuente: elaboración propia.}
+	\label{fig:Dorling_Efectos_Edad}
+\end{figure}
+
+\subsection{Categorías dicotómicas}
+
+Finalmente, podemos analizar los mapas de las variables dicotómicas, es decir las que tienen solo dos categorías: Sexo, Condición migratoria y (des)ocupaciones. En la \textbf{Figura \ref{fig:Mapa_Efectos_Dicotom}} vemos que la mayor presencia de inmigrantes como de mujeres parece inhibir el voto frontista. Por el contrario, las variables de desempleo no reflejan una geografía muy clara pero sí con efectos en ambos sentidos. Al observar los intervalos de la \textbf{Figura \ref{fig:Efectos_Dicotom}} para estas categorías, nos damos cuenta que existe mucha incertidumbre en las estimaciones. Esto parece continuar confirmándonos que el desempleo no resulta ser la variable con mayor poder explicativo, al menos en términos de configuraciones sociales de las comunas.\\ 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Mapa_Efectos_Dicotom_Modelo_H}
+	\caption{Estimaciones puntuales de los efectos de categorías dicotómicas por departamento francés bajo el modelo H. Fuente: elaboración propia con la cartografía de Open Street Map.}
+	\label{fig:Mapa_Efectos_Dicotom}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Efectos_Dicotom_Modelo_H}
+	\caption{Intervalos centrales de probabilidad al 95\%, 80\% y 50\% para los efectos de categorías dicotómicas por departamento francés bajo el modelo H. Los departamentos se ordenan para cada categoría por magnitud del estimador puntual que es el efecto mediano. Las distribuciones de colores rosa o azul representan que el efecto es significativo al 95\%. Las lineas verticales representan el efecto promedio a través de los departamentos. Fuente: elaboración propia.}
+	\label{fig:Efectos_Dicotom}
+\end{figure}
+
+En el caso de la inmigración, las teorías del conflicto no parecen encontrar eco al observar los dorlings de la \textbf{Figura \ref{fig:Dorling_Efectos_Dicotom}}. Ciertamente aquí podríamos arriesgarnos a hablar de inferencia a nivel individual. Si una mayor proporción de inmigrantes adquieren derecho al voto, uno esperaría que no eligieran al partido NAP que resulta ser el FN. Por lo mismo, una mayor presencia de inmigrantes reduciría el voto frontista. Pero también existen las hipótesis que mencionan que el contacto con el inmigrante disminuye la xenofobia al comprobar que el otro no es tan diferente como se temía. En este sentido las explicaciones de un efecto indirecto de la presencia de inmigrantes parecerían más prometedoras que aquellas de xenofobia directa.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Dorling_Efectos_Dicotom_Modelo_H}
+	\caption{Estimaciones puntuales de los efectos de categorías dicotómicas por departamento francés bajo el modelo H, solo se colorean los efectos significativos. Fuente: elaboración propia.}
+	\label{fig:Dorling_Efectos_Dicotom}
+\end{figure}
+
+Con base en este análisis gráfico procederé en el siguiente capítulo a resumir las conclusiones del estudio así como las primeras críticas que pudieran realizarse al modelo y, por lo mismo, algunas reflexiones sobre trabajo futuro y extensiones. 

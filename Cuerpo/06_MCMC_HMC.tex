@@ -352,7 +352,7 @@ El número de cadenas se puede elegir en función del número de procesos parale
 
 Desafortunadamente, los teoremas ergódicos son asintóticos, por lo que solo se garantiza la convergencia en el infinito. Aunque hay cotas para los errores, normalmente no son muy útiles, salvo algunos casos \parencite{SmithRoberts93}. Por ello, en la práctica se han desarrollado diferentes técnicas de diagnóstico de convergencia. Sin embargo, ninguna puede garantizarnos totalmente que la cadena ya haya convergido. Entonces, es recomendable considerar diferentes técnicas para disminuir la probabilidad de pasar por alto algún problema de convergencia. Una vez que estamos satisfechos con las pruebas de convergencia, podemos utilizar todas las simulaciones como una sola muestra que caracteriza la distribución posterior y realizar las estimaciones de Monte Carlo necesarias.\\
 
-La primera técnica ya la he utilizado en los ejemplos de RWM y Gibbs: graficar los promedios ergódicos para diferentes variables o resúmenes inferenciales para observar en qué punto se estabilizan. La segunda es precisente iniciar en puntos dispersos del espacio parametral para evitar que las cadenas exploren solo una parte del espacio y, por ejemplo, queden atrapadas en una sola moda cuando la distribución posterior pueda ser multimodal. Al mismo tiempo, tener diferentes cadenas nos permite comparar las estimaciones dentro de cada cadena así como a través de las cadenas. Un ejemplo de promedios ergódicos para 4 cadenas de \textit{Gibbs Sampler} (GS) iniciadas en puntos dispersos del espacio parametral puede verse en la \textbf{Figura \ref{fig:Conv_Prom_Erg}}.\\ 
+La primera técnica ya la he utilizado en los ejemplos de RWM y Gibbs: graficar los promedios ergódicos para diferentes variables o resúmenes inferenciales para observar en qué punto se estabilizan. La segunda es precisamente iniciar en puntos dispersos del espacio parametral para evitar que las cadenas exploren solo una parte del espacio y, por ejemplo, queden atrapadas en una sola moda cuando la distribución posterior pueda ser multimodal. Al mismo tiempo, tener diferentes cadenas nos permite comparar las estimaciones dentro de cada cadena así como a través de las cadenas. Un ejemplo de promedios ergódicos para 4 cadenas de \textit{Gibbs Sampler} (GS) iniciadas en puntos dispersos del espacio parametral puede verse en la \textbf{Figura \ref{fig:Conv_Prom_Erg}}.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -589,11 +589,13 @@ De manera conceptual, entonces, el \textbf{Algoritmo \ref{alg:HMC}} de \textit{H
 \item Repetimos el procedimiento para generar $(\theta^{(2)},m^{(2)}),\dots,(\theta^{(N)},m^{(N)})$.\\
 \end{enumerate}
 
+En estos pasos entonces hay dos grandes decisiones que el usuario debe tomar. En primer lugar, la elección de la distribución de \textit{momentum} y que, general pero no necesariamente, resulta ser una normal centrada en cero independiente de $\theta$ y de los datos. En segundo lugar tenemos el paso de simulación de la dinámica hamiltoniana. Sobre este punto vale la pena detenerse un poco.\\ 
+
 \begin{algorithm}
 \DontPrintSemicolon
 Valor inicial arbitrario o simulado $\theta^{(0)} \,\in\, \mathbb{R}^d$\;
 Para un \textit{momentum} $m \,\in\, \mathbb{R}^d$, distribución conveniente $f(m)$ con energía cinética $K(m)$\;
-Algoritmo válido de simulación de trayectorias hamiltonianas $\phi(\theta,m)$
+Algoritmo válido de simulación de trayectorias hamiltonianas $\phi(\theta,m)$\;
 \For{$n \leftarrow 1$ \KwTo $N$}{
 $\theta \leftarrow  \theta^{(n-1)}$\;
 $ m \sim f(m)$\;
@@ -608,11 +610,8 @@ $u \sim U[0,1]$ \;
 	$\theta^{(n)} \leftarrow \theta $\;
 	}
 }
-
 \caption{Hamiltonian Monte Carlo para el aprendizaje bayesiano \label{alg:HMC}}
 \end{algorithm}
-
-En estos pasos entonces hay dos grandes decisiones que el usuario debe tomar. En primer lugar, la elección de la distribución de \textit{momentum} y que, general pero no necesariamente, resulta ser una normal centrada en cero independiente de $\theta$ y de los datos. En segundo lugar tenemos el paso de simulación de la dinámica hamiltoniana. Sobre este punto vale la pena detenerse un poco.\\ 
 
 El método más básico de HMC considera un tiempo fijo de integración $\tau$, un tamaño de paso $\epsilon$ también constante y con estos parámetros genera  trayectorias aproximadas de la misma longitud mediante el \textbf{Algoritmo \ref{alg:Leapfrog}}. No obstante, como mencionaba anteriormente, este no es el único método válido. Recientemente han surgido métodos que también simulan de una manera válida la dinámica hamiltoniana pero que, además, van adaptando el tiempo de integración $\tau$ y, por tanto, la longitud de las trayectorias generadas. El más famoso de estos algoritmos de HMC adaptativo se conoce como NUTS o \textit{No-U-Turn Sampler} \parencite{NUTS11}. La heurística detrás de NUTS es que se pueden generar trayectorias hamiltonianas eficientes si integramos no por un tiempo constante sino hasta el punto en que la partícula vaya a dar una ``vuelta en U'' \parencite{Betancourt17,McElreath17}.\\
 

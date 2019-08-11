@@ -1,0 +1,189 @@
+%% Based on Omar Pardo's Thesis repository at Github (@opardo)
+%% Based on a TeXnicCenter-Template by Tino Weinkauf.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% LATEX %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[oneside,10pt,review,usenames,dvipsnames]{book}
+
+%% Generales %%
+%\usepackage[letterpaper, paperwidth=17cm, paperheight=22.5cm, bottom = 1.25cm, right = 1.2cm, left = 1.2cm, top = 1.75cm]{geometry}
+\usepackage[letterpaper, paperwidth=170mm, paperheight=225mm, bottom=15mm, right=15mm, left = 20mm, bottom = 13mm]{geometry}
+\usepackage[doublespacing]{setspace}
+\usepackage[bottom]{footmisc}
+\usepackage{enumerate}
+\usepackage{fancyhdr} 
+\usepackage{bm}
+\usepackage{url}
+\usepackage[usenames,dvipsnames]{xcolor}
+            
+%% Español y letras %%
+\usepackage[spanish,es-nodecimaldot]{babel} 
+\usepackage[utf8]{inputenc}
+%\usepackage{lmodern} %Type1-font for non-english texts and characters
+%\usepackage[T1]{fontenc}
+%\usepackage{dsfont}
+
+%% Tablas %%
+\usepackage{longtable} 
+\usepackage{multirow}
+\usepackage{arydshln}
+\usepackage{rotating}
+
+%% Figuras %%
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[font=scriptsize,labelfont=bf]{caption} 
+
+%% Bibliografía %%
+\usepackage[nottoc]{tocbibind}
+\usepackage[backend=biber,style=chicago-authordate, natbib=true,ibidtracker = strict, opcittracker = strict]{biblatex}
+\renewcommand*{\revsdnamedelim}{} %Se necesita para eliminar la coma antes de la conjunción "y" en una lista de dos nombres cuando el primero está  invertido (apellido, nombre)
+\addbibresource{referencias_tesis_ACT.bib}
+\addbibresource{referencias_tesis_RRII.bib}
+
+%% Matemáticas %%
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[spanish,onelanguage,linesnumbered,ruled]{algorithm2e} %Algoritmos
+%\usepackage{mathtools} Mejoras a símbolos matemáticos
+
+%% Corrección espacios %%
+\allowdisplaybreaks
+	\setlength\abovedisplayskip{-10pt plus 0 pt minus 0pt}
+	\setlength\belowdisplayskip{-10pt plus 0 pt minus 0pt}
+	\setlength{\abovedisplayshortskip}{-10pt plus 0 pt minus 0pt}
+	\setlength{\belowdisplayshortskip}{-10pt plus 0 pt minus 0pt}
+
+%% Nuevos comandos mates %%
+
+\renewcommand{\Pr}{\ensuremath{\mathbb{P}}}
+\newcommand{\E}[1]{\ensuremath{\mathbb{E}\left[ #1 \right]}}
+\addto\captionsspanish{%
+  \renewcommand{\appendixname}{Anexo}
+}
+\renewcommand{\proofname}{Demostración}
+
+
+\newtheorem{teo}{Teorema}[chapter] 
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{lem}[teo]{Lema}
+
+\theoremstyle{definition}
+	\newtheorem{axiom}{Axioma}
+	\newtheorem{pos}[axiom]{Postulado}
+	\newtheorem{dfn}{Definición}[chapter]
+	\newtheorem*{dfn*}{Definición}
+	\newtheorem{obs}{Observación}[chapter]
+	\newtheorem*{obs*}{Observación}
+	\newtheorem{propiedad}{Propiedad}
+	\newtheorem*{propiedad*}{Propiedad}
+
+%% Contenido (ToC) %%
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+%% Referencias cruzadas %%
+\usepackage[pdftex,
+            pdfauthor={Fernando Antonio Zepeda Herrera},
+            pdftitle={Modelado bayesiano del voto FN en 2012},
+            pdfsubject={Tesis para el título de licenciado},
+            pdfkeywords={Front National Bayesian ITAM Statistics},
+            pdfproducer={Latex con hyperref},
+            pdfcreator={pdflatex},
+            hidelinks]{hyperref}
+\addto\extrasspanish{%
+\def\chapterautorefname{Capítulo}%
+\def\appendixautorefname{Anexo}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% INICIO DEL DOCUMENTO %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PRELIMINARES %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+%% TAPA VERDE %%
+\input{Preliminares/Cubierta.tex}
+
+%% PORTADA %%
+\input{Preliminares/Portada.tex}
+
+%% DECLARACIÓN LEGAL %%
+\input{Preliminares/Legal.tex}
+\newpage
+%% DEDICATORIA %%
+\input{Preliminares/Dedicatoria.tex}
+
+%% AGRADECIMIENTOS %%
+\input{Preliminares/Agradecimientos.tex}
+
+%% Índice %%
+\tableofcontents
+
+%% Introducción %%
+\input{Preliminares/Intro.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% CUERPO %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter 
+
+\pagestyle{fancy}
+	\fancyhf{}
+	\rhead{\thepage}
+	\fancyhead[L]{\nouppercase{\leftmark}}
+
+%% Parte I %%
+\part{Los movimientos NAP y el caso del FN} 
+	
+	\input{Cuerpo/01_Movimientos_NAP.tex}
+	\input{Cuerpo/02_FN_en_Francia.tex}
+	\input{Cuerpo/03_Voto_NAP.tex}
+
+%% Parte II %%
+\part{Paradigma estadístico bayesiano}
+
+	\input{Cuerpo/04_Est_Bayesiana.tex}
+	\input{Cuerpo/05_Modelos_Regr_Bayes.tex}
+	\input{Cuerpo/06_MCMC_HMC.tex}
+
+%% Parte III %%
+\part{Modelado de Datos Franceses}
+	
+	\input{Cuerpo/07_AED.tex}
+	\input{Cuerpo/08_Modelado.tex}
+	%\input{Cuerpo/09_Conclusiones.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  ANEXOS %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+
+\addcontentsline{toc}{part}{Anexos}
+\part*{Anexos}
+\input{Anexos/A_Modelo_Lineal_Normal.tex}
+\input{Anexos/B_Modelos_Compuestos.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  REFERENCIAS %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addcontentsline{toc}{part}{Referencias}
+\part*{Referencias}
+\printbibliography[title = {Referencias}]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  FINAL DEL DOCUMENTO %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
