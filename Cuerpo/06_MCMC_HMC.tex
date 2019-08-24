@@ -337,7 +337,7 @@ Por consiguiente, aunque los algoritmos de MCMC producen cadenas correlacionadas
 
 Por lo anterior, usualmente solo se conservan las simulaciones cada $m$ transiciones de manera que la correlación entre ellas sea lo más cercana a cero posible. Buscaríamos descartar aquellas simulaciones que, debido a la correlación, no están aportando realmente mayor información sobre la distribución objetivo. Con este \textit{adelgazamiento} de la cadena se busca ahorrar espacio de memoria en la computadora y conservar solo las simulaciones que aportan \textit{nueva} información y aumentan el tamaño efectivo de muestra.\\ 
 
-En este sentido, la forma usual de aplicar la única receta de la inferencia bayesiana mediante MCMC se resume de la manera siguiente: 
+En este sentido, la forma usual de aplicar la inferencia bayesiana mediante MCMC se resume de la manera siguiente: 
 
 \begin{enumerate}
 \item Elegir un número $c$ de cadenas para simular.
@@ -363,7 +363,7 @@ La primera técnica ya la he utilizado en los ejemplos de RWM y Gibbs: graficar 
 
 En el fondo, hay dos características que se buscan para declarar la convergencia \parencite{Gelman13}. Queremos que las cadenas lleguen a la estacionariedad, pues la distribución límite es también estacionaria. Las estimaciones deben estabilizarse. También, y dicho de manera coloquial, buscamos que las cadenas \textit{mezclen} bien. Es decir, que las estimaciones para cada cadena sean parecidas a las estimaciones de todas las cadenas en su conjunto. Por ello un buen algoritmo de MCMC buscará recorrer y explorar todas las regiones críticas de la distribución objetivo \parencites{Neal93,Betancourt18}.\\ 
 
-Uno de los diagnósticos visuales más utilizados son los llamados gráficos de oruga o \textit{trace plots}. En ellos se grafica la secuencia de iteraciones, es decir en el eje $x$ se encuentra el número de iteración y en el eje $y$ el valor de la cadena en dicha iteración. Si las cadenas son estacionarias entonces el gráfico saltará de un punto a otro dentro de un rango de valores que determinan la región crítica. Si las cadenas mezclan bien, entonces las diferentes secuencias estarán oscilando en la misma región crítica, intercalándose. El \textit{trace plot} del ejemplo de esta sección puede verse en la \textbf{Figura \ref{fig:Conv_Trace_Inicial}}. También podemos ver en la \textbf{Figura \ref{fig:Conv_Trace_Final}}, el gráfico correspondiente a las iteraciones válidas para cada cadena, es decir, después del descarte del periodo de calentamiento y el espaciamiento para evitar la correlación.\\
+Uno de los diagnósticos visuales más utilizados son los llamados gráficos de oruga o \textit{trace plots}. En ellos se grafica la secuencia de iteraciones, es decir en el eje $x$ se encuentra el número de iteración y en el eje $y$ el valor o estado de la cadena en dicha iteración. Si las cadenas son estacionarias entonces el gráfico saltará de un punto a otro dentro de un rango de valores que determinan la región crítica. Si las cadenas mezclan bien, entonces las diferentes secuencias estarán oscilando en la misma región crítica, intercalándose. El \textit{trace plot} del ejemplo de esta sección puede verse en la \textbf{Figura \ref{fig:Conv_Trace_Inicial}}. También podemos ver en la \textbf{Figura \ref{fig:Conv_Trace_Final}}, el gráfico correspondiente a las iteraciones válidas para cada cadena, es decir, después del descarte del periodo de calentamiento y el espaciamiento para evitar la correlación.\\
 
 \begin{figure}[h]
 	\centering
@@ -379,7 +379,7 @@ Uno de los diagnósticos visuales más utilizados son los llamados gráficos de 
 	\label{fig:Conv_Trace_Final}	
 \end{figure}
 
-En este caso, el ejemplo es lo suficientemente sencillo para permitirnos un adelgazamiento de 8. La reducción en la autocorrelación que esto tiene se puede apreciar en la \textbf{Figura \ref{fig:Conv_Autocorr}}. En la práctica el adelgazamiento suele ser más chico.\\ 
+En este caso, el ejemplo es lo suficientemente sencillo para permitirnos un adelgazamiento de 8, aunque este suele ser más chico. La reducción en la autocorrelación que esto tiene se puede apreciar en la \textbf{Figura \ref{fig:Conv_Autocorr}}. En los gráficos de la cadena completa, del lado izquierdo, vemos que la autocorrelación es superior a 0.75 para un \textit{lag} de 1 e incluso sigue siendo mayor a 0.5 para algunas cadenas y \textit{lags} de 4. Por el contrario, del lado derecho, observamos que tras adelgazar la cadena las autocorrelaciones ya son siempre menores a 0.25 desde el primer \textit{lag}.\\ 
 
 \begin{figure}[h]
     \centering
@@ -393,7 +393,7 @@ En este caso, el ejemplo es lo suficientemente sencillo para permitirnos un adel
     \caption{Gráficos de autocorrelación para las 4 cadenas de \textit{Gibbs Sampling} antes y después de realizar un adelgazamiento de 8. Fuente: elaboración propia.}\label{fig:Conv_Autocorr}
 \end{figure}
 
-Otro diagnóstico gráfico es el de comparar histogramas o densidades estimadas para varios parámetros y resúmenes inferenciales y verificar que estos son estables--- comparándolos para la primera mitad de la muestra y para la segunda, por ejemplo--- y mezclan bien--- los gráficos para las diferentes cadenas se parecen al gráfico de todas juntas---. Para el ejemplo, vemos la comparación de los histogramas de cada cadena con el histograma de todas las cadenas en su conjunto en la \textbf{Figura \ref{fig:Conv_Hist}}.\\
+Otro diagnóstico gráfico es el de comparar histogramas o densidades estimadas para varios parámetros y resúmenes inferenciales y verificar que estos son estables--- comparándolos para la primera mitad de la muestra y para la segunda, por ejemplo--- y mezclan bien--- los gráficos para las diferentes cadenas se parecen al gráfico de todas juntas---. Para el ejemplo, vemos la comparación de los histogramas de cada cadena con el histograma de todas las cadenas en su conjunto en la \textbf{Figura \ref{fig:Conv_Hist}}. Si bien no son exactamente iguales, pues son simulaciones independientes, sí son muy parecidos entre sí lo que indica que las cadenas mezclaron bien.\\
 
 \begin{figure}[h]
 	\centering
@@ -410,7 +410,7 @@ Finalmente, querría comentar que hay 3 factores principales que permiten tener 
 
 \section{Hamiltonian Monte Carlo}
 
-Una distribución posterior puede ser vista como una superficie de cimas y valles. Por ejemplo, la distribución normal--- identificada por su típica forma de campana--- sería una cima central. Imaginemos que queremos tener una muestra aleatoria de esta distribución. Esperaríamos tener más muestra en la región central--- al rededor de la moda--- que en las colas de la distribución, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Original}}. Si volteamos la función de densidad--- tomando el menos logaritmo, por ejemplo--- esta se convierte en una especie de tazón. Las regiones cercanas a la moda ahora son zonas bajas y las colas son zonas altas. La muestra se concentra en el fondo del tazón y no en los bordes, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Volteada}}.\\
+Una distribución posterior puede ser vista como una superficie de cimas y valles. Por ejemplo, la distribución normal--- identificada por su típica forma de campana--- sería una cima central. Imaginemos que queremos tener una muestra aleatoria de esta distribución. Esperaríamos tener más muestra en la región central--- al rededor de la moda--- que en las colas de la distribución, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Original}}. Si volteamos la función de densidad--- tomando menos el logaritmo, por ejemplo--- esta se convierte en una especie de tazón. Las regiones cercanas a la moda ahora son zonas bajas y las colas son zonas altas. La muestra se concentra en el fondo del tazón y no en los bordes, como puede verse en la \textbf{Figura \ref{fig:Muestra_Normal_Volteada}}.\\
 
 \begin{figure}[h]
 	\centering	
@@ -460,7 +460,7 @@ Una distribución posterior puede ser vista como una superficie de cimas y valle
  
  Imaginemos que tuviéramos una descripción microscópica completa de un sistema físico. Por ejemplo, que conociéramos la posición y velocidad de todas las partículas de un sistema en un momento dado en el tiempo. Esta descripción se conoce como el \textit{microestado} del sistema. Evidentemente, en la realidad no podemos observar dicho microestado; más bien observamos el \textit{macroestado} del sistema, que incluye la temperatura o el volumen. Por ello, debemos asignar una medida de probabilidad sobre los microestados que podrían llevar al macroestado que observamos.\\ 
  
- Por ejemplo, supongamos que tenemos un sistema que mantiene una temperatura constante $T$ pero en el que cada microestado $s$ tiene una cierta energía $H(s)$.\footnote{En física, y en la referencia de \textcite{Neal93}, se utiliza la notación $E(s)$, pero para evitar confuciones con el valor esperado de $s$ y para facilitar la explicación de Hamiltonian Monte Carlo, utilizo la letra $H$. Asimismo, utilizaré otras notaciones no comunes en física, con la intención de ser más adecuadas al contexto estadístico.} Normalmente se supone que se satisface la siguiente \textit{distribución canónica}, también conocida como de Gibbs o de Boltzmann: 
+ Por ejemplo, supongamos que tenemos un sistema que mantiene una temperatura constante $T$ pero en el que cada microestado $s$ tiene una cierta energía $H(s)$.\footnote{En física, y en la referencia de \textcite{Neal93}, se utiliza la notación $E(s)$ para denotar la energía pero para evitar confuciones con el valor esperado y facilitar la explicación de Hamiltonian Monte Carlo, utilizaré letras como $H$, $U$ o $K$, con la intención de ser más adecuadas al contexto estadístico.} Normalmente se supone que se satisface la siguiente \textit{distribución canónica}, también conocida como de Gibbs o de Boltzmann: 
  
 \begin{equation}
 \label{eq:Gibbs_Distr_Can}
@@ -469,9 +469,9 @@ Una distribución posterior puede ser vista como una superficie de cimas y valle
  
  donde $Z$ es la constante de normalización y $H(s)$ es la función de energía del sistema y que depende del microestado en el que este se encuentre.\\
  
- Esta distribución canónica es particularmente útil porque \textit{cualquier} distribución de probabilidad que no valga cero en ningún punto puede ser expresada de esta manera. Para ver por qué, consideremos que tenemos un vector de variables aleatorias $s$, cuya distribución de probabilidad es $f(s)$. Esta puede considerarse una distribución canónica como \eqref{eq:Gibbs_Distr_Can} si consideramos que $s$ representa los microestados de un sistema físico ficticio con temperatura $T$ y constante de normalización $Z$ cuya función de energía esté dada por $H(s) = -T\,ln\left[Z\,f(s)\right]$. Por construcción, podríamos decir que la temperatura constante es $T=1$ y eliminarla de las ecuaciones.\\ 
+ Esta distribución canónica es particularmente útil porque \textit{cualquier} distribución de probabilidad que no valga cero en ningún punto puede ser expresada de esta manera. Para ver por qué, consideremos que tenemos un vector de variables aleatorias $s$, cuya distribución de probabilidad es $f(s)$. Esta puede considerarse una distribución canónica como \eqref{eq:Gibbs_Distr_Can} si consideramos que $s$ representa los microestados de un sistema físico ficticio con temperatura $T$ y constante de normalización $Z$ cuya función de energía esté dada por $H(s) = -T\,log\left[Z\,f(s)\right]$. Por construcción, podríamos decir que la temperatura constante es $T=1$ y eliminarla de las ecuaciones.\\ 
  
- Esto quiere decir que podemos interpretar a una variable aleatoria como microestado de un sistema físico imaginario con distribución canónica para alguna función de energía conveniente. En particular, regresemos al caso en que queremos muestrear de la distribución posterior $f(\theta|y)$ de nuestro vector de parámetros de interés $\theta = (\theta_1,\dots,\theta_d)$. Diremos que los parámetros representan las coordenadas de la \textit{posición} de una partícula en un sistema físico y la expresamos como una distribución canónica con \textit{energía potencial} $U(\theta|y) = -ln\left[f(y|\theta)f(\theta)\right]$: 
+ Esto quiere decir que podemos interpretar a una variable aleatoria como microestado de un sistema físico imaginario con distribución canónica para alguna función de energía conveniente. En particular, regresemos al caso en que queremos muestrear de la distribución posterior $f(\theta|y)$ de nuestro vector de parámetros de interés $\theta = (\theta_1,\dots,\theta_d)$. Diremos que los parámetros representan las coordenadas de la \textit{posición} de una partícula en un sistema físico y la expresamos como una distribución canónica con una \textit{energía potencial} $U(\theta|y) = -log\left[f(y|\theta)f(\theta)\right]$: 
 \begin{equation*}
  f(\theta|y)=\dfrac{f(y|\theta)f(\theta)}{f(y)}=\dfrac{exp\left\lbrace -U(\theta|y)\right\rbrace}{Z_y},
 \end{equation*} 
@@ -498,7 +498,7 @@ f(m)=\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}
  La trayectoria que dicha partícula seguiría en el tiempo $\tau$ cumpliría las \textit{ecuaciones de Hamilton} \parencites{Neal93,Neal11,Betancourt17}: 
  \begin{equation}
  \label{eq:Ecuaciones_Hamilton}
- \dfrac{d\theta}{d\tau}=+\dfrac{\partial H}{\partial m} = \dfrac{\partial K}{\partial m} \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}=-\dfrac{\partial H}{\partial \theta} = -\dfrac{\partial U}{\partial \theta}
+ \dfrac{d\theta}{d\tau}=\dfrac{\partial H}{\partial m} = \dfrac{\partial K}{\partial m} \qquad \text{y} \qquad \dfrac{d\,m}{d\tau}=-\dfrac{\partial H}{\partial \theta} = -\dfrac{\partial U}{\partial \theta}
  \end{equation}
  
  Estas ecuaciones diferenciales nos dicen cómo cambiarían $\theta$ y $m$ conforme avanza el tiempo en una simulación dinámica del sistema físico que construimos. Asimismo, podemos verificar que la energía se mantiene constante, viendo que el cambio del hamiltoniano en el tiempo es cero, sustituyendo \eqref{eq:Ecuaciones_Hamilton}:
@@ -582,7 +582,7 @@ Esta diferencia es positiva cuando la energía de la propuesta es menor a aquell
 
 De manera conceptual, entonces, el \textbf{Algoritmo \ref{alg:HMC}} de \textit{Hamiltonian Monte Carlo} o HMC para el aprendizaje bayesiano es un método de MCMC para simular de una distribución posterior $f(\theta|y)$ de acuerdo con los siguientes pasos: 
 \begin{enumerate}
-\item La distribución $f(\theta|y)$ se representa de manera canónica \eqref{eq:Gibbs_Distr_Can} con función de energía potencial $U(\theta|y)=-ln\left[f(y|\theta)f(\theta)\right]$.
+\item La distribución $f(\theta|y)$ se representa de manera canónica \eqref{eq:Gibbs_Distr_Can} con función de energía potencial $U(\theta|y)=-log\left[f(y|\theta)f(\theta)\right]$.
 \item Comenzando con un valor inicial $\theta^{(0)}$, se genera un valor auxiliar de \textit{momentum} $m^{(0)}$ de la misma dimensión que $\theta$ proveniente de una distribución especificada por el usuario y representada también de manera canónica para alguna energía cinética.
 \item Mediante algún método válido simulamos una trayectoria de la dinámica hamiltoniana que seguiría una partícula en el espacio de fases iniciando en $(\theta^{(0)},m^{(0)})$ y proponemos un nuevo estado $(\tilde{\theta},\tilde{m})$.
 \item Aceptamos $(\theta^{(1)},m^{(1)})=(\tilde{\theta},\tilde{m})$ con probabilidad de aceptación \eqref{eq:Proba_Acepta_HMC}; en caso de rechazar la propuesta, $(\theta^{(1)},m^{(1)})=(\theta^{(0)},m^{(0)})$. 
@@ -600,8 +600,8 @@ Algoritmo válido de simulación de trayectorias hamiltonianas $\phi(\theta,m)$\
 $\theta \leftarrow  \theta^{(n-1)}$\;
 $ m \sim f(m)$\;
 $(\tilde{\theta},\tilde{m}) \sim \phi(\theta,m)$\;
-$H(\theta,m) \leftarrow K(m) - ln\left[f(y|\theta)f(\theta)\right]$\;
-$H(\tilde{\theta},\tilde{m}) \leftarrow K(\tilde{m}) - ln\left[f(y|\tilde{\theta})f(\tilde{\theta})\right]$\;
+$H(\theta,m) \leftarrow K(m) - log\left[f(y|\theta)f(\theta)\right]$\;
+$H(\tilde{\theta},\tilde{m}) \leftarrow K(\tilde{m}) - log\left[f(y|\tilde{\theta})f(\tilde{\theta})\right]$\;
 $\alpha(\tilde{\theta},\tilde{m};\theta,m) \leftarrow min\left\lbrace exp\left[H(\theta,m) - H(\tilde{\theta},\tilde{m})\right],1\right\rbrace$\;
 $u \sim U[0,1]$ \;
 \eIf{$u \leq \alpha(\tilde{\theta},\tilde{m};\theta,m)$}{
@@ -617,7 +617,7 @@ El método más básico de HMC considera un tiempo fijo de integración $\tau$, 
 
 Por su parte, el \textit{software} Stan también utiliza una implementación adaptativa de HMC. Además de ir modificando el tiempo de integración de las trayectorias, elige la propuesta mediante un muestreo multinomial dentro de la trayectoria generada y no necesariamente como el punto final de la misma \parencite{Betancourt16,TuitSimpson18}. Este nuevo software permite, al igual que hizo en su momento BUGS, definir modelos complejos mediante un lenguaje computacional sencillo sin que el usuario se preocupe por la implementación del algoritmo de MCMC. No obstante debe recalcarse que utilizar estas herramientas no significa abandonar las buenas prácticas de modelado y explorar distintas alternativas de parametrizaciones y modelos. Por el contrario, precisamente al liberar al usuario de la tarea más pragmática de cómputo, podemos dedicarnos a explorar los aspectos estadísticos más importantes y llegar a presentar mejores modelos que también se beneficien de mejor manera de las herramientas computacionales.\\
 
-Para terminar este capítulo debo decir que, independientemente de la implementación específica que se tenga de HMC, la ventaja del algoritmo general sobre \textit{Randowm Walk Metropolis} o \textit{Gibbs Sampler} se relaciona con el último factor para el buen desempeño de MCMC que mencionaba en la página \pageref{factor_ventaja_HMC}. Este es qué tantas iteraciones necesitamos para que, una vez que estamos en la región crítica de la distribución posterior donde queremos que la muestra se concentre, generemos otra observación casi independiente. Conforme aumenta la dimensión $d$ de nuestros parámetros $\theta$, esta región se vuelve cada vez más estrecha \parencites{Betancourt17,McElreath17}. Podemos conceptualizarla como una especie de circuito de carreras con diferentes curvas.\\ 
+Para terminar este capítulo debo decir que, independientemente de la implementación específica que se tenga de HMC, la ventaja del algoritmo general sobre \textit{Randowm Walk Metropolis} o \textit{Gibbs Sampler} se relaciona con el último factor para el buen desempeño de MCMC que mencionaba en la \textbf{\autoref{factor_ventaja_HMC}}. Este es qué tantas iteraciones necesitamos para que, una vez que estamos en la región crítica de la distribución posterior donde queremos que la muestra se concentre, generemos otra observación casi independiente. Conforme aumenta la dimensión $d$ de nuestros parámetros $\theta$, esta región se vuelve cada vez más estrecha \parencites{Betancourt17,McElreath17}. Podemos conceptualizarla como una especie de circuito de carreras con diferentes curvas.\\ 
 
 \textit{Randowm Walk Metropolis} propone moverse en una dirección aleatoria y, si el kernel de propuestas es más ``ancho'' que la región crítica, la gran mayoría de las propuestas se ``saldrían de la pista'' y, por tanto, tenderían a ser rechazadas y la cadena se estancaría en la misma posición por un número importante de iteraciones. Como ya había mencionado anteriormente, una solución sería hacer más estrecho el kernel de propuestas, pero si es demasiado estrecho entonces las nuevas observaciones van a estar muy cerca de las anteriores y la cadena tardará en ``dar la vuelta al circuito''. El problema es parecido para \textit{Gibbs Sampler}, pues una región crítica estrecha significa que las condicionales completas tienden a estar fuertemente determinadas por las otras variables. Así pues, la cadena va avanzando dando pasos pequeños.\\ 
 

@@ -133,13 +133,13 @@ En este caso tenemos que la función liga resulta ser la identidad, lo que se co
 Cuando nuestra variable de interés representa conteos, un modelo usual es la regresión Poisson o loglineal, en el que la liga resulta ser el logaritmo natural. En este caso el parámetro de dispersión $\phi$ no está presente; dicho de otra forma $\phi=1$, por lo que la distribución Poisson es un caso de una distribución exponencial natural. 
 \begin{align*}
 y_i|\beta & \sim Poi(\lambda_i) \quad \forall \quad i \in \mathbb{N}_N \nonumber \\
-\text{con} \quad ln(\lambda_i) &= X_i\beta \nonumber \\
+\text{con} \quad log(\lambda_i) &= X_i\beta \nonumber \\
 \beta &\sim p(\beta)
 \end{align*}
 
 \subsection{Regresión logística}\label{Sec:Pres_Logis}
 
-A continuación presento con más detalle uno de los MLG más conocidos y utilizados: la regresión logística. Esta busca modelar $f(y|\theta)$ mediante una distribución Bernoulli. La relación entre las variables explicativas y el valor esperado se construye con un predictor lineal para el logit de la probabilidad de éxito del ensayo de Bernoulli. Es decir, si $p = \Pr(Y=1)$ es la probabilidad de éxito, entonces $ln\left(\dfrac{p}{1-p}\right)=X\beta$.\\ 
+A continuación presento con más detalle uno de los MLG más conocidos y utilizados: la regresión logística. Esta busca modelar $f(y|\theta)$ mediante una distribución Bernoulli. La relación entre las variables explicativas y el valor esperado se construye con un predictor lineal para el logit de la probabilidad de éxito del ensayo de Bernoulli. Es decir, si $p = \Pr(Y=1)$ es la probabilidad de éxito, entonces $log\left(\dfrac{p}{1-p}\right)=X\beta$.\\ 
 
 En otras ocasiones, nuestra variable de interés podría ser binomial, es decir, los éxitos en una serie de ensayos Bernoulli independientes. Para cada observación $y_i$, además de las variables explicativas, conocemos también $n_i$, el número de ensayos Bernoulli para el $i$-ésimo individuo. Es decir, es posible generalizar una regresión logística para que el número de ensayos sea mayor a $1$. Veamos ahora cómo construir el modelo como un MLG.
 
@@ -148,55 +148,55 @@ En otras ocasiones, nuestra variable de interés podría ser binomial, es decir,
 En primer lugar debemos probar que una variable binomial, con parámetro $n$ conocido, puede expresarse como miembro de la familia exponencial. 
 \begin{align*}
 Y|p \sim Binom(n,p) \;\Leftrightarrow\; f(y|p) &= {n\choose y}p^y(1-p)^{n-y} \\
-\;\Leftrightarrow\; f(y|p) &= {n\choose y}\,exp\left\lbrace ln\left[p^y(1-p)^{n-y}\right]\right\rbrace \\
-\;\Leftrightarrow\; f(y|p) &= {n\choose y}\,exp\left\lbrace y\,ln\left(\dfrac{p}{1-p}\right)+n\,ln\left(1-p\right)\right\rbrace
+\;\Leftrightarrow\; f(y|p) &= {n\choose y}\,exp\left\lbrace log\left[p^y(1-p)^{n-y}\right]\right\rbrace \\
+\;\Leftrightarrow\; f(y|p) &= {n\choose y}\,exp\left\lbrace y\,log\left(\dfrac{p}{1-p}\right)+n\,log\left(1-p\right)\right\rbrace
 \end{align*}
-Definiendo el logit de $p$ como nuestro parámetro $\theta$, tenemos que $\theta = ln\left(\dfrac{p}{1-p}\right)$ y al despejar $p = \dfrac{e^\theta}{1+e^\theta}$, por lo que podemos podemos sustituir: \begin{align} \label{eq:Veros_Binomial}
-\Rightarrow f(y|p) &= {n\choose y}\,exp\left\lbrace y\,\theta+n\,ln\left(1-\dfrac{e^\theta}{1+e^\theta}\right)\right\rbrace \nonumber \\
-&= {n\choose y}\,exp\left\lbrace y\,\theta+n\,ln\left(\dfrac{1}{1+e^\theta}\right)\right\rbrace \nonumber \\
-&= {n\choose y}\,exp\left\lbrace y\,\theta-n\,ln\left(1+e^\theta\right)\right\rbrace
+Definiendo el logit de $p$ como nuestro parámetro $\theta$, tenemos que $\theta = log\left(\dfrac{p}{1-p}\right)$ y al despejar $p = \dfrac{e^\theta}{1+e^\theta}$, por lo que podemos podemos sustituir: \begin{align} \label{eq:Veros_Binomial}
+\Rightarrow f(y|p) &= {n\choose y}\,exp\left\lbrace y\,\theta+n\,log\left(1-\dfrac{e^\theta}{1+e^\theta}\right)\right\rbrace \nonumber \\
+&= {n\choose y}\,exp\left\lbrace y\,\theta+n\,log\left(\dfrac{1}{1+e^\theta}\right)\right\rbrace \nonumber \\
+&= {n\choose y}\,exp\left\lbrace y\,\theta-n\,log\left(1+e^\theta\right)\right\rbrace
 \end{align} 
 Así, tenemos que una variable binomial con parámetro $n$ conocido se expresa de la forma de \eqref{eq:fam_exp} tomando los siguientes valores: 
 \begin{align*}
-\theta &= ln\left(\dfrac{p}{1-p}\right) \qquad \phi = 1\\
-a(\theta) &= n\,ln\left(1+e^\theta\right) \qquad b(\theta,y) = {n\choose y}
+\theta &= log\left(\dfrac{p}{1-p}\right) \qquad \phi = 1\\
+a(\theta) &= n\,log\left(1+e^\theta\right) \qquad b(\theta,y) = {n\choose y}
 \end{align*}
 Ahora bien, habiendo ilustrado la pertenencia a la familia exponencial, el MLG binomial normalmente se plantea en términos de $p_i$, el valor esperado de cada uno de los ensayos de Bernouilli \parencite{Gelman13}:
 \begin{align*}
 Y_i|\beta & \sim Binom(n_i,p_i) \quad \forall \quad i \in \mathbb{N}_N \nonumber \\
-\text{con} \quad ln\left(\dfrac{p_i}{1-p_i}\right) &= X_i\beta \nonumber \\
+\text{con} \quad log\left(\dfrac{p_i}{1-p_i}\right) &= X_i\beta \nonumber \\
 \beta &\sim f(\beta)
 \end{align*}
 En este caso, debido a que cada valor esperado binomial $\mu_i$ es igual a $n_ip_i$, tenemos que $p_i=\mu_i/n_i$. Por lo que la tradicional función logística implícitamente refleja la siguiente función liga: 
 \begin{align*}
-ln\left(\dfrac{p_i}{1-p_i}\right)&=ln(p_i)-ln(1-p_i)\\
-&=ln\left(\dfrac{\mu_i}{n_i}\right)-ln\left(1-\dfrac{\mu_i}{n_i}\right)\\ 
-&= ln\left(\dfrac{\mu_i}{n_i}\right)-ln\left(\dfrac{n_i-\mu_i}{n_i}\right)\\
-&=ln\left(\mu_i\right)-ln\left(n_i-\mu_i\right)\\ 
-\therefore \quad g(\mu_i)&=ln\left(\dfrac{\mu_i}{n_i-\mu_i}\right)
+log\left(\dfrac{p_i}{1-p_i}\right)&=log(p_i)-log(1-p_i)\\
+&=log\left(\dfrac{\mu_i}{n_i}\right)-log\left(1-\dfrac{\mu_i}{n_i}\right)\\ 
+&= log\left(\dfrac{\mu_i}{n_i}\right)-log\left(\dfrac{n_i-\mu_i}{n_i}\right)\\
+&=log\left(\mu_i\right)-log\left(n_i-\mu_i\right)\\ 
+\therefore \quad g(\mu_i)&=log\left(\dfrac{\mu_i}{n_i-\mu_i}\right)
 \end{align*}
 
 \subsubsection{Problema analítico} \label{sec:Prob_Analitico}
 
 Ahora supongamos que queremos realizar un análisis bayesiano y actualizar nuestras creencias mediante el teorema de Bayes. Podríamos llevarnos la desagradable sorpresa de que una regresión logística no tiene las mismas facilidades analíticas que sí tiene el modelo normal del \textbf{Anexo \ref{Anexo_modelo_lineal}}. De manera particular, no podemos encontrar una distribución conjugada.\\ 
 
-En efecto, definiendo $\theta_i = ln\left(\dfrac{p_i}{1-p_i}\right)=X_i\beta$ y utilizando la forma de la función de verosimilitud en \eqref{eq:Veros_Binomial}, donde $y$ representa el vector de observaciones de nuestra variable de interés: 
+En efecto, definiendo $\theta_i = log\left(\dfrac{p_i}{1-p_i}\right)=X_i\beta$ y utilizando la forma de la función de verosimilitud en \eqref{eq:Veros_Binomial}, donde $y$ representa el vector de observaciones de nuestra variable de interés: 
 \begin{align} \label{eq:Veros_Binomial_MLG} 
 f(y|\beta) &= f(y_1,\dots,y_N|\beta)= \prod_{i=1}^N f(y_i|\beta) \nonumber\\
-&= \prod_{i=1}^N {n_i\choose y_i}\,exp\left\lbrace y_i\,X_i\beta-n_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace \nonumber\\
-&\propto \prod_{i=1}^N exp\left\lbrace y_i\,X_i\beta-n_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace \nonumber\\
-&\propto exp\left\lbrace \sum\limits_{i=1}^Ny_i\,X_i\beta-n_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace 
+&= \prod_{i=1}^N {n_i\choose y_i}\,exp\left\lbrace y_i\,X_i\beta-n_i\,log\left(1+e^{X_i\beta}\right)\right\rbrace \nonumber\\
+&\propto \prod_{i=1}^N exp\left\lbrace y_i\,X_i\beta-n_i\,log\left(1+e^{X_i\beta}\right)\right\rbrace \nonumber\\
+&\propto exp\left\lbrace \sum\limits_{i=1}^Ny_i\,X_i\beta-n_i\,log\left(1+e^{X_i\beta}\right)\right\rbrace 
 \end{align}
 Esta no es una forma funcional que permita encontrar fácilmente una inicial conjugada conocida.\\
 
 En el mismo sentido, supongamos que tomamos como iniciales independientes para los coeficientes, distribuciones normales centradas en $0$ con cierta desviación estándar común $\sigma$, conocida. Veamos cómo luce la actualización de la verosimilitud en \eqref{eq:Veros_Binomial_MLG} por esta inicial normal multivariada: 
 \begin{align*}
-f(y|\beta) &\propto exp\left\lbrace \sum\limits_{i=1}^N y_i\,X_i\beta-n_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace \\
-&\propto exp\left\lbrace (\beta yX)^T-\sum\limits_{i=1}^Nn_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace; \\
+f(y|\beta) &\propto exp\left\lbrace \sum\limits_{i=1}^N y_i\,X_i\beta-n_i\,log\left(1+e^{X_i\beta}\right)\right\rbrace \\
+&\propto exp\left\lbrace (\beta yX)^T-\sum\limits_{i=1}^Nn_i\,log\left(1+e^{X_i\beta}\right)\right\rbrace; \\
 f(\beta) &= \dfrac{1}{\sqrt{(2\pi)|\sigma^2 \mathbb{I}_N|}}exp\left\lbrace -\dfrac{1}{2}\beta^T(\sigma^2\mathbb{I}_N)^{-1}\beta\right\rbrace \\
 &\propto exp\left\lbrace -\dfrac{\beta^T\beta}{2\sigma^2}\right\rbrace, \\
 \Rightarrow \; f(\beta|y)&\propto f(y|\beta)f(\beta) \\
-&\propto exp\left\lbrace -\dfrac{\beta^T\beta}{2\sigma^2} + (\beta yX)^T-\sum\limits_{i=1}^Nn_i\,ln\left(1+e^{X_i\beta}\right)\right\rbrace \\
+&\propto exp\left\lbrace -\dfrac{\beta^T\beta}{2\sigma^2} + (\beta yX)^T-\sum\limits_{i=1}^Nn_i\,log\left(1+e^{X_i\beta}\right)\right\rbrace \\
 &\propto exp\left\lbrace -\dfrac{1}{2\sigma^2}\left[\beta^T\beta - 2\sigma^2(\beta yX)^T\right]\right\rbrace\prod_{i=1}^N \left(1+e^{X_i\beta}\right)^{-n_i}
 \end{align*}
 
@@ -334,7 +334,7 @@ III. Hiperparámetros &
 Naturalmente, es posible proponer MLG jerárquicos. Por ejemplo, una regresión logística jerárquica con algunas \textit{hiperiniciales} arbitrarias sería la siguiente: 
 \begin{align*}
 y_i|\alpha_{j[i]},\beta_{j[i]} & \sim Binom(n_i,p_i) \\
-ln\left(\dfrac{p_i}{1-p_i}\right) &= \alpha_{j[i]} + \beta_{j[i]} x_i  \\ 
+log\left(\dfrac{p_i}{1-p_i}\right) &= \alpha_{j[i]} + \beta_{j[i]} x_i  \\ 
 \alpha_{j[i]} & \sim N(a_{\alpha} + b_{\alpha} u_{j[i]}, \sigma_{\alpha}^2) \\ 
 \beta_{j[i]} & \sim N(a_{\beta} + b_{\beta} u_{j[i]}, \sigma_{\beta}^2) \\ 
 a_{\alpha} \sim N(0,5) & \quad  a_{\beta} \sim N(0,5) \\

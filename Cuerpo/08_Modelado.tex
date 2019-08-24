@@ -1,6 +1,6 @@
 \chapter{Modelado}
 
-En este capítulo desarrollo el proceso de modelado de los datos franceses con tal de explorar las configuraciones sociales que favorecieron o inhibieron el voto por el FN en 2012. Para ello hay que notar que los datos electorales que considero son el número de votos por Marine Le Pen en cada comuna así como el número de inscritos en el listado nominal de las mismas. Tenemos entonces $C$ pares de la forma $\left\lbrace y_c, n_c \right\rbrace$ donde $y_c$ representa el número de votos y $n_c$ el de inscritos en la comuna $c$. Este tipo de datos puede ser modelado como proveniente de una distribución binomial con número de ensayos conocido y parámetro de interés $p_c$: 
+En este capítulo desarrollo el proceso de modelado de los datos franceses con tal de explorar las configuraciones sociales que favorecieron o inhibieron el voto por el FN en 2012. Para ello hay que notar que los datos electorales que considero son el número de votos por Marine Le Pen en cada comuna así como el número de inscritos en el listado nominal de las mismas. Tenemos entonces $C$ pares de la forma $\left\lbrace y_c, n_c \right\rbrace$ donde $y_c$ representa el número de votos y $n_c$ el de inscritos en la comuna $c \,\in\,\mathbb{N}_C$. Este tipo de datos puede ser modelado como proveniente de una distribución binomial con número de ensayos conocido y parámetro de interés $p_c$: 
 
 \begin{equation*}
 y_c|p_c \sim Binom(n_c, p_c) \quad \forall \; c \, \in \mathbb{N}_C
@@ -8,27 +8,24 @@ y_c|p_c \sim Binom(n_c, p_c) \quad \forall \; c \, \in \mathbb{N}_C
 
 Podemos interpretar cada parámetro $p_c$ como la afinidad que se tuvo en la comuna $c$ por Marine Le Pen en la primera vuelta presidencial de 2012. Esta afinidad es la que quisiéramos explicar en términos de configuraciones sociales.\\
 
-Recordando la presentación de la regresión logística en la \textbf{\autoref{Sec:Pres_Logis}}, si tenemos un vector $x_c$ de variables explicativas en la comuna $c$, construimos un MLG de la siguiente manera: 
+Recordando la presentación de la regresión binomial con liga logística, comunmente conocida como regresión logística, en la \textbf{\autoref{Sec:Pres_Logis}}, si tenemos un vector $x_c$ de variables explicativas en la comuna $c$, construimos un MLG de la siguiente manera: 
 
 \begin{align*}
 y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \beta x_c \nonumber \\
-\text{y} \quad \theta &= (\alpha,\beta) \sim f(\theta)
+\text{con} \quad log\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \beta x_c \nonumber \\
+\text{y} \quad \theta &= (\alpha,\beta) \sim f(\theta),
 \end{align*}
+donde $f(\theta)$ representa nuestro conocimiento inicial en un modelo bayesiano.\\ 
 
-En nuestro caso, sin pérdida de generalidad, para la $m$-ésima variable explicativa tenemos un vector de proporciones $x_c=(x_{1,c},\dots,x_{l_m,c})$ donde $l_m$ es el número de categorías de la variable y $x_{j,c}=1 - \sum_{k\neq j} x_{k,c}$ para toda $j \in \mathbb{N}_{l_m}$. Recordando el problema de multicolinealidad que esto ocasionaría al considerar la regresión con intercepto--- \textbf{\autoref{prob_multicolinealidad}}--- podemos definir una restricción de identificabilidad de suma cero para los coeficientes, de manera tal que $\beta_j=-\sum\limits_{k\neq j}\beta_k$.\\
+En nuestro caso tenemos $m$ variables censales formadas, cada una, por distintas categorías poblacionales. Sin pérdida de generalidad, para la $m$-ésima variable censal tenemos un vector de proporciones $x_{m,c}=(x_{m,1,c},\dots,x_{m,l_m,c})$ donde $l_m$ es el número de categorías de la variable y $\sum\limits_{j=1}^{l_m} x_{m,j,c}=1$. Recordando el problema de multicolinealidad que esto ocasionaría al considerar la regresión con intercepto--- \textbf{\autoref{prob_multicolinealidad}}--- defino una restricción de identificabilidad de suma cero para los coeficientes, de manera tal que $\sum\limits_{j=1}^{l_m}\beta_j=0$.\\
 
-Para ilustrarlo, si tomáramos como variable explicativa la composición por edad de la población comunal, tendríamos $x_c=(Ed1_c, \dots, Ed6_c)$ donde $Edj_c$ es la proporción de habitantes del grupo de edad $j$. En este caso, $\beta_{6} = -\sum\limits_{k = 1}^5 \beta_k$, por lo que en realidad solo tenemos libres el intercepto y 5 coeficientes a la hora de asignar la distribución inicial $f(\theta)$. 
+Para ilustrarlo, si tomáramos como única variable explicativa la composición por edad de la población comunal, tendríamos $x_{edad,c}=(x_{edad,1,c}, \dots, x_{edad,6,c})$ donde $x_{edad,j,c}$ es la proporción de habitantes del grupo de edad $j$ en la comuna $c$. En este caso, el predictor lineal sería $\eta_c = \alpha + \sum\limits_{j=1}^6 \beta_j x_{edad,j,c}$ y la restricción de identificabilidad $\sum\limits_{j=1}^{6}\beta_j=0$, por lo que en realidad solo tenemos libres el intercepto y 5 coeficientes a la hora de asignar la distribución inicial $f(\theta)$. 
 
-\begin{align*}
-y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \beta_1Ed1_c + \dots + \beta_6Ed6_c \quad \text{tal que} \quad \beta_6 = -\sum\limits_{k = 1}^5 \beta_k \nonumber \\
-\text{y} \quad \theta &= (\alpha,\beta_1,\dots,\beta_5) \sim f(\theta) 
-\end{align*}
+\section{Distribuciones inciales} \label{Secc_Iniciales}
 
-\section{Distribuciones inciales}
+¿Cómo asignamos distribuciones iniciales? Primero hay que tomar en cuenta que las distribuciones comunmente consideradas como mínimo informativas tienen implicaciones particulares en el contexto de la escala logística. Supongamos que quisiéramos asignar una distribución inicial al valor del predictor lineal $\eta = \alpha + \beta x$. Una distribución $N(0,100)$ sería normalmente considerada como una distribución mínimo informativa. Tendría una desviación estándar de $10$, por lo que poco más del 95\% de sus observaciones oscilrían entre $-20$ y $20$.\\ 
 
-¿Cómo asignamos distribuciones iniciales? Primero hay que tomar en cuenta que las distribuciones normalmente consideradas como mínimo informativas tienen implicaciones particulares en el contexto de la escala logística. Supongamos que quisiéramos asignar una distribución inicial al valor del predictor lineal $\eta = \alpha + \beta X$. Una distribución $N(\mu=0,\sigma^2=100)$ sería normalmente considerada como una distribución mínimo informativa. Tendría una desviación estándar de $10$, por lo que poco más del 95\% de sus observaciones oscilrían entre $-20$ y $20$. ¿Qué implicación tiene esto para una proporción $p$ vinculada con $\eta$ mediante la liga logística? Es decir, si asignamos esa distribución inicial a $\eta=ln\left(\dfrac{p}{1-p}\right)$, ¿qué estamos diciendo sobre $p$? Podemos observarlo en el primer histograma de la \textbf{Figura \ref{fig:Malas_Iniciales}}. Simulando observaciones de $\eta\sim N(\mu=0,\sigma_1=10)$ vemos que la mayoría de ellas llevan a valores extremos de $p$ cercanos a 0 o a 1. Incluso repitiendo el ejercicio para desviaciones estándar menores como $\sigma_2=5$ o $\sigma_3=2.5$, la distribución inicial lleva a un histograma para $p$ en forma de U. Tendríamos que tener desviaciones estándar más pequeñas, como $\sigma_4=1.5$, o una normal estándar con $\sigma_5=1$ para estar asignando una distribución poco informativa para $p$.\\ 
+¿Qué implicación tiene esto para una proporción $p$ vinculada con $\eta$ mediante la liga logística? Es decir, si asignamos esa distribución inicial a $\eta=log\left(\dfrac{p}{1-p}\right)$, ¿qué estamos diciendo sobre $p$? Podemos observarlo en el primer histograma de la \textbf{Figura \ref{fig:Malas_Iniciales}}. Simulando observaciones de $\eta\sim N(0,100)$ vemos que la mayoría de ellas llevan a valores extremos de $p$ cercanos a 0 o a 1. Incluso repitiendo el ejercicio para desviaciones estándar menores como 5 o 2.5, la distribución inicial lleva a un histograma para $p$ en forma de U. Tendríamos que tener desviaciones estándar más pequeñas, como 1.5, o 1 para estar asignando una distribución normal poco informativa para $p$.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -46,9 +43,11 @@ El motivo es que la función logística no es lineal y tiene que ``compactar'' v
 	\label{fig:Escala_Logis}
 \end{figure}
 
-Ahora bien, nosotros no asignaremos distribuciones iniciales para el predictor lineal en su conjunto, sino para los coeficientes $\beta$ de dicho predictor lineal. Optaré aquí por una posición un poco escéptica o conservadora. A pesar de lo que sugerían las tendencias ingenuas del capítulo anterior, \textit{a priori}, no buscaría asignarle un sentido al efecto. Asimismo, los efectos de variables ecológicas o agregadas, no deberían ser tan grandes. No querría ``inflar'' la magnitud del valor explicativo mediante la distribución inicial pero tampoco negar la posibilidad de que existan algunos efectos importantes.\\ 
+En este sentido, las distribuciones vagas con desviaciones estándar grandes permiten \textit{a priori} la existencia de efectos de una magnitud inverosímil, un problema análogo al que \textcite{Regueiro12} quiere evitar cuando discute el máximo número posible de goles en un partido de fútbol. Discusiones más detalladas sobre algunas posibles desventajas de utilizar distribuciones no informativas, sobre todo conforme aumenta la complejidad de los modelos considerados, pueden encontrarse en {\color{Red} Simpson, Case Study Betancourt, Prior Context Likelihood}.\\
 
-Considero que una inicial para el coeficiente $\beta\sim N(\mu=0,\sigma=0.5)$ cumple relativamente bien con estas condiciones. Si tomamos el $0$ como referencia y comparamos el valor correspondiente de $p$ con aquel para una $\beta$ una desviación estándar mayor--- i.e. $\beta = 0.5$--- el efecto $\Delta$ sería de aproximadamente $+12$ puntos porcentuales. Si ahora disminuimos $\beta$ en 2 desviaciones estándar,  $\Delta \approx -23$ pp, como puede apreciarse en la \textbf{Figura \ref{fig:Inicial_Coef}}. Sin exagerar su interpretación, pues hay que multiplicar por el valor de la variable explicativa, estos podrían pensarse como los máximos efectos creíbles \textit{a priori}.\\ 
+Ahora bien, no asignaré distribuciones iniciales para el predictor lineal en su conjunto, sino para los coeficientes de dicho predictor lineal, interpretados como efectos de variables explicativas sobre la variable de interés. No obstante, en lugar de optar por iniciales no informativas, propondré unas distribuciones más informativas aunque guiadas por una posición un poco escéptica. A pesar de lo que sugerían las tendencias ingenuas del capítulo anterior, \textit{a priori}, no buscaría asignarle un sentido al efecto. Asimismo, los efectos de variables ecológicas o agregadas, no deberían ser tan grandes, favoreciendo una desviación estándar más pequeña.\\ 
+
+Considero que una inicial para un coeficiente $\beta\sim N(0,0.5^2)$ cumple relativamente bien con estas condiciones. Si tomamos el $0$ como referencia y comparamos el valor correspondiente de $p$ con aquel para una $\beta$ una desviación estándar mayor--- i.e. $\beta = 0.5$--- el efecto $\Delta$ sería de aproximadamente $+12$ puntos porcentuales. Si ahora disminuimos $\beta$ en 2 desviaciones estándar,  $\Delta \approx -23$ pp, como puede apreciarse en la \textbf{Figura \ref{fig:Inicial_Coef}}. Sin exagerar su interpretación, pues hay que multiplicar por el valor de la variable explicativa, estos podrían pensarse como los máximos efectos creíbles \textit{a priori}.\\ 
 
 \begin{figure}[h]
 	\centering
@@ -57,23 +56,21 @@ Considero que una inicial para el coeficiente $\beta\sim N(\mu=0,\sigma=0.5)$ cu
 	\label{fig:Inicial_Coef}
 \end{figure}
 
-Por otro lado, debemos detenernos a pensar en la interpretación del intercepto $\alpha$. Por un lado, $\alpha$ es el valor que tomaría el predictor lineal $\eta_c$, si todos los coeficientes fueran iguales a $0$. Esto nos podría hacer pensar que querríamos que \textit{a priori} su distribución nos lleve a valores cercanos al  17.46\%, porcentaje mediano de votos que obtuvo Le Pen en la elección. Sin embargo, también hay que notar que con variables explicativas de configuraciones sociales, $x_c$, $\alpha$ es el valor que tomaría $\eta_c$ si la población estuviera repartida equitativamente entre todas las categorías. En efecto, supongamos que para la $m$-ésima variable con $l_m$ categorías cada $x_{j,c}=l_m^{-1}$. Tendríamos que
-
+Por otro lado, debemos detenernos a pensar en la interpretación del intercepto $\alpha$. Por un lado, $\alpha$ es el valor que tomaría el predictor lineal $\eta_c$, si todos los coeficientes fueran iguales a $0$. Siguiendo las recomendaciones de pensar qué implicaciones tienen las distribuciones iniciales en las predictivas {\color{Red} Simpson}, esto nos podría hacer pensar que querríamos que \textit{a priori} la inicial para $\alpha$ prediga valores cercanos al  17.46\%, porcentaje mediano de votos que obtuvo Le Pen en la elección. Sin embargo, también hay que notar que con variables explicativas de configuraciones sociales, $x_c$, $\alpha$ es el valor que tomaría $\eta_c$ si la población estuviera repartida equitativamente entre todas las categorías. En efecto, supongamos que para la $m$-ésima variable con $l_m$ categorías cada $x_{j,c}=l_m^{-1}$. Tendríamos que
 \begin{align*}
 \eta_c &= \alpha + \sum\limits_{j=1}^{l_m} \beta_j x_{j,c} = \alpha + \sum\limits_{j=1}^{l_m} \dfrac{\beta_j}{l_m} = \alpha + \dfrac{1}{l_m}\sum\limits_{j=1}^{l_m} \beta_j
 \intertext{y por la restricción de identificabilidad de suma cero de los coeficientes,}
 &= \alpha + \dfrac{1}{l_m}\left(0\right) = \alpha 
 \end{align*}
 
-Tomando en cuenta las teorías del conflicto discutidas en la revisión de literatura, podríamos pensar que si en lugar de tener grupos mayoritarios frente a grupos minoritarios hubiese una sociedad más ``equilibrada'', el voto frontista disminuiría. Así pues, deberíamos buscar una distribución inicial con una media menor al 17.5\%. También, considerando que puede ser más robusto dilucidar una distribución inicial con base en cuantiles, más que igualar la media podríamos intentar aproximar el rango intercuartílico observado de entre 13.54\% y 21.44\%, pero sesgado un poco a la baja para tomar en cuenta la hipótesis anterior sobre una población equilibrada. Después de algunas pruebas elegí una distribución inicial para $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$.\\
+Tomando en cuenta las teorías del conflicto discutidas en la revisión de literatura, podríamos pensar que si en lugar de tener grupos mayoritarios frente a grupos minoritarios hubiese una sociedad más ``equilibrada'', el voto frontista disminuiría. Así pues, deberíamos buscar una distribución inicial con una media menor al 17.5\%. También, considerando que puede ser más robusto dilucidar una distribución inicial con base en cuantiles, más que igualar la media podríamos intentar aproximar el rango intercuartílico observado de entre 13.54\% y 21.44\%, pero sesgado un poco a la baja para tomar en cuenta la hipótesis anterior sobre una población equilibrada. Después de algunas pruebas elegí una distribución inicial para $\alpha\sim N(-1.7,0.25^2)$.\\
 
-Consideremos ahora una ``comuna promedio'', definida como aquella que tuviera valores promedio en las variables explicativas; podemos realizar simulaciones de la distribución predictiva con estas iniciales. Es decir, simulamos de $\alpha\sim N(\mu = -1.7,\sigma = 0.25)$ y para cada $\beta\sim N(\mu = 0,\sigma = 0.5)$. Calculamos el predictor lineal con base en los valores promedio de cada categoría--- considerando también la restricción de suma cero de los coeficientes--- y tomamos el logit inverso. Este proceso, por ejemplo para grupos de edad, nos lleva al histograma de la \textbf{Figura \ref{fig:Predictiva_Inicial}}, con el modelo
-
+Consideremos ahora una ``comuna promedio'', definida como aquella que tuviera valores promedio en las variables explicativas; podemos realizar simulaciones de la distribución predictiva con estas iniciales en su conjunto. Es decir, simulamos de $\alpha\sim N(-1.7,0.25^2)$ y para cada $\beta\sim N(0,0.5^2)$. Calculamos el predictor lineal con base en los valores promedio de cada categoría--- considerando también la restricción de suma cero de los coeficientes--- y tomamos el logit inverso. Este proceso, por ejemplo para grupos de edad, nos lleva al histograma de la \textbf{Figura \ref{fig:Predictiva_Inicial}}, con el modelo
 \begin{align*}
 y_c|\theta=(\alpha,\beta) & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \beta_1Ed1_c + \dots + \beta_6Ed6_c \quad \text{tal que} \quad \beta_6 = -\sum\limits_{k = 1}^5 \beta_k \nonumber \\
-\text{y} \quad \alpha & \sim N(\mu = -1.7,\sigma = 0.25)\\
-\beta_j & \sim N(\mu = 0,\sigma = 0.5) \quad \, j =1,\dots,5
+\text{con} \quad log\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \beta_1 x_{edad,1,c} + \dots + \beta_6 x_{edad,6,c} \quad \text{tal que} \quad \sum\limits_{j = 1}^6 \beta_j = 0 \nonumber \\
+\text{y} \quad \alpha & \sim N(-1.7,0.25^2)\\
+\beta_j & \sim N(0,0.5^2) \quad \, j \in \mathbb{N}_{5} 
 \end{align*}
 
 \begin{figure}[h]
@@ -83,37 +80,35 @@ y_c|\theta=(\alpha,\beta) & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathb
 	\label{fig:Predictiva_Inicial}
 \end{figure}
 
-Estas distribuciones iniciales, como ya he mencionado, son subjetivas. Alguien más podría no estar muy convencido de la elección que realizo, por lo que eran importantes los párrafos anteriores de manera que fuera más transparente el proceso por el cual llegué a elegirlas.\\  
+Estas distribuciones iniciales, como ya he mencionado, son subjetivas y podrían considerarse como informativas. Algún lector podría no estar muy convencido de la elección que realizo, por lo que eran importantes los párrafos anteriores de manera que fuera más transparente el proceso por el cual llegué a elegirlas. Adicionalmente, después de presentar los modelos considerados hasta culminar con un modelo final, describiré un pequeño análisis de sensibilidad que contribuye a la justificación de estas distribuciones iniciales.\\  
 
 \section{Modelos individuales}
 
-Consideremos entonces, para cada variable explicativa con $l_m$ categorías poblacionales, modelos de la siguiente forma:
-
+Consideremos entonces, para la $m$-ésima variable censal con $l_m$ categorías poblacionales, modelos de la siguiente forma:
 \begin{align}\label{eq:Modelo_Nal_Ind}
 y_c|\theta=(\alpha,\beta) & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \nonumber \\
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \sum\limits_{j=1}^{l_m} \beta_j x_{j,c} \quad \text{tal que} \quad \beta_{l_m} = -\sum\limits_{k = 1}^{l_m} \beta_k \nonumber \\
-\text{y} \quad \alpha & \sim N(\mu = -1.7,\sigma = 0.25) \nonumber \\
-\beta_j & \sim N(\mu = 0,\sigma = 0.5) \quad \, j \in \mathbb{N}_{l_m-1} 
+\text{con} \quad log\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \sum\limits_{j=1}^{l_m} \beta_j x_{m,j,c} \quad \text{tal que} \quad \sum\limits_{j = 1}^{l_m} \beta_j = 0 \nonumber \\
+\text{y} \quad \alpha & \sim N(-1.7,0.25^2) \nonumber \\
+\beta_j & \sim N(0,0.5^2) \quad \, j \in \mathbb{N}_{l_m-1} 
 \end{align}
 
-A \eqref{eq:Modelo_Nal_Ind} le llamaré un \textbf{Modelo Nacional Individual} porque se tienen coeficientes a nivel nacional\footnote{En realidad, como mencionaba en el análisis exploratorio de datos, son coeficientes para la metrópoli y no para todo el país.} y solo incluyo una variable explicativa de manera individual. Tendría entonces 9 modelos nacionales individuales de esta forma. Sin embargo, el análisis exploratorio de datos sugería que se podría modelar de mejor manera dejando que los coeficientes e interceptos variasen para cada uno de los 96 departamentos. Es decir, podríamos construir igualmente 9 \textbf{Modelos Jerárquicos Individuales}. Si denotamos como $d[c]$ el \textit{departamento} al que pertenece la comuna $c$, el modelo jerárquico individual sería: 
-
+A \eqref{eq:Modelo_Nal_Ind} le llamaré un \textbf{Modelo Nacional Individual} porque se tienen coeficientes a nivel nacional\footnote{En realidad, como mencionaba en el análisis exploratorio de datos, son coeficientes para la metrópoli y no para todo el país.} y solo incluyo una variable explicativa de manera individual. Tendría entonces 9 modelos nacionales individuales de esta forma. Sin embargo, el análisis exploratorio de datos sugería que se podría modelar de mejor manera dejando que los coeficientes e interceptos variasen para cada uno de los 96 departamentos. Es decir, podríamos construir igualmente 9 \textbf{Modelos Jerárquicos Individuales}. Si denotamos como $d[c]$ el \textit{departamento} al que pertenece la comuna $c$, el $m$-ésimo modelo jerárquico individual sería: 
 \begin{align}\label{eq:Modelo_Jer_Ind}
 y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
-\text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \sum\limits_{j=1}^{l_m} \beta_{d[c],j} x_{j,c} \nonumber\\ 
-\text{tal que} \quad \beta_{d,l_m} &= -\sum\limits_{k = 1}^{l_m} \beta_{d,k} \nonumber \\
-\alpha_d & \sim N(\mu_{\alpha}, \sigma=1) \quad \forall \, d \in \mathbb{N}_{96} \nonumber \\
-\beta_{d,j} & \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{l_m-1}  \quad \text{y} \quad d \in \mathbb{N}_{96} \nonumber \\
-\mu_{\alpha} &\sim N(-1.7,\sigma=0.25) \nonumber \\
-\mu_{\beta} &\sim N(0,\sigma=0.5)
+\text{con} \quad log\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \sum\limits_{j=1}^{l_m} \beta_{d[c],j} x_{m,j,c} \nonumber\\ 
+\text{tal que} \quad -\sum\limits_{j = 1}^{l_m} \beta_{d,j} = 0 \nonumber \\
+\alpha_d & \sim N(\mu_{\alpha}, 1) \quad \forall \, d \in \mathbb{N}_{96} \nonumber \\
+\beta_{d,j} & \sim N(\mu_{\beta}, 1) \quad \forall \, j \in \mathbb{N}_{l_m-1}  \quad \text{y} \quad d \in \mathbb{N}_{96} \nonumber \\
+\mu_{\alpha} &\sim N(-1.7, 0.25^2) \nonumber \\
+\mu_{\beta} &\sim N(0,0.5^2)
 \end{align}
 
-Se corrieron cada uno de los 18 modelos mediante el software Stan, simulando vía \textit{Hamiltonian Monte Carlo} las distribuciones posteriores dada la muestra de datos discutida en la \autoref{secc:muestra}. Una vez con dichas distribuciones posteriores, podemos hacer lo que \textcite{Gelman13} llaman \textit{posterior predictive checks}. Podemos predecir el porcentaje esperado de votos en cada una de las comunas y calcular su error respecto al real. Para el modelo nacional de ocupación laboral juvenil, los resultados están en la \textbf{Figura \ref{fig:Modelo_Nal_Ocu_Juvenil}}.\\
+Se corrieron cada uno de los 18 modelos individuales mediante el software Stan, simulando vía \textit{Hamiltonian Monte Carlo} las distribuciones posteriores dada la muestra de datos discutida en la \textbf{\autoref{secc:muestra}}. Una vez con dichas distribuciones posteriores, podemos hacer lo que \textcite{Gelman13} llaman \textit{posterior predictive checks}. Podemos predecir el porcentaje esperado de votos en cada una de las comunas y calcular su error respecto al real. Para el modelo nacional de ocupación laboral juvenil, los resultados están en la \textbf{Figura \ref{fig:Modelo_Nal_Ocu_Juvenil}}.\\
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Nal_Ocu_Juvenil}
-	\caption{Mapa de predicciones medias del porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Nacional por Ocupación Juvenil y mapa de los respectivos errores. Fuente: elaboración propia con la cartografía de Open Street Map.}
+	\caption{Mapa de predicciones medias del porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Nacional por Ocupación Juvenil (izq.) y mapa de los respectivos errores (der.). Fuente: elaboración propia con la cartografía de Open Street Map.}
 	\label{fig:Modelo_Nal_Ocu_Juvenil}
 \end{figure}
 
@@ -128,7 +123,7 @@ En general, los modelos nacionales tienen el defecto de no reconocer la enorme v
 	\label{fig:Errores_Modelos_Individuales}
 \end{figure} 
 
-Como es de esperarse, los modelos estiman de mejor manera los porcentajes de niveles de mayor agregación que el del nivel comunal. Viendo la pérdida arbitraria llamada de tolerancia 1.5, salvo las variables de sexo y ocupaciones, todas las predicciones estiman un porcentaje de votos nacional a menos de 1.5 puntos porcentuales del real. Sin embargo, vemos que para los 96 departamentos, los modelos nacionales solo logran esta precisión esperada de estimación en alrededor de 70.\\ 
+Como es de esperarse, los modelos estiman de mejor manera los porcentajes de niveles de mayor agregación que el del nivel comunal. Viendo la pérdida arbitraria llamada de tolerancia 1.5, salvo las variables de sexo y ocupaciones, todas las predicciones estiman un porcentaje de votos nacional a menos de 1.5 puntos porcentuales del real. Sin embargo, vemos que los modelos nacionales solo logran esta precisión de estimación en alrededor de 70 de los 96 departamentos.\\ 
 
 Esto refleja lo que había mencionado al ver el mapa de predicciones para el modelo nacional individual por ocupación juvenil. Al no permitir que los coeficientes varíen por departamento, el modelo ajusta para el país entero, sacrificando las estimaciones en las diferentes zonas geográficas que estos constituyen. Si observamos medidas de error más tradicionales como la absoluta o la cuadrática vemos que todas las flechas se dirigen a la izquierda, es decir que se reducen los errores al reconocer esa variabilidad geográfica. Ahora bien, estas 3 medidas tienen más un carácter ilustrativo y sirven para recordar que se pueden construir diferentes errores para diferentes estimadores.\\ 
 
@@ -139,27 +134,17 @@ Ahora notemos que las variables de solo 2 categorías como ocupación, sexo, nac
 Pensando en la posibilidad de mejorar un ajuste simplemente haciendo más complejo el modelo es que una mejor y más aceptada medida de error es el llamado WAIC por sus siglas en inglés \textit{Widely Applicable} o \textit{Watanabe-Akaike Information Criterion} \parencite{Vehtari16}. El WAIC busca estimar la capacidad predictiva de un modelo via las predictivas posteriores de los datos con los que se ajusta. La intuición es que a mayor valor de la predictiva posterior para el dato observado, mayor la posibilidad de predecir otros datos.\\ 
 
 Para un conjunto de $n$ datos $y=(y_1,\dots,y_n)$ y una muestra posterior de parámetros $\left\lbrace\theta_{(s)}\right\rbrace_{s=1}^S$, el WAIC se define de la siguiente manera:
-
 \begin{align}\label{WAIC}
 WAIC(y|\theta) &= \widehat{lpd} + \widehat{par} \\
-\text{con} \quad \widehat{lpd} &= \sum_{i=1}^{n} ln\left(\dfrac{1}{S}\sum\limits_{s=1}^S f(y_i|\theta_{(s)}) \right) \nonumber \\
+\text{con} \quad \widehat{lpd} &= \sum_{i=1}^{n} log\left(\dfrac{1}{S}\sum\limits_{s=1}^S f(y_i|\theta_{(s)}) \right) \nonumber \\
 \text{y} \quad \widehat{par} &= \sum\limits_{i=1}^n V(y_i|\theta), \nonumber
 \end{align}
 
-donde $V(y_i|\theta)=\dfrac{1}{S-1}\sum\limits_{s=1}^S \mathcal{L}(y_i;\theta_{s})^2$ y $\mathcal{L}(y_i;\theta_{s}) = ln\left[f(y_i|\theta_{(s)})\right] - \dfrac{1}{S}\sum\limits_{s=1}^S ln\left[f(y_i|\theta_{(s)})\right]$.{}\\
+donde $V(y_i|\theta)=\dfrac{1}{S-1}\sum\limits_{s=1}^S \mathcal{L}(y_i;\theta_{s})^2$ y $\mathcal{L}(y_i;\theta_{s}) = log\left[f(y_i|\theta_{(s)})\right] - \dfrac{1}{S}\sum\limits_{s=1}^S log\left[f(y_i|\theta_{(s)})\right]$.{}\\
 
-El WAIC se conforma de dos sumas. La primera, $\widehat{lpd}$, es una aproximación de la log predictiva posterior, es decir una medidad de ajuste. Por otro lado, $\widehat{par}$ es normalmente llamado el \textit{número efectivo estimado de parámetros} y, mediante sumas de varianzas, busca medir la complejidad del modelo. En total, entre menor sea el valor del WAIC, esperaríamos un mejor desempeño predictivo tomando en cuenta la complejidad del modelo.\\ 
+El WAIC se conforma de dos sumas. La primera, $\widehat{lpd}$, es una aproximación de la log predictiva posterior, es decir una medidad de ajuste. Por otro lado, $\widehat{par}$ es normalmente llamado el \textit{número efectivo estimado de parámetros} y, mediante sumas de varianzas, busca medir la complejidad del modelo. En total, entre menor sea el valor del WAIC, esperaríamos un mejor desempeño predictivo tomando en cuenta la complejidad del modelo.\\
 
-Notemos que con la definición dada, el WAIC es un estimador por lo que tiene una distribución muestral. Gracias al paquete \textit{loo} de $\mathsf{R}$, podemos estimar tanto los WAICs y sus errores estándar como la diferencia esperada entre dos de ellos y, {\color{Red} argumentando un teorema central del límite, la probabilidad de que el WAIC de un modelo sea efectivamente menor o igual al WAIC de otro. Estas comparaciones las observamos en la \textbf{Figura \ref{fig:Compara_WAIC_Individuales}}.}\\
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{Figs/Modelado/Graf_WAIC_Probas_Modelos_Individuales}
-	\caption{Comparativo de WAIC para distintos modelos. Fuente: elaboración propia con base en la estimación de la diferencia en WAIC proveniente de la función \textit{compare} del paquete \textit{loo} dentro $\mathsf{R}$ y asumiendo una distribución normal para la diferencia.}
-	\label{fig:Compara_WAIC_Individuales}
-\end{figure}
-
-Para la mayoría de las comparaciones es claro que un modelo tiene mejor ajuste que el otro. Podríamos pensar que efectivamente hay un ordenamiento en el poder predictivo de las distintas variables: escolaridad, categorías socioprofesionales, edad, condición migratoria, nacionalidad, sexo y, finalmente, las ocupaciones. Sin concluir todavía nada, parecería que a las hipótesis sobre inseguridad laboral no les corresponde el mejor de los poderes explicativos en términos de estos modelos.\\
+Así pues, observando los valores del WAIC para cada modelo (\textbf{Figura \ref{fig:Errores_Modelos_Individuales}}), podríamos comenzar a pensar que efectivamente hay un ordenamiento en el poder predictivo de las distintas variables: escolaridad, categorías socioprofesionales, edad, condición migratoria, nacionalidad, sexo y, finalmente, las ocupaciones. Sin concluir todavía nada, parecería que a las hipótesis sobre inseguridad laboral no les corresponde el mejor de los poderes explicativos en términos de estos modelos.\\
 
 \section{Modelos compuestos}
 
@@ -168,7 +153,7 @@ Este ordenamiento preliminar tiene el objetivo de ayudarme a construir, secuenci
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Jer_Escolaridad}
-	\caption{Mapa de predicciones medias del porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad y mapa de los respectivos errores. Fuente: elaboración propia.}
+	\caption{Mapa de predicciones medias del porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad (izq.) y mapa de los respectivos errores (der.). Fuente: elaboración propia.}
 	\label{fig:Modelo_Jer_Escolaridad}
 \end{figure}
 
@@ -179,41 +164,39 @@ Estas reflexiones sugieren que, en lugar de tomar una a una las variables, podem
 El primer modelo compuesto incluye las variables de escolaridad y categorías socioprofesionales. A este modelo lo llamaré el \textbf{Modelo A}. Para distinguir las variables utilizaré diferentes letras griegas para sus coeficientes. Para la configuración social de escolaridad 
 \[x_{escol,c} = (Esc_c,Dip1_c,Dip2_c,Dip3_c,Dip4_c)^T\]
 en la comuna $c$ los coeficientes departamentales serán un vector $\beta_{d[c]} = (\beta_{d[c],1},\dots,\beta_{d[c],5})$. Para las categorías socioprofesionales $x_{csp,c}$ los coeficientes serán $\gamma_{d[c]}$:
-
 \begin{align}\label{eq:Modelo_Comp_A}
 y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \, c \in \mathbb{N}_C \nonumber \\
 \text{con} \quad ln\left(\dfrac{p_c}{1-p_c}\right) &= \alpha_{d[c]} + \beta_{d[c]} x_{escol,c} + \gamma_{d[c]} x_{csp,c} \\ 
 \intertext{tal que} 
-\beta_{d,5} = -\sum\limits_{k = 1}^{4} \beta_{d,k}, \quad & \gamma_{d,8} = -\sum\limits_{k = 1}^{7} \gamma_{d,k}, \nonumber \\
-\alpha_d & \sim N(\mu_{\alpha}, \sigma=1), \nonumber \\
+\sum\limits_{j = 1}^{5} \beta_{d,j}=0, \quad & \sum\limits_{j = 1}^{8} \gamma_{d,j}=0, \nonumber \\
+\alpha_d & \sim N(\mu_{\alpha}, 1), \nonumber \\
 \intertext{donde $\forall \, d \in \mathbb{N}_{96}$}
-\beta_{d,j} \sim N(\mu_{\beta}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{4}, & \quad \gamma_{d,j} \sim N(\mu_{\gamma}, \sigma=1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
+\beta_{d,j} \sim N(\mu_{\beta}, 1) \quad \forall \, j \in \mathbb{N}_{4}, & \quad \gamma_{d,j} \sim N(\mu_{\gamma}, 1) \quad \forall \, j \in \mathbb{N}_{7} \nonumber \\
 \intertext{y}
-\mu_{\alpha} \sim N(-1.7,\sigma=0.25), \quad \mu_{\beta} &\sim N(0,\sigma=0.5) \quad \text{y} \quad \mu_{\gamma} \sim N(0,\sigma=0.5). \nonumber
+\mu_{\alpha} \sim N(-1.7, 0.25^2), \quad \mu_{\beta} &\sim N(0, 0.5^2) \quad \text{y} \quad \mu_{\gamma} \sim N(0,0.5^2). \nonumber
 \end{align}
 
-Al estimar el modelo con ambas variables las predicciones efectivamente mejoran. La diferencia en WAIC entre el modelo A y el modelo jerárquico por escolaridad se estima en -1594.7 con un error estándar de 175.2. Asimismo, observando los mapas de la \textbf{Figura \ref{fig:Modelo_Compuesto_A}}, vemos que se reduce la gran zona blanquiza del centro, se comienza a observar mayor variabilidad dentro de los departamentos y los tonos también se oscurecen más, sobre todo en el noreste.\\ 
+Al estimar el modelo con ambas variables el WAIC mejora. Asimismo, observando los mapas de la \textbf{Figura \ref{fig:Modelo_Compuesto_A}}, vemos que se reduce la gran zona blanquiza del centro, se comienza a observar mayor variabilidad dentro de los departamentos y los tonos también se oscurecen más, sobre todo en el noreste.\\ 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Compuesto_A}
-	\caption{Mapas de predicciones medias y respectivos errores para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad y Categorías socioprofesionales. Fuente: elaboración propia.}
+	\caption{Mapas de predicciones medias (izq.) y respectivos errores (der.) para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad y Categorías socioprofesionales. Fuente: elaboración propia.}
 	\label{fig:Modelo_Compuesto_A}
 \end{figure}
 
-
-Los siguientes modelos se llamarán de manera progresiva por letras latinas y sus planteamientos en términos de ecuaciones pueden encontrarse en el \autoref{Anexo_modelos_compuestos}. Por ejemplo, el \textbf{Modelo B} incorpora los grupos de edad $x_{edad,c}$. Al hacerlo, el WAIC vuelve a disminuir, ahora 965.4 unidades. Debido a la similitud entre condición migratoria y nacionalidad, solamente buscaba incorporar una de las dos, tratando de identificar la que tuviera mejor desempeño. De acuerdo al ordenamiento previo en los modelos individuales, consideraré solo la variable migratoria $x_{migr,c}$ dentro del \textbf{Modelo C}. Por su parte, el \textbf{Modelo D} incluye la distribución comunal por sexo $x_{sexo,c}$. {\color{Red} No presento los mapas por brevedad, pero de necesitarse se incluyen pues ya están generados}.\\
+Los siguientes modelos se llamarán de manera progresiva por letras latinas y sus planteamientos en términos de ecuaciones pueden encontrarse en el \textbf{\autoref{Anexo_modelos_compuestos}}. Por ejemplo, el \textbf{Modelo B} incorpora los grupos de edad $x_{edad,c}$. Debido a la similitud entre condición migratoria y nacionalidad, solamente buscaba incorporar una de las dos, tratando de identificar la que tuviera mejor desempeño. De acuerdo al ordenamiento previo en los modelos individuales, consideraré solo la variable migratoria $x_{migr,c}$ dentro del \textbf{Modelo C}. Por su parte, el \textbf{Modelo D} incluye la distribución comunal por sexo $x_{sexo,c}$.\\
 
 Después comenzaríamos a incluir las variables de ocupación. Como mencionaba al presentarlas, tengo un interés especial en la (des)ocupación juvenil, pues esta sería una variable que referencias como \textcite{LeBras16} y \textcite{Perrineau07} favorecerían. Por ello, al margen del ordenamiento, construí dos modelos de 6 variables. De manera general ambos incorporan una variable explicativa $x_{ocu,c}$. El \textbf{Modelo E} es el modelo D más la ocupación juvenil, mientras que el \textbf{Modelo F} es el modelo D más la ocupación general. Una vez generados por separado, podemos considerar un modelo que incorpore ambas variables, este sería el \textbf{Modelo G}. Finalmente agregamos la última variable considerada, la ocupación para personas de 55 a 64 años $x_{ocu\_may,c}$, para obtener el \textbf{Modelo H}, cuyos mapas corresponden a la \textbf{Figura \ref{fig:Modelo_Compuesto_H}}.\\
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{Figs/Modelado/Modelo_Compuesto_H}
-	\caption{Mapas de predicciones medias y respectivos errores para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad, Categorías socioprofesionales, Edad, Condición migratoria, Sexo y Ocupaciones. Fuente: elaboración propia.}
+	\caption{Mapas de predicciones medias (izq.) y respectivos errores (der.) para el porcentaje bruto de votos obtenido por Marine Le Pen en las presidenciales 2012 mediante el Modelo Jerárquico por Escolaridad, Categorías socioprofesionales, Edad, Condición migratoria, Sexo y Ocupaciones. Fuente: elaboración propia.}
 	\label{fig:Modelo_Compuesto_H}
 \end{figure}
 
-¿Cuál es la comparación de WAICs entre todos estos modelos? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}} podemos observarlo. En general, el WAIC mejora conforme se van agregando variables. Ciertamente las mayores ganancias se dan al agregar las primeras variables que el análisis individual sugería eran las más explicativas. Esto parece reforzar dicha hipótesis. Por el contrario, en términos de WAIC, la ocupación juvenil no parece ser la más poderosa de las variables. En efecto, la ganancia en WAIC frente al modelo D al agregarla en el modelo E es de apenas 46 unidades, menor a la ganancia del modelo F que fue de 162. Más aún, al pasar del modelo F al modelo G agregándola de nuevo, la ganancia vuelve a ser poca, apenas de 29. Esto no quiere decir, sin embargo, que no aporte nada a la regresión. Aunque la mejora en WAIC sea pequeña y los intervalos con error estándar se traslapen, {\color{Red} la probabilidad de que agregarla produce un mejor modelo es de 84\% en el caso del modelo E y de 77\% en el modelo G.}
+¿Cuál es la comparación de WAICs entre todos estos modelos? En la \textbf{Figura \ref{fig:Compara_WAIC_Compuestos}} podemos observarlo. En general, el WAIC mejora conforme se van agregando variables. Ciertamente las mayores ganancias se dan al agregar las primeras variables que el análisis individual sugería eran las más explicativas. Esto parece reforzar dicha hipótesis. Por el contrario, en términos de WAIC, la ocupación juvenil no parece ser la más poderosa de las variables. En efecto, la ganancia en WAIC frente al modelo D al agregarla en el modelo E es de apenas 46 unidades, menor a la ganancia del modelo F que fue de 162. Más aún, al pasar del modelo F al modelo G agregándola de nuevo, la ganancia vuelve a ser poca, apenas de 29. Esto no quiere decir, sin embargo, que no aporte nada a la regresión. Aunque la mejora en WAIC sea pequeña esta es positiva por lo que tenemos mejores modelos al incluirla.\\
 
 \begin{figure}[h]
 	\centering
@@ -222,9 +205,11 @@ Después comenzaríamos a incluir las variables de ocupación. Como mencionaba a
 	\label{fig:Compara_WAIC_Compuestos}
 \end{figure}
 
+El mejor modelo en términos de WAIC es el modelo H, por lo que será este el que interpretaré. Sin embargo, antes de ello, como adelantaba en la \autoref{sec:Convergencia}, hay que verificar que las cadenas simuladas mediante la implementación de HMC dentro de Stan hubieran convergido. En esta discusión de convergencia también menciono un pequeño análisis de sensibilidad respecto a la elección de distribuciones iniciales informativas.\\
+
 \subsection{Convergencia de HMC}
 
-Una vez ajustados los modelos, como adelantaba en la \autoref{sec:Convergencia}, habría que verificar que las cadenas simuladas mediante la implementación de HMC dentro de Stan hubieran convergido. Debido a la cantidad de parámetros dentro de cada modelo, así como a la cantidad de modelos ajustados en sí, es difícil verificar a detalle todas y cada una de las muestras posteriores. Afortunadamente, \textcite{BetancourtRStanWorkflow} desarrolla un caso de estudio en el que ilustra cómo programar distintos diagnósticos útiles para todos los parámetros de interés dentro de todos los modelos. Entre ellos encontramos el factor de reducción de escala $\hat{R}$, así como un cálculo del tamaño efectivo de muestra por iteración y 3 diagnósticos particulares de HMC. Utilizando su código abierto\footnote{Los derechos de autor son de Michael Betancourt y la Universidad de Columbia y las licencias específicas pueden verificarse en el link en las referencias.}, verificamos que los modelos satisfacen los criterios planteados y podemos confiar en la convergencia de las muestras posteriores obtenidas. {\color{Red} Esta comprobación puede reproducirse con el código del repositorio de Github de esta tesis y solicitándome acceso a los archivos .rds con los ajustes de todos los modelos.}\\
+Debido a la cantidad de parámetros dentro de cada modelo, así como a la cantidad de modelos ajustados en sí, es difícil verificar a detalle todas y cada una de las muestras posteriores. Afortunadamente, \textcite{BetancourtRStanWorkflow} desarrolla un caso de estudio en el que ilustra cómo programar distintos diagnósticos útiles para todos los parámetros de interés dentro de todos los modelos. Entre ellos encontramos el factor de reducción de escala $\hat{R}$, así como un cálculo del tamaño efectivo de muestra por iteración y 3 diagnósticos particulares de HMC. Utilizando su código abierto\footnote{Los derechos de autor son de Michael Betancourt y la Universidad de Columbia y las licencias específicas pueden verificarse en el link en las referencias.}, verificamos que los modelos satisfacen los criterios planteados y podemos confiar en la convergencia de las muestras posteriores obtenidas. Esta comprobación puede reproducirse con el código del repositorio de Github de esta tesis y solicitándome acceso a los archivos .rds con los ajustes de todos los modelos.\\
 
  Adicionalmente, podemos observar algunos diagnósticos gráficos para algunos parámetros del modelo H. Por ejemplo, en la \textbf{Figura \ref{fig:Traceplots_H}} observamos en los \textit{traceplots} que hay una buena mezcla de las cadenas; esto también se confirma viendo que las densidades por cadena de la \textbf{Figura \ref{fig:Densidades_H}} son parecidas. Finalmente, en la \textbf{Figura \ref{fig:Autocorr_H}} vemos que las autocorrelaciones son pequeñas. De hecho, existe un poco de simulación antitética que permite una mejor eficiencia en el tamaño de muestra \parencite{BlogAntithetical}.\\ 
  
@@ -250,7 +235,54 @@ Una vez ajustados los modelos, como adelantaba en la \autoref{sec:Convergencia},
 	\caption{Fuente: elaboración propia.}
 \end{figure}
 
- También analicé la convergencia del modelo H mediante los diagnósticos del paquete de $\mathsf{R}$ \textit{shinystan}, que permite de manera interactiva observar distintos gráficos y resúmenes respecto al ajuste del modelo vía HMC. De esta exploración, también concluí que el modelo satisfacía suficientemente bien la batería de diagnósticos para darnos confianza en que las muestras obtenidas provienen de la distribución posterior. Una vez verificada la convergencia, podemos proceder al análisis de los resultados para lo cual debemos interpretar lo que los coeficientes simulados nos dicen. 
+ También analicé la convergencia del modelo H mediante los diagnósticos del paquete de $\mathsf{R}$ \textit{shinystan}, que permite de manera interactiva observar distintos gráficos y resúmenes respecto al ajuste del modelo vía HMC. De esta exploración, también concluí que el modelo satisfacía suficientemente bien la batería de diagnósticos para darnos confianza en que las muestras obtenidas provienen de la distribución posterior.\\
+ 
+ En este punto conviene discutir un pequeño análisis de sensibilidad que realicé tomando en cuenta que los modelos considerados incorporan distribuciones iniciales informativas. ¿Qué pasa si utilizamos una inicial vaga como la $N(0,100)$ que discutí en la \textbf{\autoref{Secc_Iniciales}}? Realicé una nueva corrida del modelo H con todas las distribuciones iniciales $N(0,100)$, pero utilizando la misma semilla, el mismo número de cadenas, iteraciones y parámetros para la implementación de HMC de Stan. Llamo a esta nueva corrida el \textbf{Modelo S}, por sensibilidad.\\
+  
+ Lo primero que debe decirse es que las iniciales no informativas dañan significativamente la eficiencia del muestreo por HMC. Consideremos que el Modelo H tardó aproximadamente 9 horas con 11 minutos en terminar las 4000 simulaciones posteriores divididas en 4 cadenas de 1000 iteraciones de calentamiento y 1000 de muestreo cada una. ¡El Modelo S tardó 34 horas! Más aún, aunque los principales diagnósticos de convergencia indican que también el modelo S convergió, a diferencia de los modelos con iniciales informativas, este modelo sí generó advertencias en algunos diagnósticos.\\
+ 
+ En primer lugar, cada iteración de HMC del modelo S siempre llegó a lo que podríamos considerar como el tiempo máximo de integración de las trayectorias hamiltonianas y que en Stan se conoce como \textit{max treedepth}. La forma de resolver esta advertencia es aumentando el máximo permitido pero esto lleva consigo un mayor tiempo de cómputo, mismo que ya podría considerarse excesivo comparado con el modelo H. Por otro lado, vemos que las autocorrelaciones en el modelo S son mucho mayores que en el modelo H--- comparar \textbf{Figuras  \ref{fig:Autocorr_H}, \ref{fig:Autocorr_S}}---. Como consecuencia, los tamaños efectivos de muestra son siempre menores en el modelo S que en el modelo H, como puede observarse en la \textbf{Figura \ref{fig:N_eff_compara}}. Esto querría decir que los estimadores del modelo S tienen un mayor error de Monte Carlo que los del modelo H. De hecho, Stan automáticamente imprime una advertencia para el modelo S haciendo notar que las medias y medianas posteriores pudieran no ser confiables debido al tamaño de muestra.\\
+ 
+ \begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[width = \textwidth]{Figs/Convergencia/Convergencia_Traceplots_s}
+	\caption{Ejemplo de \textit{traceplots} para los mismos parámetros del modelo S que se seleccionaron para el modelo H.}
+	\label{fig:Traceplots_S}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[width = \textwidth]{Figs/Convergencia/Convergencia_Densidades_S}
+	\caption{Ejemplo de gráficos de densidades para los mismos parámetros del modelo S que se seleccionaron para el modelo H.}
+	\label{fig:Densidades_S}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.6\textwidth}
+	\includegraphics[width = \textwidth]{Figs/Convergencia/Convergencia_AutoCorr_S}
+	\caption{Ejemplo de gráficos de autocorrelación para los mismos parámetros del modelo S que se seleccionaron para el modelo H.}
+	\label{fig:Autocorr_S}
+	\end{subfigure}
+	\caption{Fuente: elaboración propia.}
+\end{figure} 
+ 
+ Adicionalmente, observamos en la \textbf{Figura \ref{fig:Rhat_compara}} que los factores de reducción de escala tienden a ser mayores para el modelo S que para el modelo H. Si bien todos son lo suficientemente cercanos a 1 como para declarar convergencia con base en este diagnóstico, sí podemos reafirmar que tendríamos más confianza en los valores del modelo H que en los del S. Esto también podría decirse comparando las densidades para los parámetros seleccionados en las \textbf{Figuras  \ref{fig:Densidades_H}, \ref{fig:Densidades_S}}. Las estimaciones de las cadenas del modelo H son más parecidas entre sí que aquellas del modelo S. Finalmente, comparando los traceplots de los modelos (\textbf{Figuras  \ref{fig:Traceplots_H}, \ref{fig:Traceplots_S}}) observamos cómo en la fase de calentamiento el modelo S pasa más tiempo explorando regiones poco creíbles del espacio parametral--- recordemos que no esperaríamos efectos superiores en magnitud a 5 en la escala logística--- pero que las iniciales vagas sugieren. Ciertamente las cadenas terminan por ``encontrar'' la región crítica, pero este puede no ser siempre el caso cuando se consideran las restricciones de tiempo que se tengan en alguna aplicación dada o cuando se usan iniciales aún más vagas.\footnote{No se presenta por brevedad pero con los mismos parámetros un modelo con iniciales $N(0,10000)$ no logra converger en las 2000 iteraciones y sus 4 cadenas no mezclan pues siguen explorando regiones alejadas del espacio parametral.}\\ 
+ 
+ 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Convergencia/Compara_n_eff}
+	\caption{Comparativo de tamaños efectivos de muestra para los modelos H y S. Fuente: elaboración propia.}
+	\label{fig:N_eff_compara}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{Figs/Convergencia/Compara_Rhat}
+	\caption{Comparativo de factores de reducción de escala para los modelos H y S. Fuente: elaboración propia.}
+	\label{fig:Rhat_compara}
+\end{figure} 
+ 
+  Por todo lo anterior, seleccionamos al modelo H como el modelo final a analizar. Por lo que, una vez verificada su convergencia, podemos proceder con confianza al análisis de los resultados. Para ello debemos interpretar lo que los coeficientes estimados nos dicen. 
  
 \section{Efectos de las variables}
 
@@ -260,7 +292,7 @@ Interpretar los coeficientes de regresiones logísticas no es sencillo pues, por
  
 \subsection{Definiendo efectos}
 
- Por nuestra parte, para fijar ideas, recordemos que las variables explicativas son las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales. Supongamos por ahora que estamos analizando un modelo individual nacional para una variable con 3 categorías, $x = (x_1,x_2,x_3)$. Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo el subíndice de las comunas, tendríamos que para alguna comuna en particular,
+ Por nuestra parte, para fijar ideas, recordemos que las variables explicativas son las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales. Supongamos por ahora que quisiéramos analizar un modelo individual nacional para una variable con 3 categorías, $x = (x_1,x_2,x_3)$.\footnote{La interpretación se realizará solo para le modelo compuesto H, pero para entender la interpretación de efectos conviene empezar planteándola para un modelo más sencillo.} Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo por claridad algunos subíndices, tendríamos que para alguna comuna en particular,
 
 \begin{equation*}
 ln\left(\dfrac{p}{1-p}\right) = \alpha + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3.
@@ -326,59 +358,11 @@ Hasta aquí ya construimos una propuesta de efecto comparando dos predicciones e
 \Delta(\beta_{d,i}^{(s)};\bar{z}_d^{(s)}) =  p(x^\star_{d};\beta_{d,i}^{(s)},\bar{z}_d^{(s)})-p(\bar{x}_{d};\beta_{d,i}^{(s)},\bar{z}_d^{(s)}) \quad \forall i \in \mathbb{N}_l ,\, s \in \mathbb{N}_S.
 \end{equation*}
 
-Esta sería la distribución posterior de los efectos con la que podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto esperado. Asimismo, podemos resumir la distribución reportando intervalos centrales de probabilidad al 50\%, 90\% y 95\%, así como el efecto mediano. Siguiendo la práctica común, cuando los intervalos centrales al 95\% contienen al 0, diremos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto significativo positivo o negativo, respectivamente. 
-
-\subsection{Evolución de los efectos}
-
-La variable de escolaridad era la que el ordenamiento preliminar sugería que podría ser la más explicativa. Por ello el modelo 0 comienza con solo esa variable y, progresivamente, fui agregando el resto de variables. Al ir construyendo un modelo más complejo podemos ver cómo se van comportando los efectos estimados para las distintas categorías de escolaridad con respecto a distintos criterios. En la \textbf{Figura \ref{fig:Evol_Efectos_Escolaridad}} observamos cómo evolucionaron la estimación puntual de los efectos para cada departamento, la incertidumbre sobre dicha estimación reflejada en la longitud de los intervalos centrales al 95\%, así como el número de departamentos con efectos significativos positivos y negativos.\\ 
-
-\clearpage
-\begin{sidewaysfigure}[h]
-	\centering
-	\includegraphics[width = 0.95\textwidth]{Figs/Efectos/Evol_Efectos_Escolaridad}
-	\caption{Evolución de los efectos de la escolaridad por departamento a través de los distintos modelos. Cada línea gris representa uno de los 96 departamentos. En la fila superior la referencia naranja es un efecto nulo en 0. En la fila de en medio, las líneas verdes representan la longitud promedio a través de los departamentos. En la fila inferior en rosa tenemos efectos negativos y en azul efectos positivos. Fuente: elaboración propia.}
-	\label{fig:Evol_Efectos_Escolaridad}
-\end{sidewaysfigure}
-\clearpage
-
-Vemos por ejemplo que en la mayoría de los departamentos, al agregar las categorías socioprofesionales y, sobre todo, los grupos de edad en el modelo B, los efectos de las personas que todavía estudian se contraen hacia el 0, incrementando su incertidumbre y reduciendo fuertemente la cantidad de departamentos con efectos significativo. Por el contrario, en el caso de las personas sin escolaridad el efecto se va convirtiendo en positivo aumentando el número de departamentos significativos. Si en el modelo 0 había incluso más departamentos con efecto significativo negativo que positivo, para le modelo H ya hay prácticamente puros efectos significativos positivos llegando a superar el número de efectos de este tipo para cualquier otra categoría. Por ejemplo, las personas con preparatoria o equivalente se mantienen con un efecto positivo pero la reducción en el número de departamentos significativos es clara. La categoría aparentemente más significativa sería las personas que tienen diplomas universitarios. Si bien sus coeficientes se van contrayendo hacia el 0 al ir agregando variables, aumentan algo su incertidumbre y, por consiguiente, disminuyen el número de departamentos con efectos significativos, es claro que el número de efectos significativos se mantiene alto siendo 72 de los 96 departamentos.\\
-
-Podemos observar el mismo diagnóstico para las siguientes variables a partir del modelo en el que fueron introducidas. En el caso de las categorías socioprofesionales en la \textbf{Figura \ref{fig:Evol_Efectos_Cat_Socioprof}} vemos que la incertidumbre parece no aumentar mucho conforme se agregan variables, salvo para el caso de los retirados y otras personas sin actividad. Estas son categorías que podríamos llamar ruidosas en el sentido de que observamos mayor incertidumbre y mayor variabilidad tanto en los estimadores puntuales como en el número de efectos significativos. Asimismo, observamos que la categoría más significativa podría ser la de obreros que salvo al agregar edad, mantiene prácticamente el mismo número de departamentos con efecto significativo positivo.\\ 
-	
-\clearpage
-\begin{sidewaysfigure}[h]
-	\centering
-	\includegraphics[width = 0.95\textwidth]{Figs/Efectos/Evol_Efectos_Cat_Socioprof}
-	\caption{Evolución de los efectos de las categorías socioprofesionales por departamento a través de los distintos modelos. Cada línea gris representa uno de los 96 departamentos. En la fila superior la referencia naranja es un efecto nulo en 0. En la fila de en medio, las líneas verdes representan la longitud promedio a través de los departamentos. En la fila inferior en rosa tenemos efectos negativos y en azul efectos positivos. Fuente: elaboración propia.}
-	\label{fig:Evol_Efectos_Cat_Socioprof}
-\end{sidewaysfigure}
-\clearpage
-
-\clearpage
-\begin{sidewaysfigure}[h]
-	\centering
-	\includegraphics[width = 0.95\textwidth]{Figs/Efectos/Evol_Efectos_Edad}
-	\caption{Evolución de los efectos de los grupos de edad por departamento a través de los distintos modelos. Cada línea gris representa uno de los 96 departamentos. En la fila superior la referencia naranja es un efecto nulo en 0. En la fila de en medio, las líneas verdes representan la longitud promedio a través de los departamentos. En la fila inferior en rosa tenemos efectos negativos y en azul efectos positivos. Fuente: elaboración propia.}
-	\label{fig:Evol_Efectos_Edad}
-\end{sidewaysfigure}
-\clearpage
-
-En el caso de las edades--- \textbf{Figura \ref{fig:Evol_Efectos_Edad}}--- tenemos distintos niveles de incertidumbre. Mientras hay departamentos con longitudes prácticamente nulas en los intervalos, en la categoría de 65 años o más observamos un departamento con una longitud de casi 6pp. Sin embargo, no parece incrementarse o reducirse tanto dicho nivel de incertidumbre conforme se agregan variables. No obstante, los efectos parecen irse concentrando hacia el 0 y sí se van reduciendo el número de efectos significativos. Podríamos decir que el grupo de los menores de edad tiene un efecto positivo mientras que el de los jóvenes de 18 a 24 años y los adultos mayores de 65 tendrían efectos negativos. Aquí observamos una primera explicación de por qué las categorías socioprofesionales ruidosas eran los retirados y las personas sin actividad. Existe una correlación alta entre estas categorías y los grupos de edad. Este es un punto a notar hacia el futuro si se quisiera mejorar o modificar el modelo completo H.\\
-
-Finalmente, para las categorías dicotómicas a excepción de la (des)ocupación de 55 a 64--- que no tuvo evolución al estar presente solo en el modelo completo H---, observamos poca variación en los tres diagnósticos, salvo por algunos departamentos atípicos. La prescencia de inmigrantes tiene un buen número de departamentos significativos con efecto negativo mientras que el resto de categorías parecerían mezclar efectos en ambos sentidos. Una vez observada esta evolución de los efectos al ir construyendo el modelo H, podemos analizar con mayor detalle este último modelo.\\ 
-
-\clearpage
-\begin{sidewaysfigure}[h]
-	\centering
-	\includegraphics[width = 0.95\textwidth]{Figs/Efectos/Evol_Efectos_Dicotom}
-	\caption{Evolución de los efectos del resto de variables presentes en al menos dos modelos por departamento. Cada línea gris representa uno de los 96 departamentos. En la fila superior la referencia naranja es un efecto nulo en 0. En la fila de en medio, las líneas verdes representan la longitud promedio a través de los departamentos. En la fila inferior en rosa tenemos efectos negativos y en azul efectos positivos. Fuente: elaboración propia.}
-	\label{fig:Evol_Efectos_Dicotom}
-\end{sidewaysfigure}
-\clearpage
+Esta sería la distribución posterior de los efectos con la que podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto mediano. Asimismo, podemos resumir la distribución reportando intervalos centrales de probabilidad al 95\% y, siguiendo la práctica común, cuando estos contengan al 0, diremos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto significativo positivo o negativo, respectivamente.
 
 \subsection{Escolaridad}
 
-Comenzamos el análisis de los efectos predichos por el modelo completo por la variable de escolaridad. En la \textbf{Figura \ref{fig:Mapa_Efectos_Escolaridad}} podemos observar el mapa de estimadores puntuales para los efectos departamentales por categorías de escolaridad bajo el modelo H. En cada departamento la intensidad de color refleja la magnitud del efecto mediano; en tonos rojos tenemos efectos negativos y en tonos azules efectos positivos.\\
+Comienzo el análisis de los efectos predichos por el modelo final por la variable de escolaridad, pues era la que los modelos individuales sugerían como más explicativa y sobre la que se fue construyendo el modelo 0 hasta llegar al H. En la \textbf{Figura \ref{fig:Mapa_Efectos_Escolaridad}} podemos observar el mapa de estimadores puntuales para los efectos departamentales por categorías de escolaridad bajo el modelo H. En cada departamento la intensidad de color refleja la magnitud del efecto mediano; en tonos rojos tenemos efectos negativos y en tonos azules efectos positivos.\\
 
 \begin{figure}[h]
 	\centering
