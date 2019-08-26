@@ -292,7 +292,7 @@ Interpretar los coeficientes de regresiones logísticas no es sencillo pues, por
  
 \subsection{Definiendo efectos}
 
- Por nuestra parte, para fijar ideas, recordemos que las variables explicativas son las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales. Supongamos por ahora que quisiéramos analizar un modelo individual nacional para una variable con 3 categorías, $x = (x_1,x_2,x_3)$.\footnote{La interpretación se realizará solo para le modelo compuesto H, pero para entender la interpretación de efectos conviene empezar planteándola para un modelo más sencillo.} Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo por claridad algunos subíndices, tendríamos que para alguna comuna en particular,
+ Por nuestra parte, para fijar ideas, recordemos que las variables explicativas son las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales. Supongamos por ahora que quisiéramos analizar un modelo individual nacional\footnote{La interpretación se realizará solo para le modelo compuesto H, pero para entender la interpretación de efectos conviene empezar planteándola para un modelo más sencillo.} para una variable con 3 categorías, $x = (x_1,x_2,x_3)$. Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo por claridad algunos subíndices, tendríamos que para alguna comuna en particular,
 
 \begin{equation*}
 ln\left(\dfrac{p}{1-p}\right) = \alpha + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3.
@@ -320,30 +320,26 @@ como el valor de la afinidad por Marine Le Pen en la comuna como función de la 
 
 Sin embargo, en nuestro caso no tenemos total libertad para elegir los valores $x_{(0)}$ y $x_{(1)}$ pues recordemos que son proporciones que deben sumar a 1. ¿Cómo elegirlos entonces?\\ 
 
-En primer lugar, podemos seleccionar el punto de referencia $x_{(0)}$ como la media muestral, $x_{(0)}=\bar{x}=(\bar{x}_1,\bar{x}_2,\bar{x}_3)$. Posteriormente, como estamos interesados en el efecto del coeficiente $\beta_i$, empecemos a construir $x_{(1)}$ con base en $x_{(1),i}=\bar{x}_i + s_i$ donde $s_i$ es la desviación estándar muestral en la $i$-ésima categoría. Al agregarle una desviación estándar a $x_i$, para cumplir con la restricción, debemos disminuir su valor del resto de las $x_k$ en su conjunto. Sin que sea la única forma de hacerlo, una propuesta es quitarle de manera proporcional a cada categoría restante una parte de la desviación estándar que sumamos a la categoría de interés. Esto sería de la siguiente manera: 
-
+En primer lugar, podemos seleccionar el punto de referencia $x_{(0)}$ como la media muestral, $x_{(0)}=\bar{x}=(\bar{x}_1,\bar{x}_2,\bar{x}_3)$. Posteriormente, como estamos interesados en el efecto del coeficiente $\beta_i$, empecemos a construir $x_{(1)}$ con base en $x_{(1),i}=\bar{x}_i + a_i$ donde $a_i$ es un valor positivo conveniente. Al aumentar $x_i$, para cumplir con la restricción, debemos disminuir su valor del resto de las $x_k$ en su conjunto. Sin que sea la única forma de hacerlo, una propuesta es quitarle de manera proporcional a cada categoría restante una parte de la cantidad que sumamos a la categoría de interés. Esto sería de la siguiente manera: 
 \begin{equation*}
-x_{(1),k}=\bar{x}_k - s_i \dfrac{\bar{x}_k}{1-\bar{x}_i} \quad \forall k \neq i
+x_{(1),k}=\bar{x}_k - a_i \dfrac{\bar{x}_k}{1-\bar{x}_i} \quad \forall k \neq i
 \end{equation*}
 
 Con este criterio podemos abusar un poco más de la notación. Si en lugar del caso específico de una configuración social de 3 categorías tenemos $l$, el efecto sería 
-
 \begin{align*}
 \Delta(\beta_i) &= p(x^\star;\beta_i)-p(\bar{x};\beta_i) \quad \forall i \in \mathbb{N}_l \\
 \text{donde} \quad \bar{x} &= (\bar{x}_1,\dots,\bar{x}_{l}), \\ 
-x_i^\star = \bar{x}_i + s_i \quad &\text{y} \quad x_j^\star =\bar{x}_j - s_i\dfrac{\bar{x}_j}{1- \bar{x}_i} \quad \forall j \neq i 
+x_i^\star = \bar{x}_i + a_i \quad &\text{y} \quad x_j^\star =\bar{x}_j - a_i\dfrac{\bar{x}_j}{1- \bar{x}_i} \quad \forall j \neq i 
 \end{align*}
 
 La interpretación de los coeficientes sería entonces el efecto predicho en puntos porcentuales al aumentar la proporción de individuos en la categoría de interés respecto a una comuna ``típica''; es decir, al pasar de $\bar{x}$ a $x^\star$.\\ 
 
-Ahora pensemos que querríamos calcular efectos para nuestros modelos jerárquicos. En este caso en lugar de un solo efecto nacional $\Delta(\beta_i)$ tendríamos 96 efectos $\Delta(\beta_{d,i})$, uno para cada departamento. Por lo mismo, simplemente reemplazamos el parámetro de interés por su equivalente jerárquico y tendríamos que calcular la media, $\bar{x}_{d}$, y la desviación estándar correspondiente dentro de cada departamento, $s_{d,i}$: 
-
+Ahora pensemos que querríamos calcular efectos para nuestros modelos jerárquicos. En este caso en lugar de un solo efecto nacional $\Delta(\beta_i)$ tendríamos 96 efectos $\Delta(\beta_{d,i})$, uno para cada departamento. Por lo mismo, simplemente reemplazamos el parámetro de interés por su equivalente jerárquico y tendríamos que calcular la media, $\bar{x}_{d}$, y considerar el aumento correspondiente dentro de cada departamento, $a_{d,i}$: 
 \begin{equation*}
 \Delta(\beta_{d,i}) =  p(x^\star_{d};\beta_{d,i})-p(\bar{x}_{d};\beta_{d,i}) \quad \forall i \in \mathbb{N}_l
 \end{equation*}
 
 ¿Pero qué pasa cuando tenemos un modelo compuesto con más de una variable censal? En esta situación, la decisión que tomé fue buscar una comparación \textit{c\ae teris paribus} en la que los sumandos del resto de variables explicativas del predictor lineal toman sus valores promedio en el departamento. Podemos también pensar que estamos modificando el intercepto con los sumandos del resto de categorías con valores promedio. Por ello, si asociamos a $x$ con la variable de la categoría de interés, $\theta$ con sus coeficientes y $z$ con el resto del predictor lineal, una notación más general podría ser
-
 \begin{align}\label{eq:Efecto_Enchufado_Compuesto}
 \Delta(\theta_{d,i};\bar{z}_d) &= p(x_d^\star;\theta_{d,i},\bar{z}_d)-p(\bar{x}_d;\theta_{d,i},\bar{z}_d) \quad \forall i \in \mathbb{N}_l \\
 \text{donde} \quad p(x_d;\theta_{d,i},\bar{z}_d) &=\dfrac{1}{1+e^{-\eta(x_d;\theta_{d,i},\bar{z}_d)}} \nonumber \\
@@ -352,13 +348,12 @@ Ahora pensemos que querríamos calcular efectos para nuestros modelos jerárquic
 
 Por ejemplo, pensemos en el caso del modelo compuesto A que incluye a la escolaridad y a las categorías socioprofesionales. Si queremos el efecto para una categoría de escolaridad, $\theta = \beta$ y este dependería del intercepto y las 8 categorías socioprofesionales vía $\bar{z}_d = \alpha_d + \sum\limits_{j=1}^8 \gamma_{d,k}\bar{x}_{csp,d,k}$. Análogamente, para el efecto de una categoría socioprofesional tendríamos $\theta = \gamma$ y $\bar{z}_d = \alpha_d + \sum\limits_{j=1}^5 \beta_{d,k}\bar{x}_{escol,d,k}$.\\
 
-Hasta aquí ya construimos una propuesta de efecto comparando dos predicciones específicas del modelo ``enchufando'' un valor específico o un estimador puntual de los coeficientes. Sin embargo, tenemos incertidumbre sobre sus valores reflejada mediante muestras posteriores de $S$ valores simulados via HMC. Por lo mismo, siguiendo la única receta de la estadística bayesiana tendríamos que obtener la distribución posterior de los efectos, calculando \eqref{eq:Efecto_Enchufado_Compuesto} para cada simulación posterior $\beta_{d,i}^{(s)}$ y, correspondientemente, $\bar{z}_d^{(s)}$:
-
+Hasta aquí ya construimos una propuesta de efecto comparando dos predicciones específicas del modelo ``enchufando'' un valor específico o un estimador puntual de los coeficientes. Sin embargo, tenemos incertidumbre sobre sus valores reflejada mediante muestras posteriores de $S$ valores simulados via HMC. Por lo mismo, para hacer inferencia bayesiana tendríamos que obtener la distribución posterior de los efectos, calculando \eqref{eq:Efecto_Enchufado_Compuesto} para cada simulación posterior $\beta_{d,i}^{(s)}$ y, correspondientemente, $\bar{z}_d^{(s)}$:
 \begin{equation*}
 \Delta(\beta_{d,i}^{(s)};\bar{z}_d^{(s)}) =  p(x^\star_{d};\beta_{d,i}^{(s)},\bar{z}_d^{(s)})-p(\bar{x}_{d};\beta_{d,i}^{(s)},\bar{z}_d^{(s)}) \quad \forall i \in \mathbb{N}_l ,\, s \in \mathbb{N}_S.
 \end{equation*}
 
-Esta sería la distribución posterior de los efectos con la que podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto mediano. Asimismo, podemos resumir la distribución reportando intervalos centrales de probabilidad al 95\% y, siguiendo la práctica común, cuando estos contengan al 0, diremos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto significativo positivo o negativo, respectivamente.
+Esta sería la distribución posterior de los efectos con la que podemos continuar el análisis de los modelos mediante distintos resúmenes inferenciales como el efecto mediano. Asimismo, podemos resumir la distribución reportando intervalos centrales de probabilidad al 95\% y, siguiendo la práctica común, cuando estos contengan al 0, diremos que la categoría poblacional no tiene un efecto significativo. Si, por el contrario, se encuentran en su totalidad por encima o por debajo del 0, diremos que se tiene un efecto significativo positivo o negativo, respectivamente. En esta ocasión fijaré todos los aumentos $a_{d,i}=0.1$, por lo que estaré hablando del efecto en puntos porcentuales que conlleva pasar de una comuna típica a una con 10 puntos porcentuales de habitantes más en la categoría de interés $i$ dentro del departamento $d$.
 
 \subsection{Escolaridad}
 
@@ -373,8 +368,8 @@ Comienzo el análisis de los efectos predichos por el modelo final por la variab
 
 Inmediatamente observamos que la categoría universidad o más tiene un efecto negativo en prácticamente todo el hexágono francés. Algunos departamentos tienen magnitudes altas, reflejadas en la intensidad del color. Por el contrario, el aumento en el porcentaje de personas sin escolaridad parece llevar consigo un aumento en las preferencias por Marine Le Pen en la mayoría de departamentos. No obstante, vemos que en Córcega se daría el efecto contrario. En tonos más claros, es decir con una magnitud menor, el porcentaje de personas con escolaridad equivalente a la preparatoria parece también tener un efecto positivo en la afinidad por el FN. Los mapas de las personas que todavía están estudiando y de personas con primaria o secundaria parecen tener efectos mixtos, aunque los segundos se observan más intensos que los primeros.\\
 
-Ahora bien, estos son solo estimadores puntuales. Una de las principales ventajas de los modelos jerárquicos bayesianos es que nos permiten reconocer la variabilidad de los fenómenos bajo estudio así como reportar la incertidumbre sobre ellos de manera más clara. En la \textbf{Figura \ref{fig:Efectos_Escolaridad}} tenemos un resúmen de las distribuciones posteriores de los efectos. Para cada categoría observamos las 96 distribuciones posteriores representadas mediante intervalos centrales de probabilidad al 95\%, 80\% y 50\% así como la mediana como estimador puntual que ordena los departamentos por categoría. Si el efecto se estima significativo--- es decir que el intervalo al 95\% excluye al 0---, observamos la distribución marcada en rosa o azul dependiendo del sentido de dicho efecto.\\
-  
+Ahora bien, estos son solo estimadores puntuales. Una de las principales ventajas de los modelos jerárquicos bayesianos es que nos permiten reconocer la variabilidad de los fenómenos bajo estudio así como reportar la incertidumbre sobre ellos de manera más clara. En la \textbf{Figura \ref{fig:Efectos_Escolaridad}} tenemos un resumen de las distribuciones posteriores de los efectos. Para cada categoría observamos los 96 intervalos centrales de probabilidad al 95\% así como la mediana como estimador puntual que ordena los departamentos por categoría. Si el efecto se estima significativo--- es decir que el intervalo al 95\% excluye al 0---, observamos la distribución marcada en rosa o azul dependiendo del sentido de dicho efecto.\\
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Efectos_Escolaridad_Modelo_H}
@@ -382,9 +377,11 @@ Ahora bien, estos son solo estimadores puntuales. Una de las principales ventaja
 	\label{fig:Efectos_Escolaridad}
 \end{figure}
 
-Podemos hacer varias lecturas de este gráfico. En primer lugar confirmamos mediante las líneas verticales que, en general, un aumento en la proporción de personas con estudios universitarios disminuyó la afinidad comunal por Le Pen, de hecho la mayoría de departamentos tienen efectos significativos. Departamentos como Isère y Haute-Loire tienen magnitudes estimadas importantes de casi -4 pp. Por el contrario, el resto de categorías de escolaridad tienen efectos positivos en la afinidad frontista, aunque no todas en la misma magnitud y en todos los departamentos. Confirmamos que para las personas sin escolaridad la mayoría de departamentos tienen un efecto positivo, el más grande de al rededor de 2.5 puntos porcentuales por una desviación estándar de incremento frente a la comuna típica. Pero también vemos que, aunque hay bastante incertidumbre reflejada en la longitud del intervalo, en Haute-Corse el efecto es el contrario, aproximadamente de -1.45 pp.\\ 
+Podemos hacer varias lecturas de este gráfico. En primer lugar confirmamos mediante las líneas verticales que, en general, un aumento en la proporción de personas con estudios universitarios disminuyó la afinidad comunal por Le Pen. De hecho, la mayoría de departamentos tienen efectos significativos; algunos, como Haute-Loire o Indre, incluso cercanos a -10 pp. ¡Esto es un efecto considerable, dado que estamos comparando una comuna promedio con una con 10 pp más de personas con escolaridad universitaria!\\
 
-La categoría de preparatoria tiene muchos departamentos con efectos significativos positivos y ninguno con efecto significativo negativo. Pero aquí también vemos al modelado jerárquico en acción. Aunque hayan muchos departamentos significativos, la incertidumbre es distinta a través de ellos. Comparemos por ejemplo la longitud de los intervalos de un departamento como Alpes-de-Haute-Provence, el décimo con mayor estimador puntual pero alta incertidumbre, con el de París que es el de menor magnitud entre los significativos y sobre el que no tenemos prácticamente nada de incertidumbre. También podemos ver en el caso de las personas que todavía estudian que pueden existir efectos con un estimador puntual mayor al de otros, pero que no son significativos.\\
+Por el contrario, el resto de categorías de escolaridad tienen efectos positivos en la afinidad frontista, aunque no todas en la misma magnitud y en todos los departamentos. Confirmamos que para las personas sin escolaridad la mayoría de departamentos tienen un efecto positivo, el más grande de al rededor de 5 puntos porcentuales por 10 de aumento en esta categoría poblacional. Pero también vemos que, aunque hay incertidumbre reflejada en la longitud del intervalo, en Haute-Corse el efecto es el contrario, aproximadamente de -1.8 pp.\\ 
+
+La categoría de preparatoria tiene muchos departamentos con efectos significativos positivos y ninguno con efecto significativo negativo. Pero aquí también vemos al modelado jerárquico en acción. Aunque hayan muchos departamentos significativos, la incertidumbre es distinta a través de ellos. Comparemos por ejemplo las longitudes de los intervalos de los 7 departamentos con mayor efecto mediano. También podemos ver en el caso de las personas que todavía estudian que pueden existir efectos con un estimador puntual mayor al de otros, pero que no son significativos.\\
 
 \begin{figure}[h]
 	\centering
@@ -399,7 +396,7 @@ Tomando en cuenta entonces el carácter de significancia o no de un efecto, pode
 
 La segunda variable a considerar son las categorías socioprofesionales. Como indicaba en la revisión de literatura esta es probablemente la variable más utilizada en el estudio de la sociología electoral francesa. A pesar de ello, los mapas de la \textbf{Figura \ref{fig:Mapa_Efectos_Cat_Socioprof}} aparecen descolorados para la mayoría de categorías, indicando efectos muy pequeños. Resalta inmediatamente un departamento al noreste francés coloreado con un azul más intenso en el panel de obreros, la que es la categoría que parece tener una mayor asociación positiva con las preferencias por Marine Le Pen. Esto refuerza las hipótesis sobre \textit{gaucho-lépénisme} discutidas en la primera parte de este trabajo. Llama particularmente la atención la falta de intensidad en los efectos de los artesanos, comerciantes y empresarios, un grupo tradicionalmente asociado al FN. Otro punto interesante es notar que los cuadros y las profesiones intelectuales superiores tienen un efecto negativo, salvo en pocos departamentos que aparecen claramente en azul.\\ 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{Figs/Efectos/Mapa_Efectos_Cat_Socioprof_Modelo_H}
 	\caption{Estimaciones puntuales de los efectos de la categoría socioprofesional por departamento francés bajo el modelo H. Fuente: elaboración propia con la cartografía de Open Street Map.}
