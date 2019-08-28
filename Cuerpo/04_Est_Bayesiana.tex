@@ -136,7 +136,7 @@ f(\theta = \mu) &\propto \dfrac{1}{\sigma^2} \propto 1.
 \end{align*}
 Es decir, la inicial de Jeffreys en este caso coincide con la distribución ``uniforme'' para $\theta = \mu$. El problema radica en que, si integramos sobre todo el espacio parametral $\mathbb{R}$, el resultado no es 1 como requiere una distribución de probabilidad; esta distribución es \textit{impropia}.\\ 
 
-\textcite{Robert07} presenta algunas justificaciones para utilizar distribuciones iniciales impropias. La más razonable, desde mi punto de vista, resulta ser que en realidad cualquier inferencia o decisión se deberá tomar--- como ya he mencionado--- con la distribución posterior. Mientras esta distribución posterior sea propia, sería posible utilizar distribuciones iniciales impropias. Otra justificación es cuando la inicial impropia puede ser vista como un límite de distribuciones propias, pero de esto hablo un poco más adelante.\\ 
+\textcite{Robert07} presenta algunas justificaciones para utilizar distribuciones iniciales impropias. La más razonable, desde mi punto de vista, resulta ser que en realidad cualquier inferencia o decisión se deberá tomar--- como ya he mencionado--- con la distribución posterior. Mientras esta distribución posterior sea propia, sería posible utilizar distribuciones iniciales impropias. Otra justificación es cuando la inicial impropia puede ser vista como un límite de distribuciones propias, pero de esto hablo un poco más adelante.
 
 \subsection{Distribuciones informativas}
 
@@ -157,7 +157,6 @@ Hoy en día, es relativamente sencillo visualizar mediante histogramas, densidad
 También es posible especificar \textit{distribuciones débilmente informativas} basados en la idea que, aunque haya poca información, se tienen nociones generales de valores que resultarían muy poco razonables. Estas buscan ser un justo medio entre las distribuciones completamente informativas y aquellas no informativas. Este enfoque es particularmente útil en modelos de regresión cuando se pueden tener nociones de los tamaños de los efectos de ciertas variables \parencite{Gelman13}.\\ 
 
 Por ejemplo, \textcite{Regueiro12} busca definir distribuciones iniciales en un modelo predictivo del número de goles anotados en partidos de futbol. Él argumenta que la inicial debe concentrar la mayor parte de la probabilidad en valores que lleven a un número de goles entre $0$ y $20$, sin que esto signifique que no haya probabilidad de más de $20$ goles. En efecto, la mayor cantidad de goles anotados por un equipo en un partido oficial de FIFA es de $31$, pero ya $20$ goles es una cantidad extrema. Ciertamente ``una información inicial que permita que el número esperado de goles se encuentre en el orden de los millones es inapropiada''. 
-
 
 \subsection{Distribuciones Conjugadas}
 

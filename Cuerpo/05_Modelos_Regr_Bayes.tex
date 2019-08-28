@@ -4,7 +4,7 @@ Parafraseando a \textcite{DraperSmith98}, al realizar un análisis estadístico 
 
 \section{Regresión lineal} 
  
-En el caso más sencillo, tendríamos que $y=f(x)$. Sin embargo, en la mayoría de los casos este modelo tomado literalmente podría parecernos una mala aproximación. Pensemos en el caso en el que se busca describir el peso en kilogramos de una persona a partir de la estatura. Es claro que a una misma estatura le podrían corresponder distintos valores de peso. A pesar de ello, podemos observar empíricamente que a mayor estatura \textit{esperamos} un mayor peso. Esto nos llevaría a pensar que podemos modelar el \textit{valor esperado} de nuestra variable de interés mediante alguna función de las variables explicativas.\\
+En el caso más sencillo, tendríamos que $y=f(x)$. Sin embargo, en la mayoría de los casos este modelo tomado literalmente podría parecernos una mala aproximación. Pensemos que buscamos describir el peso en kilogramos de una persona a partir de la estatura. Es claro que a una misma estatura le podrían corresponder distintos valores de peso. A pesar de ello, podemos observar empíricamente que a mayor estatura \textit{esperamos} un mayor peso. Podemos pensar en modelar el \textit{valor esperado} de nuestra variable de interés mediante alguna función de las variables explicativas.\\
 
 Esto quiere decir que, bajo una perspectiva bayesiana paramétrica, modelaremos la incertidumbre sobre la variable de interés $Y$ mediante una distribución de probabilidad condicional $f(y|\theta,x)$. Las variables explicativas $X$ determinan esta distribución condicional a través del valor esperado mediante una función que depende también de un subconjunto de parámetros $\theta_d$: 
 \begin{equation} \label{eq:regr_gral}
@@ -49,7 +49,7 @@ donde $N_N(X\beta,\sigma^2\mathbb{I}_N)$ representa una distribución normal $N-
 
 \subsection{Problema de multicolinealidad} \label{prob_multicolinealidad}
 
-Antes de continuar, debo señalar un posible problema cuando uno ajusta modelos de regresión. En el \textbf{Anexo \ref{Anexo_modelo_lineal}} se muestra el desarrollo del modelo lineal normal utilizando iniciales conjugadas--- que pueden ser informativas o débilmente informativas--- así como un caso límite que resulta ser la inicial no informativa de Jeffreys. El estimador máximo verosimil $b=(X^TX)^{-1}X^Ty$ es clave para el análisis. En dicho desarrollo asumo que es posible calcular $b$, aún cuando no siempre es el caso.\\
+Antes de continuar, debo señalar un posible problema cuando uno ajusta modelos de regresión. En el repositorio de la tesis se encuentra un desarrollo del modelo lineal normal utilizando iniciales conjugadas--- que pueden ser informativas o débilmente informativas--- así como un caso límite que resulta ser la inicial no informativa de Jeffreys. El estimador máximo verosimil $b=(X^TX)^{-1}X^Ty$ es clave para el análisis. En dicho desarrollo asumo que es posible calcular $b$, aún cuando no siempre es el caso.\\
 
 El estimador involucra la matriz inversa $(X^TX)^{-1}$, pero no siempre es posible invertir una matriz. Para ello se requiere que todas sus columnas sean lo que en álgebra lineal se conoce como \textit{linealmente independientes}. Esto no pasa si hay variables explicativas tales que exista una combinación lineal de ellas que sea igual a $0$ para todos los datos \parencite{GelmanHill06}. Cuando esto sucede se dice que dichas variables son linealmente dependientes o bien que son \textit{colineales}.\\
 
@@ -63,8 +63,7 @@ Otra solución consiste en imponer una restricción de tipo suma cero. En este c
 \end{equation*}
 Esta restricción tiene como consecuencia que los efectos de las diferentes categorías no pueden ser todos positivos o todos negativos \parencite{Usi14}.\\
 
-Ahora bien, en términos estadísticos normalmente se habla del problema de \textit{multicolinealidad} porque incluso si no hay colinealidad exacta, hay ocasiones que los datos están altamente correlacionados y esto tiene como consecuencia que sea difícil invertir la matriz $X^TX$ \parencite{Usi14}. Una manera de atacar este problema es agregar información que permita facilitar la inversión, por ejemplo a través de la distribución inicial \parencite{Congdon06}.\\ 
-
+Ahora bien, en términos estadísticos normalmente se habla del problema de \textit{multicolinealidad} porque incluso si no hay colinealidad exacta, hay ocasiones que los datos están altamente correlacionados y esto tiene como consecuencia que sea difícil invertir la matriz $X^TX$ \parencite{Usi14}. Una manera de atacar este problema es agregar información que permita facilitar la inversión, por ejemplo a través de la distribución inicial \parencite{Congdon06}. 
 
 \section{Modelos Lineales Generalizados}
 
@@ -178,7 +177,7 @@ log\left(\dfrac{p_i}{1-p_i}\right)&=log(p_i)-log(1-p_i)\\
 
 \subsubsection{Problema analítico} \label{sec:Prob_Analitico}
 
-Ahora supongamos que queremos realizar un análisis bayesiano y actualizar nuestras creencias mediante el teorema de Bayes. Podríamos llevarnos la desagradable sorpresa de que una regresión logística no tiene las mismas facilidades analíticas que sí tiene el modelo normal del \textbf{Anexo \ref{Anexo_modelo_lineal}}. De manera particular, no podemos encontrar una distribución conjugada.\\ 
+Ahora supongamos que queremos realizar un análisis bayesiano y actualizar nuestras creencias mediante el teorema de Bayes. Podríamos llevarnos la desagradable sorpresa de que una regresión logística no tiene las mismas facilidades analíticas que sí tiene el modelo normal. Por ejemplo, no podemos encontrar una distribución conjugada.\\ 
 
 En efecto, definiendo $\theta_i = log\left(\dfrac{p_i}{1-p_i}\right)=X_i\beta$ y utilizando la forma de la función de verosimilitud en \eqref{eq:Veros_Binomial}, donde $y$ representa el vector de observaciones de nuestra variable de interés: 
 \begin{align} \label{eq:Veros_Binomial_MLG} 
@@ -189,7 +188,7 @@ f(y|\beta) &= f(y_1,\dots,y_N|\beta)= \prod_{i=1}^N f(y_i|\beta) \nonumber\\
 \end{align}
 Esta no es una forma funcional que permita encontrar fácilmente una inicial conjugada conocida.\\
 
-En el mismo sentido, supongamos que tomamos como iniciales independientes para los coeficientes, distribuciones normales centradas en $0$ con cierta desviación estándar común $\sigma$, conocida. Veamos cómo luce la actualización de la verosimilitud en \eqref{eq:Veros_Binomial_MLG} por esta inicial normal multivariada: 
+En el mismo sentido, supongamos que tomamos como iniciales independientes para los coeficientes, distribuciones normales centradas en $0$ con cierta varianza común $\sigma^2$, conocida. Veamos cómo luce la actualización de la verosimilitud en \eqref{eq:Veros_Binomial_MLG} por esta inicial normal multivariada: 
 \begin{align*}
 f(y|\beta) &\propto exp\left\lbrace \sum\limits_{i=1}^N y_i\,X_i\beta-n_i\,log\left(1+e^{X_i\beta}\right)\right\rbrace \\
 &\propto exp\left\lbrace (\beta yX)^T-\sum\limits_{i=1}^Nn_i\,log\left(1+e^{X_i\beta}\right)\right\rbrace; \\
@@ -202,7 +201,7 @@ f(\beta) &= \dfrac{1}{\sqrt{(2\pi)|\sigma^2 \mathbb{I}_N|}}exp\left\lbrace -\dfr
 
 Esta expresión tampoco permite un tratamiento analítico bajo una forma funcional conocida. No es posible integrarla para conocer la constante de normalización y así tener completa la distribución posterior.\\
 
-¿Acaso es posible llevar a cabo una simple regresión logística bajo el paradigma bayesiano? Por mucho tiempo la respuesta a esta pregunta era prácticamente no. Como la integral no se puede calcular, la alternativa es obtenerla mediante aproximaciones analíticas como la llamada \textit{aproximación de Laplace} o bien mediante integración numérica mediante métodos de cuadratura \parencites{Nieto16,GP97}. Sin embargo, estos métodos son muy difíciles de aplicar cuando la dimensión del problema empieza a crecer.\\ 
+¿Acaso es posible llevar a cabo una simple regresión logística bajo el paradigma bayesiano? Por mucho tiempo la respuesta a esta pregunta era prácticamente no. Como la integral no se puede calcular, la alternativa es obtenerla mediante aproximaciones analíticas como la llamada \textit{aproximación de Laplace} o bien mediante integración numérica mediante métodos de cuadratura \parencites{Nieto16,GP97}. Sin embargo, estos métodos son difíciles de aplicar cuando la dimensión del problema empieza a crecer.\\ 
 
 Afortunadamente, el desarrollo de las computadoras permitió superar este obstáculo y, desde la década de 1990, el paradigma bayesiano ha ido creciendo con fuerza. Hoy es posible aplicar modelos como la regresión logística y más complejos sin problemas. Por ello, pospongo el tema de cómo calcular las integrales al \textbf{\autoref{chap:Cap_MCMC}} y continúo con la discusión general de los modelos de regresión. 
 
@@ -327,7 +326,6 @@ III. Hiperparámetros &
 \caption{Ejemplos esquemáticos de regresiones jerárquicas lineales. Fuente: elaboración propia.}
 \label{tbl:Regr_Jer_Lineales}
 \end{table}
-
 
 \subsubsection*{Regresión logística jerárquica}
 

@@ -1,7 +1,6 @@
 \chapter{Modelado}
 
 En este capítulo desarrollo el proceso de modelado de los datos franceses con tal de explorar las configuraciones sociales que favorecieron o inhibieron el voto por el FN en 2012. Para ello hay que notar que los datos electorales que considero son el número de votos por Marine Le Pen en cada comuna así como el número de inscritos en el listado nominal de las mismas. Tenemos entonces $C$ pares de la forma $\left\lbrace y_c, n_c \right\rbrace$ donde $y_c$ representa el número de votos y $n_c$ el de inscritos en la comuna $c \,\in\,\mathbb{N}_C$. Este tipo de datos puede ser modelado como proveniente de una distribución binomial con número de ensayos conocido y parámetro de interés $p_c$: 
-
 \begin{equation*}
 y_c|p_c \sim Binom(n_c, p_c) \quad \forall \; c \, \in \mathbb{N}_C
 \end{equation*} 
@@ -9,7 +8,6 @@ y_c|p_c \sim Binom(n_c, p_c) \quad \forall \; c \, \in \mathbb{N}_C
 Podemos interpretar cada parámetro $p_c$ como la afinidad que se tuvo en la comuna $c$ por Marine Le Pen en la primera vuelta presidencial de 2012. Esta afinidad es la que quisiéramos explicar en términos de configuraciones sociales.\\
 
 Recordando la presentación de la regresión binomial con liga logística, comunmente conocida como regresión logística, en la \textbf{\autoref{Sec:Pres_Logis}}, si tenemos un vector $x_c$ de variables explicativas en la comuna $c$, construimos un MLG de la siguiente manera: 
-
 \begin{align*}
 y_c|\theta & \sim Binom(n_c,p_c) \quad \forall \quad c \in \mathbb{N}_C \\
 \text{con} \quad log\left(\dfrac{p_c}{1-p_c}\right) &= \alpha + \beta x_c \nonumber \\
@@ -127,7 +125,7 @@ Como es de esperarse, los modelos estiman de mejor manera los porcentajes de niv
 
 Esto refleja lo que había mencionado al ver el mapa de predicciones para el modelo nacional individual por ocupación juvenil. Al no permitir que los coeficientes varíen por departamento, el modelo ajusta para el país entero, sacrificando las estimaciones en las diferentes zonas geográficas que estos constituyen. Si observamos medidas de error más tradicionales como la absoluta o la cuadrática vemos que todas las flechas se dirigen a la izquierda, es decir que se reducen los errores al reconocer esa variabilidad geográfica. Ahora bien, estas 3 medidas tienen más un carácter ilustrativo y sirven para recordar que se pueden construir diferentes errores para diferentes estimadores.\\ 
 
-Ahora notemos que las variables de solo 2 categorías como ocupación, sexo, nacionalidad y condición migratoria tienen peor desempeño que las de más categorías como edad, categoría socioprofesional y escolaridad. ¿Esto quiere decir que son peores variables explicativas? ¿No podría esto deberse a que las últimas tienen más parámetros y es más fácil ajustar mejor simplemente por introducir parámetros adicionales?\\
+Ahora notemos que las variables de solo 2 categorías como ocupación, sexo, nacionalidad y condición migratoria tienen peor desempeño que las de más categorías como edad, categoría socioprofesional y escolaridad. ¿Esto quiere decir que son peores variables explicativas? ¿No podría esto deberse a que las últimas tienen más parámetros y es más fácil ajustar mejor simplemente por introducir parámetros adicionales?
 
 \subsection{WAIC}
 
@@ -139,12 +137,11 @@ WAIC(y|\theta) &= \widehat{lpd} + \widehat{par} \\
 \text{con} \quad \widehat{lpd} &= \sum_{i=1}^{n} log\left(\dfrac{1}{S}\sum\limits_{s=1}^S f(y_i|\theta_{(s)}) \right) \nonumber \\
 \text{y} \quad \widehat{par} &= \sum\limits_{i=1}^n V(y_i|\theta), \nonumber
 \end{align}
-
 donde $V(y_i|\theta)=\dfrac{1}{S-1}\sum\limits_{s=1}^S \mathcal{L}(y_i;\theta_{s})^2$ y $\mathcal{L}(y_i;\theta_{s}) = log\left[f(y_i|\theta_{(s)})\right] - \dfrac{1}{S}\sum\limits_{s=1}^S log\left[f(y_i|\theta_{(s)})\right]$.{}\\
 
 El WAIC se conforma de dos sumas. La primera, $\widehat{lpd}$, es una aproximación de la log predictiva posterior, es decir una medidad de ajuste. Por otro lado, $\widehat{par}$ es normalmente llamado el \textit{número efectivo estimado de parámetros} y, mediante sumas de varianzas, busca medir la complejidad del modelo. En total, entre menor sea el valor del WAIC, esperaríamos un mejor desempeño predictivo tomando en cuenta la complejidad del modelo.\\
 
-Así pues, observando los valores del WAIC para cada modelo (\textbf{Figura \ref{fig:Errores_Modelos_Individuales}}), podríamos comenzar a pensar que efectivamente hay un ordenamiento en el poder predictivo de las distintas variables: escolaridad, categorías socioprofesionales, edad, condición migratoria, nacionalidad, sexo y, finalmente, las ocupaciones. Sin concluir todavía nada, parecería que a las hipótesis sobre inseguridad laboral no les corresponde el mejor de los poderes explicativos en términos de estos modelos.\\
+Así pues, observando los valores del WAIC para cada modelo (\textbf{Figura \ref{fig:Errores_Modelos_Individuales}}), podríamos comenzar a pensar que efectivamente hay un ordenamiento en el poder predictivo de las distintas variables: escolaridad, categorías socioprofesionales, edad, condición migratoria, nacionalidad, sexo y, finalmente, las ocupaciones. Sin concluir todavía nada, parecería que a las hipótesis sobre inseguridad laboral no les corresponde el mejor de los poderes explicativos en términos de estos modelos.
 
 \section{Modelos compuestos}
 
@@ -205,7 +202,7 @@ Después comenzaríamos a incluir las variables de ocupación. Como mencionaba a
 	\label{fig:Compara_WAIC_Compuestos}
 \end{figure}
 
-El mejor modelo en términos de WAIC es el modelo H, por lo que será este el que interpretaré. Sin embargo, antes de ello, como adelantaba en la \autoref{sec:Convergencia}, hay que verificar que las cadenas simuladas mediante la implementación de HMC dentro de Stan hubieran convergido. En esta discusión de convergencia también menciono un pequeño análisis de sensibilidad respecto a la elección de distribuciones iniciales informativas.\\
+El mejor modelo en términos de WAIC es el modelo H, por lo que será este el que interpretaré. Sin embargo, antes de ello, como adelantaba en la \autoref{sec:Convergencia}, hay que verificar que las cadenas simuladas mediante la implementación de HMC dentro de Stan hubieran convergido. En esta discusión de convergencia también menciono un pequeño análisis de sensibilidad respecto a la elección de distribuciones iniciales informativas.
 
 \subsection{Convergencia de HMC}
 
@@ -267,7 +264,6 @@ Debido a la cantidad de parámetros dentro de cada modelo, así como a la cantid
  
  Adicionalmente, observamos en la \textbf{Figura \ref{fig:Rhat_compara}} que los factores de reducción de escala tienden a ser mayores para el modelo S que para el modelo H. Si bien todos son lo suficientemente cercanos a 1 como para declarar convergencia con base en este diagnóstico, sí podemos reafirmar que tendríamos más confianza en los valores del modelo H que en los del S. Esto también podría decirse comparando las densidades para los parámetros seleccionados en las \textbf{Figuras  \ref{fig:Densidades_H}, \ref{fig:Densidades_S}}. Las estimaciones de las cadenas del modelo H son más parecidas entre sí que aquellas del modelo S. Finalmente, comparando los traceplots de los modelos (\textbf{Figuras  \ref{fig:Traceplots_H}, \ref{fig:Traceplots_S}}) observamos cómo en la fase de calentamiento el modelo S pasa más tiempo explorando regiones poco creíbles del espacio parametral--- recordemos que no esperaríamos efectos superiores en magnitud a 5 en la escala logística--- pero que las iniciales vagas sugieren. Ciertamente las cadenas terminan por ``encontrar'' la región crítica, pero este puede no ser siempre el caso cuando se consideran las restricciones de tiempo que se tengan en alguna aplicación dada o cuando se usan iniciales aún más vagas.\footnote{No se presenta por brevedad pero con los mismos parámetros un modelo con iniciales $N(0,10000)$ no logra converger en las 2000 iteraciones y sus 4 cadenas no mezclan pues siguen explorando regiones alejadas del espacio parametral.}\\ 
  
- 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{Figs/Convergencia/Compara_n_eff}
@@ -288,24 +284,21 @@ Debido a la cantidad de parámetros dentro de cada modelo, así como a la cantid
 
 Interpretar los coeficientes de regresiones logísticas no es sencillo pues, por la función liga, estos se encuentran en una escala distinta a la de las proporciones o probabilidades que es en la que normalmente estamos interesados. Como explican \textcite{GelmanHill06}, además de las interpretaciones en términos de momios, una primera alternativa es considerar el caso cuando la variable explicativa vale 1. Sin embargo, esto no siempre tiene sentido dependiendo del contexto en el que se realiza la regresión. Sobre todo para evitar alguna falacia ecológica--- ver página \pageref{No_Extrapolar}--- yo no podría interpretar los coeficientes mediante alguna estrategia de ese tipo.\\ 
 
- Por ello, resultan útiles lo que los mismos autores llaman \textit{predictive comparisons}. Básicamente estos consisten en pensar en los efectos de los coeficientes en términos de una comparación entre dos valores distintos pero informativos de las variables explicativas de interés; por ejemplo, la media y una desviación estándar por encima de ella. Esta elección tiene la ventaja de que, usualmente, se estaría realizando la interpretación en el rango de valores observado y no mediante una extrapolación. Hay que decir, no obstante, que una situación donde esto puede no suceder es cuando las variables observadas sean multimodales y la media caiga en uno de los valles. Esta discusión general sobre alternativas de interpretación para regresiones logísticas puede consultarse en la referencia antes citada.\\ 
+ Por ello, resultan útiles lo que los mismos autores llaman \textit{predictive comparisons}. Básicamente estos consisten en pensar en los efectos de los coeficientes en términos de una comparación entre dos valores distintos pero informativos de las variables explicativas de interés; por ejemplo, la media y una desviación estándar por encima de ella. Esta elección tiene la ventaja de que, usualmente, se estaría realizando la interpretación en el rango de valores observado y no mediante una extrapolación. Hay que decir, no obstante, que una situación donde esto puede no suceder es cuando las variables observadas sean multimodales y la media caiga en uno de los valles. Esta discusión general sobre alternativas de interpretación para regresiones logísticas puede consultarse en la referencia antes citada.
  
 \subsection{Definiendo efectos}
 
  Por nuestra parte, para fijar ideas, recordemos que las variables explicativas son las \textit{configuraciones sociales} definidas por las categorías poblacionales de las variables censales. Supongamos por ahora que quisiéramos analizar un modelo individual nacional\footnote{La interpretación se realizará solo para le modelo compuesto H, pero para entender la interpretación de efectos conviene empezar planteándola para un modelo más sencillo.} para una variable con 3 categorías, $x = (x_1,x_2,x_3)$. Recordando \eqref{eq:Modelo_Nal_Ind} y omitiendo por claridad algunos subíndices, tendríamos que para alguna comuna en particular,
-
 \begin{equation*}
 ln\left(\dfrac{p}{1-p}\right) = \alpha + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3.
 \end{equation*}
 
 Abusando de la notación, introduzco ahora unas expresiones. En primer lugar
-
 \begin{equation*}
 \eta(x;\beta_i)= \alpha + \beta_i x_i + \sum\limits_{k\neq i} \beta_k x_k, 
 \end{equation*} 
 
 para referirme al predictor lineal como función de la configuración social $x$ y considerando el intercepto $\alpha$ y los coeficientes como fijos; pongo énfasis en el coeficiente $\beta_i$ porque es el efecto a interpretar. Asimismo tomemos 
-
 \begin{equation*}
 p(x;\beta_i)=\dfrac{e^{\eta(x;\beta_i)}}{1+e^{\eta(x;\beta_i)}}=\dfrac{1}{1+e^{-\eta(x;\beta_i)}}
 \end{equation*} 
@@ -313,7 +306,6 @@ p(x;\beta_i)=\dfrac{e^{\eta(x;\beta_i)}}{1+e^{\eta(x;\beta_i)}}=\dfrac{1}{1+e^{-
 como el valor de la afinidad por Marine Le Pen en la comuna como función de la configuración social y, de nuevo, con el resto del predictor lineal fijo.\\
 
  Buscaríamos entonces definir el efecto que tiene el coeficiente $\beta_i$ como el cambio en puntos porcentuales para dicha afinidad cuando se pasa de una configuración a otra. Por ejemplo, suponiendo $x_{(0)}$ como una configuración inicial y $x_{(1)}$ como otra en la que aumenta la categoría de interés, tendríamos que el efecto sería
-
 \begin{equation*}
 \Delta(\beta_i;x_{(0)},x_{(1)}) = p(x_{(1)};\beta_i)-p(x_{(0)};\beta_i)
 \end{equation*}
@@ -414,7 +406,7 @@ Llama la atención también que para las profesiones intermediarias la mayoría 
 	\label{fig:Efectos_Cat_Socioprof}
 \end{figure}
 
-La geografía de los efectos significativos que se observa en los dorlings de la \textbf{Figura \ref{fig:Dorling_Efectos_Cat_Socioprof}} tiene algunos puntos notables. El norte más industrializado se asocia con mayores efectos de la clase obrera. Vemos la particularidad del litoral mediterráneo en términos de profesiones intermediarias. Quizás sorprende que en París una mayor presencia de cuadros lleva a una mayor preferencia frontista. La explicación podría estar en que los cuadros que logran vivir dentro de París tiendan a ser más cercanos a la derecha, pero esta tendría que ser una hipótesis a explorarse con mayor detalle en otro tipo de estudio.\\ 
+La geografía de los efectos significativos que se observa en los dorlings de la \textbf{Figura \ref{fig:Dorling_Efectos_Cat_Socioprof}} tiene algunos puntos notables. El norte más industrializado se asocia con mayores efectos de la clase obrera. Vemos la particularidad del litoral mediterráneo en términos de profesiones intermediarias. Quizás sorprende que en París una mayor presencia de cuadros lleva a una mayor preferencia frontista. La explicación podría estar en que los cuadros que logran vivir dentro de París tiendan a ser más cercanos a la derecha, pero esta tendría que ser una hipótesis a explorarse con mayor detalle en otro tipo de estudio. 
 
 \begin{figure}[h]
 	\centering

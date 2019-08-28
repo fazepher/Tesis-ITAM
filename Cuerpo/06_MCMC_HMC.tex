@@ -4,7 +4,7 @@ De acuerdo con \textcite{Ross10}, los resultados más importantes y más conocid
 
 Después de varios avances históricos que pueden consultarse en \textcite{Seneta13}, hoy contamos con las leyes débil y fuerte de los grandes números \parencite{Ross10}. Ambas nos dicen que, conforme el tamaño de una muestra aleatoria aumenta, los promedios empíricos convergen a los promedios teóricos. Una manera común de ejemplificar este fenómeno es mediante el lanzamiento sucesivo de monedas. En este caso los volados \textit{simulan} observaciones de una variable aleatoria de ensayos Bernoulli y, al tener una muestra suficientemente grande, se comienza a apreciar la convergencia hacia la probabilidad de éxito.\\ 
 
-Gracias al avance tecnológico, hoy ya no tenemos necesariamente que lanzar volados físicamente sino que los simulamos desde una computadora, a partir de la generación de números pseudoaleatorios, diseñados de manera tal que satisfagan todas las propiedades básicas de números auténticamente aleatorios \parencite{Ross13}. Podemos pedirle a la computadora que simule una gran cantidad de volados \textit{justos} y registre la proporción empírica acumulada de los que cayeron águila. Conforme más aumenta el número de volados, más nos acercamos a 0.5, la proporción teórica. Esto se puede repetir para otras series de volados y el comportamiento es el mismo, como puede apreciarse en la \textbf{Figura \ref{fig:LGN}}. \\
+Gracias al avance tecnológico, hoy ya no tenemos necesariamente que lanzar volados físicamente sino que los simulamos desde una computadora, a partir de la generación de números pseudoaleatorios, diseñados de manera tal que satisfagan todas las propiedades básicas de números auténticamente aleatorios \parencite{Ross13}. Podemos pedirle a la computadora que simule una gran cantidad de volados \textit{justos} y registre la proporción empírica acumulada de los que cayeron águila. Conforme más aumenta el número de volados, más nos acercamos a 0.5, la proporción teórica. Esto se puede repetir para otras series de volados y el comportamiento es el mismo, como puede apreciarse en la \textbf{Figura \ref{fig:LGN}}.\\
 
 \begin{figure}[h]
 	\centering
@@ -64,7 +64,6 @@ Z^{(N)} &\xrightarrow[N\rightarrow\infty]{\mathcal{D}} Z, \quad Z \sim f(z) \lab
 \end{subequations}
 
 Esto da lugar a los métodos de \textit{Markov Chain Monte Carlo} o MCMC en los que el objetivo es construir una cadena de Markov que satisfaga las condiciones necesarias y cuya distribución límite sea la distribución de la cual se quiere simular. Así, después de $N$ transiciones de la cadena, la simulación convergería a la distribución objetivo y se podría estimar la cantidad de interés $h^\star$ mediante el estimador de MCMC: 
-
 \begin{equation*}
 h^\star \approx \hat{h} = \sum\limits_{n=1}^N \dfrac{h\left(z^{(n)}\right)}{N}
 \end{equation*}
@@ -325,88 +324,7 @@ Por ello, el \textit{Gibbs Sampler} puede sucumbir en la práctica ante problema
 ...incluso una implementación eficiente y escalable no resuelve el problema subyacente de que \textit{Gibbs sampling} no se desempeña bien con posteriores altamente correlacionadas. Finalmente nos dimos cuenta que necesitábamos un mejor muestreador, no una mejor implementación.
 \end{quote}
 
-Ese mejor muestreador se materealizó en el software \textit{Stan}--- nombrado así en honor al propio Stan Ulam--- cuya primera versión estable fue liberada en 2013 y que introduciré más adelante. Pero antes de hacerlo, quisiera detenerme en un tema que he omitido por ahora.\\
-
-\subsection{Convergencia}\label{sec:Convergencia}
-
-La convergencia de los promedios ergódicos que implica \eqref{eq:Teo_Erg_Conv_Prom} es la clave de un análisis de MCMC, pues nos permite aproximar los resúmenes inferenciales que necesitamos, tanto como nuestros recursos computacionales lo permitan. Sin embargo, como ya he mencionado, en un análisis bayesiano la única receta indica tener una muestra aleatoria de la distribución posterior. Si observamos con cuidado \eqref{eq:Teo_Erg_Conv_D}, vemos que la última simulación de la cadena es la que podemos considerar como proveniente de la distribución objetivo límite. Si quisiéramos una muestra de tamaño $N$, podríamos inicialmente pensar que necesitaríamos correr $N$ cadenas independientes.\\ 
-
-Afortunadamente, en las cadenas de MCMC en general, la distribución límite es también lo que se conoce como \textit{distribución estacionaria} de la cadena de Markov. Esto quiere decir que el kernel de transición de la cadena mantiene estable la distribución de las simulaciones, una vez que se alcanza la distribución estacionaria \parencite{Neal93}. Esta característica estacionaria de la distribución límite implica que si reiniciamos la cadena una vez que se llega a la convergencia, podemos después de algún número de transiciones adicionales contar con otra observación prácticamente independiente proveniente de la misma distribución objetivo.\\ 
-
-Por consiguiente, aunque los algoritmos de MCMC producen cadenas correlacionadas, es posible calcular un \textit{tamaño efectivo de muestra} que aproxima el tamaño de una muestra aleatoria auténticamente independiente proveniente de la distribución objetivo cuyas estimaciones equivaldrían a las que hacemos con la muestra simulada. Los detalles de cómo se calcula dicha estadística puede consultarse en \textcite{Gelman13}.\\ 
-
-Por lo anterior, usualmente solo se conservan las simulaciones cada $m$ transiciones de manera que la correlación entre ellas sea lo más cercana a cero posible. Buscaríamos descartar aquellas simulaciones que, debido a la correlación, no están aportando realmente mayor información sobre la distribución objetivo. Con este \textit{adelgazamiento} de la cadena se busca ahorrar espacio de memoria en la computadora y conservar solo las simulaciones que aportan \textit{nueva} información y aumentan el tamaño efectivo de muestra.\\ 
-
-En este sentido, la forma usual de aplicar la inferencia bayesiana mediante MCMC se resume de la manera siguiente: 
-
-\begin{enumerate}
-\item Elegir un número $c$ de cadenas para simular.
-\item Iniciar cada cadena en un punto distinto y disperso del espacio parametral. 
-\item Correr de manera independiente las $c$ cadenas hasta que ``alcancen la convergencia''. 
-\item Una vez que se considera que las cadenas convergieron, se desechan las transiciones iniciales que constituyen el \textit{periodo de calentamiento}. 
-\item Se \textit{adelgaza} cada cadena conservando las simulaciones solo cada $m$ transiciones de manera que la correlación sea baja. 
-\item Se continúan realizando simulaciones después del calentamiento y el adelgazamiento hasta obtener una muestra ``lo suficientemente grande''.  
-\end{enumerate}
-
-El número de cadenas se puede elegir en función del número de procesos paralelos que la computadora puede realizar para aprovechar la eficiencia que implica el cómputo paralelo. Usualmente se corren 3, 4 o 5 cadenas. Por su parte, seleccionar el espaciamiento $m$ de las cadenas normalmente implica realizar gráficos de autocorrelación para algunas pruebas preliminares cuyo objetivo es también determinar la convergencia del algoritmo. En realidad, el punto más delicado es precisamente este último, declarar la convergencia.\\ 
-
-Desafortunadamente, los teoremas ergódicos son asintóticos, por lo que solo se garantiza la convergencia en el infinito. Aunque hay cotas para los errores, normalmente no son muy útiles, salvo algunos casos \parencite{SmithRoberts93}. Por ello, en la práctica se han desarrollado diferentes técnicas de diagnóstico de convergencia. Sin embargo, ninguna puede garantizarnos totalmente que la cadena ya haya convergido. Entonces, es recomendable considerar diferentes técnicas para disminuir la probabilidad de pasar por alto algún problema de convergencia. Una vez que estamos satisfechos con las pruebas de convergencia, podemos utilizar todas las simulaciones como una sola muestra que caracteriza la distribución posterior y realizar las estimaciones de Monte Carlo necesarias.\\
-
-La primera técnica ya la he utilizado en los ejemplos de RWM y Gibbs: graficar los promedios ergódicos para diferentes variables o resúmenes inferenciales para observar en qué punto se estabilizan. La segunda es precisamente iniciar en puntos dispersos del espacio parametral para evitar que las cadenas exploren solo una parte del espacio y, por ejemplo, queden atrapadas en una sola moda cuando la distribución posterior pueda ser multimodal. Al mismo tiempo, tener diferentes cadenas nos permite comparar las estimaciones dentro de cada cadena así como a través de las cadenas. Un ejemplo de promedios ergódicos para 4 cadenas de \textit{Gibbs Sampler} (GS) iniciadas en puntos dispersos del espacio parametral puede verse en la \textbf{Figura \ref{fig:Conv_Prom_Erg}}.\\ 
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Prom_Erg}
-	\caption{Ilustración de la convergencia de dos promedios ergódicos para 4 cadenas de \textit{Gibbs Sampling} iniciadas en puntos dispersos del espacio parametral. Vemos cómo las estimaciones de distintas cadenas se estabilizan y mezclan. Esto ayuda a detectar la fase de calentamiento. Fuente: elaboración propia.}
-	\label{fig:Conv_Prom_Erg}	
-\end{figure}
-
-En el fondo, hay dos características que se buscan para declarar la convergencia \parencite{Gelman13}. Queremos que las cadenas lleguen a la estacionariedad, pues la distribución límite es también estacionaria. Las estimaciones deben estabilizarse. También, y dicho de manera coloquial, buscamos que las cadenas \textit{mezclen} bien. Es decir, que las estimaciones para cada cadena sean parecidas a las estimaciones de todas las cadenas en su conjunto. Por ello un buen algoritmo de MCMC buscará recorrer y explorar todas las regiones críticas de la distribución objetivo \parencites{Neal93,Betancourt18}.\\ 
-
-Uno de los diagnósticos visuales más utilizados son los llamados gráficos de oruga o \textit{trace plots}. En ellos se grafica la secuencia de iteraciones, es decir en el eje $x$ se encuentra el número de iteración y en el eje $y$ el valor o estado de la cadena en dicha iteración. Si las cadenas son estacionarias entonces el gráfico saltará de un punto a otro dentro de un rango de valores que determinan la región crítica. Si las cadenas mezclan bien, entonces las diferentes secuencias estarán oscilando en la misma región crítica, intercalándose. El \textit{trace plot} del ejemplo de esta sección puede verse en la \textbf{Figura \ref{fig:Conv_Trace_Inicial}}. También podemos ver en la \textbf{Figura \ref{fig:Conv_Trace_Final}}, el gráfico correspondiente a las iteraciones válidas para cada cadena, es decir, después del descarte del periodo de calentamiento y el espaciamiento para evitar la correlación.\\
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Traceplot_Inicial}
-	\caption{Ilustración de un \textit{trace plot} para las 4 cadenas de \textit{Gibbs Sampling}. Vemos el comportamiento de oruga, al rededor de una banda de valores. Fuente: elaboración propia.}
-	\label{fig:Conv_Trace_Inicial}	
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Traceplot_Final}
-	\caption{Ilustración de un \textit{trace plot} para las 4 cadenas de \textit{Gibbs Sampling} considerando solo las iteraciones válidas. Fuente: elaboración propia.}
-	\label{fig:Conv_Trace_Final}	
-\end{figure}
-
-En este caso, el ejemplo es lo suficientemente sencillo para permitirnos un adelgazamiento de 8, aunque este suele ser más chico. La reducción en la autocorrelación que esto tiene se puede apreciar en la \textbf{Figura \ref{fig:Conv_Autocorr}}. En los gráficos de la cadena completa, del lado izquierdo, vemos que la autocorrelación es superior a 0.75 para un \textit{lag} de 1 e incluso sigue siendo mayor a 0.5 para algunas cadenas y \textit{lags} de 4. Por el contrario, del lado derecho, observamos que tras adelgazar la cadena las autocorrelaciones ya son siempre menores a 0.25 desde el primer \textit{lag}.\\ 
-
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Autocorr_Completas}
-    \end{subfigure}
-    ~ 
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Autocorr_Final}
-    \end{subfigure}
-    \caption{Gráficos de autocorrelación para las 4 cadenas de \textit{Gibbs Sampling} antes y después de realizar un adelgazamiento de 8. Fuente: elaboración propia.}\label{fig:Conv_Autocorr}
-\end{figure}
-
-Otro diagnóstico gráfico es el de comparar histogramas o densidades estimadas para varios parámetros y resúmenes inferenciales y verificar que estos son estables--- comparándolos para la primera mitad de la muestra y para la segunda, por ejemplo--- y mezclan bien--- los gráficos para las diferentes cadenas se parecen al gráfico de todas juntas---. Para el ejemplo, vemos la comparación de los histogramas de cada cadena con el histograma de todas las cadenas en su conjunto en la \textbf{Figura \ref{fig:Conv_Hist}}. Si bien no son exactamente iguales, pues son simulaciones independientes, sí son muy parecidos entre sí lo que indica que las cadenas mezclaron bien.\\
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{Figs/Bayes/Ejemplos_Convergencia_Histogramas}
-	\caption{Comparación de histogramas para las 4 cadenas de \textit{Gibbs Sampling} considerando solo las iteraciones válidas. Fuente: elaboración propia.}
-	\label{fig:Conv_Hist}	
-\end{figure}
-
-A pesar de su utilidad, siempre hay que tener presente que los diagnósticos gráficos pueden ser engañosos y no bastan por si solos. Si la distribución es multimodal, por ejemplo, los gráficos de oruga pueden no mezclarse porque cada cadena explora una moda distinta.\\ 
-
-Por otro lado, existen también resúmenes estadísticos para evaluar convergencia. Una estadística frecuentemente utilizada y que es normalmente reportada en softwares de cómputo mediante MCMC es el \textit{factor de reducción de escala} $\hat{R}$ propuesto por \textcite{GelmanRubin92}. Este está basado en comparar las varianzas de los parámetros o resúmenes inferenciales a través de las cadenas con aquellos dentro de cada cadena. La $\hat{R}$, bajo supuestos de normalidad, tiende a 1 conforme la convergencia aumenta. Por ello, un valor empírico cercano a 1, es normalmente requerido antes de poder declarar la convergencia.\\
-
-Finalmente, querría comentar que hay 3 factores principales que permiten tener un buen muestreador de MCMC \parencite{Neal93}. El primero es la cantidad de cómputo requerida para simular cada transición; esta, por ejemplo, podría ser una ventaja de \textit{Gibbs Sampling} sobre \textit{Random Walk Metropolis} pues al aceptar todas las propuestas nos ahorramos la necesidad de realizar la corrección de Metropolis. El segundo factor es el tiempo que le lleva a la cadena alcanzar la convergencia; esto indica de manera general la cantidad de cómputo invertido en el periodo de calentamiento que se descartará. El tercer y útlimo factor está relacionado con el segundo pero es ligeramente diferente: las transiciones necesarias para movernos de un estado en la distribución objetivo a otro prácticamente independiente. Esto nos indicará el tamaño de la simulación requerido para realizar una estimación con alguna precisión deseada. Es normalmente este tercer factor el que motiva el uso de un muestreador distinto a RWM o a \textit{Gibbs Sampler} y que introduzco a continuación.\label{factor_ventaja_HMC}
+Ese mejor muestreador se materealizó en el software \textit{Stan}--- nombrado así en honor al propio Stan Ulam--- cuya primera versión estable fue liberada en 2013 y que introduzco a continuación. Pero antes de hacerlo, quisiera mencionar que en el \textbf{\autoref{Anexo_Convergencia}} discuto un poco más la convergencia de las cadenas de MCMC y las técnicas usuales utilizadas en la práctica para verificarla.
 
 \section{Hamiltonian Monte Carlo}
 
@@ -452,16 +370,13 @@ Una distribución posterior puede ser vista como una superficie de cimas y valle
  
  Lo maravilloso de esta idea es que puede ser utilizada para obtener realizaciones provenientes de una distribución objetivo y realizar estimaciones de Monte Carlo. Es decir, podemos simular este sistema físico imaginario para construir una cadena de Markov y obtener una muestra de MCMC que no solo cumpla la intuición de tener más observaciones cerca de las modas que en las colas, sino que lo haga en la proporción correcta que marca la ley de probabilidad objetivo. Más aún, no requerimos conocerla \textit{por completo}, pues ``una pelota no conoce la superficie sobre la que rueda, sin embargo su camino está gobernado por ella'' \parencite{McElreath17}. Nos basta conocer la densidad objetivo salvo por una constante de normalización.\\ 
  
- De manera informal, lo único que debemos hacer es imaginar una partícula y ``empujarla'' en alguna dirección. Luego seguimos por un tiempo la trayectoria que las leyes de la física determinarían sobre la superficie de nuestra densidad volteada y la ``detenemos''. En este punto registramos su posición en el eje horizontal como una realización de nuestra variable aleatoria. Si volvemos a empujarla en otra dirección aleatoria y la seguimos por otro periodo de tiempo llegaríamos a una nueva posición que sería nuestra siguiente observación. Repitiendo este procedimiento obtendríamos una secuencia de observaciones que consituirían nuestra cadena de Markov.\\ 
- 
- Este método de MCMC se conoce como \textit{Hamiltonian Monte Carlo} o HMC y procederé a exponerlo a continuación. Pero para entenderlo mejor, primero hay que introducir un poco de terminología del campo de la física estadística, para lo que seguiré la explicación de \textcite{Neal93}.\\
+ De manera informal, lo único que debemos hacer es imaginar una partícula y ``empujarla'' en alguna dirección. Luego seguimos por un tiempo la trayectoria que las leyes de la física determinarían sobre la superficie de nuestra densidad volteada y la ``detenemos''. En este punto registramos su posición en el eje horizontal como una realización de nuestra variable aleatoria. Si volvemos a empujarla en otra dirección aleatoria y la seguimos por otro periodo de tiempo llegaríamos a una nueva posición que sería nuestra siguiente observación. Repitiendo este procedimiento obtendríamos una secuencia de observaciones que consituirían nuestra cadena de Markov. Este método de MCMC se conoce como \textit{Hamiltonian Monte Carlo} o HMC y, para exponerlo de manera un poco más formal, necesitamos un poco de terminología del campo de la física estadística, para lo que seguiré la explicación de \textcite{Neal93}.
  
 \subsection{Sistemas físicos} 
  
  Imaginemos que tuviéramos una descripción microscópica completa de un sistema físico. Por ejemplo, que conociéramos la posición y velocidad de todas las partículas de un sistema en un momento dado en el tiempo. Esta descripción se conoce como el \textit{microestado} del sistema. Evidentemente, en la realidad no podemos observar dicho microestado; más bien observamos el \textit{macroestado} del sistema, que incluye la temperatura o el volumen. Por ello, debemos asignar una medida de probabilidad sobre los microestados que podrían llevar al macroestado que observamos.\\ 
  
  Por ejemplo, supongamos que tenemos un sistema que mantiene una temperatura constante $T$ pero en el que cada microestado $s$ tiene una cierta energía $H(s)$.\footnote{En física, y en la referencia de \textcite{Neal93}, se utiliza la notación $E(s)$ para denotar la energía pero para evitar confuciones con el valor esperado y facilitar la explicación de Hamiltonian Monte Carlo, utilizaré letras como $H$, $U$ o $K$, con la intención de ser más adecuadas al contexto estadístico.} Normalmente se supone que se satisface la siguiente \textit{distribución canónica}, también conocida como de Gibbs o de Boltzmann: 
- 
 \begin{equation}
 \label{eq:Gibbs_Distr_Can}
  f(s) = \dfrac{exp\left\lbrace-H(s)/T\right\rbrace}{Z},
@@ -484,12 +399,12 @@ f(m)=\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}
  Usualmente, por conveniencia y eficacia esta distribución será una normal centrada en cero pero cabe aclarar que $f(m)$ no \textit{necesita} ni ser independiente, ni ser gaussiana \parencite{Betancourt17}.\\
  
  Así pues, tenemos un espacio ampliado $2d$-dimencional y una distribución conjunta $f(\theta,m|y)=f(\theta|y)f(m)$. Dicho espacio para la posición y el \textit{momentum} de una partícula se conoce en física como \textit{espacio de fases}. De nueva cuenta, podemos construir la distribución canónica en este espacio; ahora, la función de energía total se llama el \textit{hamiltoniano} del sistema y es igual a la suma de las energías potencial y cinética, $H(\theta,m|y) = U(\theta|y) + K(m)$. En efecto, ignorando las constantes de normalización, 
- \begin{align*}
+\begin{align*}
  f(\theta,m|y)&=f(\theta|y)f(m)\\
  &\propto exp\left\lbrace -U(\theta|y)\right\rbrace \, exp\left\lbrace -K(m)\right\rbrace\\
  &\propto exp\left\lbrace -\left[ U(\theta|y) + K(m)\right]\right\rbrace\\
  &\propto exp\left\lbrace -H(\theta,m|y)\right\rbrace.
- \end{align*}
+\end{align*}
  
  Notemos que si muestreamos de esta distribución canónica conjunta en el espacio de fases, automáticamente estaríamos muestreando de la distribución de nuestros parámetros $\theta$, pues solo debemos marginalizar ignorando los valores del vector auxiliar $m$. Para ello aprovecharemos que este sistema físico ficticio satisfaría las leyes de la mecánica hamiltoniana--- que es solo una reformulación de la mecánica clásica--- y utilizaremos una estrategia de dos pasos.\\ 
  
@@ -520,7 +435,7 @@ f(m)=\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}
  \theta(\tau) = r\,cos(a + \tau) \qquad \text{y} \qquad m(\tau) = -r\,sen(a + \tau)
  \end{equation}
  
- La partícula de la \textbf{Figura \ref{fig:Part_Rodando}} en el espacio de fases se vería como en la \textbf{Figura \ref{fig:Primera_Trayectoria}}. La distribución canónica es una normal bivariada cuyas curvas de nivel determinan órbitas con energía/hamiltoniano constante a lo largo de las cuales se desplazarían las partículas ficticias sobre las trayectorias definidas por las ecuaciones de Hamilton.\\ 
+ En el espacio de fases, la partícula de la \textbf{Figura \ref{fig:Part_Rodando}} se vería como en la \textbf{Figura \ref{fig:Primera_Trayectoria}}. La distribución canónica es una normal bivariada cuyas curvas de nivel determinan órbitas con energía/hamiltoniano constante a lo largo de las cuales se desplazarían las partículas ficticias sobre las trayectorias definidas por las ecuaciones de Hamilton.\\ 
  
  Si iniciamos con un valor de $\theta^{(0)}$, muestreamos un valor $m^{(0)} \sim f(m)$. Esto coloca a la partícula sobre una órbita particular con valor constante del hamiltoniano $H(\theta^{(0)},m^{(0)})$. Ahora seguimos por un tiempo $\tau$ la trayectoria definida por \eqref{eq:Trayectorias_Normal}. Esto nos lleva a una nueva coordenada $(\theta^{(1)},\tilde{m}^{(0)})$, desde la que registramos la posición $\theta^{(1)}$ como nuestra propuesta de observación muestreada. En este punto repetimos el procedimiento: generamos un nuevo valor $m^{(1)} \sim f(m)$, saltamos a una nueva órbita con hamiltoniano $H(\theta^{(1)},m^{(1)})$, seguimos la trayectoria por otro periodo $\tau$ para obtener $\theta^{(2)}$. En la \textbf{Figura \ref{fig:Primeras_Trayectorias}} se muestran 10 iteraciones de este procedimiento con los valores muestreados en los márgenes del gráfico como \textit{rug plot}.\\ 
 
@@ -615,9 +530,9 @@ $u \sim U[0,1]$ \;
 
 El método más básico de HMC considera un tiempo fijo de integración $\tau$, un tamaño de paso $\epsilon$ también constante y con estos parámetros genera  trayectorias aproximadas de la misma longitud mediante el \textbf{Algoritmo \ref{alg:Leapfrog}}. No obstante, como mencionaba anteriormente, este no es el único método válido. Recientemente han surgido métodos que también simulan de una manera válida la dinámica hamiltoniana pero que, además, van adaptando el tiempo de integración $\tau$ y, por tanto, la longitud de las trayectorias generadas. El más famoso de estos algoritmos de HMC adaptativo se conoce como NUTS o \textit{No-U-Turn Sampler} \parencite{NUTS11}. La heurística detrás de NUTS es que se pueden generar trayectorias hamiltonianas eficientes si integramos no por un tiempo constante sino hasta el punto en que la partícula vaya a dar una ``vuelta en U'' \parencite{Betancourt17,McElreath17}.\\
 
-Por su parte, el \textit{software} Stan también utiliza una implementación adaptativa de HMC. Además de ir modificando el tiempo de integración de las trayectorias, elige la propuesta mediante un muestreo multinomial dentro de la trayectoria generada y no necesariamente como el punto final de la misma \parencite{Betancourt16,TuitSimpson18}. Este nuevo software permite, al igual que hizo en su momento BUGS, definir modelos complejos mediante un lenguaje computacional sencillo sin que el usuario se preocupe por la implementación del algoritmo de MCMC. No obstante debe recalcarse que utilizar estas herramientas no significa abandonar las buenas prácticas de modelado y explorar distintas alternativas de parametrizaciones y modelos. Por el contrario, precisamente al liberar al usuario de la tarea más pragmática de cómputo, podemos dedicarnos a explorar los aspectos estadísticos más importantes y llegar a presentar mejores modelos que también se beneficien de mejor manera de las herramientas computacionales.\\
+Por su parte, el \textit{software} Stan también utiliza una implementación adaptativa de HMC. Además de ir modificando el tiempo de integración de las trayectorias, elige la propuesta mediante un muestreo multinomial dentro de la trayectoria generada y no necesariamente como el punto final de la misma \parencite{Betancourt16,TuitSimpson18}. Este nuevo software permite, al igual que hizo en su momento BUGS, definir modelos complejos mediante un lenguaje computacional sencillo sin que el usuario se preocupe por la implementación del algoritmo de MCMC.\\
 
-Para terminar este capítulo debo decir que, independientemente de la implementación específica que se tenga de HMC, la ventaja del algoritmo general sobre \textit{Randowm Walk Metropolis} o \textit{Gibbs Sampler} se relaciona con el último factor para el buen desempeño de MCMC que mencionaba en la \textbf{\autoref{factor_ventaja_HMC}}. Este es qué tantas iteraciones necesitamos para que, una vez que estamos en la región crítica de la distribución posterior donde queremos que la muestra se concentre, generemos otra observación casi independiente. Conforme aumenta la dimensión $d$ de nuestros parámetros $\theta$, esta región se vuelve cada vez más estrecha \parencites{Betancourt17,McElreath17}. Podemos conceptualizarla como una especie de circuito de carreras con diferentes curvas.\\ 
+Para terminar este capítulo debo decir que, independientemente de la implementación específica que se tenga de HMC, la ventaja del algoritmo general sobre \textit{Randowm Walk Metropolis} o \textit{Gibbs Sampler} se relaciona con el último factor para el buen desempeño de MCMC que menciono al final del \textbf{\autoref{Anexo_Convergencia}}: qué tantas iteraciones necesitamos para que, una vez que estamos en la región crítica de la distribución posterior donde queremos que la muestra se concentre, generemos otra observación casi independiente. Conforme aumenta la dimensión $d$ de nuestros parámetros $\theta$, esta región se vuelve cada vez más estrecha \parencites{Betancourt17,McElreath17}. Podemos conceptualizarla como una especie de circuito de carreras con diferentes curvas.\\ 
 
 \textit{Randowm Walk Metropolis} propone moverse en una dirección aleatoria y, si el kernel de propuestas es más ``ancho'' que la región crítica, la gran mayoría de las propuestas se ``saldrían de la pista'' y, por tanto, tenderían a ser rechazadas y la cadena se estancaría en la misma posición por un número importante de iteraciones. Como ya había mencionado anteriormente, una solución sería hacer más estrecho el kernel de propuestas, pero si es demasiado estrecho entonces las nuevas observaciones van a estar muy cerca de las anteriores y la cadena tardará en ``dar la vuelta al circuito''. El problema es parecido para \textit{Gibbs Sampler}, pues una región crítica estrecha significa que las condicionales completas tienden a estar fuertemente determinadas por las otras variables. Así pues, la cadena va avanzando dando pasos pequeños.\\ 
 
