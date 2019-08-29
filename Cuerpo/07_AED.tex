@@ -405,23 +405,23 @@ Con esta muestra podemos explorar las asociaciones entre el voto y las configura
 
 En la \textbf{Figura \ref{fig:Disper_Voto_Variables}} observamos diagramas de dispersión de los porcentajes brutos de votos observados en la escala logística\footnote{Cuando los porcentajes observados son iguales a 0, la transformación logística no está definida por lo que los puntos son representados como si estuvieran por debajo de cualquier otro valor en el eje vertical. Recordemos que el modelo binomial sí permite una cantidad nula de votos, es solo el logit de un parámetro de probabilidad de éxito igual a 0 lo que no estaría definido.} con respecto a los distintos porcentajes de la población que representa cada categoría de las variables explicativas. Cuando las categorías son dicotómicas, como el caso del sexo, solo se presenta una de las dos.\\ 
 
-\begin{figure}[h]
+\begin{sidewaysfigure}
 	\centering
 	\includegraphics[width = 0.9\textwidth]{Figs/AED/Asociaciones_MUESTRA}
 	\caption{Diagramas de dispersión para el logit de los porcentajes brutos de voto y las distintas variables explicativas observados en la muestra de comunas. Fuente: elaboración propia.}
 	\label{fig:Disper_Voto_Variables}	
-\end{figure}
+\end{sidewaysfigure}
 
 Vemos que varias de las categorías presentan patrones de asociación tanto negativa--- Mujeres, Extranjeros, Inmigrantes, Universidad o más--- como positiva--- 0 a 17 años, Obreros---. También observamos que las variables explicativas presentan observaciones en 0 que dificultan a primera vista la asignación de una tendencia.\\
 
 Ahora bien, estas nubes de puntos son para el conjunto de la muestra. Debido a que el fenómeno electoral es variable por departamento, podríamos preguntarnos si existen distintas asociaciones a través de los diferentes departamentos. En caso de existir diferencias, esperaríamos que un modelado jerárquico de los datos fuera una mejor alternativa que un modelo de agregación completa. Para explorar esta hipótesis presento los gráficos de la \textbf{Figura \ref{fig:Tendencias_Ingenuas_Muestra}} que llamo tendencias ingenuas con el objetivo de reafirmar que este es solamente un análisis exploratorio y no concluyente. Mediante el comando \verb|ggplot2::geom_smooth()| en $\mathsf{R}$, podemos ajustar tendencias lineales a todos los datos de la muestra que no hayan presentado un porcentaje de votos igual a 0. Estas son las lineas azules gruesas. Asimismo podemos realizar el ajuste para cada departamento, obteniendo las 96 líneas delgadas en color rosa.\\ 
 
-\begin{figure}[h]
+\begin{sidewaysfigure}
 	\centering
 	\includegraphics[width = 0.9\textwidth]{Figs/AED/Tend_Ingenuas_Todas_MUESTRA}
 	\caption{Tendencias ingenuas para la muestra entera y por departamento calculadas mediante ajustes lineales en la escala logística. Fuente: elaboración propia.}
 	\label{fig:Tendencias_Ingenuas_Muestra}	
-\end{figure}
+\end{sidewaysfigure}
 
 Efectivamente reafirmamos los indicios de asociaciones negativas para las categorías de Mujeres, Extranjeros, Inmigrantes y personas con diploma universitario. Pero también observamos pendientes ligeramente negativas para los grupos de edades 18 a 24, 55 a 64 y más de 65 años. Algunas categorías socioprofesionales como agricultores, artesanos, comerciantes y empresarios, cuadros y profesiones intelectuales superiores, profesiones intermediarias y retirados parecen tener también asociaciones negativas. Salvo quizás los casos del desempleo juvenil (15-24 años) y general (25-54 años) o las personas con primaria y secundaria, el resto de las categorías muestran tendencias positivas.\\
 
