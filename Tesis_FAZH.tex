@@ -9,7 +9,7 @@
 
 %% Generales %%
 %\usepackage[letterpaper, paperwidth=17cm, paperheight=22.5cm, bottom = 1.25cm, right = 1.2cm, left = 1.2cm, top = 1.75cm]{geometry}
-\usepackage[letterpaper, paperwidth=170mm, paperheight=225mm, bottom=15mm, right=15mm, left = 20mm, bottom = 13mm]{geometry}
+\usepackage[letterpaper, paperwidth=170mm, paperheight=225mm, top=15mm, right=15mm, left = 20mm, bottom = 13mm]{geometry}
 \usepackage[doublespacing]{setspace}
 \usepackage[bottom]{footmisc}
 \usepackage{enumerate}
@@ -56,13 +56,19 @@
 	\setlength{\abovedisplayshortskip}{-10pt plus 0 pt minus 0pt}
 	\setlength{\belowdisplayshortskip}{-10pt plus 0 pt minus 0pt}
 
+%% Nuevos nombres capítulos español %%
+\addto\captionsspanish{%
+  \renewcommand{\appendixname}{Anexo}
+}
+\addto\extrasspanish{%
+\def\chapterautorefname{Capítulo}%
+\def\appendixautorefname{Anexo}
+}
+
 %% Nuevos comandos mates %%
 
 \renewcommand{\Pr}{\ensuremath{\mathbb{P}}}
 \newcommand{\E}[1]{\ensuremath{\mathbb{E}\left[ #1 \right]}}
-\addto\captionsspanish{%
-  \renewcommand{\appendixname}{Anexo}
-}
 \renewcommand{\proofname}{Demostración}
 
 
@@ -89,14 +95,10 @@
             pdfauthor={Fernando Antonio Zepeda Herrera},
             pdftitle={Modelado bayesiano del voto FN en 2012},
             pdfsubject={Tesis para el título de licenciado},
-            pdfkeywords={Front National Bayesian ITAM Statistics},
+            pdfkeywords={Front National Bayesian ITAM Statistics Hamiltonian Monte Carlo},
             pdfproducer={Latex con hyperref},
             pdfcreator={pdflatex},
             hidelinks]{hyperref}
-\addto\extrasspanish{%
-\def\chapterautorefname{Capítulo}%
-\def\appendixautorefname{Anexo}
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% INICIO DEL DOCUMENTO %%%
