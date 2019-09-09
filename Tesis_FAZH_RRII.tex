@@ -43,6 +43,7 @@
 \renewcommand*{\revsdnamedelim}{} %Se necesita para eliminar la coma antes de la conjunción "y" en una lista de dos nombres cuando el primero está  invertido (apellido, nombre)
 \addbibresource{referencias_tesis_ACT.bib}
 \addbibresource{referencias_tesis_RRII.bib}
+\addbibresource{referencias_tesis_extras.bib}
 
 %% Matemáticas %%
 \usepackage{amsmath,amssymb,amsthm}
@@ -157,8 +158,7 @@
 %%  REFERENCIAS %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-
-\addcontentsline{toc}{part}{Referencias}
+\cleardoublepage\phantomsection\addcontentsline{toc}{part}{Referencias}
 \printbibliography[title = {Referencias}]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
