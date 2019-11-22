@@ -112,24 +112,27 @@ ejemplo_est_indep_a <- graf_base +
              color = azul, size = rel(2)) + 
   geom_path(data = filter(datos_graf, n <= 10), 
             color = azul, size = rel(1), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
-  scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  labs(title = "Primeras iteraciones con pasos intermedios")
+  scale_x_continuous(limits = c(-2.5,3.5), breaks = seq(-3,3,by=1))+ 
+  scale_y_continuous(limits = c(-3,3), breaks = seq(-3,3,by=1))+ 
+  labs(title = "Primeras iteraciones con pasos intermedios") + 
+  theme(legend.position = c(0.9,0.5))
 
-ggsave("Bayes/Ejemplo_GS_A.pdf",plot = ejemplo_est_indep_a, device = cairo_pdf, width = 10, height = 8)
+ggsave("Bayes/Ejemplo_GS_A.pdf",plot = ejemplo_est_indep_a, device = cairo_pdf, width = 22.5/3, height = 17/3)
 
 ejemplo_est_indep_b <- graf_base + 
   geom_point(data = filter(Ejemplo_Est_Indep, n >0), 
-             color = azul, size = rel(1.25), shape = 18) + 
+             color = azul, size = rel(1), shape = 18) + 
   geom_point(data = filter(Ejemplo_Est_Indep, n == 0), 
              color = azul, size = rel(1)) + 
   geom_path(data = Ejemplo_Est_Indep,
-            color = azul, size = rel(0.2), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
-  scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  labs(title = "1,250 iteraciones")
+            color = azul, size = rel(0.05), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
+  scale_x_continuous(limits = c(-3.5,5), breaks = seq(-3,3,by=1))+ 
+  scale_y_continuous(limits = c(-3.25,3.5), breaks = seq(-3,3,by=1))+ 
+  labs(title = "1,250 iteraciones") + 
+  theme(legend.position = "none")
 
-ggsave("Bayes/Ejemplo_GS_B.pdf",plot = ejemplo_est_indep_b, device = cairo_pdf, width = 10, height = 8)
+ggsave("Bayes/Ejemplo_GS_B.pdf",plot = ejemplo_est_indep_b, device = cairo_pdf, width = 22.5/3, height = 17/3)
+
 
 ejemplo_est_indep_c <- Ejemplo_Est_Indep %>% 
   mutate_if(is.double,funs(Media = cummean(.))) %>% 
@@ -137,19 +140,19 @@ ejemplo_est_indep_c <- Ejemplo_Est_Indep %>%
   gather(Variable,Media,-n) %>% 
   separate(Variable,c("Variable","Aux")) %>% 
   ggplot(aes(x=n,y=Media,group=Variable)) + 
-  geom_segment(x = 0, xend = 1250, y = 0, yend = 0, color = rosa, size = rel(1.5)) +
-  geom_path(size = rel(1), color = azul) + 
-  annotate("text",x = 50, y = c(3.15,-3.15), label = c("Var1","Var2"), size = rel(6)) + 
-  annotate("text",x = 1300, y = 0, label = "Media real", size = rel(6), hjust = 0, vjust = 0.5) + 
+  geom_segment(x = 0, xend = 1250, y = 0, yend = 0, color = rosa, size = rel(1)) +
+  geom_path(size = rel(0.75), color = azul) + 
+  annotate("text",x = 80, y = c(3.05,-3.05), label = c("Var1","Var2"), size = rel(6)) + 
+  annotate("text",x = 1300, y = 0, label = "Media real", size = rel(5), hjust = 0, vjust = 0.5) + 
   labs(title = "Promedios Ergódicos por variable") + 
   ylab("Promedio ergódico") + 
   scale_x_continuous(limits = c(0,1500), breaks = seq(0,1250,by=250))+ 
-  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
+  scale_y_continuous(limits = c(-3.5,3.5), breaks = seq(-3,3,by=1))+ 
   theme_minimal() + 
   lucify_basics() + 
   theme(panel.grid = element_blank())  
 
-ggsave("Bayes/Ejemplo_GS_C.pdf",plot = ejemplo_est_indep_c, device = cairo_pdf, width = 10, height = 8)
+ggsave("Bayes/Ejemplo_GS_C.pdf",plot = ejemplo_est_indep_c, device = cairo_pdf, width = 22.5/3, height = 17/3)
 
 #### Ejemplo con correlación ####
 set.seed(31122018)
@@ -166,20 +169,22 @@ ejemplo_est_corr_a <- graf_base_corr +
              color = azul, size = rel(2)) + 
   geom_path(data = filter(datos_graf, n <= 10), 
             color = azul, size = rel(0.75), arrow = arrow(angle = 40, length = unit(0.15, "inches"))) + 
-  scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  labs(title = "Primeras 10 iteraciones de GS")
+  scale_x_continuous(limits = c(-3.5,4), breaks = seq(-3,3,by=1))+ 
+  scale_y_continuous(limits = c(-3,4), breaks = seq(-3,3,by=1))+ 
+  labs(title = "Primeras 10 iteraciones de GS") + 
+  theme(legend.position = c(0.8,0.3))
 
-ggsave("Bayes/Ejemplo_GS_Compara1.pdf",plot = ejemplo_est_corr_a, device = cairo_pdf, width = 10, height = 8)
+ggsave("Bayes/Ejemplo_GS_Compara1.pdf",plot = ejemplo_est_corr_a, device = cairo_pdf, width = 22.5/3, height = 17/3)
 
 ejemplo_est_corr_b <- graf_base_corr + 
   geom_point(data = Ejemplo_Est_Corr,
-             color = azul, size = rel(0.75), shape = 18) + 
-  scale_x_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
-  labs(title = "1,250 transiciones de GS")
+             color = azul, size = rel(0.5), shape = 18) + 
+  scale_x_continuous(limits = c(-3.5,4.5), breaks = seq(-3,3,by=1))+ 
+  scale_y_continuous(limits = c(-3,3.5), breaks = seq(-3,3,by=1))+ 
+  labs(title = "1,250 transiciones de GS") + 
+  theme(legend.position = c(0.8,0.3))
 
-ggsave("Bayes/Ejemplo_GS_Compara2.pdf",plot = ejemplo_est_corr_b, device = cairo_pdf, width = 10, height = 8)
+ggsave("Bayes/Ejemplo_GS_Compara2.pdf",plot = ejemplo_est_corr_b, device = cairo_pdf, width = 22.5/3, height = 17/3)
 
 ejemplo_est_corr_c <- Ejemplo_Est_Corr %>% 
   mutate_if(is.double,funs(Media = cummean(.))) %>% 
@@ -187,19 +192,19 @@ ejemplo_est_corr_c <- Ejemplo_Est_Corr %>%
   gather(Variable,Media,-n) %>% 
   separate(Variable,c("Variable","Aux")) %>% 
   ggplot(aes(x=n,y=Media,group=Variable)) + 
-  geom_segment(x = 0, xend = 1250, y = 0, yend = 0, color = rosa, size = rel(1.5)) +
-  geom_path(size = rel(1), color = azul) + 
-  annotate("text",x = 50, y = c(-2.75,2.75), label = c("Var1","Var2"), size = rel(6)) + 
-  annotate("text",x = 1300, y = 0, label = "Media real", size = rel(6), hjust = 0, vjust = 0.5) + 
+  geom_segment(x = 0, xend = 1250, y = 0, yend = 0, color = rosa, size = rel(0.75)) +
+  geom_path(size = rel(0.75), color = azul) + 
+  annotate("text",x = 80, y = c(-2.5,2.5), label = c("Var1","Var2"), size = rel(6)) + 
+  annotate("text",x = 1300, y = 0, label = "Media real", size = rel(5), hjust = 0, vjust = 0.5) + 
   labs(title = "Promedios Ergódicos para GS") + 
   ylab("Promedio ergódico") + 
   scale_x_continuous(limits = c(0,1500), breaks = seq(0,1250,by=250))+ 
-  scale_y_continuous(limits = c(-4.5,4.5), breaks = seq(-3,3,by=1))+ 
+  scale_y_continuous(limits = c(-2.75,2.75), breaks = seq(-3,3,by=1))+ 
   theme_minimal() + 
   lucify_basics() + 
   theme(panel.grid = element_blank())  
 
-ggsave("Bayes/Ejemplo_GS_Compara3.pdf",plot = ejemplo_est_corr_c, device = cairo_pdf, width = 10, height = 8)
+ggsave("Bayes/Ejemplo_GS_Compara3.pdf",plot = ejemplo_est_corr_c, device = cairo_pdf, width = 22.5/3, height = 17/3)
 
 #### Ejemplos para Convergencia ####
 set.seed(51295)
@@ -218,20 +223,21 @@ promedios_cadenas <- datos_graf %>%
   gather(Variable,Media,-n,-Cadena) %>% 
   separate(Variable,c("Variable","Aux")) %>% 
   ggplot(aes(x=n,y=Media,color=Cadena)) + 
-  annotate("rect",xmin = 0, xmax = 1200, ymin = -7, ymax = 7, alpha = 0.4, fill = "gray85") + 
-  geom_segment(x = 0, xend = 6050, y = 0, yend = 0, color = "gray5", size = rel(1.5)) +
-  geom_path(size = rel(1)) + 
+  annotate("rect",xmin = 0, xmax = 1200, ymin = -6.5, ymax = 6.5, alpha = 0.4, fill = "gray85") + 
+  geom_segment(x = 0, xend = 6050, y = 0, yend = 0, color = "gray5", size = rel(.75)) +
+  geom_path(size = rel(0.5)) + 
   facet_grid(Variable~.) + 
-  annotate("text",x = 600, y = 4, label = "Calentamiento") + 
+  annotate("text",x = 600, y = 5, label = "Calentamiento") + 
   labs(title = "Promedios Ergódicos de GS para 4 cadenas") + 
   ylab("Promedio ergódico") + 
   scale_color_manual(values = c(azul,"#2D9779","#F78D7C","#B8C2E9")) + 
+  scale_y_continuous(breaks = seq(-5,5,by=2.5)) + 
   theme_minimal() + 
   lucify_basics() + 
   theme(panel.grid = element_blank()) 
 
 ggsave("Bayes/Ejemplos_Convergencia_Prom_Erg.pdf",
-       plot = promedios_cadenas, device = cairo_pdf, width = 20, height = 10)
+       plot = promedios_cadenas, device = cairo_pdf, width = 22.5/2, height = 17/2.5)
 
 traceplot_inicial <- datos_graf %>% 
   filter(Tipo == "Simulación") %>% 
@@ -239,16 +245,18 @@ traceplot_inicial <- datos_graf %>%
   ggplot(aes(x=n,y = Valor, color = Cadena)) + 
   annotate("rect",xmin = 0, xmax = 1200, ymin = -8, ymax = 8, alpha = 0.4, fill = "gray85") + 
   annotate("text",x = 600, y = 7, label = "Calentamiento") + 
-  geom_path() + 
+  geom_path(size = rel(0.1)) + 
   facet_grid(Variable~.) + 
   scale_color_manual(values = c(azul,"#2D9779","#F78D7C","#B8C2E9")) + 
   labs(title = "Traceplot inicial de GS para 4 cadenas") + 
   theme_minimal() + 
   lucify_basics() + 
-  theme(legend.position = "top")
+  theme(legend.position = "top",
+        panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank())
 
 ggsave("Bayes/Ejemplos_Convergencia_Traceplot_Inicial.pdf",
-       plot = traceplot_inicial, device = cairo_pdf, width = 20, height = 10)
+       plot = traceplot_inicial, device = cairo_pdf, width = 22.5/2, height = 17/2.5)
 
 
 autocorr_completas <- datos_graf %>% 
@@ -269,10 +277,11 @@ autocorr_completas <- datos_graf %>%
   labs(title = "Autocorrelación de las cadenas completas") + 
   theme_minimal() + 
   lucify_basics() + 
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        panel.grid.minor = element_blank())
 
 ggsave("Bayes/Ejemplos_Convergencia_Autocorr_Completas.pdf",
-       plot = autocorr_completas, device = cairo_pdf, width = 20, height = 10)
+       plot = autocorr_completas, device = cairo_pdf, width = 22.5/2, height = 17/2.5)
 
 
 traceplot_final <- datos_graf %>% 
@@ -282,17 +291,19 @@ traceplot_final <- datos_graf %>%
   ungroup %>% 
   gather(Variable,Valor,Var1,Var2) %>% 
   ggplot(aes(x=n,y = Valor, color = Cadena)) + 
-  geom_path() + 
+  geom_path(size = rel(0.2)) + 
   facet_grid(Variable~.) + 
   scale_color_manual(values = c(azul,"#2D9779","#F78D7C","#B8C2E9")) + 
   labs(title = "Traceplot final de GS para 4 cadenas",
        subtitle = "Calentamiento de 1200 y espaciamiento de 6 iteraciones") + 
   theme_minimal() + 
   lucify_basics() + 
-  theme(legend.position = "top")
+  theme(legend.position = "top",
+        panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank())
 
 ggsave("Bayes/Ejemplos_Convergencia_Traceplot_Final.pdf",
-       plot = traceplot_final, device = cairo_pdf, width = 20, height = 10)
+       plot = traceplot_final, device = cairo_pdf, width = 22.5/2, height = 17/2.5)
 
 
 autocorr_final <- datos_graf %>% 
@@ -313,10 +324,12 @@ autocorr_final <- datos_graf %>%
   labs(title = "Autocorrelación de las cadenas después del calentamiento y espaciamiento") + 
   theme_minimal() + 
   lucify_basics() + 
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(size = rel(1.2),hjust = 0.9),
+        panel.grid.minor = element_blank())
 
 ggsave("Bayes/Ejemplos_Convergencia_Autocorr_Final.pdf",
-       plot = autocorr_final, device = cairo_pdf, width = 20, height = 10)
+       plot = autocorr_final, device = cairo_pdf, width = 22.5/2, height = 17/2.5)
 
 histogramas <- datos_graf %>% 
   filter(Tipo == "Simulación", mod(n,6) %>% equals(0), n > 1200) %>% 
@@ -324,7 +337,7 @@ histogramas <- datos_graf %>%
   {bind_rows(.,mutate(.,Cadena="Todas juntas"))} %>% 
   {ggplot(data = ., aes(x=Valor,fill = Cadena, y = ..density..)) + 
       geom_histogram(binwidth = 0.15) + 
-      facet_grid(Variable~Cadena) + 
+      facet_grid(Variable~Cadena, scales = "free_y") + 
       scale_fill_manual(values = c(azul,"#2D9779","#F78D7C","#B8C2E9","gray45")) + 
       labs(title = "Histogramas de las muestras por cadena y todas juntas") + 
       theme_minimal() + 
@@ -334,9 +347,10 @@ histogramas <- datos_graf %>%
             panel.grid = element_blank())}
 
 ggsave("Bayes/Ejemplos_Convergencia_Histogramas.pdf",
-       plot = histogramas, device = cairo_pdf, width = 20, height = 10)
+       plot = histogramas, device = cairo_pdf, width = 22.5/2, height = 17/2)
 
 
+# Verificar diagn. Gelman
 datos_graf %>% 
   split(.$Cadena) %>% 
   map(~ select(.x,Var1,Var2) %>% 

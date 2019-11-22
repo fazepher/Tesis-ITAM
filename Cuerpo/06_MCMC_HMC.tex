@@ -268,56 +268,57 @@ La consagración del \textit{Gibbs Sampler} como la principal herramienta de sim
 
 Debo decir que hasta ahora no he mencionado ninguna justificación teórica de convergencia para el algoritmo, pero el lector más inquieto puede consultar \textcite{Geyer05}, en donde se muestra que, aunque normalmente es considerado un algoritmo distinto por derecho propio y desarrollo histórico, el \textit{Gibbs Sampler} es una implementación particular de Metropolis Hastings en la que la probabilidad de aceptación es siempre 1. Otra manera de justificar el algoritmo se puede consultar en el artículo de \textcite{CasellaGeorge92}, donde además de discutir la convergencia también se da una explicación más detallada de por qué funciona.\\  
 
-Al igual que en el caso de \textit{Random Walk Metropolis}, podemos observar el comportamiento del \textit{Gibbs Sampler} para el ejemplo trivial de las normales independientes. El algoritmo funciona de manera mucho más eficiente que la implementación de \textit{Random Walk Metropolis}--- comparar \textbf{Figuras \ref{fig:GS_indep} y \ref{fig:RWM}}---. Esto no debería sorprendernos tanto, puesto que la independencia de normales implica que las condicionales completas son en realidad las verdaderas marginales.\\ 
+Al igual que en el caso de \textit{Random Walk Metropolis}, podemos observar el comportamiento del \textit{Gibbs Sampler} para el ejemplo trivial de las normales independientes. El algoritmo funciona de manera mucho más eficiente que la implementación de \textit{Random Walk Metropolis}--- comparar \textbf{Figuras \ref{fig:GS_indep} y \ref{fig:GS_indep_ergo} con \ref{fig:RWM} y \ref{fig:RWM_ergo}}---. Esto no debería sorprendernos tanto, puesto que la independencia de normales implica que las condicionales completas son en realidad las verdaderas marginales.\\ 
 
 \begin{figure}[h]
     \centering
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.35\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_A}
         \caption{El algoritmo consiste en dar pasos de Gibbs intermedios mediante las condicionales completas. Cada transición de Gibbs se señala como un cuadrado.}
     \end{subfigure}
     ~ 
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.35\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_B}
         \caption{Después de 1,250 transiciones, la cadena cubre completamente la región crítica.}
     \end{subfigure}
-    ~
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_C}
-        \caption{Los promedios ergódicos convergen rápidamente a las medias teóricas, al rededor de la iteración 500. }
-     \end{subfigure}
      \caption{Ilustración de una cadena de \textit{Gibbs Sampling} para una normal bivariada sin correlación. Fuente: elaboración propia.}\label{fig:GS_indep}
 \end{figure}
  
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Figs/Bayes/Ejemplo_GS_C}
+    \caption{Ilustración de la convergencia de los promedios ergódicos de una cadena de \textit{Gibbs Sapling} para las dos variables o entradas de una normal bivariada sin correlación. Los promedios ergódicos convergen rápidamente a las medias teóricas, al rededor de la iteración 500. Fuente: elaboración propia.}\label{fig:GS_indep_ergo}
+\end{figure}
+
 En realidad, pocas veces contamos con tanta suerte como para tener completa independencia. Normalmente los parámetros que queremos simular están correlacionados entre sí. En la \textbf{Figura \ref{fig:GS_corr}} podemos ver cómo el \textbf{Gibbs Sampler} también se desempeña mucho mejor en este caso que RWM.\\
  
-\begin{figure}[h]
+\begin{sidewaysfigure}[p]
     \centering
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.31\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara1}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.31\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara2}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.31\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_GS_Compara3}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.31\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2A}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.31\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2B}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.31\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2C}
     \end{subfigure}
     \caption{Comparación del \textit{Gibbs Sampler} (GS) con \textit{Random Walk Metropolis} (RWM) para simular de una normal bivariada de correlación 0.95. Las condicionales completas le permiten al GS llegar a la región crítica más rápidamente que al kernel uniforme de RWM que se retrasa en cada propuesta rechazada. Si comparamos todos los valores simulados después de 1,250 iteraciones vemos cómo aquellos de GS cubren de mejor manera la región crítica que los de RWM, mismos que se disturbaron ligeramente para presentar también los valores que se repiten por los rechazos. Asimismo, los promedios ergódicos convergen más rápidamente para GS que para RWM. Fuente: elaboración propia.}\label{fig:GS_corr}
-\end{figure}
+\end{sidewaysfigure}
 
 Por otro lado, si comparamos entre los dos casos del \textit{Gibbs sampler}, vemos que el desempeño se vio afectado al agregar correlación. Este es un fenómeno que se debe tener siempre presente: cuando la parametrización del modelo genera alta correlación entre los componentes, el algoritmo se hace más lento. El motivo es un equivalente al caso de un kernel de transiciones más estrecho. La correlación de los parámetros implica que las condicionales completas están muy concentradas, determinadas fuertemente por el valor actual; es decir, la simulación no puede generar un valor muy alejado del actual y el avance de la cadena es más lento.\\ 
 
@@ -441,7 +442,9 @@ f(m)=\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}
  
  Si iniciamos con un valor de $\theta^{(0)}$, muestreamos un valor $m^{(0)} \sim f(m)$. Esto coloca a la partícula sobre una órbita particular con valor constante del hamiltoniano $H(\theta^{(0)},m^{(0)})$. Ahora seguimos por un tiempo $\tau$ la trayectoria definida por \eqref{eq:Trayectorias_Normal}. Esto nos lleva a una nueva coordenada $(\theta^{(1)},\tilde{m}^{(0)})$, desde la que registramos la posición $\theta^{(1)}$ como nuestra propuesta de observación muestreada. En este punto repetimos el procedimiento: generamos un nuevo valor $m^{(1)} \sim f(m)$, saltamos a una nueva órbita con hamiltoniano $H(\theta^{(1)},m^{(1)})$, seguimos la trayectoria por otro periodo $\tau$ para obtener $\theta^{(2)}$. En la \textbf{Figura \ref{fig:Primeras_Trayectorias}} se muestran 10 iteraciones de este procedimiento con los valores muestreados en los márgenes del gráfico como \textit{rug plot}.\\ 
 
-\begin{figure}[h]
+Esta estrategia de dos pasos funcionaría como un algoritmo de \textit{Gibbs dentro de Metropolis-Hastings}. El primer paso--- muestrear un nuevo valor de \textit{momentum}--- constituye un paso de Gibbs pues, en general, estaríamos muestreando de la condicional de $m$ dada la $\theta$ anterior. Integrar las ecuaciones de Hamilton por un tiempo $\tau$, constituiría un paso de Metropolis-Hastings, respecto a la distribución canónica $f(\theta,m)$. Es decir, podemos pensar que seguir la trayectoria de la partícula por un tiempo $\tau$ constituye un kernel de propuestas $q(\tilde{\theta},\tilde{m}|\theta,m)$.\\ 
+
+\begin{sidewaysfigure}[p]
 	\centering	
 	\begin{subfigure}{0.4\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Trayectoria_Espacio_Fase}
@@ -456,10 +459,8 @@ f(m)=\dfrac{exp\left\lbrace -K(m)\right\rbrace}{Z_m}
     \end{subfigure}
 	\caption{Ilustración de las trayectorias definidas por la distribución canónica de un espacio de fases en el que tanto la posición como el \textit{momentum} se distribuyen normal estándar y en donde se muestrea mediante una estrategia de dos pasos. Fuente: elaboración propia con base en \textcite{Betancourt17}.}
 	\label{fig:Trayectorias_Espacio_Fase}	
-\end{figure}
+\end{sidewaysfigure}
  
-Esta estrategia de dos pasos funcionaría como un algoritmo de \textit{Gibbs dentro de Metropolis-Hastings}. El primer paso--- muestrear un nuevo valor de \textit{momentum}--- constituye un paso de Gibbs pues, en general, estaríamos muestreando de la condicional de $m$ dada la $\theta$ anterior. Integrar las ecuaciones de Hamilton por un tiempo $\tau$, constituiría un paso de Metropolis-Hastings, respecto a la distribución canónica $f(\theta,m)$. Es decir, podemos pensar que seguir la trayectoria de la partícula por un tiempo $\tau$ constituye un kernel de propuestas $q(\tilde{\theta},\tilde{m}|\theta,m)$.\\ 
-
 La única consideración téorica adicional es que, al finalizar de integrar la trayectoria por un tiempo $\tau$, se deberían negar las variables de \textit{momentum} para garantizar la reversibilidad de la cadena de Markov \parencite{Neal93,Neal11,Betancourt17}. Esta negación en la \textbf{Figura \ref{fig:Part_Rodando_A}} se vería simplemente como voltear la flecha. En las \textbf{Figuras \ref{fig:Trayectorias_Espacio_Fase}} la partícula saltaría al lado contrario de la misma órbita. Ahora bien, debemos notar que esta negación del \textit{momentum} vuelve al kernel de propuestas simétrico. Esta característica, junto con la propiedad de conservación del hamiltoniano--- pues no hemos cambiamos de órbita--- lleva a que siempre aceptemos las propuestas.\\ 
 
 En efecto, si comenzamos en un punto $(\theta,m)$ y seguimos la trayectoria un tiempo $\tau$, llegamos a un nuevo punto $(\theta_\tau,m_\tau)$; negando el \textit{momentum} llegaríamos al punto $(\theta_\tau,-m_\tau)$ de manera determinista, por lo que  $q(\theta_\tau,-m_\tau|\theta,m) = 1$. Si ahora comenzamos en $(\theta_\tau,-m_\tau)$, la trayectoria ``regresaría sobre sus propios pasos'' excepto que con el signo contrario del \textit{momentum} hasta $(\theta,-m)$. Al completar la propuesta, negando de nueva cuenta el \textit{momentum}, regresaríamos exactamente a $(\theta,m)$. Así pues, resulta que también $q(\theta,m|\theta_\tau,-m_\tau) = 1$. Esto lleva a una probabilidad de aceptación \eqref{eq:Proba_Aceptar_MH} de 1:
