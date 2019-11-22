@@ -8,7 +8,7 @@ Gracias al avance tecnológico, hoy ya no tenemos necesariamente que lanzar vola
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.2]{Figs/Bayes/LGN}
+	\includegraphics[width=0.75\textwidth]{Figs/Bayes/LGN}
 	\caption{Ilustración de las leyes de los grandes números mediante volados simulados por computadora. Conforme el número de volados aumenta, la proporción empírica converge a la proporción teórica. Esto pasa para cada serie de volados. Fuente: elaboración propia.}
 	\label{fig:LGN}	
 \end{figure}
@@ -148,71 +148,73 @@ Estos kérneles de caminata aleatoria resultan ser \textit{simétricos}--- esto 
 
 Un ejemplo trivial puede ayudar a visualizar cómo funcionan. Supongamos que quisiéramos simular de una posterior que, en realidad, es una normal bivariada cuyas marginales son normales estándar. Un posible kernel de transición sería una distribución uniforme en un rectángulo de $3$ de lado centrado en el estado actual de la cadena, por lo que tendríamos un kernel simétrico y un algoritmo de \textit{Random Walk Metropolis}.\\ 
 
-Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo--- como espero explicar más claro después--- encontrar esta \textit{región crítica} y explorarla lo suficientemente bien para poder calcular los resúmenes inferenciales de interés es el verdadero objetivo de un algoritmo de integración por MCMC \parencites{Neal93,Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió varias veces y los valores que alejarían a la cadena de la misma son normalmente rechazados. Podemos ver también cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
-
-Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qué usar $3$ como lado y no $0.5$? ¿Qué hubiera pasado en ese caso? Podemos observarlo en la \textbf{Figura \ref{fig:RWM2}}. El rectángulo de propuestas es más pequeño y eso tiene dos efectos: hay menos propuestas rechazadas pero la cadena avanza más lentamente. Vemos cómo aún después de las mismas 2,500 iteraciones la cadena no ha explorado por completo el área de mayor densidad y los promedios ergódicos apenas comienzan a converger.\\ 
-
 \begin{figure}[h]
     \centering
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.35\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_A}
         \caption{La cadena empieza lejos de las zonas de mayor densidad y se va acercando a ellas. Las taches representan propuestas rechazadas.}
     \end{subfigure}
     ~ 
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.35\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_B}
         \caption{Después de 2,500 iteraciones, la cadena explora ya la región crítica. Los valores fuera de ella normalmente son rechazados.}
-    \end{subfigure}
-    ~
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_C}
-        \caption{Los promedios ergódicos van convergiendo a las medias teóricas.}
     \end{subfigure}
     \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis}. Fuente: elaboración propia.}\label{fig:RWM}
 \end{figure}
 
 \begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Figs/Bayes/Ejemplo_RWM_C}
+        \caption{Ilustración de la convergencia de los promedios ergódicos de una cadena de Metropolis Hastings para las dos variables o entradas de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis}. Fuente: elaboración propia.}\label{fig:RWM_ergo}
+\end{figure}
+
+Podemos ver cómo se va explorando el espacio de estados en la \textbf{Figura \ref{fig:RWM}}. Cuando una de las propuestas es rechazada, esta se marca como una tache. Empezando en un punto alejado del origen, la cadena comienza a acercarse a la región de mayor densidad. En el fondo--- como espero explicar más claro después--- encontrar esta \textit{región crítica} y explorarla lo suficientemente bien para poder calcular los resúmenes inferenciales de interés es el verdadero objetivo de un algoritmo de integración por MCMC \parencites{Neal93,Betancourt17}. Con tan solo 2,500 iteraciones la cadena ya la recorrió varias veces y los valores que alejarían a la cadena de la misma son normalmente rechazados. También podemos ver, en la \textbf{Figura \ref{fig:RWM_ergo}}, cómo los promedios ergódicos van acercándose a $0$ para ambas variables.\\
+
+Pero la pregunta permanece, ¿cómo determinar el kernel de propuestas? ¿Por qué usar $3$ como lado y no $0.5$? ¿Qué hubiera pasado en ese caso? Podemos observarlo en la \textbf{Figura \ref{fig:RWM2}}. El rectángulo de propuestas es más pequeño y eso tiene dos efectos: hay menos propuestas rechazadas pero la cadena avanza más lentamente. Vemos cómo aún después de las mismas 2,500 iteraciones la cadena no ha explorado por completo el área de mayor densidad y los promedios ergódicos apenas comienzan a converger en la \textbf{Figura \ref{fig:RWM2_ergo}}.\\ 
+
+\begin{figure}[H]
     \centering
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.35\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo2_RWM_A}
         \caption{La cadena empieza lejos de las zonas de mayor densidad y avanza lentamente. Las taches representan propuestas rechazadas.}
     \end{subfigure}
     ~ 
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.35\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo2_RWM_B}
         \caption{Después de 2,500 iteraciones, la cadena no ha explorado la región crítica, aunque hay menos propuestas rechazadas.}
     \end{subfigure}
-    ~
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo2_RWM_C}
-        \caption{Los promedios ergódicos tardan en converger.}
-    \end{subfigure}
     \caption{Ilustración de una cadena de Metropolis Hastings simulando de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis} con un kernel de propuestas estrecho. Fuente: elaboración propia.}\label{fig:RWM2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Figs/Bayes/Ejemplo2_RWM_C}
+        \caption{Ilustración de la convergencia de los promedios ergódicos de una cadena de Metropolis Hastings para las dos variables o entradas de una normal bivariada sin correlación mediante una implementación de \textit{Random Walk Metropolis} con un kernel de propuestas estrecho. Fuente: elaboración propia.}\label{fig:RWM2_ergo}
 \end{figure}
 
 El rectángulo más amplio propone valores que se alejan de la región crítica, mismos que tienden a ser rechazados. Sin embargo, también permite proponer valores más distantes del punto actual, lo que en este caso hace que la cadena avance rápidamente. El rectángulo más pequeño avanza más bien ``lento pero seguro''... quizás demasiado lento. Ambas cadenas convergerán, pero este ejemplo ilustra uno de los principales problemas de los algoritmos de MH, en general.\\ 
 
 Elegir un kernel de propuestas eficiente no es sencillo. Si la escala del kernel es demasiado pequeña, los saltos son demasiado pequeños y la cadena avanza demasiado lento. Si la escala es demasiado grande, corremos el riesgo de que la cadena rechace casi todas las propuestas y quede ``atorada'' en algún lugar; si la cadena repite el mismo valor varias veces seguidas, también alenta su avance. Debe haber un justo medio entre ambos extremos. Esto podemos verlo comparando el comportamiento de tres kérneles cuando intentan simular normales ahora altamente correlacionadas, en la \textbf{Figura \ref{fig:RWM_Corr}}.\\ 
 
-\begin{figure}[h]
+\begin{sidewaysfigure}[p]
     \centering
-    \begin{subfigure}{0.3\textwidth}
+    \begin{subfigure}{0.35\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara1}
         \caption{Un kernel de propuestas demasiado estrecho acepta más propuestas pero se mueve lento.}
     \end{subfigure}
-    ~ 
-    \begin{subfigure}{0.3\textwidth}
+    ~
+    \begin{subfigure}{0.35\textwidth}
+        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara3}
+        \caption{Un kernel de propuestas demasiado amplio rechaza demasiadas propuestas. Esto puede provocar que la cadena quede ``atorada'' en el mismo lugar por varias propuestas, lo que a su vez implica un avance más lento.}
+    \end{subfigure}
+     ~ 
+    \begin{subfigure}{0.35\textwidth}
         \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara2}
         \caption{El kernel óptimo en general es uno que permita alcanzar regiones diferentes del espacio sin rechazar ``demasiadas'' propuestas. Esto permite que la cadena avance de mejor manera.}
     \end{subfigure}
     ~
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figs/Bayes/Ejemplo_RWM_Compara3}
-        \caption{Un kernel de propuestas demasiado amplio rechaza demasiadas propuestas. Esto puede provocar que la cadena quede ``atorada'' en el mismo lugar por varias propuestas, lo que a su vez implica un avance más lento.}
-    \end{subfigure}
-    ~
     \caption{Comparación de kerneles uniformes de propuestas para simular una normal bivariada con correlación $0.95$ mediante RWM. Las tres cadenas presentan las primeras $30$ transiciones, aunque no se distingan las repeticiones de los puntos en los que la cadena permanece en el mismo estado. Fuente: elaboración propia.}\label{fig:RWM_Corr}
-\end{figure}
+\end{sidewaysfigure}
 
 Ciertamente hay investigación enfocada a proponer ``reglas de dedo'' que sean relativamente eficientes \parencites{GelmanRobertsGilks96,Geyer05,YangRdz13}. Para el ejemplo original de normales bivariadas no correlacionadas elegí el rectángulo uniforme de lado $3$ porque \textcite{YangRdz13} encuentran que este es el ancho óptimo para simular una normal estándar mediante un kernel uniforme. El uso del kernel uniforme se debe a que es fácil de entender y fue el utilizado por los científicos de Los Álamos, pero pueden haber kérneles más eficientes como reporta el mismo artículo.\\ 
 

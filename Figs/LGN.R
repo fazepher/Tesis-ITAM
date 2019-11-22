@@ -51,7 +51,7 @@ set.seed(51295)
 lgn <- purrr::map_dfr(factor(1:4),~volados(N) %>% mutate(Cadena = .x)) %>% 
   ggplot(aes(x=i,y=p_aguila,color=Cadena)) + 
   geom_hline(aes(yintercept = 0.5),color="gray5",size=1.5) + 
-  geom_line(size=1) +
+  geom_line(size=0.6) +
   scale_color_manual(values = c("#4E67C8","#2D9779","#F78D7C","#B8C2E9","gray45")) + 
   ylim(0,1) + 
   ylab("Proporción empírica de águila") + 
@@ -63,6 +63,6 @@ lgn <- purrr::map_dfr(factor(1:4),~volados(N) %>% mutate(Cadena = .x)) %>%
   theme(legend.position = "none")
   
 ggsave("Bayes/LGN.pdf",
-       plot = lgn, device = cairo_pdf, width = 20, height = 10)
+       plot = lgn, device = cairo_pdf, width = 22.5/3, height = 17/3)
   
   
