@@ -14,7 +14,7 @@ Las formas más simples de la función $h(\theta_d,X)$ son \textit{lineales en l
 \begin{equation*}
 h(\theta_d,X) = \beta_0 + \beta_1X_1 + \beta_2X_2 + \dots + \beta_{d-1}X_{d-1}, 
 \end{equation*}
-para $d-1$ variables explicativas y donde $\theta_d = (\beta_0,\beta_1,\dots,\beta_{d-1})$. El vector general de parámetros $\theta$ entonces se descompone en dos--- $\theta = (\theta_d,\theta_r)$--- con $\theta_r$ posibles parámetros adicionales de la distribución condicional de $Y$ dado $X$ pero que no determinan su esperanza. Las variables explicativas pueden llegar a ser transformaciones unas de otras como cuando se buscan ajustar relaciones de orden cuadrático o como cuando se incluyen interacciones.\\
+para $d-1$ variables explicativas y donde $\theta_d = (\beta_0,\beta_1,\dots,\beta_{d-1})$. El vector general de parámetros $\theta$ entonces se descompone en dos--- $\theta = (\theta_d,\theta_r)$--- con $\theta_r$ posibles parámetros adicionales de la distribución condicional de $Y$ dado $X$ pero que no determinan su esperanza. Las variables explicativas pueden llegar a ser transformaciones conocidas unas de otras como cuando se buscan ajustar relaciones de orden cuadrático o como cuando se incluyen interacciones.\\
 
 Debido a que no conocemos la verdadera relación entre nuestras variables, tenemos incertidumbre sobre los valores de los coeficientes que determinan nuestra función $h(\theta_d ,X)$ y, posiblemente, sobre el resto de parámetros $\theta_r$. Así pues, bajo la perspectiva bayesiana debemos reflejar dicha incertidumbre también mediante alguna distribución de probabilidad $f(\theta)$. Buscaremos, entonces, reducirla mediante la recolección de datos $(y,x)$ que nos permitan, a través del teorema de Bayes obtener la distribución posterior $f(\theta|y,x)$.\\
 
@@ -111,7 +111,7 @@ Bajo el paradigma bayesiano, además, un MLG debe incluir un cuarto elemento que
 
 \begin{enumerate}
 \setcounter{enumi}{3}
-\item \textbf{Distribución Inicial}: la incertidumbre o el conocimiento incial que se tenga sobre los parámetros $\theta$ y, en su defecto $\phi$, se refleja en una distribución inicial de probabilidad $f(\theta,\phi)$. Nótese que en un MLG los parámetros $\theta$ de la variable de interés, incluyen a los coeficientes $\beta$ del predictor lineal.
+\item \textbf{Distribución Inicial}: la incertidumbre o el conocimiento incial que se tenga sobre los parámetros $\theta$ y $\phi$, se refleja en una distribución inicial de probabilidad $f(\theta,\phi)$. Nótese que en un MLG los parámetros $\theta$ de la variable de interés, incluyen a los coeficientes $\beta$ del predictor lineal.
 \end{enumerate}
 }
  
@@ -138,7 +138,7 @@ y_i|\beta & \sim Poi(\lambda_i) \quad \forall \quad i \in \mathbb{N}_N \nonumber
 
 \subsection{Regresión logística}\label{Sec:Pres_Logis}
 
-A continuación presento con más detalle uno de los MLG más conocidos y utilizados: la regresión logística. Esta busca modelar $f(y|\theta)$ mediante una distribución Bernoulli. La relación entre las variables explicativas y el valor esperado se construye con un predictor lineal para el logit de la probabilidad de éxito del ensayo de Bernoulli. Es decir, si $p = \Pr(Y=1)$ es la probabilidad de éxito, entonces $log\left(\dfrac{p}{1-p}\right)=X\beta$.\\ 
+A continuación presento con más detalle uno de los MLG más conocidos y utilizados: la regresión logística. Esta modela $f(y|\theta)$ mediante una distribución Bernoulli. La relación entre las variables explicativas y el valor esperado se construye con un predictor lineal para el logit de la probabilidad de éxito del ensayo de Bernoulli. Es decir, si $p = \Pr(Y=1)$ es la probabilidad de éxito, entonces $log\left(\dfrac{p}{1-p}\right)=X\beta$.\\ 
 
 En otras ocasiones, nuestra variable de interés podría ser binomial, es decir, los éxitos en una serie de ensayos Bernoulli independientes. Para cada observación $y_i$, además de las variables explicativas, conocemos también $n_i$, el número de ensayos Bernoulli para el $i$-ésimo individuo. Es decir, es posible generalizar una regresión logística para que el número de ensayos sea mayor a $1$. Veamos ahora cómo construir el modelo como un MLG.
 
@@ -199,9 +199,9 @@ f(\beta) &= \dfrac{1}{\sqrt{(2\pi)|\sigma^2 \mathbb{I}_N|}}exp\left\lbrace -\dfr
 &\propto exp\left\lbrace -\dfrac{1}{2\sigma^2}\left[\beta^T\beta - 2\sigma^2(\beta yX)^T\right]\right\rbrace\prod_{i=1}^N \left(1+e^{X_i\beta}\right)^{-n_i}
 \end{align*}
 
-Esta expresión tampoco permite un tratamiento analítico bajo una forma funcional conocida. No es posible integrarla para conocer la constante de normalización y así tener completa la distribución posterior.\\
+Esta expresión tampoco permite un tratamiento analítico bajo una forma funcional conocida. No es posible integrarla analíticamente para conocer la constante de normalización y así tener completa la distribución posterior.\\
 
-¿Acaso es posible llevar a cabo una simple regresión logística bajo el paradigma bayesiano? Por mucho tiempo la respuesta a esta pregunta era prácticamente no. Como la integral no se puede calcular, la alternativa es obtenerla mediante aproximaciones analíticas como la llamada \textit{aproximación de Laplace} o bien mediante integración numérica mediante métodos de cuadratura \parencites{Nieto16,GP97}. Sin embargo, estos métodos son difíciles de aplicar cuando la dimensión del problema empieza a crecer.\\ 
+¿Acaso es posible llevar a cabo una simple regresión logística bajo el paradigma bayesiano? Por mucho tiempo la respuesta a esta pregunta era prácticamente no. Como la integral no se puede calcular, la alternativa es obtenerla mediante aproximaciones sean analíticas, como la llamada \textit{aproximación de Laplace}, o bien numéricas mediante métodos de cuadratura \parencites{Nieto16,GP97}. Sin embargo, estos métodos son difíciles de aplicar cuando la dimensión del problema empieza a crecer.\\ 
 
 Afortunadamente, el desarrollo de las computadoras permitió superar este obstáculo y, desde la década de 1990, el paradigma bayesiano ha ido creciendo con fuerza. Hoy es posible aplicar modelos como la regresión logística y más complejos sin problemas. Por ello, pospongo el tema de cómo calcular las integrales al \textbf{\autoref{chap:Cap_MCMC}} y continúo con la discusión general de los modelos de regresión. 
 
@@ -256,7 +256,7 @@ Ahora bien, un modelo jerárquico establece la intercambiabilidad de las observa
 &\text{III Hiperparámetros} \quad & f(\varphi)&
 \end{align*}
 
-Un modelo jerárquico aumenta el número de parámetros a estimar al agregar los hiperparámetros. Entonces, tenemos que la distribución inicial de los parámetros depende de un hiperparámetro mismo que, para realizar el aprendizaje bayesiano, deberá tener una distribución \textit{hiperinicial}. El problema consiste en inferir tanto las características de las subpoblaciones, $\theta_j$, como aquellas poblacionales, $\varphi$ \parencite{GP98}: 
+Un modelo jerárquico aumenta el número de parámetros a estimar al agregar los hiperparámetros. Entonces, tenemos que la distribución inicial de los parámetros depende de un hiperparámetro mismo que, para realizar el aprendizaje bayesiano, deberá también tener una distribución inicial. El problema consiste en inferir tanto las características de las subpoblaciones, $\theta_j$, como aquellas poblacionales, $\varphi$ \parencite{GP98}: 
 \begin{align*}
 f(\theta,\varphi|y) & \propto f(y|\theta,\varphi)f(\theta,\varphi) \\
 &\propto f(y|\theta)f(\theta|\varphi)f(\varphi) \\
@@ -266,9 +266,9 @@ f(\theta,\varphi|y) & \propto f(y|\theta,\varphi)f(\theta,\varphi) \\
 
 \subsection{Regresiones jerárquicas}
 
-En términos de regresiones, los modelos jerárquicos son aquellos en los que los coeficientes también son modelados mediante hiperparámetros estimados con los mismos datos \parencite{GelmanHill06}. Esto permite pensar en regresiones a distintos niveles y con variables grupales, estudios con base en muestreo estratificado e incluso estructuras no necesariamente anidadas. Las ventajas de los modelos jerárquicos hacen que, para algunos investigadores, las regresiones multinivel merezcan ser el enfoque predeterminado \parencite{McElreath15}.\\
+En términos de regresiones, los modelos jerárquicos son aquellos en los que los coeficientes también son modelados mediante distribuciones cuyos parámetros son estimados con los mismos datos \parencite{GelmanHill06}. Esto permite pensar en regresiones a distintos niveles y con variables grupales, estudios con base en muestreo estratificado e incluso estructuras no necesariamente anidadas. Las ventajas de los modelos jerárquicos hacen que, para algunos investigadores, las regresiones multinivel merezcan ser el enfoque predeterminado \parencite{McElreath15}.\\
 
-De manera general es posible clasificar las regresiones jerárquicas en tres grandes categorías: interceptos variables, pendientes variables e interceptos y pendientes variables. De manera gráfica estos pueden verse en la \textbf{Figura \ref{fig:Ejemplos_Jer}}. Para presentarlas, supongamos que tenemos $N$ observaciones $\left\lbrace(y_i,x_i,u_{j[i]})\right\rbrace_{i=1}^{N}$ agrupadas en $J$ grupos. Nuestra variable de interés es $Y$, contamos con una variable explicativa a nivel individuo, $X$,  y una a nivel grupo,  $U$.  Debido a que ahora tenemos $J$ grupos, indico con la notación $j[i]$ el grupo al que pertenece el $i$-ésimo individuo. En el \textbf{Cuadro \ref{tbl:Regr_Jer_Lineales}} presento ejemplos esquemáticos de este tipo para modelos lineales en los que $\alpha$ representa el intercepto y $\beta$ la pendiente de la recta; en el caso de los \textit{hipercoeficientes} estos se representan por $a$ y $b$.\\
+De manera general es posible clasificar las regresiones jerárquicas en tres grandes categorías: interceptos variables, pendientes variables e interceptos y pendientes variables. De manera gráfica estos pueden verse en la \textbf{Figura \ref{fig:Ejemplos_Jer}}. Para presentarlas, supongamos que tenemos $N$ observaciones $\left\lbrace(y_i,x_i,u_{j[i]})\right\rbrace_{i=1}^{N}$ agrupadas en $J$ grupos. Nuestra variable de interés es $Y$, contamos con una variable explicativa a nivel individuo, $X$,  y una a nivel grupo,  $U$.  Debido a que ahora tenemos $J$ grupos, indico con la notación $j[i]$ el grupo al que pertenece el $i$-ésimo individuo. En el \textbf{Cuadro \ref{tbl:Regr_Jer_Lineales}} presento ejemplos esquemáticos de este tipo para modelos lineales en los que $\alpha$ representa el intercepto y $\beta$ la pendiente de la recta; en el caso de los coeficientes que a su vez los modelan estos se representan por $a$ y $b$.\\
 
 \begin{figure}[h]
     \centering
@@ -329,7 +329,7 @@ III. Hiperparámetros &
 
 \subsubsection*{Regresión logística jerárquica}
 
-Naturalmente, es posible proponer MLG jerárquicos. Por ejemplo, una regresión logística jerárquica con algunas \textit{hiperiniciales} arbitrarias sería la siguiente: 
+Naturalmente, es posible proponer MLG jerárquicos. Por ejemplo, una regresión logística jerárquica con algunas iniciales arbitrarias sería la siguiente: 
 \begin{align*}
 y_i|\alpha_{j[i]},\beta_{j[i]} & \sim Binom(n_i,p_i) \\
 log\left(\dfrac{p_i}{1-p_i}\right) &= \alpha_{j[i]} + \beta_{j[i]} x_i  \\ 

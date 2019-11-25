@@ -41,9 +41,11 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage[backend=biber,style=chicago-authordate, natbib=true,ibidtracker = strict, opcittracker = strict]{biblatex}
 \renewcommand*{\revsdnamedelim}{} %Se necesita para eliminar la coma antes de la conjunción "y" en una lista de dos nombres cuando el primero está  invertido (apellido, nombre)
-\addbibresource{referencias_tesis_ACT.bib}
-\addbibresource{referencias_tesis_RRII.bib}
-\addbibresource{referencias_tesis_extras.bib}
+%\addbibresource{referencias_tesis_ACT.bib}
+%\addbibresource{referencias_tesis_RRII.bib}
+%\addbibresource{referencias_tesis_extras.bib}
+\addbibresource{referencias_tesis.bib}
+\addbibresource{referencia_tesis_act.bib}
 
 %% Matemáticas %%
 \usepackage{amsmath,amssymb,amsthm}
@@ -120,13 +122,13 @@
 \input{Preliminares/Portada_RRII.tex}
 
 %% DECLARACIÓN LEGAL %%
-\input{Preliminares/Legal.tex}
+\input{Preliminares/Legal_RRII.tex}
 \newpage
 %% DEDICATORIA %%
 \input{Preliminares/Dedicatoria.tex}
 
 %% AGRADECIMIENTOS %%
-\input{Preliminares/Agradecimientos.tex}
+\input{Preliminares/Agradecimientos_RRII.tex}
 
 %% Índice %%
 \tableofcontents
@@ -158,7 +160,17 @@
 %%  REFERENCIAS %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-\cleardoublepage\phantomsection\addcontentsline{toc}{part}{Referencias}
+
+\addcontentsline{toc}{part}{Anexos}
+\part*{Anexos}
+\input{Anexos/B_Distribuciones_Departamentales.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  REFERENCIAS %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\part*{Referencias}
+\addcontentsline{toc}{part}{Referencias}
 \printbibliography[title = {Referencias}]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

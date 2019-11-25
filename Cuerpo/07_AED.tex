@@ -60,62 +60,61 @@ Jacques Cheminade & SP & 89,545 & 0.25 & & \\[3pt]
 \label{tbl:Resul_Oficiales_P12}
 \end{table}
 
-El análisis que realizaré se circunscribe a los resultados dentro de la metrópoli francesa. Esta decisión está basada en dos consideraciones. La principal es que no se cuentan con todos los datos de las variables explicativas para todos los territorios de ultramar. Adicionalmente, el fenómeno político es marcadamente distinto en los \textit{DROM}\footnote{Départements et régions d'outre mer.} que en el hexágono. Si el resultado nacional fue de 17.9\%, en la metrópoli llegó al 18.3\% mientras que fuera resultó ser de poco más del 7\%. El \textit{DROM} en el que Marine Le Pen obtuvo el mayor porcentaje efectivo de votos fue la Guyana, con 10.5\%; este resultado fue casi dos puntos porcentuales menos que su peor región metropolitana, Île de France, con 12.3\%. En Mayotte, Le Pen se quedó incluso por debajo del 3\% de la votación efectiva. Más aún, si en lugar de observar la votación efectiva tomamos en cuenta los votos nulos y las abstenciones mediante la votación bruta--- es decir los votos con respecto al número de inscritos en la lista nominal--- la diferencia metrópoli-ultramar es del 14.6\% contra 3.5\%. Las diferencias políticas no solo se reflejan en preferencias electorales y niveles de participación sino que los temas de discusión y al rededor de los cuales se desarrollan las campañas también son diferentes. Así pues, deberá recordarse que cualquier conclusión que se tenga del análisis se refiere exclusivamente a la metrópoli francesa.\\
+El análisis que realizaré se circunscribe a los resultados dentro de la metrópoli francesa. Esta decisión se debe a que no se cuentan con todos los datos de las variables explicativas para todos los territorios de ultramar. Así pues, deberá recordarse que cualquier conclusión que se tenga del análisis se refiere exclusivamente a la metrópoli francesa.\\
 
-Esta última consideración nos hace notar que la distribución de los votos no es uniforme. Existen zonas de fortaleza y debilidad del FN. En 70 comunas Le Pen no recibió ningún sufragio mientras que la comuna en la que fue más votada obtuvo 62.5\% de la votación bruta\footnote{Hay que decir que recibió 5 votos de un listado nominal de 8 personas.}. El rango intercuartílico va de 13.5\% a 21.4\% con una mediana de 17.45\%, estos valores están señalados en el eje horizontal del histograma de la \textbf{Figura \ref{fig:Distr_Br}}.\\ 
+Ahora bien, en la \textbf{Figura \ref{fig:Distr_Br}} podemos notar que la distribución de los votos no es uniforme. Existen zonas de fortaleza y debilidad del FN. En 70 comunas Le Pen no recibió ningún sufragio mientras que la comuna en la que fue más votada obtuvo 62.5\% de la votación bruta\footnote{Hay que decir que recibió 5 votos de un listado nominal de 8 personas.}. El rango intercuartílico va de 13.5\% a 21.4\% con una mediana de 17.5\%.\\ 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.5\textwidth]{Figs/AED/Distr_Votos_Br_P12_FN}
+	\includegraphics[width = 0.625\textwidth]{Figs/AED/Distr_Votos_Br_P12_FN}
 	\caption{Histograma del \% bruto de votos obtenido en cada comuna, así como los valores mínimo, máximo y los tres cuartiles. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés.}
 	\label{fig:Distr_Br}	
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.725\textwidth]{Figs/AED/Pct_Br_Reg_P12_FN}
+	\caption{Mapa del \% bruto de votos obtenido por Marine Le Pen en las elecciones presidenciales del 2012 en cada región francesa. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
+	\label{fig:Pct_Br_Reg_P12}		
 \end{figure}
 
 Podemos agregar los datos a nivel región como en la \textbf{Figura \ref{fig:Pct_Br_Reg_P12}}, para describir de manera más general las zonas de fortaleza o debilidad. Mientras que el porcentaje de votos brutos en la metrópoli fue de 14.6\%, en la región île de France Marine Le Pen obtuvo el 9.4\% y en Picardie llegó a obtener casi el 20\%.\\
 
 Otra forma de valorar la presencia territorial del partido es considerar las comunas de cada región y comparar su distribución frente a la distribución agregada de toda la metrópoli. Podemos ver este ejercicio mediante el \textit{geofacet} de la \textbf{Figura \ref{fig:Geofacet_Distr_Reg_P12}}. Dentro de él comparo los histogramas de los porcentajes de votos que recibió la candidata frontista en las comunas de cada región con la distribución de los porcentajes para todas las comunas de la metrópoli. La intensidad del color de los histogramas depende del cociente del porcentaje mediano de votos en la región entre el porcentaje mediano de votos en toda la metrópoli, por lo que representa la fuerza relativa de cada etiqueta en la región. En azules encontramos las regiones con medianas superiores a la nacional y en rosas a aquellos con menores.\\
 
+\begin{sidewaysfigure}
+\centering
+	\includegraphics[width = 0.7\textwidth]{Figs/AED/Geofacet_Reg_P12_FN}
+	\caption{Los histogramas representan la distribución para cada una de las regiones y las densidades la de la metrópoli francesa. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
+	\label{fig:Geofacet_Distr_Reg_P12}
+\end{sidewaysfigure}
+
 Vemos que, en las regiones del noreste francés como Picardie o Alsace, los histogramas del FN están desplazados hacia la parte derecha de la distribución de referencia y, por tanto, están coloreados con mayor intensidad de azul. Por el contrario, en regiones occidentales como Bretagne, Limousin o Aquitaine, los histogramas reflejan menores porcentajes de votos para el FN y se colorean más de rosa. Podemos empezar a conjeturar que una clave geográfica para el voto frontista es la diagonal que va de Normandía--- Haute y Basse Normandie--- hacia PACA\footnote{Provence-Alpes-Côtes d'Azur.}: si la comuna se encuentra al noreste de la diagonal, tendería a manifestar mayor apoyo al Front National que si se encuentra al sudoeste de la misma. Este sería a grandes rasgos el eje que \textcite{Goodliffe16} identifica como la línea que une las ciudades de Cherbourg en Normandía y Valence en Rhône-Alpes y después con Perpignan en Languedoc-Rousillon.\\ 
 
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}{0.7\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Pct_Br_Reg_P12_FN}
-	\caption{Mapa del \% bruto de votos obtenido por Marine Le Pen en las elecciones presidenciales del 2012 en cada región francesa.}
-	\label{fig:Pct_Br_Reg_P12}		
-	\end{subfigure}\\
-	~
-	\begin{subfigure}{0.9\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Geofacet_Reg_P12_FN}
-	\caption{Los histogramas representan la distribución para cada una de las regiones y las densidades la de la metrópoli francesa.}
-	\label{fig:Geofacet_Distr_Reg_P12}
-	\end{subfigure}
-	\caption{Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
-\end{figure}
 
 Si descendemos un nivel y observamos el mapa a nivel departamento en la \textbf{Figura \ref{fig:Pct_Br_Dptos_P12}}, la división este-oeste se ve de manera más clara. También podemos ver las distribuciones a nivel departamento mediante diagramas de violines. El \textit{geofacet} respectivo se observa en la \textbf{Figura \ref{fig:Geofacet_Distr_Dptos_P12}}. En cada región se muestran 3 líneas como referencia de los tres cuartiles considerando las comunas de toda la metrópoli. El diagrama de violín sin relleno muestra dicha distribución agrupada para toda la metrópoli. Los diagramas de violín con relleno representan, pues, las distribuciones del porcentaje de votos obtenido en cada comuna del departamento correspondiente, identificado mediante su código oficial geográfico. Dentro de cada región los departamentos están ordenados de menor a mayor apoyo al FN con base en las medianas. Al igual que en los histogramas a nivel región, la intensidad del relleno es el cociente de la mediana departamental respecto a la mediana global.\\ 
 
-Dentro de las regiones con mayor apoyo en general, este es relativamente homogéneo a través de los departamentos. En efecto, las distribuciones reflejadas en diagramas de violines para los departamentos dentro de Lorraine, Champagne-Ardenne o Picardie aparentan ser similares, siempre con cocientes de medianas mayores a 1. No obstante, existen regiones--- como Île de France o Aquitaine--- cuyos departamentos presentan distribuciones más variables. Este es un elemento que podría empezar a sugerir un modelado jerárquico de los datos por departamento.\\
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.6\textwidth]{Figs/AED/Pct_Br_Dpto_P12_FN}
+	\includegraphics[width = 0.75\textwidth]{Figs/AED/Pct_Br_Dpto_P12_FN}
 	\caption{Mapa del \% bruto de votos obtenido por Marine Le Pen en las elecciones presidenciales del 2012 en cada departamento. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
 	\label{fig:Pct_Br_Dptos_P12}
 \end{figure}
 	
-\begin{figure}[H]
+\begin{figure}
 	\centering
-	\includegraphics[width = 0.9\textwidth]{Figs/AED/Geofacet_Dpto_P12_FN}
+	\includegraphics[width = 0.7\textwidth]{Figs/AED/Geofacet_Dpto_P12_FN}
 	\caption{Los violines rellenos de color son las distribuciones del \% bruto de votos obtenido por Marine Le Pen dentro del departamento correspondiente mientras que las 3 líneas horizontales representan una referencia al rango intercuartílico y la mediana considerando todas las comunas de la metrópoli, cuya distribución puede verse en el panel superior derecho. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
 	\label{fig:Geofacet_Distr_Dptos_P12}	
 \end{figure}
 
+Dentro de las regiones con mayor apoyo en general, este es relativamente homogéneo a través de los departamentos. En efecto, las distribuciones reflejadas en diagramas de violines para los departamentos dentro de Lorraine, Champagne-Ardenne o Picardie aparentan ser similares, siempre con cocientes de medianas mayores a 1. No obstante, existen regiones--- como Île de France o Aquitaine--- cuyos departamentos presentan distribuciones más variables. Este es un elemento que podría empezar a sugerir un modelado jerárquico de los datos por departamento.\\
+
 Finalmente, observamos el mapa de los porcentajes de voto brutos que obtuvo Marine Le Pen en cada comuna en la \textbf{Figura \ref{fig:Mapa_Pct_Br}}. De nueva cuenta distinguimos zonas de fuerza o debilidad con respecto a la mediana. Es decir, en tonos de azul se encuentran la mitad de las comunas con mayor porcentaje de votos y en rojos la mitad de menor porcentaje. La variabilidad es clara. Observamos lo que autores como \textcite{LeBras15} llaman las capas del voto FN. En primer lugar la gran zona de fuerza del norte. También hay corredores de fortaleza: el litoral mediterráneo y dos diagonales que parecen desembocar en él; estas serían las márgenes del Ródano que viene del norte y del Garona que viene del Atlántico. La débilidad la encontramos al oeste y en zonas urbanas vistas como manchas rojas rodeadas de color azul, particularmente París.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9\textwidth]{Figs/AED/Mapa_Votos_Br_P12_FN}
+	\includegraphics[width = 0.8\textwidth]{Figs/AED/Mapa_Votos_Br_P12_FN}
 	\caption{Mapa del \% bruto de votos obtenido por Marine Le Pen en las elecciones presidenciales del 2012. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
 	\label{fig:Mapa_Pct_Br}	
 \end{figure}
@@ -172,7 +171,7 @@ Inm & Inmigrantes\\
 \label{tbl:Variables_Censales}
 \end{table}
 
-Comenzando con la distribución del porcentaje de Mujeres en las comunas en 2012 vemos que, como es de esperarse, la mayoría de los departamentos tienen distribuciones muy concentradas al rededor del 50\% de la población. Las únicas distribuciones que llaman la atención en la \textbf{Figura \ref{fig:Distr_por_Dpto_Muj_2012}} son las de los departamentos de Île de France, con porcentajes un poco mayores que el resto de la metrópoli.\\ 
+Las distintas distribuciones de estas variables censales se pueden observar en el \textbf{Anexo B}, para poder ser apreciadas de mejor manera. Comenzando con la distribución del porcentaje de Mujeres en las comunas en 2012 vemos que, como es de esperarse, la mayoría de los departamentos tienen distribuciones muy concentradas al rededor del 50\% de la población. Las únicas distribuciones que llaman la atención en la \textbf{Figura \ref{fig:Distr_por_Dpto_Muj_2012}} son las de los departamentos de Île de France, con porcentajes un poco mayores que el resto de la metrópoli.\\ 
 
 Las variables de nacionalidad y condición migratoria son similares pero no idénticas. El \textcite{DefsCenso} define a un extranjero como un residente del territorio francés que no posee la nacionalidad francesa y a un inmigrante como aquella persona nacida extranjera en el extranjero; esto quiere decir, por ejemplo, que hay individuos franceses considerados inmigrantes pues pudieron haberse naturalizado, así como extranjeros considerados locales porque nacieron en territorio francés sin tener derecho a la nacionalidad.\\ 
 
@@ -186,11 +185,11 @@ Finalmente, vemos en las \textbf{Figuras \ref{fig:Distr_por_Dpto_CSPA_2012}}, \t
  
  Las profesiones intermediarias\footnote{Este nombre se refiere a aquellas ocupaciones que fungen como intermediarios entre personas. La mayoría son intermediarios entre gerentes y el grueso de los obreros o empleados. Otros son intermediarios en un sentido figurado, como la enfermería o el trabajo social.} tienen una variabilidad intraregional que se puede observar por la progresión de intensidades en los colores de los violines; es decir, dentro de cada región tienden a haber departamentos con medianas superiores a la mediana nacional y otros con medianas inferiores. Los empleados, por el contrario, parecen distribuirse de manera relativamente homogénea a través de los departamentos de una misma región, salvo por algunas comunas atípicas que alargan las colas de algunos violines. El norte industrial es visible desde las distribuciones de los obreros, quienes están más presentes en las regiones del norte y oeste que en el sureste.\\
  
-  Las distribuciones de las proporciones de las poblaciones que representan las personas retiradas permite confirmar que el sur de Francia está más avejentado que el norte, aunque también observamos que dentro de algunas regiones como Aquitaine, Midi-Pyrénées o Bourgogne existe considerable variabilidad a través de sus departamentos. Finalmente, la categoría de personas sin actividad es más bien residual y un poco más difícil de interpretar en este nivel, pues incorpora tanto menores de edad como personas sin trabajo, incluidos estudiantes. Podemos, sin embargo, observar similitudes con las distribuciones de los menores de edad y seguir pensando que las regiones del norte tienen una estructura más juvenil que regiones más avejentadas como Limousin y Auvergne.
+  Las distribuciones de las proporciones que representan las personas retiradas en cada población permiten confirmar que el sur de Francia tiene una configuración social de mayor edad que el norte, aunque también observamos que dentro de algunas regiones como Aquitaine, Midi-Pyrénées o Bourgogne existe considerable variabilidad a través de sus departamentos. Finalmente, la categoría de personas sin actividad es más bien residual y un poco más difícil de interpretar en este nivel, pues incorpora tanto menores de edad como personas sin trabajo, incluidos estudiantes. Podemos, sin embargo, observar similitudes con las distribuciones de los menores de edad y seguir pensando que las regiones del norte tienen una estructura más juvenil que regiones más avejentadas como Limousin y Auvergne.
 
 \section{Otros datos a nivel comuna}
 
-Derivado del marco teórico sobre el voto NAP existen otras variables explicativas de interés que ayuden a perfilar el clivaje de escolaridad o el estado económico del lugar. Afortunadamente el INSEE también publica datos sobre el máximo grado escolar que tienen los habitantes mayores de 15 años de cada comuna, así como el número de habitantes que siguen estudiando.\footnote{El sistema educativo francés tiene una estructura distinta al mexicano, así que las categorías en el \textbf{Cuadro \ref{tbl:Otros_datos_comuna}} son aproximadas. Por ejemplo, entre otros, Dip2 incluye al llamado Brevet, Dip3 a varios tipos de Baccalauréat y para clasificarse en Dip4 se requieren al menos 2 años de ciclos universitarios.} Por otro lado, también es posible obtener el número de personas empleadas y desempleadas dentro de las comunas para 3 grupos de edad. La distinción por grupos de edad es importante puesto que referencias como \textcite{LeBras16} o \textcite{Perrineau07} tienden a mencionar la precariedad salarial juvenil como un catalizador del voto frontista.\\ 
+Derivado del marco teórico sobre el voto NAP existen otras variables explicativas de interés; estas ayudarían a perfilar el clivaje de escolaridad o el estado económico del lugar. Afortunadamente el INSEE también publica datos sobre el máximo grado escolar que tienen los habitantes mayores de 15 años de cada comuna, así como el número de habitantes que siguen estudiando.\footnote{El sistema educativo francés tiene una estructura distinta al mexicano, así que las categorías en el \textbf{Cuadro \ref{tbl:Otros_datos_comuna}} son aproximadas. Por ejemplo, entre otros, Dip2 incluye al llamado Brevet, Dip3 a varios tipos de Baccalauréat y para clasificarse en Dip4 se requieren al menos 2 años de ciclos universitarios.} Por otro lado, también es posible obtener el número de personas empleadas y desempleadas dentro de las comunas para 3 grupos de edad. La distinción por grupos de edad es importante puesto que referencias como \textcite{LeBras16} o \textcite{Perrineau07} tienden a mencionar la precariedad salarial juvenil como un catalizador del voto frontista.\\ 
 
 \begin{table}[h]
 \centering
@@ -226,7 +225,7 @@ Ocu1 & Empleados de 15 a 24 años\\
 
 Si repetimos el análisis exploratorio hecho para los datos censales, vemos en las \textbf{Figuras \ref{fig:Distr_por_Dpto_DipA_2012}} y \textbf{\ref{fig:Distr_por_Dpto_DipB_2012}} las distribuciones departamentales por nivel escolar en 2012. En primer lugar, confirmamos la singularidad de Île de France respecto al resto del país. Es claramente la región con los departamentos más escolarizados de Francia, en el sentido de que tienden a tener una población con mayores niveles de escolarización y con diploma universitario--- notablemente en 75-París intramuros y el acaudalado 92-Hauts-de-Seine---. Asimismo, observamos menores porcentajes de personas sin ningún diploma escolar, salvo el caso aparentemente atípico de 93-Seine-Saint-Denis, pero que veíamos en la sección anterior que era el departamento de más inmigrantes, empleados y obreros. Resulta ilustrativo el patrón de personas con preparatoria pues hay un contraste entre París y su \textit{petite courone} y la \textit{grande courone}--- 75, 92, 93 y 94 vs 78, 95, 91 y 77---.\\ 
 
- Respecto al panorama general de la metrópoli, de nueva cuenta se refleja el patrón generacional de un norte más joven que el sur observando las distribuciones de personas todavía estudiando. Resaltan departamentos en Corse, Poitou-Charentes, Basse-Normandie o Picardie como lugares con altas poblaciones no escolarizadas. Por su parte, Limousin, Auvergne, Champagne-Ardenne y, en cierto sentido, Midi-Pyrinées son regiones con fuertes poblaciones cuyo máximo nivel de estudios es la educación básica.\\ 
+ Respecto al panorama general de la metrópoli, de nueva cuenta se refleja el patrón generacional de un norte más joven que el sur observando las distribuciones de personas todavía estudiando. Resaltan departamentos en Corse, Poitou-Charentes, Basse-Normandie o Picardie como lugares con altas poblaciones no escolarizadas. Por su parte, Limousin, Auvergne, Champagne-Ardenne y, en cierto sentido, Midi-Pyrinées son regiones con grandes poblaciones cuyo máximo nivel de estudios es la educación básica.\\ 
  
  En cuanto a las personas con preparatoria, ambos departamentos en Alsace se ubican por encima de la mediana nacional. En términos de población con diploma universitario encontramos lugares cercanos a grandes universidades francesas como la de Aix-Marsaille, 13 en PACA, o en Rhône-Alpes las de Grenoble-Alpes (38) y la ENS-Lyon (69). También en dicha región resalta que el departamento con mayor mediana es 74-Haute-Savoie, probablemente se debe a su carácter conurbado con la ciudad suiza de Ginebra.\\
  
@@ -244,18 +243,16 @@ Para el resto de departamentos se realizó un muestreo aleatorio simple de comun
  
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.75\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Distr_Votos_Br_P12_FN_MUESTRA}
-	\caption{}
+	\includegraphics[width = 0.75\textwidth]{Figs/AED/Distr_Votos_Br_P12_FN_MUESTRA}
+	\caption{Distribuciones del \% bruto de votos para las comunas muestreadas y no muestreadas. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés}
 	\label{fig:Compara_Distr_Muestra}		
-	\end{subfigure}\\
-	~
-	\begin{subfigure}{0.8\textwidth}
-	\includegraphics[width = \textwidth]{Figs/AED/Mapa_Votos_Br_P12_FN_MUESTRA}
-	\caption{}
-	\label{fig:Mapa_Comunas_Muestra}
-	\end{subfigure}
-	\caption{Distribuciones y mapa del \% bruto de votos para las comunas muestreadas. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{Figs/AED/Mapa_Votos_Br_P12_FN_MUESTRA}
+	\caption{Mapa del \% bruto de votos para las comunas muestreadas. Fuente: elaboración propia con base en los datos electorales oficiales del Ministerio del Interior francés y la cartografía de OpenStreetMap.}
+	\label{fig:Mapa_Comunas_Muestra}	
 \end{figure}
 
 En la \textbf{Figura \ref{fig:Compara_Distr_Muestra}} vemos un comparativo de las distribuciones de porcentajes brutos de votos para las comunas muestreadas y aquellas fuera de muestra. Vemos que la muestra cubre correctamente el rango de la distribución, sin embargo está más concentrada en el centro de la misma y no refleja de la mejor manera las colas, sobre todo la moda en 0 que sí presentan las comunas fuera de la muestra. Esto hay que tenerlo en cuenta pues probablemente las predicciones que hagan los modelos serán más concentradas hacia la media o mediana de la distribución nacional y fallarán para comunas con porcentajes observados extremos. Sin embargo, para efectos de construcción del modelo es un sacrificio que aceptamos. La muestra logra delinear las grandes zonas de fuerza y debilidad del FN como vemos en el mapa de la \textbf{Figura \ref{fig:Mapa_Comunas_Muestra}}.\\
@@ -264,7 +261,7 @@ Si estimáramos el porcentaje de votos en cada departamento con base en el porce
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width = 0.75\textwidth]{Figs/AED/Dorling_Errores_P12_FN_MUESTRA}
+	\includegraphics[width = 0.7\textwidth]{Figs/AED/Dorling_Errores_P12_FN_MUESTRA}
 	\caption{Errores de estimación para cada departamento con base en la muestra. Fuente: elaboración propia.}
 	\label{fig:Errores_Est_Muestra}	
 \end{figure}
@@ -273,9 +270,9 @@ Si estimáramos el porcentaje de votos en cada departamento con base en el porce
 
 Con esta muestra podemos explorar las asociaciones entre el voto y las configuraciones sociales definidas por las variables seleccionadas. Debido a que los datos que tenemos son tanto los votos obtenidos como el número de inscritos, es decir el máximo de posibles votos, una buena alternativa de modelado será considerar los datos como binomiales, donde nuestro parámetro de interés es el porcentaje bruto de votos obtenido por el FN, explicado por las configuraciones sociales. Por tanto, en lugar de intentar una asociación directa, podemos buscarla en la escala logística.\\
 
-En la \textbf{Figura \ref{fig:Disper_Voto_Variables}} observamos diagramas de dispersión de los porcentajes brutos de votos observados en la escala logística\footnote{Cuando los porcentajes observados son iguales a 0, la transformación logística no está definida por lo que los puntos son representados como si estuvieran por debajo de cualquier otro valor en el eje vertical. Recordemos que el modelo binomial sí permite una cantidad nula de votos, es solo el logit de un parámetro de probabilidad de éxito igual a 0 lo que no estaría definido.} con respecto a los distintos porcentajes de la población que representa cada categoría de las variables explicativas. Cuando las categorías son dicotómicas, como el caso del sexo, solo se presenta una de las dos.\\ 
+En la \textbf{Figura \ref{fig:Disper_Voto_Variables}} observamos diagramas de dispersión de los porcentajes brutos de votos observados en la escala logística\footnote{Cuando los porcentajes observados son iguales a 0, la transformación logística no está definida por lo que los puntos son representados como si estuvieran por debajo de cualquier otro valor en el eje vertical. Recordemos que el modelo binomial sí permite una cantidad nula de votos, es solo el logit de un parámetro de probabilidad de éxito igual a 0 lo que no estaría definido.} con respecto a los distintos porcentajes de la población que representa cada categoría de las variables explicativas. Cuando las categorías son dicotómicas, como el caso del sexo, solo se presenta una de las dos.\\
 
-\begin{sidewaysfigure}
+\begin{sidewaysfigure}[p]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{Figs/AED/Asociaciones_MUESTRA}
 	\caption{Diagramas de dispersión para el logit de los porcentajes brutos de voto y las distintas variables explicativas observados en la muestra de comunas. Fuente: elaboración propia.}
